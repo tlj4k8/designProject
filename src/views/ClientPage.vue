@@ -1,15 +1,15 @@
 <template>
   <div class="client">
-    <Client/>
+    <Clients/>
   </div>
 </template>
 
 <script>
-import Client from '@/components/Client.vue';
+import Clients from '@/components/Clients.vue';
 export default {
   name: "ClientPage",
   components: {
-    Client
+    Clients
   }
 };
 </script>

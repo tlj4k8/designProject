@@ -1,6 +1,7 @@
 <template>
     <div class="login">
         <div class="form">
+            <h2>Login</h2>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group id="exampleInputGroup1"
                             label="Email address:"
