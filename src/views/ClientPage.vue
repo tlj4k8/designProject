@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 .client{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 
 </style>

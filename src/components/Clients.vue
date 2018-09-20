@@ -52,15 +52,8 @@ export default {
 </script>
 
 <style scoped>
-.client{
-    margin-top: 20px;
-}
 .filter{
     padding: 10px;
-}
-.clientTable{
-    border-style: solid;
-    
 }
 h1{
     text-align: center;
