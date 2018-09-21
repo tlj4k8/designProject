@@ -1,22 +1,22 @@
 <template>
   <div class="client">
-    <Client/>
+    <Clients/>
   </div>
 </template>
 
 <script>
-import Client from '@/components/Client.vue';
+import Clients from '@/components/Clients.vue';
 export default {
   name: "ClientPage",
   components: {
-    Client
+    Clients
   }
 };
 </script>
 
 <style scoped>
 .client{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 
 </style>

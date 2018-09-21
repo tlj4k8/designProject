@@ -1,12 +1,12 @@
 <template>
   <div class="dash">
+  <h1>Dashboard</h1>
     <b-button-group vertical class="dashGroup">
         <b-button to="/client">Client</b-button>
         <b-button to="/menu">Menu</b-button>
         <b-button to="/chef">Chef</b-button>
         <b-button to="/schedule">Schedule</b-button>
     </b-button-group>
-
   </div>
 </template>
 
@@ -19,11 +19,15 @@ export default {
 </script>
 
 <style scoped>
-.dashGroup{
-
+.dash{
+  margin-top: 12em;
 }
-.btn{
-    padding: 10px;
+.dashGroup{
+  width: 80vw;
+  margin: 0 10%;
+}
+h1{
+  text-align: center;
 }
 
 </style>
