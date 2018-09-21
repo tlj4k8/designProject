@@ -54,6 +54,7 @@ export default {
 <style scoped>
 .filter{
     padding: 10px;
+    width: 50%;
 }
 h1{
     text-align: center;
