@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 .dash{
-  margin-top: 12em;
+  padding-top: 25px;
 }
 .dashGroup{
   width: 80vw;

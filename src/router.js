@@ -5,6 +5,7 @@ import ClientPage from './views/ClientPage';
 import Dashboard from './views/Dashboard';
 import ChefPage from './views/ChefPage';
 import MenuPage from './views/MenuPage';
+import PersonPage from './views/PersonPage.vue';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/menu',
       name: 'MenuPage',
       component: MenuPage
+    },
+    {
+      path: '/person',
+      name: 'PersonPage',
+      component: PersonPage
     }
   ]
 })

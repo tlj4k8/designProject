@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <h1>Welcome to Salted Chef</h1>
     <DashMenu/>
   </div>
 </template>
@@ -17,6 +18,9 @@ export default {
 <style scoped>
 .dashboard{
     margin-top: 12em;
+}
+h1{
+  text-align: center;
 }
 
 </style>
