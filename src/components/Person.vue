@@ -1,98 +1,10 @@
-<!--
-<template>
-    <div class="person">
-        <h1>Create Profile</h1>
-        <form @submit="onSubmit" @reset="onReset" v-if="show">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Email">
-            </div>
-            <div class="form-group col-md-6">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-            <label for="firstName">FirstName</label>
-            <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-            </div>
-            <div class="form-group col-md-4">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-            </div>
-            <div class="form-group col-md-4">
-            <label for="phoneNumber">Phone Number</label>
-            <input type="tel" class="form-control" id="phoneNumber"
-                placeholder="123-456-7890"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                required >
-            <span class="validity"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-            </div>
-            <div class="form-group col-md-6">
-            <label for="addressTwo">Address 2</label>
-            <input type="text" class="form-control" id="addressTwo" placeholder="Apartment, studio, or floor">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-            <label for="city">City</label>
-            <input type="text" class="form-control" id="city" required>
-            </div>
-            <div class="form-group col-md-4">
-            <label for="states">State</label>
-            <select id="states" class="form-control" :options="states" v-model="form.states" required>
-                option selected>Choose...</option>
-                <option>...</option>
-            </select>
-            </div>
-            <div class="form-group col-md-2">
-            <label for="zip">Zip</label>
-            <input type="text" class="form-control" id="zip" required>
-            </div>
-        </div>
-        <fieldset class="form-group">
-            <div class="row">
-            <legend class="col-form-label col-sm-2 pt-0">Job Title</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="chefGrid" value="option1" checked>
-                <label class="form-check-label" for="chefGrid">
-                    Chef
-                </label>
-                </div>
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadios" id="hrGrid" value="option2">
-                <label class="form-check-label" for="hrGrid">
-                    HR
-                </label>
-                </div>
-                <div class="form-check disabled">
-                <input class="form-check-input" type="radio" name="gridRadios" id="menuGrid" value="option3">
-                <label class="form-check-label" for="menuGrid">
-                    Menu Team
-                </label>
-                </div>
-            </div>
-            </div>
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Create</button>
-        </form>
-    </div>
-</template>
- -->
 <template>
   <div class="person">
   <h1>Create Profile</h1>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
-      <b-form-group id="firstName"
+    <div class="flexGroup">
+      <b-form-group class="flex"
+                    id="firstName"
                     label="First Name:"
                     label-for="firstName">
         <b-form-input id="firstName"
@@ -101,7 +13,8 @@
                       required>
         </b-form-input>
       </b-form-group>
-      <b-form-group id="lastName"
+      <b-form-group class="flex"
+                    id="lastName"
                     label="Last Name:"
                     label-for="lastName">
         <b-form-input id="lastName"
@@ -110,6 +23,7 @@
                       required>
         </b-form-input>
         </b-form-group>
+        </div>
       <b-form-group id="phone"
                     label="Phone:"
                     label-for="phone">
@@ -120,26 +34,32 @@
                       required>
         </b-form-input>
       </b-form-group>
-      <b-form-group id="address"
+      <div class="flexGroup">
+      <b-form-group class="flex"
+                    id="address"
                     label="Address:"
                     label-for="address">
         <b-form-input id="address"
                       type="text"
                       v-model="form.address"
                       required
-                      placeholder="Street Address or P.O. Box">
+                      placeholder="">
         </b-form-input>
       </b-form-group>
-      <b-form-group id="addressTwo"
+      <b-form-group class="flex"
+                    id="addressTwo"
                     label="Address 2:"
                     label-for="addressTwo">
         <b-form-input id="addressTwo"
                       type="text"
                       v-model="form.addressTwo"
-                      placeholder="Company, C/O, Suite, Unit, Building, Floor">
+                      placeholder="Optional">
         </b-form-input>
       </b-form-group>
-      <b-form-group id="city"
+      </div>
+      <div class="flexGroup">
+      <b-form-group class="flex"
+                    id="city"
                     label="City:"
                     label-for="city">
         <b-form-input id="city"
@@ -148,7 +68,8 @@
                       required>
         </b-form-input>
       </b-form-group>
-      <b-form-group id="state"
+      <b-form-group class="flex"
+                    id="state"
                     label="State:"
                     label-for="state">
         <b-form-select id="state"
@@ -157,7 +78,8 @@
                       v-model="form.state">
         </b-form-select>
       </b-form-group>
-      <b-form-group id="zip"
+      <b-form-group class="flex"
+                    id="zip"
                     label="Zip Code:"
                     label-for="zip">
         <b-form-input id="zip"
@@ -166,13 +88,7 @@
                       required>
         </b-form-input>
       </b-form-group>
-      <b-form-group id="checks">
-        <b-form-checkbox-group v-model="form.checked" id="checks">
-          <b-form-checkbox value="menu">Menu Team</b-form-checkbox>
-          <b-form-checkbox value="hr">Human Resources</b-form-checkbox>
-          <b-form-checkbox value="chef">Chef</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group>
+      </div>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -192,8 +108,7 @@ export default {
         addressTwo: '',
         state: null,
         city: '',
-        zip: '',
-        checked: []
+        zip: ''
       },
       state: [
         { text: 'Select One', value: null },
@@ -213,7 +128,6 @@ export default {
       this.form.email = '';
       this.form.name = '';
       this.form.food = null;
-      this.form.checked = [];
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => { this.show = true });
@@ -222,14 +136,20 @@ export default {
 }
 </script>
 <style scoped>
-.person{
-  padding: 0 10px;
-}
 .form{
     padding: 0 15px;
 }
 h1{
     text-align: center;
+}
+.flexGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.flex{
+    flex-grow: 1;
+    padding: 0 2px;
 }
 
 </style>

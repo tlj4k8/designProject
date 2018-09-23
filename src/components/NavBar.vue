@@ -1,5 +1,5 @@
 <template>
-    <div class="bar">
+    <div class="bar">    
         <div class="menu">
             <b-dropdown id="ddown-divider" text="Menu" class="m-2">
                 <router-link to="/dash"><b-dropdown-item-button>Dashboard</b-dropdown-item-button></router-link>

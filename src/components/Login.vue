@@ -1,6 +1,7 @@
 <template>
     <div class="login">
         <div class="form">
+            <h1>Welcome to Salted Chef!</h1>
             <h2>Login</h2>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group id="exampleInputGroup1"
@@ -55,6 +56,9 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 12em;
+}
+h1, h2{
+    text-align:center;
 }
 
 
