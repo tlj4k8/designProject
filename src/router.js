@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home';
-import ClientPage from './views/ClientPage';
+import Clients from './components/Clients';
 import Dashboard from './views/Dashboard';
 import ChefPage from './views/ChefPage';
+import ClientPage from './views/ClientPage';
 import MenuPage from './views/MenuPage';
+import MenuAdd from './components/MenuAdd';
+import MenuDash from './views/MenuDash.vue';
 import PersonPage from './views/PersonPage.vue';
-import NeedForm from './components/NeedForm.vue';
-import Schedule from './components/Schedule.vue';
+import ClientDash from './views/ClientDash.vue';
 
 Vue.use(Router);
 
@@ -19,19 +21,29 @@ export default new Router({
       component: Home
     },
     {
-      path: '/schedule',
-      name: 'schedule',
-      component: Schedule
+      path: '/clientDash',
+      name: 'clientDash',
+      component: ClientDash
     },
     {
-      path: '/need',
-      name: 'need',
-      component: NeedForm
+      path: '/clients',
+      name: 'clients',
+      component: Clients
     },
     {
-      path: '/client',
-      name: 'ClientPage',
+      path: '/clientPage',
+      name: 'clientPage',
       component: ClientPage
+    },
+    {
+      path: '/menuDash',
+      name: 'menuDash',
+      component: MenuDash
+    },
+    {
+      path: '/menuAdd',
+      name: 'menuAdd',
+      component: MenuAdd
     },
     {
       path: '/dash',

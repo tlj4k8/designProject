@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style scoped>
+.client{
+    margin-top: 12em;
+}
 .filter{
     padding: 10px;
     width: 50%;

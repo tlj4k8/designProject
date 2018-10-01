@@ -2,8 +2,8 @@
   <div class="dashboard">
   <h1>Dashboard</h1>
     <b-button-group vertical class="dashGroup">
-        <b-button to="/client">Client</b-button>
-        <b-button to="/menu">Menu</b-button>
+        <b-button to="/clientDash">Client</b-button>
+        <b-button to="/menuDash">Menu</b-button>
         <b-button to="/chef">Chef</b-button>
         <b-button to="/employee">Employee</b-button>
     </b-button-group>
