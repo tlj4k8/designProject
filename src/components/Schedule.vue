@@ -1,6 +1,6 @@
 <template>
   <div class="schedule">
-  <h1>Availability</h1>
+  <h3>Availability</h3>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
       <b-container>
         <b-row>
@@ -117,8 +117,5 @@ export default {
 <style scoped>
 .schedule{
     padding: 5px 15px;
-}
-h1{
-    text-align: center;
 }
 </style>

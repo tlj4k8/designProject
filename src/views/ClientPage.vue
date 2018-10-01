@@ -1,5 +1,7 @@
 <template>
-  <div class="client">
+  <div class="clientPage">
+    <h1>Client Page</h1>
+    <Client/>
     <Person/>
     <Schedule/>
     <b-button variant="primary" @click="modalShow = !modalShow">
@@ -18,12 +20,14 @@
 import Schedule from '../components/Schedule';
 import Person from '../components/Person';
 import NeedForm from '../components/NeedForm';
+import Client from '../components/Client';
 export default {
   name: "ClientPage",
   components: {
     Person,
     Schedule,
-    NeedForm
+    NeedForm,
+    Client
   },
   data() {
     return {
@@ -34,8 +38,11 @@ export default {
 </script>
 
 <style scoped>
-.client{
+.clientPage{
   margin-top: 10em;
+}
+h1{
+  text-align: center;
 }
 
 </style>

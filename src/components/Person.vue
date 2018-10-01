@@ -1,6 +1,6 @@
 <template>
   <div class="person">
-  <h1>Profile</h1>
+  <h3>Profile</h3>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group class="flex"
@@ -149,11 +149,8 @@ export default {
 }
 </script>
 <style scoped>
-.form{
-    padding: 0 15px;
-}
-h1{
-    text-align: center;
+.person{
+    padding: 5px 15px;
 }
 .flexGroup{
     display: flex;
