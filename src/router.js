@@ -6,6 +6,8 @@ import Dashboard from './views/Dashboard';
 import ChefPage from './views/ChefPage';
 import MenuPage from './views/MenuPage';
 import PersonPage from './views/PersonPage.vue';
+import NeedForm from './components/NeedForm.vue';
+import Schedule from './components/Schedule.vue';
 
 Vue.use(Router);
 
@@ -15,6 +17,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: Schedule
+    },
+    {
+      path: '/need',
+      name: 'need',
+      component: NeedForm
     },
     {
       path: '/client',

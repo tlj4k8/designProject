@@ -1,6 +1,6 @@
 <template>
   <div class="person">
-  <h1>Create Profile</h1>
+  <h1>Profile</h1>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group class="flex"
@@ -24,7 +24,19 @@
         </b-form-input>
         </b-form-group>
         </div>
-      <b-form-group id="phone"
+    <div class="flexGroup">
+      <b-form-group class="flex"
+                    id="email"
+                    label="Email:"
+                    label-for="email">
+        <b-form-input id="email"
+                      type="email"
+                      v-model="form.email"
+                      required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group class="flex"
+                    id="phone"
                     label="Phone:"
                     label-for="phone">
         <b-form-input id="phone"
@@ -33,7 +45,8 @@
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>
         </b-form-input>
-      </b-form-group>
+        </b-form-group>
+        </div>
       <div class="flexGroup">
       <b-form-group class="flex"
                     id="address"

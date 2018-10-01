@@ -5,7 +5,7 @@
         <b-button to="/client">Client</b-button>
         <b-button to="/menu">Menu</b-button>
         <b-button to="/chef">Chef</b-button>
-        <b-button to="/schedule">Schedule</b-button>
+        <b-button to="/employee">Employee</b-button>
     </b-button-group>
   </div>
 </template>

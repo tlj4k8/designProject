@@ -8,15 +8,21 @@
         <b-button>Clients</b-button>
       </b-button-group>
     </div>
+    <div>
+      <Person/>
+      <Schedule/>
+    </div>
   </div>
 </template>
 
 <script>
-
+import Schedule from '../components/Schedule';
+import Person from '../components/Person';
 export default {
   name: "ChefPage",
   components: {
-
+    Schedule,
+    Person
   }
 };
 </script>
