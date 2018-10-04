@@ -10,6 +10,7 @@ import MenuAdd from './components/MenuAdd';
 import MenuDash from './views/MenuDash.vue';
 import PersonPage from './views/PersonPage.vue';
 import ClientDash from './views/ClientDash.vue';
+import Employee from './views/Employee.vue';
 
 Vue.use(Router);
 
@@ -49,6 +50,11 @@ export default new Router({
       path: '/dash',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+    path: '/employee',
+    name: 'Employee',
+    component: Employee
     },
     {
       path: '/chef',

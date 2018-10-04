@@ -4,6 +4,9 @@
     <div>
       <Person/>
       <Schedule/>
+      <TimeStamp/>
+      <Receipt/>
+      <MenuAdd/>
     </div>
   </div>
 </template>
@@ -11,11 +14,17 @@
 <script>
 import Schedule from '../components/Schedule';
 import Person from '../components/Person';
+import TimeStamp from '../components/TimeStamp';
+import Receipt from '../components/Receipt';
+import MenuAdd from '../components/MenuAdd';
 export default {
   name: "ChefPage",
   components: {
     Schedule,
-    Person
+    Person,
+    TimeStamp,
+    Receipt,
+    MenuAdd
   }
 };
 </script>
