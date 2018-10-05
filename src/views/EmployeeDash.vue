@@ -1,22 +1,23 @@
 <template>
-  <div class="dashboard">
-  <h1>Dashboard</h1>
+  <div class="employeeDash">
+  <h1>Employee</h1>
     <b-button-group vertical class="dashGroup">
-        <b-button to="/clientDash">Client</b-button>
-        <b-button to="/menuDash">Menu</b-button>
-        <b-button to="/chef">Chef</b-button>
-        <b-button to="/employeeDash">Employee</b-button>
+        <b-button to="/employeeView">View Employees</b-button>
+        <b-button to="/employee">Add/Modify/Delete Employee</b-button>
     </b-button-group>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Dashboard"
+  name: "EmployeeDash"
 };
 </script>
 
 <style scoped>
+.employeeDash{
+  margin-top: 12em;
+}
 .dashboard{
   margin-top: 12em;
 }

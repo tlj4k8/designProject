@@ -6,7 +6,7 @@
                 <router-link to="/clientDash"><b-dropdown-item-button>Client</b-dropdown-item-button></router-link>
                 <router-link to="/MenuDash"><b-dropdown-item-button>Menu</b-dropdown-item-button></router-link>
                 <router-link to="/chef"><b-dropdown-item-button>Chef</b-dropdown-item-button></router-link>
-                <router-link to="/employee"><b-dropdown-item-button>Employee</b-dropdown-item-button></router-link>
+                <router-link to="/employeeDash"><b-dropdown-item-button>Employee</b-dropdown-item-button></router-link>
                 <b-dropdown-divider></b-dropdown-divider>
                 <router-link to="/"><b-dropdown-item-button>Login/Logout</b-dropdown-item-button></router-link>
             </b-dropdown>

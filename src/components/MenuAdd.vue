@@ -93,7 +93,7 @@ export default {
     margin-top: 12em;
 }
 .form{
-    padding: 0 15px;
+    padding: 5px 15px;
 }
 h1{
     text-align: center;

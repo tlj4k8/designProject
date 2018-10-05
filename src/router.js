@@ -8,9 +8,10 @@ import ClientPage from './views/ClientPage';
 import MenuPage from './views/MenuPage';
 import MenuAdd from './components/MenuAdd';
 import MenuDash from './views/MenuDash.vue';
-import PersonPage from './views/PersonPage.vue';
 import ClientDash from './views/ClientDash.vue';
 import Employee from './views/Employee.vue';
+import EmployeeDash from './views/EmployeeDash.vue';
+import EmployeeView from './views/EmployeeView.vue';
 
 Vue.use(Router);
 
@@ -67,9 +68,14 @@ export default new Router({
       component: MenuPage
     },
     {
-      path: '/person',
-      name: 'PersonPage',
-      component: PersonPage
+      path: '/employeeView',
+      name: 'EmployeeView',
+      component: EmployeeView
+    },
+    {
+      path: '/employeeDash',
+      name: 'EmployeeDash',
+      component: EmployeeDash
     }
   ]
 })
