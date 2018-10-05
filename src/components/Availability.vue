@@ -1,5 +1,5 @@
 <template>
-  <div class="schedule">
+  <div class="availability">
   <h3>Availability</h3>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="table">
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: 'schedule',
+  name: 'availability',
   data () {
     return {
       form: {
@@ -75,7 +75,7 @@ export default {
 }
 </script>
 <style scoped>
-.schedule{
+.availability{
     padding: 5px 15px;
 }
 .table{

@@ -3,7 +3,7 @@
     <h1>Client Page</h1>
     <Client/>
     <Person/>
-    <Schedule/>
+    <Availability/>
     <b-button variant="primary" @click="modalShow = !modalShow">
       Need Form
     </b-button>
@@ -16,8 +16,7 @@
 </template>
 
 <script>
-// import Clients from '@/components/Clients.vue';
-import Schedule from '../components/Schedule';
+import Availability from '../components/Availability';
 import Person from '../components/Person';
 import NeedForm from '../components/NeedForm';
 import Client from '../components/Client';
@@ -25,7 +24,7 @@ export default {
   name: "ClientPage",
   components: {
     Person,
-    Schedule,
+    Availability,
     NeedForm,
     Client
   },

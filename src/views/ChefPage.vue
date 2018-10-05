@@ -3,24 +3,21 @@
     <h1> Chef Portal </h1>
     <div>
       <Person/>
-      <Schedule/>
-      <TimeStamp/>
+      <Availability/>
       <Receipt/>
     </div>
   </div>
 </template>
 
 <script>
-import Schedule from '../components/Schedule';
+import Availability from '../components/Availability';
 import Person from '../components/Person';
-import TimeStamp from '../components/TimeStamp';
 import Receipt from '../components/Receipt';
 export default {
   name: "ChefPage",
   components: {
-    Schedule,
+    Availability,
     Person,
-    TimeStamp,
     Receipt
   }
 };

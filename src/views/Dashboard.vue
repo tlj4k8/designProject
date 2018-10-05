@@ -6,6 +6,7 @@
         <b-button to="/menuDash">Menu</b-button>
         <b-button to="/chef">Chef</b-button>
         <b-button to="/employeeDash">Employee</b-button>
+        <b-button to="/availability">Availability</b-button>
     </b-button-group>
   </div>
 </template>
