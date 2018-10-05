@@ -4,7 +4,6 @@
     <div>
       <Person/>
       <Availability/>
-      <Receipt/>
     </div>
   </div>
 </template>
@@ -12,13 +11,11 @@
 <script>
 import Availability from '../components/Availability';
 import Person from '../components/Person';
-import Receipt from '../components/Receipt';
 export default {
   name: "ChefPage",
   components: {
     Availability,
-    Person,
-    Receipt
+    Person
   }
 };
 </script>
