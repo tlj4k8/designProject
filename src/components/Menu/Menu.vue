@@ -20,10 +20,12 @@
       <b-form-group id="instructions"
                     label="Instructions:"
                     label-for="instructions">
-        <b-form-input id="instructions"
+        <b-form-textarea id="instructions"
                       type="text"
+                      :rows="3"
+                      :max-rows="6"
                       v-model="form.instructions">
-        </b-form-input>
+        </b-form-textarea>
       </b-form-group>
       <b-form-group id="servings"
                     label="Servings:"

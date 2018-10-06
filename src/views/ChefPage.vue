@@ -1,15 +1,15 @@
 <template>
   <div class="chef">
     <h1> Chef Portal </h1>
-    <div>
+    <b-card bg-variant="light" class="card">
       <Person/>
       <Availability/>
-    </div>
+    </b-card>
   </div>
 </template>
 
 <script>
-import Availability from '../components/Availability';
+import Availability from '../components/Schedule/Availability';
 import Person from '../components/Person';
 export default {
   name: "ChefPage",
@@ -21,8 +21,11 @@ export default {
 </script>
 
 <style scoped>
+.card{
+  margin: 15px 15px;
+}
 .chef{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 .buttons{
   width: 80vw;

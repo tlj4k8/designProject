@@ -1,7 +1,7 @@
 <template>
   <div class="employee">
   <h1>Employee</h1>
-  <div class="forms">
+  <b-card bg-variant="light" class="card">
     <EmployeeSelect/>
     <div class="formUser">
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form1">
@@ -26,13 +26,13 @@
 <!--    <b-button type="submit" variant="primary">Submit</b-button>
     <b-button type="reset" variant="danger">Reset</b-button>-->
     <Person/>
-    </div>
+    </b-card>
   </div>
 </template>
 
 <script>
 import Person from '../components/Person';
-import EmployeeSelect from '../components/EmployeeSelect';
+import EmployeeSelect from '../components/Employee/EmployeeSelect';
 export default {
   name: "Employee",
   components: {
@@ -52,14 +52,14 @@ export default {
 </script>
 
 <style scoped>
+.card{
+    margin: 15px 15px;
+}
 .employee{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 h1{
   text-align: center;
-}
-.forms{
-    padding: 5px 15px;
 }
 .form1{
     width: 60vw;

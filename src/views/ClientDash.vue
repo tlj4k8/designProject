@@ -10,7 +10,7 @@
 
 <script>
 import ClientPage from '../views/ClientPage';
-import Clients from '../components/Clients';
+import Clients from '../components/Client/Clients';
 export default {
   name: "ClientDash",
   components: {

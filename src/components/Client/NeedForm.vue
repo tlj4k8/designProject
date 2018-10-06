@@ -1,17 +1,21 @@
 <template>
   <div class="needform">
   <h1>Client Need Assessment</h1>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
-      <b-form-group label="Preferred Meats:">
-        <b-form-checkbox-group v-model="form.meats" name="meat" :options="meats">
-        </b-form-checkbox-group>
-    </b-form-group>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="need">
+      <b-form-group id="preferredMeat"
+                    label="Preferred Meats:"
+                    label-for="preferredMeat">
+        <b-form-input id="preferredMeat"
+                      type="text"
+                      v-model="need.meats">
+        </b-form-input>
+      </b-form-group>
       <b-form-group id="meatAvoid"
                     label="Meats to Avoid:"
                     label-for="meatAvoid">
         <b-form-input id="meatAvoid"
                       type="text"
-                      v-model="form.meatAvoid">
+                      v-model="need.meatAvoid">
         </b-form-input>
       </b-form-group>
       <b-form-group id="meatCookPreferrence"
@@ -19,7 +23,7 @@
                     label-for="meatCookPreferrence">
         <b-form-input id="meatCookPreferrence"
                       type="text"
-                      v-model="form.meatCookPref">
+                      v-model="need.meatCookPref">
         </b-form-input>
       </b-form-group>
       <b-form-group id="preferredCheeses"
@@ -27,7 +31,7 @@
                     label-for="preferredCheeses">
         <b-form-input id="preferredCheeses"
                       type="text"
-                      v-model="form.cheese">
+                      v-model="need.cheese">
         </b-form-input>
       </b-form-group>
       <b-form-group id="cheeseAvoid"
@@ -35,7 +39,7 @@
                     label-for="cheeseAvoid">
         <b-form-input id="cheeseAvoid"
                       type="text"
-                      v-model="form.cheeseAvoid">
+                      v-model="need.cheeseAvoid">
         </b-form-input>
       </b-form-group>
       <b-form-group id="preferredGrains"
@@ -43,7 +47,7 @@
                     label-for="preferredGrains">
         <b-form-input id="preferredGrains"
                       type="text"
-                      v-model="form.grains">
+                      v-model="need.grains">
         </b-form-input>
       </b-form-group>
       <b-form-group id="spice"
@@ -51,7 +55,7 @@
                     label-for="spice">
         <b-form-input id="spice"
                       type="text"
-                      v-model="form.spice">
+                      v-model="need.spice">
         </b-form-input>
       </b-form-group>
       <b-form-group id="other"
@@ -59,7 +63,7 @@
                     label-for="other">
         <b-form-input id="other"
                       type="text"
-                      v-model="form.other">
+                      v-model="need.other">
         </b-form-input>
       </b-form-group>
       <b-form-group id="allergies"
@@ -67,7 +71,7 @@
                     label-for="allergies">
         <b-form-input id="allergies"
                       type="text"
-                      v-model="form.allergies">
+                      v-model="need.allergies">
         </b-form-input>
       </b-form-group>
       <b-form-group id="dietRestrictions"
@@ -75,7 +79,7 @@
                     label-for="dietRestrictions">
         <b-form-input id="dietRestrictions"
                       type="text"
-                      v-model="form.dietRestrictions">
+                      v-model="need.dietRestrictions">
         </b-form-input>
       </b-form-group>
       <b-form-group id="dietGoals"
@@ -83,7 +87,7 @@
                     label-for="dietGoals">
         <b-form-input id="dietGoals"
                       type="text"
-                      v-model="form.dietGoals">
+                      v-model="need.dietGoals">
         </b-form-input>
       </b-form-group>
       <b-form-group id="mainDish"
@@ -91,23 +95,21 @@
                     label-for="mainDish">
         <b-form-input id="mainDish"
                       type="text"
-                      v-model="form.mainDish">
+                      v-model="need.mainDish">
         </b-form-input>
       </b-form-group>
       <b-form-group id="storageContainers"
-                    label="Storage Containers:"
+                    label="Select if Client has Storage Containers:"
                     label-for="storageContainers">
-        <b-form-input id="storageContainers"
-                      type="text"
-                      v-model="form.storageContainers">
-        </b-form-input>
+      <b-button :pressed.sync="storageContainers" variant="primary">Toggle Me</b-button>
+      <p>Pressed State: <strong>{{ storageContainers }}</strong></p>
       </b-form-group>
       <b-form-group id="groceryStore"
                     label="Grocery Store:"
                     label-for="groceryStore">
         <b-form-input id="groceryStore"
                       type="text"
-                      v-model="form.groceryStore">
+                      v-model="need.groceryStore">
         </b-form-input>
       </b-form-group>
       <b-form-group id="mealStructure"
@@ -115,7 +117,7 @@
                     label-for="mealStructure">
         <b-form-input id="mealStructure"
                       type="text"
-                      v-model="form.mealStructure">
+                      v-model="need.mealStructure">
         </b-form-input>
       </b-form-group>
       <b-form-group id="notes"
@@ -125,7 +127,7 @@
                       :rows="3"
                       :max-rows="6"
                       type="text"
-                      v-model="form.notes">
+                      v-model="need.notes">
         </b-form-textarea>
       </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
@@ -139,8 +141,8 @@ export default {
   name: 'needForm',
   data () {
     return {
-      form: {
-        email: '',
+      need: {
+        meats: '',
         meatAvoid: '',
         meatCookPref: '',
         cheese: '',
@@ -152,20 +154,13 @@ export default {
         dietRestrictions: '',
         dietGoals: '',
         mainDish: '',
-        storageContainers: '',
+        
         groceryStore: '',
         mealStructure:'',
-        notes: '',
-        meats: []
+        notes: ''
       },
-      show: true,
-      meats: [
-        {text: 'Chicken', value: 'chicken'},
-        {text: 'Beef', value: 'beef'},
-        {text: 'Pork', value: 'pork'},
-        {text: 'Fish', value: 'fish'},
-        {text: 'Lamb', value: 'lamb'}
-      ]
+      storageContainers: false,
+      show: true
     }
   },
   methods: {

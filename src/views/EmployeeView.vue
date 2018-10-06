@@ -1,6 +1,7 @@
 <template>
   <div class="employeeView">
   <h1> Employees </h1>
+  <b-card bg-variant="light" class= "card">
     <div class="employeeTable">
         <b-form-group horizontal label="Search Employee" class="filter">
             <b-input-group>
@@ -16,7 +17,8 @@
             :filter="filter"
         >
         </b-table>
-        </div>
+    </div>
+    </b-card>
   </div>
 </template>
 
@@ -52,8 +54,11 @@ export default {
 </script>
 
 <style scoped>
+.card{
+    margin: 15px 15px;
+}
 .employeeView{
-    margin-top: 12em;
+    margin-top: 10em;
 }
 .filter{
     padding: 10px;
