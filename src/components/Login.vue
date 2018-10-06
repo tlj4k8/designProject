@@ -20,6 +20,7 @@
                 <b-form-input id="exampleInput2"
                             type="password"
                             v-model="form.password"
+                            auto-complete="off"
                             required
                             placeholder="Enter password">
                 </b-form-input>
