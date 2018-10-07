@@ -83,7 +83,6 @@ export default {
 </script>
 
 <style scoped>
-
 .login{
     margin-top: 10em;
 }
@@ -97,10 +96,15 @@ h1{
     border-style: solid;
     border-width: 3px;
     border-color: #5cbdf2;
-    margin: 20px 20%;
+    margin: 20px 10%;
     padding: 10px 15px;
 }
 .flex{
     width: 50vw;
+}
+@media(max-width: 430px){
+    .flex{
+        width: 70vw;
+    }
 }
 </style>

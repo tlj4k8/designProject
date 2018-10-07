@@ -26,7 +26,11 @@ export default {
 }
 .menu{
     padding: 20px 20px;
-
+}
+.btn{
+    background-color: #efefef;
+    color: black;
+    border-color: #efefef;
 }
 .flex{
     padding: 5px 5px;

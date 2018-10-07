@@ -80,9 +80,7 @@ hr{
     background-color: #0d50bc;
     height: 1px;
 }
-.availability{
-    padding: 5px 15px;
-}
+
 .table{
     overflow-x:auto;
     padding: 5px 15px;

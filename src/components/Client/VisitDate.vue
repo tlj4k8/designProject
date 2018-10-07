@@ -1,9 +1,10 @@
 <template>
-  <div class="client">
-    <b-form-group id="clientList"
-                label="Client Search:"
-                label-for="clientList">
-    <b-form-select v-model="selected" :options="options"/>
+  <div class="visitDate">
+  <h3>Scheduled Visit</h3>
+  <hr/>
+    <b-form-group id="visit"
+                class="select">
+    <b-form-select v-model="visit" :options="visitDates" />
     </b-form-group>
   </div>
 </template>
@@ -11,11 +12,11 @@
 <script>
 
 export default {
-  name: "Client",
+  name: "VisitDate",
   data () {
     return{
-      selected: null,
-      options: [
+      visit: null,
+      visitDates: [
         { value: 'client1', text: 'Client1' },
         { value: 'client2', text: 'client2' },
         { value: 'client3', text: 'client3' },
@@ -28,7 +29,8 @@ export default {
 </script>
 
 <style scoped>
-
-
-
+hr{
+    background-color: #0d50bc;
+    height: 1px;
+}
 </style>
