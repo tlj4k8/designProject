@@ -149,9 +149,7 @@ export default {
 }
 </script>
 <style scoped>
-.person{
-    padding: 5px 15px;
-}
+
 .flexGroup{
     display: flex;
     flex-direction: row;
@@ -161,5 +159,9 @@ export default {
     flex-grow: 1;
     padding: 0 2px;
 }
-
+@media(max-width: 440px){
+  .flexGroup{
+    flex-wrap: wrap;
+  }
+}
 </style>

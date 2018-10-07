@@ -1,6 +1,6 @@
 <template>
   <div class="needform">
-  <h1>Client Need Assessment</h1>
+  <h3>Client Need Assessment</h3>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group id="stove"
@@ -175,12 +175,6 @@ export default {
 }
 </script>
 <style scoped>
-.form{
-    padding: 0 15px;
-}
-h1{
-    text-align: center;
-}
 .flexGroup{
     display: flex;
     flex-direction: row;
