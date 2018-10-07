@@ -4,6 +4,7 @@
     <b-card bg-variant="light" class="card">
       <Person/>
       <Availability/>
+      <ZipCode/>
     </b-card>
   </div>
 </template>
@@ -11,11 +12,13 @@
 <script>
 import Availability from '../components/Schedule/Availability';
 import Person from '../components/Person';
+import ZipCode from '../components/ZipCode';
 export default {
   name: "ChefPage",
   components: {
     Availability,
-    Person
+    Person,
+    ZipCode
   }
 };
 </script>

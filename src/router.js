@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home';
 import Dashboard from './views/Dashboard';
 import ChefPage from './views/ChefPage';
+import ChefDash from './views/ChefDash.vue';
 import ClientPage from './views/ClientPage';
 import MenuPage from './views/MenuPage';
 import MenuEdit from './views/MenuEdit.vue';
@@ -37,6 +38,11 @@ export default new Router({
       path: '/clientPage',
       name: 'clientPage',
       component: ClientPage
+    },
+    {
+      path: '/chefDash',
+      name: 'chefDash',
+      component: ChefDash
     },
     {
       path: '/menuDash',
