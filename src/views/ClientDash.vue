@@ -2,19 +2,19 @@
   <div class="clientDash">
     <h1>Client Dashboard</h1>
     <b-button-group vertical class="dashGroup">
-        <b-button to="/clients">View Clients</b-button>
-        <b-button to="/clientPage">Add Client</b-button>
+        <b-button to="/clientPage">View Clients</b-button>
+        <b-button to="/newclient">Add Client</b-button>
     </b-button-group>
   </div>
 </template>
 
 <script>
 import ClientPage from '../views/ClientPage';
-import Clients from '../components/Client/Clients';
+import ClientNew from '../views/ClientNew';
 export default {
   name: "ClientDash",
   components: {
-    Clients,
+    ClientNew,
     ClientPage
   }
 };

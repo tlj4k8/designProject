@@ -26,8 +26,10 @@ export default {
     position: fixed;
     top: 0;
     z-index: 15;
-    width: 100%;
+    width: 100vw;
     height: 5em;
     background: #dee9fc;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 </style>

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home';
-import Clients from './components/Client/Clients';
 import Dashboard from './views/Dashboard';
 import ChefPage from './views/ChefPage';
 import ClientPage from './views/ClientPage';
@@ -9,6 +8,7 @@ import MenuPage from './views/MenuPage';
 import MenuEdit from './views/MenuEdit.vue';
 import MenuDash from './views/MenuDash.vue';
 import ClientDash from './views/ClientDash.vue';
+import ClientNew from './views/ClientNew.vue';
 import Employee from './views/Employee.vue';
 import EmployeeDash from './views/EmployeeDash.vue';
 import EmployeeView from './views/EmployeeView.vue';
@@ -29,9 +29,9 @@ export default new Router({
       component: ClientDash
     },
     {
-      path: '/clients',
-      name: 'clients',
-      component: Clients
+      path: '/newclient',
+      name: 'clientNew',
+      component: ClientNew
     },
     {
       path: '/clientPage',
