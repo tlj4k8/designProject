@@ -16,10 +16,7 @@ export default {
 
 <style scoped>
 .employeeDash{
-  margin-top: 12em;
-}
-.dashboard{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 .dashGroup{
   width: 80vw;

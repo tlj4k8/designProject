@@ -1,6 +1,7 @@
 <template>
   <div class="needform">
   <h3>Client Need Assessment</h3>
+  <hr/>
     <b-form ref="needForm" @submit.prevent="handleSubmit" :model="needForm" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group id="stove"
@@ -192,6 +193,10 @@ export default {
 }
 </script>
 <style scoped>
+hr{
+    background-color: #0d50bc;
+    height: 1px;
+}
 .flexGroup{
     display: flex;
     flex-direction: row;

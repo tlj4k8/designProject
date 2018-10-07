@@ -1,6 +1,7 @@
 <template>
   <div class="person">
   <h3>Profile</h3>
+  <hr/>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group class="flex"
@@ -23,7 +24,7 @@
                       required>
         </b-form-input>
         </b-form-group>
-        </div>
+    </div>
     <div class="flexGroup">
       <b-form-group class="flex"
                     id="email"
@@ -55,8 +56,7 @@
         <b-form-input id="address"
                       type="text"
                       v-model="form.address"
-                      required
-                      placeholder="">
+                      required>
         </b-form-input>
       </b-form-group>
       <b-form-group class="flex"
@@ -149,7 +149,10 @@ export default {
 }
 </script>
 <style scoped>
-
+hr{
+    background-color: #0d50bc;
+    height: 1px;
+}
 .flexGroup{
     display: flex;
     flex-direction: row;

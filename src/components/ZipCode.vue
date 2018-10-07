@@ -1,19 +1,21 @@
 <template>
   <div class="zipCode">
-  <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
+  <h3> Zip Radius </h3>
+  <hr/>
+  <b-form ref="zipForm" @submit.prevent="handleSubmit" :model="zipForm" v-if="show" class="form">
     <div class="flexGroup">
-    <b-form-group class="flex" 
+    <b-form-group class="flex"
                 id="zip"
-                :label-cols="4"
-                breakpoint="md"
                 label="Zip Code"
                 label-for="zip">
-    <b-form-select v-model="selected" :options="options" class="mb-1" />
+    <b-form-select 
+                v-model="zip.selected" 
+                :options="options"/>
     </b-form-group>
-    <b-form-group class="flex" 
-                id="addZip"
-                label="New Zip Code"
-                label-form="addZip"
+    <b-form-group class="flex"
+                id="zipCode"
+                label="Add Zip Code"
+                label-for="zipCode">
         <b-form-input
                 v-model="zip.zipCode"
                 type="text"/>
@@ -29,15 +31,18 @@ export default {
   name: "zipCode",
   data () {
     return{
-      selected: null,
-      options: [
-        { value: 'zip1', text: 'zip1' },
-        { value: 'zip2', text: 'zip2' },
-        { value: 'zip3', text: 'zip3' },
-        { value: 'zip4', text: 'zip4' },
-        { value: 'zip5', text: 'zip5' }
-      ],
-      show: true
+        zip: {
+            selected: null,
+            zipCode: ''
+        },
+        options: [
+            { value: 'zip1', text: 'zip1' },
+            { value: 'zip2', text: 'zip2' },
+            { value: 'zip3', text: 'zip3' },
+            { value: 'zip4', text: 'zip4' },
+            { value: 'zip5', text: 'zip5' }
+        ],
+        show: true
     }
   }
 };
@@ -52,6 +57,10 @@ export default {
 .flex{
     flex-grow: 1;
     padding: 0 2px;
+}
+hr{
+    background-color: #0d50bc;
+    height: 1px;
 }
 @media(max-width: 440px){
   .flexGroup{

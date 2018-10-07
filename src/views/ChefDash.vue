@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .chefDash{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 .dashGroup{
   width: 80vw;

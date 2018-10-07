@@ -1,24 +1,24 @@
 <template>
-  <div class="menuEdit">
-    <h1>Add Master Menu Item</h1>
+  <div class="clientMenu">
+    <h1>Create Client Menu</h1>
     <b-card bg-variant="light" class="card">
-    <Menu/>
+    <ClientMenuAdd/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Menu from "@/components/Menu/Menu.vue";
+import ClientMenuAdd from "@/components/Menu/ClientMenuAdd.vue";
 export default {
   name: "MenuEdit",
   components: {
-    Menu
+    ClientMenuAdd
   }
 };
 </script>
 
 <style scoped>
-.menuEdit{
+.clientMenu{
   margin-top: 10em;
 }
 h1{

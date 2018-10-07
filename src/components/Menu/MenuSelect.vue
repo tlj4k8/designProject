@@ -36,7 +36,7 @@ export default {
     justify-content: space-evenly;
 }
 .select{
-    width: 60vw;
+    width: 70vw;
 }
 
 

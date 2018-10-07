@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .dashboard{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 .dashGroup{
   width: 80vw;

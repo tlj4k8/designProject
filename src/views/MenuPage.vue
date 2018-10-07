@@ -1,6 +1,6 @@
 <template>
   <div class="menuPage">
-    <h1>Master Menu</h1>
+    <h1>View Master Menu</h1>
     <b-card bg-variant="light" class="card">
     <MenuSelect/>
     <Menu/>

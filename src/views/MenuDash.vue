@@ -4,6 +4,7 @@
     <b-button-group vertical class="dashGroup">
         <b-button to="/menu">View Master Menu</b-button>
         <b-button to="/menuEdit">Add Master Menu Item</b-button>
+        <b-button to="/clientMenu">Create Customer Menu</b-button>
     </b-button-group>
   </div>
 </template>
@@ -16,7 +17,7 @@ export default {
 
 <style scoped>
 .menuDash{
-  margin-top: 12em;
+  margin-top: 10em;
 }
 .dashGroup{
   width: 80vw;
