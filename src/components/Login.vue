@@ -1,6 +1,7 @@
 <template>
     <div class="login">
         <div class="form">
+            <h1>Welcome to Salted Chef!</h1>
             <h2>Login</h2>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group id="exampleInputGroup1"
@@ -19,6 +20,7 @@
                 <b-form-input id="exampleInput2"
                             type="password"
                             v-model="form.password"
+                            auto-complete="off"
                             required
                             placeholder="Enter password">
                 </b-form-input>
@@ -55,6 +57,9 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 12em;
+}
+h1, h2{
+    text-align:center;
 }
 
 

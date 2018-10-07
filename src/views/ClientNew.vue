@@ -1,9 +1,10 @@
 <template>
-  <div class="chef">
-    <h1> Chef Portal </h1>
+  <div class="clientNew">
+    <h1>New Client</h1>
     <b-card bg-variant="light" class="card">
-      <Person/>
-      <Availability/>
+    <Person/>
+    <Availability/>
+    <NeedForm/>
     </b-card>
   </div>
 </template>
@@ -11,11 +12,13 @@
 <script>
 import Availability from '../components/Schedule/Availability';
 import Person from '../components/Person';
+import NeedForm from '../components/Client/NeedForm';
 export default {
-  name: "ChefPage",
+  name: "ClientNew",
   components: {
+    Person,
     Availability,
-    Person
+    NeedForm
   }
 };
 </script>
@@ -24,14 +27,11 @@ export default {
 .card{
   margin: 15px 15px;
 }
-.chef{
+.clientNew{
   margin-top: 10em;
-}
-.buttons{
-  width: 80vw;
-  margin: 0 10%;
 }
 h1{
   text-align: center;
 }
+
 </style>

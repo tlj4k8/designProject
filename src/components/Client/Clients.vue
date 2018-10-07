@@ -1,6 +1,7 @@
 <template>
   <div class="client">
   <h1> Clients </h1>
+  <b-card bg-variant="light" class="card">
     <div class="clientTable">
         <b-form-group horizontal label="Search Client" class="filter">
             <b-input-group>
@@ -17,6 +18,7 @@
         >
         </b-table>
         </div>
+    </b-card>
   </div>
 </template>
 
@@ -52,6 +54,12 @@ export default {
 </script>
 
 <style scoped>
+.card{
+    margin: 15px 15px;
+}
+.client{
+    margin-top: 10em;
+}
 .filter{
     padding: 10px;
     width: 50%;

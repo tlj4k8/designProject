@@ -1,6 +1,16 @@
 <template>
-    <div class="bar">
-
+    <div class="bar">    
+        <div class="menu">
+            <b-dropdown id="ddown-divider" text="Menu" class="m-2">
+                <router-link to="/dash"><b-dropdown-item-button>Dashboard</b-dropdown-item-button></router-link>
+                <router-link to="/clientDash"><b-dropdown-item-button>Client</b-dropdown-item-button></router-link>
+                <router-link to="/MenuDash"><b-dropdown-item-button>Menu</b-dropdown-item-button></router-link>
+                <router-link to="/chef"><b-dropdown-item-button>Chef</b-dropdown-item-button></router-link>
+                <router-link to="/employeeDash"><b-dropdown-item-button>Employee</b-dropdown-item-button></router-link>
+                <b-dropdown-divider></b-dropdown-divider>
+                <router-link to="/"><b-dropdown-item-button>Login/Logout</b-dropdown-item-button></router-link>
+            </b-dropdown>
+        </div>
     </div>
 </template>
 
@@ -12,12 +22,14 @@ export default {
 
 <style scope>
 .bar {
-  display: flex;
-  position: fixed;
-  top: 0;
-  z-index: 15;
-  width: 100%;
-  height: 5em;
-  background: grey;
+    display: flex;
+    position: fixed;
+    top: 0;
+    z-index: 15;
+    width: 100vw;
+    height: 5em;
+    background: #dee9fc;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 </style>
