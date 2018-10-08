@@ -1,6 +1,7 @@
 <template>
     <div class="receipt">
         <h3> Customer Receipt Form </h3>
+        <hr/>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
             <div class="flexGroup">
                 <b-form-group id="mealCharged"
@@ -65,8 +66,9 @@ export default {
 </script>
 
 <style scoped>
-.receipt{
-    padding: 5px 15px;
+hr{
+    background-color: #0d50bc;
+    height: 1px;
 }
 .flexGroup{
     display: flex;

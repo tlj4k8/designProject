@@ -5,6 +5,7 @@
     <Client/>
     <Person/>
     <Availability/>
+    <VisitDate/>
     <NeedForm/>
     </b-card>
   </div>
@@ -15,13 +16,15 @@ import Availability from '../components/Schedule/Availability';
 import Person from '../components/Person';
 import NeedForm from '../components/Client/NeedForm';
 import Client from '../components/Client/Client';
+import VisitDate from '../components/Client/VisitDate';
 export default {
   name: "ClientPage",
   components: {
     Person,
     Availability,
     NeedForm,
-    Client
+    Client,
+    VisitDate
   },
   data() {
     return {

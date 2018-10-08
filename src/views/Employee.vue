@@ -23,10 +23,8 @@
       </b-form-group>
     </b-form>
     </div>
-<!--    <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>-->
     <Person/>
-    </b-card>
+  </b-card>
   </div>
 </template>
 

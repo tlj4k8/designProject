@@ -1,31 +1,32 @@
 <template>
   <div class="needform">
-  <h1>Client Need Assessment</h1>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
+  <h3>Client Need Assessment</h3>
+  <hr/>
+    <b-form ref="needForm" @submit.prevent="handleSubmit" :model="needForm" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group id="stove"
                     class="flex"
                     label="Select if Client has a Stove:"
                     label-for="stove">
-        <b-form-checkbox id="form.stove"
+        <b-form-checkbox id="need.stove"
                     type="checkbox"
-                    v-model="form.stove"/>
+                    v-model="need.stove"/>
       </b-form-group>
       <b-form-group id="organic"
                     class="flex"
                     label="Select if Client is Organic:"
                     label-for="organic">
-        <b-form-checkbox id="form.organic"
+        <b-form-checkbox id="need.organic"
                     type="checkbox"
-                    v-model="form.organic"/>
+                    v-model="need.organic"/>
       </b-form-group>
       <b-form-group id="storageContainers"
                     class="flex"
                     label="Select if Client has Storage Containers:"
                     label-for="storageContainers">
-        <b-form-checkbox id="storageContainers"
+        <b-form-checkbox id="need.storageContainers"
                     type="checkbox"
-                    v-model="form.storageContainers"/>
+                    v-model="need.storageContainers"/>
       </b-form-group>
     </div>
       <b-form-group id="preferredMeat"
@@ -33,98 +34,99 @@
                     label-for="preferredMeat">
         <b-form-input id="preferredMeat"
                       type="text"
-                      v-model="form.meats"/>
+                      v-model="need.meats"/>
       </b-form-group>
       <b-form-group id="meatAvoid"
                     label="Meats to Avoid:"
                     label-for="meatAvoid">
         <b-form-input id="meatAvoid"
                       type="text"
-                      v-model="form.meatAvoid"/>
+                      v-model="need.meatAvoid"/>
       </b-form-group>
       <b-form-group id="meatCookPreferrence"
                     label="Meat Cooked Preferrence:"
                     label-for="meatCookPreferrence">
         <b-form-input id="meatCookPreferrence"
                       type="text"
-                      v-model="form.meatCookPref"/>
+                      v-model="need.meatCookPref"/>
       </b-form-group>
       <b-form-group id="preferredCheeses"
                     label="Preferred Cheeses:"
                     label-for="preferredCheeses">
         <b-form-input id="preferredCheeses"
                       type="text"
-                      v-model="form.cheese"/>
+                      v-model="need.cheese"/>
       </b-form-group>
       <b-form-group id="cheeseAvoid"
                     label="Cheeses to Avoid:"
                     label-for="cheeseAvoid">
         <b-form-input id="cheeseAvoid"
                       type="text"
-                      v-model="form.cheeseAvoid"/>
+                      v-model="need.cheeseAvoid"/>
       </b-form-group>
       <b-form-group id="preferredGrains"
                     label="Preferred Grains:"
                     label-for="preferredGrains">
         <b-form-input id="preferredGrains"
                       type="text"
-                      v-model="form.grains"/>
+                      v-model="need.grains"/>
       </b-form-group>
       <b-form-group id="spice"
                     label="Spice Level:"
                     label-for="spice">
         <b-form-input id="spice"
                       type="text"
-                      v-model="form.spice"/>
+                      placeholder="ex. (1 - 10)"
+                      v-model="need.spice"/>
       </b-form-group>
       <b-form-group id="other"
                     label="Other to Avoid:"
                     label-for="other">
         <b-form-input id="other"
                       type="text"
-                      v-model="form.other"/>
+                      v-model="need.other"/>
       </b-form-group>
       <b-form-group id="allergies"
                     label="Allergies:"
                     label-for="allergies">
         <b-form-input id="allergies"
                       type="text"
-                      v-model="form.allergies"/>
+                      v-model="need.allergies"/>
       </b-form-group>
       <b-form-group id="dietRestrictions"
                     label="Dietary Restrictions:"
                     label-for="dietRestrictions">
         <b-form-input id="dietRestrictions"
                       type="text"
-                      v-model="form.dietRestrictions"/>
+                      v-model="need.dietRestrictions"/>
       </b-form-group>
       <b-form-group id="dietGoals"
                     label="Dietary Goals:"
                     label-for="dietGoals">
         <b-form-input id="dietGoals"
                       type="text"
-                      v-model="form.dietGoals"/>
+                      v-model="need.dietGoals"/>
       </b-form-group>
       <b-form-group id="mainDish"
                     label="Main Dish:"
                     label-for="mainDish">
         <b-form-input id="mainDish"
                       type="text"
-                      v-model="form.mainDish"/>
+                      v-model="need.mainDish"/>
       </b-form-group>
       <b-form-group id="groceryStore"
                     label="Grocery Store:"
                     label-for="groceryStore">
         <b-form-input id="groceryStore"
                       type="text"
-                      v-model="form.groceryStore"/>
+                      v-model="need.groceryStore"/>
       </b-form-group>
       <b-form-group id="mealStructure"
                     label="Meal Structure:"
                     label-for="mealStructure">
         <b-form-input id="mealStructure"
                       type="text"
-                      v-model="form.mealStructure"/>
+                      v-model="need.mealStructure"/>
       </b-form-group>
       <b-form-group id="notes"
                     label="Other Notes:"
@@ -133,7 +135,7 @@
                       :rows="3"
                       :max-rows="6"
                       type="text"
-                      v-model="form.notes"/>
+                      v-model="need.notes"/>
       </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
@@ -146,7 +148,7 @@ export default {
   name: 'needForm',
   data () {
     return {
-      form: {
+      need: {
         meats: '',
         meatAvoid: '',
         meatCookPref: '',
@@ -169,17 +171,31 @@ export default {
       show: true
     }
   },
-  methods: {
-
-  }
+    methods: {
+        handleSubmit: function(needForm){
+            var self = this;
+            this.$ref[needForm].validate((valid => {
+                if(valid){
+                    //http request goes here
+                }
+                else{
+                    this.emptyFields();
+                    return false;
+                }
+            }))
+        },
+        emptyFields() {
+            this.$alert("Please complete all required fields", "Registration failed", {
+            confirmButtonText: 'OK'
+            });
+        }
+    }
 }
 </script>
 <style scoped>
-.form{
-    padding: 0 15px;
-}
-h1{
-    text-align: center;
+hr{
+    background-color: #0d50bc;
+    height: 1px;
 }
 .flexGroup{
     display: flex;

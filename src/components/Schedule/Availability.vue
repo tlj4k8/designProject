@@ -1,6 +1,7 @@
 <template>
   <div class="availability">
   <h3>Availability</h3>
+  <hr/>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="table">
         <table>
@@ -75,9 +76,11 @@ export default {
 }
 </script>
 <style scoped>
-.availability{
-    padding: 5px 15px;
+hr{
+    background-color: #0d50bc;
+    height: 1px;
 }
+
 .table{
     overflow-x:auto;
     padding: 5px 15px;

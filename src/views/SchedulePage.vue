@@ -2,7 +2,7 @@
   <div class="schedulePage">
     <h1>Schedule</h1>
     <b-card bg-variant="light" class="card">
-        <Availability/>
+        <ScheduleVisit/>
         <EmployeeSelect/>
         <TimeStamp/>
         <Receipt/>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import Availability from '@/components/Schedule/Availability.vue';
+import ScheduleVisit from '@/components/Schedule/ScheduleVisit.vue';
 import TimeStamp from '@/components/Schedule/TimeStamp.vue';
 import Receipt from '@/components/Client/Receipt.vue';
 import EmployeeSelect from '@/components/Employee/EmployeeSelect.vue';
 export default {
   name: "SchedulePage",
   components: {
-    Availability,
+    ScheduleVisit,
     TimeStamp,
     Receipt,
     EmployeeSelect

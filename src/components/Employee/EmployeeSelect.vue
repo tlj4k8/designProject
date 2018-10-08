@@ -1,5 +1,7 @@
 <template>
   <div class="employeeSelect">
+  <h3> Select Chef </h3>
+  <hr/>
     <b-form-group id="employee"
                 class="select"
                 :label-cols="4"
@@ -31,13 +33,14 @@ export default {
 </script>
 
 <style scoped>
+hr{
+    background-color: #0d50bc;
+    height: 1px;
+}
 .employeeSelect{
-    display: flex;
-    justify-content: space-evenly;
+  padding-top: 5px 0px;
 }
-.select{
-    width: 60vw;
-}
+
 
 
 </style>

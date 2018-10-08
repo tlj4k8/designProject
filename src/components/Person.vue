@@ -1,6 +1,7 @@
 <template>
   <div class="person">
   <h3>Profile</h3>
+  <hr/>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="form">
     <div class="flexGroup">
       <b-form-group class="flex"
@@ -23,7 +24,7 @@
                       required>
         </b-form-input>
         </b-form-group>
-        </div>
+    </div>
     <div class="flexGroup">
       <b-form-group class="flex"
                     id="email"
@@ -55,8 +56,7 @@
         <b-form-input id="address"
                       type="text"
                       v-model="form.address"
-                      required
-                      placeholder="">
+                      required>
         </b-form-input>
       </b-form-group>
       <b-form-group class="flex"
@@ -125,7 +125,10 @@ export default {
       },
       state: [
         { text: 'Select One', value: null },
-        'MO', 'IL', 'TX', 'NY'
+        'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
+        'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MO', 'MS', 'MT', 
+        'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
+        'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
       ],
       show: true
     }
@@ -149,8 +152,9 @@ export default {
 }
 </script>
 <style scoped>
-.person{
-    padding: 5px 15px;
+hr{
+    background-color: #0d50bc;
+    height: 1px;
 }
 .flexGroup{
     display: flex;
@@ -161,5 +165,9 @@ export default {
     flex-grow: 1;
     padding: 0 2px;
 }
-
+@media(max-width: 440px){
+  .flexGroup{
+    flex-wrap: wrap;
+  }
+}
 </style>

@@ -1,15 +1,8 @@
 <template>
     <div class="bar">    
         <div class="menu">
-            <b-dropdown id="ddown-divider" text="Menu" class="m-2">
-                <router-link to="/dash"><b-dropdown-item-button>Dashboard</b-dropdown-item-button></router-link>
-                <router-link to="/clientDash"><b-dropdown-item-button>Client</b-dropdown-item-button></router-link>
-                <router-link to="/MenuDash"><b-dropdown-item-button>Menu</b-dropdown-item-button></router-link>
-                <router-link to="/chef"><b-dropdown-item-button>Chef</b-dropdown-item-button></router-link>
-                <router-link to="/employeeDash"><b-dropdown-item-button>Employee</b-dropdown-item-button></router-link>
-                <b-dropdown-divider></b-dropdown-divider>
-                <router-link to="/"><b-dropdown-item-button>Login/Logout</b-dropdown-item-button></router-link>
-            </b-dropdown>
+                <router-link to="/dash" class="flex"><b-button>Dashboard</b-button></router-link>
+                <router-link to="/" class="flex"><b-button>Login</b-button></router-link>
         </div>
     </div>
 </template>
@@ -28,8 +21,18 @@ export default {
     z-index: 15;
     width: 100vw;
     height: 5em;
-    background: #dee9fc;
-    flex-direction: row;
+    background: #5ad0ed;
     justify-content: flex-end;
+}
+.menu{
+    padding: 20px 20px;
+}
+.btn{
+    background-color: #efefef;
+    color: black;
+    border-color: #efefef;
+}
+.flex{
+    padding: 5px 5px;
 }
 </style>
