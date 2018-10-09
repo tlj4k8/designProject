@@ -4,7 +4,7 @@
                 class="select"
                 :label-cols="4"
                 breakpoint="md"
-                label="Menus"
+                label="Menus:"
                 label-for="menu">
     <b-form-select v-model="selected" :options="options" class="mb-1" />
     </b-form-group>
@@ -36,7 +36,7 @@ export default {
     justify-content: space-evenly;
 }
 .select{
-    width: 70vw;
+    width: 100vw;
 }
 
 
