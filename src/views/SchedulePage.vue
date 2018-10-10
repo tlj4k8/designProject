@@ -2,26 +2,17 @@
   <div class="schedulePage">
     <h1>Schedule</h1>
     <b-card bg-variant="light" class="card">
-        <ScheduleVisit/>
-        <EmployeeSelect/>
-        <TimeStamp/>
-        <Receipt/>
+        <AddSchedule/>
     </b-card>
   </div>
 </template>
 
 <script>
-import ScheduleVisit from '@/components/Schedule/ScheduleVisit.vue';
-import TimeStamp from '@/components/Schedule/TimeStamp.vue';
-import Receipt from '@/components/Client/Receipt.vue';
-import EmployeeSelect from '@/components/Employee/EmployeeSelect.vue';
+import AddSchedule from '../components/Schedule/AddSchedule.vue';
 export default {
   name: "SchedulePage",
   components: {
-    ScheduleVisit,
-    TimeStamp,
-    Receipt,
-    EmployeeSelect
+    AddSchedule
   }
 };
 </script>

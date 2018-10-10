@@ -4,7 +4,7 @@
   <b-card bg-variant="light" class= "card">
     <div class="employeeTable">
         <b-form-group horizontal label="Search Employee" class="filter">
-            <b-input-group>
+            <b-input-group class="filterEmployee">
                 <b-form-input v-model="filter" placeholder="Type to Search" />
                 <b-input-group-append>
                 <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
@@ -66,6 +66,9 @@ export default {
 }
 h1{
     text-align: center;
+}
+.filterEmployee{
+    width: 75vw;
 }
 
 

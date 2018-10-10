@@ -2,34 +2,17 @@
   <div class="clientPage">
     <h1>Client Page</h1>
     <b-card bg-variant="light" class="card">
-    <Client/>
-    <Person/>
-    <Availability/>
-    <VisitDate/>
-    <NeedForm/>
+      <ViewClient/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Availability from '../components/Schedule/Availability';
-import Person from '../components/Person';
-import NeedForm from '../components/Client/NeedForm';
-import Client from '../components/Client/Client';
-import VisitDate from '../components/Client/VisitDate';
+import ViewClient from '@/components/Client/ViewClient.vue';
 export default {
   name: "ClientPage",
   components: {
-    Person,
-    Availability,
-    NeedForm,
-    Client,
-    VisitDate
-  },
-  data() {
-    return {
-      
-    }
+    ViewClient
   }
 };
 </script>

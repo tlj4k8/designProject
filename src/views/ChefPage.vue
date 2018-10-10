@@ -2,23 +2,17 @@
   <div class="chef">
     <h1> Chef Portal </h1>
     <b-card bg-variant="light" class="card">
-      <Person/>
-      <Availability/>
-      <ZipCode/>
+      <ViewChef/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Availability from '../components/Schedule/Availability';
-import Person from '../components/Person';
-import ZipCode from '../components/ZipCode';
+import ViewChef from '../components/ViewChef';
 export default {
   name: "ChefPage",
   components: {
-    Availability,
-    Person,
-    ZipCode
+    ViewChef
   }
 };
 </script>

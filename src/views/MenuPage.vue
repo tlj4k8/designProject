@@ -2,20 +2,17 @@
   <div class="menuPage">
     <h1>View Master Menu</h1>
     <b-card bg-variant="light" class="card">
-    <MenuSelect/>
-    <Menu/>
+      <ViewMenu/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Menu from '@/components/Menu/Menu.vue';
-import MenuSelect from '@/components/Menu/MenuSelect.vue';
+import ViewMenu from '@/components/Menu/ViewMenu.vue'
 export default {
   name: "MenuPage",
   components: {
-    Menu,
-    MenuSelect
+    ViewMenu
   }
 };
 </script>

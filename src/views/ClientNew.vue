@@ -2,23 +2,17 @@
   <div class="clientNew">
     <h1>New Client</h1>
     <b-card bg-variant="light" class="card">
-    <Person/>
-    <Availability/>
-    <NeedForm/>
+      <AddClient/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Availability from '../components/Schedule/Availability';
-import Person from '../components/Person';
-import NeedForm from '../components/Client/NeedForm';
+import AddClient from '@/components/Client/AddClient.vue';
 export default {
   name: "ClientNew",
   components: {
-    Person,
-    Availability,
-    NeedForm
+    AddClient
   }
 };
 </script>
