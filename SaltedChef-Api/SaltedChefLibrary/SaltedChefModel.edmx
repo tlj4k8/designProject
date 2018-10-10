@@ -1,0 +1,953 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SaltedChefModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Availability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="StartMonday" Type="time" Precision="7" />
+          <Property Name="EndMonday" Type="time" Precision="7" />
+          <Property Name="StartTuesday" Type="time" Precision="7" />
+          <Property Name="EndTuesday" Type="time" Precision="7" />
+          <Property Name="StartWednesday" Type="time" Precision="7" />
+          <Property Name="EndWednesday" Type="time" Precision="7" />
+          <Property Name="StartThursday" Type="time" Precision="7" />
+          <Property Name="EndThursday" Type="time" Precision="7" />
+          <Property Name="StartFriday" Type="time" Precision="7" />
+          <Property Name="EndFriday" Type="time" Precision="7" />
+          <Property Name="StartSaturday" Type="time" Precision="7" />
+          <Property Name="EndSaturday" Type="time" Precision="7" />
+          <Property Name="StartSunday" Type="time" Precision="7" />
+          <Property Name="EndSunday" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="CurrentChefId" Type="int" Nullable="false" />
+          <Property Name="ImportantNotes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ClientMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="ScheduleId" Type="int" Nullable="false" />
+          <Property Name="MenuNotes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ClientNeeds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="StoveOven" Type="bit" Nullable="false" />
+          <Property Name="Allergies" Type="varchar" MaxLength="300" />
+          <Property Name="DietRestrictions" Type="varchar" MaxLength="300" />
+          <Property Name="DietGoals" Type="varchar" MaxLength="300" />
+          <Property Name="OrganicMeals" Type="bit" Nullable="false" />
+          <Property Name="PreferredMeats" Type="varchar" MaxLength="200" />
+          <Property Name="MeatsToAvoid" Type="varchar" MaxLength="200" />
+          <Property Name="PreferredCheeses" Type="varchar" MaxLength="200" />
+          <Property Name="CheesesToAvoid" Type="varchar" MaxLength="200" />
+          <Property Name="PreferredGrains" Type="varchar" MaxLength="200" />
+          <Property Name="GrainsToAvoid" Type="varchar" MaxLength="200" />
+          <Property Name="SpiceLevel" Type="varchar" MaxLength="100" />
+          <Property Name="OtherToAvoid" Type="varchar" MaxLength="300" />
+          <Property Name="MainDishSoupSaladStew" Type="varchar" MaxLength="100" />
+          <Property Name="MealSize" Type="varchar" MaxLength="100" />
+          <Property Name="StoreContainers" Type="bit" Nullable="false" />
+          <Property Name="PreferredGroceryStore" Type="varchar" MaxLength="200" />
+          <Property Name="ExtraNotes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsChef" Type="bit" Nullable="false" />
+          <Property Name="IsMenu" Type="bit" Nullable="false" />
+          <Property Name="IsHR" Type="bit" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Ingrendients" Type="varchar(max)" />
+          <Property Name="Instructions" Type="varchar(max)" />
+          <Property Name="Servings" Type="int" />
+          <Property Name="Time" Type="varchar" MaxLength="200" />
+          <Property Name="MealType" Type="varchar" MaxLength="200" />
+          <Property Name="Notes" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CellPhone" Type="bigint" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address2" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleId" Type="int" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Charged" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeSheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="ScheduleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZipAvailability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK__Availabil__Perso__5FB337D6">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Availability" Type="Self.Availability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Availability">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__CurrentC__693CA210">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="CurrentChefId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__PersonId__68487DD7">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__Clien__01142BA1">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__MenuI__00200768">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__Sched__02084FDA">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientNee__Clien__75A278F5">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientNeeds" Type="Self.ClientNeeds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientNeeds">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Person__6477ECF3">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__Schedul__797309D9">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Client__71D1E811">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Employ__70DDC3D8">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TimeSheet__Sched__7D439ABD">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZipAvaila__Emplo__6C190EBB">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ZipAvailability" Type="Self.ZipAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipAvailability">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SaltedChefModelStoreContainer">
+          <EntitySet Name="Availability" EntityType="Self.Availability" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientMenu" EntityType="Self.ClientMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientNeeds" EntityType="Self.ClientNeeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZipAvailability" EntityType="Self.ZipAvailability" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Availabil__Perso__5FB337D6" Association="Self.FK__Availabil__Perso__5FB337D6">
+            <End Role="People" EntitySet="People" />
+            <End Role="Availability" EntitySet="Availability" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__CurrentC__693CA210" Association="Self.FK__Client__CurrentC__693CA210">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__PersonId__68487DD7" Association="Self.FK__Client__PersonId__68487DD7">
+            <End Role="People" EntitySet="People" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__Clien__01142BA1" Association="Self.FK__ClientMen__Clien__01142BA1">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientMenu" EntitySet="ClientMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__MenuI__00200768" Association="Self.FK__ClientMen__MenuI__00200768">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="ClientMenu" EntitySet="ClientMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__Sched__02084FDA" Association="Self.FK__ClientMen__Sched__02084FDA">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="ClientMenu" EntitySet="ClientMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientNee__Clien__75A278F5" Association="Self.FK__ClientNee__Clien__75A278F5">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientNeeds" EntitySet="ClientNeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Person__6477ECF3" Association="Self.FK__Employee__Person__6477ECF3">
+            <End Role="People" EntitySet="People" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__Schedul__797309D9" Association="Self.FK__Receipt__Schedul__797309D9">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Client__71D1E811" Association="Self.FK__Schedule__Client__71D1E811">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Employ__70DDC3D8" Association="Self.FK__Schedule__Employ__70DDC3D8">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TimeSheet__Sched__7D439ABD" Association="Self.FK__TimeSheet__Sched__7D439ABD">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="TimeSheet" EntitySet="TimeSheet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZipAvaila__Emplo__6C190EBB" Association="Self.FK__ZipAvaila__Emplo__6C190EBB">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ZipAvailability" EntitySet="ZipAvailability" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SaltedChefModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Availability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="StartMonday" Type="Time" Precision="7" />
+          <Property Name="EndMonday" Type="Time" Precision="7" />
+          <Property Name="StartTuesday" Type="Time" Precision="7" />
+          <Property Name="EndTuesday" Type="Time" Precision="7" />
+          <Property Name="StartWednesday" Type="Time" Precision="7" />
+          <Property Name="EndWednesday" Type="Time" Precision="7" />
+          <Property Name="StartThursday" Type="Time" Precision="7" />
+          <Property Name="EndThursday" Type="Time" Precision="7" />
+          <Property Name="StartFriday" Type="Time" Precision="7" />
+          <Property Name="EndFriday" Type="Time" Precision="7" />
+          <Property Name="StartSaturday" Type="Time" Precision="7" />
+          <Property Name="EndSaturday" Type="Time" Precision="7" />
+          <Property Name="StartSunday" Type="Time" Precision="7" />
+          <Property Name="EndSunday" Type="Time" Precision="7" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Availabil__Perso__5FB337D6" FromRole="Availability" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentChefId" Type="Int32" Nullable="false" />
+          <Property Name="ImportantNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Client__CurrentC__693CA210" FromRole="Client" ToRole="Employee" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Client__PersonId__68487DD7" FromRole="Client" ToRole="People" />
+          <NavigationProperty Name="ClientMenus" Relationship="Self.FK__ClientMen__Clien__01142BA1" FromRole="Client" ToRole="ClientMenu" />
+          <NavigationProperty Name="ClientNeeds" Relationship="Self.FK__ClientNee__Clien__75A278F5" FromRole="Client" ToRole="ClientNeeds" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK__Schedule__Client__71D1E811" FromRole="Client" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="ClientMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+          <Property Name="MenuNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__ClientMen__Clien__01142BA1" FromRole="ClientMenu" ToRole="Client" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK__ClientMen__MenuI__00200768" FromRole="ClientMenu" ToRole="Menu" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK__ClientMen__Sched__02084FDA" FromRole="ClientMenu" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="ClientNeed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="StoveOven" Type="Boolean" Nullable="false" />
+          <Property Name="Allergies" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="DietRestrictions" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="DietGoals" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="OrganicMeals" Type="Boolean" Nullable="false" />
+          <Property Name="PreferredMeats" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MeatsToAvoid" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PreferredCheeses" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CheesesToAvoid" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PreferredGrains" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="GrainsToAvoid" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SpiceLevel" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OtherToAvoid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="MainDishSoupSaladStew" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MealSize" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StoreContainers" Type="Boolean" Nullable="false" />
+          <Property Name="PreferredGroceryStore" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__ClientNee__Clien__75A278F5" FromRole="ClientNeeds" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsChef" Type="Boolean" Nullable="false" />
+          <Property Name="IsMenu" Type="Boolean" Nullable="false" />
+          <Property Name="IsHR" Type="Boolean" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Client__CurrentC__693CA210" FromRole="Employee" ToRole="Client" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Employee__Person__6477ECF3" FromRole="Employee" ToRole="People" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK__Schedule__Employ__70DDC3D8" FromRole="Employee" ToRole="Schedule" />
+          <NavigationProperty Name="ZipAvailabilities" Relationship="Self.FK__ZipAvaila__Emplo__6C190EBB" FromRole="Employee" ToRole="ZipAvailability" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ingrendients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Servings" Type="Int32" />
+          <Property Name="Time" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MealType" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ClientMenus" Relationship="Self.FK__ClientMen__MenuI__00200768" FromRole="Menu" ToRole="ClientMenu" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CellPhone" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Availabilities" Relationship="Self.FK__Availabil__Perso__5FB337D6" FromRole="People" ToRole="Availability" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Client__PersonId__68487DD7" FromRole="People" ToRole="Client" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Person__6477ECF3" FromRole="People" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Charged" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK__Receipt__Schedul__797309D9" FromRole="Receipt" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Schedule__Client__71D1E811" FromRole="Schedule" ToRole="Client" />
+          <NavigationProperty Name="ClientMenus" Relationship="Self.FK__ClientMen__Sched__02084FDA" FromRole="Schedule" ToRole="ClientMenu" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Schedule__Employ__70DDC3D8" FromRole="Schedule" ToRole="Employee" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK__Receipt__Schedul__797309D9" FromRole="Schedule" ToRole="Receipt" />
+          <NavigationProperty Name="TimeSheets" Relationship="Self.FK__TimeSheet__Sched__7D439ABD" FromRole="Schedule" ToRole="TimeSheet" />
+        </EntityType>
+        <EntityType Name="TimeSheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK__TimeSheet__Sched__7D439ABD" FromRole="TimeSheet" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="ZipAvailability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__ZipAvaila__Emplo__6C190EBB" FromRole="ZipAvailability" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK__Availabil__Perso__5FB337D6">
+          <End Role="People" Type="Self.Person" Multiplicity="1" />
+          <End Role="Availability" Type="Self.Availability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Availability">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__CurrentC__693CA210">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="CurrentChefId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__PersonId__68487DD7">
+          <End Role="People" Type="Self.Person" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__Clien__01142BA1">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientNee__Clien__75A278F5">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientNeeds" Type="Self.ClientNeed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientNeeds">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Client__71D1E811">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__MenuI__00200768">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientMen__Sched__02084FDA">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="ClientMenu" Type="Self.ClientMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientMenu">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__Person__6477ECF3">
+          <End Role="People" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Employ__70DDC3D8">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZipAvaila__Emplo__6C190EBB">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ZipAvailability" Type="Self.ZipAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipAvailability">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__Schedul__797309D9">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TimeSheet__Sched__7D439ABD">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SaltedChefEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Availabilities" EntityType="Self.Availability" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="ClientMenus" EntityType="Self.ClientMenu" />
+          <EntitySet Name="ClientNeeds" EntityType="Self.ClientNeed" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipt" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="TimeSheets" EntityType="Self.TimeSheet" />
+          <EntitySet Name="ZipAvailabilities" EntityType="Self.ZipAvailability" />
+          <AssociationSet Name="FK__Availabil__Perso__5FB337D6" Association="Self.FK__Availabil__Perso__5FB337D6">
+            <End Role="People" EntitySet="People" />
+            <End Role="Availability" EntitySet="Availabilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__CurrentC__693CA210" Association="Self.FK__Client__CurrentC__693CA210">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__PersonId__68487DD7" Association="Self.FK__Client__PersonId__68487DD7">
+            <End Role="People" EntitySet="People" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__Clien__01142BA1" Association="Self.FK__ClientMen__Clien__01142BA1">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientMenu" EntitySet="ClientMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientNee__Clien__75A278F5" Association="Self.FK__ClientNee__Clien__75A278F5">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientNeeds" EntitySet="ClientNeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Client__71D1E811" Association="Self.FK__Schedule__Client__71D1E811">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__MenuI__00200768" Association="Self.FK__ClientMen__MenuI__00200768">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="ClientMenu" EntitySet="ClientMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientMen__Sched__02084FDA" Association="Self.FK__ClientMen__Sched__02084FDA">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="ClientMenu" EntitySet="ClientMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Person__6477ECF3" Association="Self.FK__Employee__Person__6477ECF3">
+            <End Role="People" EntitySet="People" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Employ__70DDC3D8" Association="Self.FK__Schedule__Employ__70DDC3D8">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZipAvaila__Emplo__6C190EBB" Association="Self.FK__ZipAvaila__Emplo__6C190EBB">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ZipAvailability" EntitySet="ZipAvailabilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__Schedul__797309D9" Association="Self.FK__Receipt__Schedul__797309D9">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TimeSheet__Sched__7D439ABD" Association="Self.FK__TimeSheet__Sched__7D439ABD">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="TimeSheet" EntitySet="TimeSheets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SaltedChefModelStoreContainer" CdmEntityContainer="SaltedChefEntities">
+          <EntitySetMapping Name="Availabilities">
+            <EntityTypeMapping TypeName="SaltedChefModel.Availability">
+              <MappingFragment StoreEntitySet="Availability">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="StartMonday" ColumnName="StartMonday" />
+                <ScalarProperty Name="EndMonday" ColumnName="EndMonday" />
+                <ScalarProperty Name="StartTuesday" ColumnName="StartTuesday" />
+                <ScalarProperty Name="EndTuesday" ColumnName="EndTuesday" />
+                <ScalarProperty Name="StartWednesday" ColumnName="StartWednesday" />
+                <ScalarProperty Name="EndWednesday" ColumnName="EndWednesday" />
+                <ScalarProperty Name="StartThursday" ColumnName="StartThursday" />
+                <ScalarProperty Name="EndThursday" ColumnName="EndThursday" />
+                <ScalarProperty Name="StartFriday" ColumnName="StartFriday" />
+                <ScalarProperty Name="EndFriday" ColumnName="EndFriday" />
+                <ScalarProperty Name="StartSaturday" ColumnName="StartSaturday" />
+                <ScalarProperty Name="EndSaturday" ColumnName="EndSaturday" />
+                <ScalarProperty Name="StartSunday" ColumnName="StartSunday" />
+                <ScalarProperty Name="EndSunday" ColumnName="EndSunday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="SaltedChefModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="CurrentChefId" ColumnName="CurrentChefId" />
+                <ScalarProperty Name="ImportantNotes" ColumnName="ImportantNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientMenus">
+            <EntityTypeMapping TypeName="SaltedChefModel.ClientMenu">
+              <MappingFragment StoreEntitySet="ClientMenu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="MenuNotes" ColumnName="MenuNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientNeeds">
+            <EntityTypeMapping TypeName="SaltedChefModel.ClientNeed">
+              <MappingFragment StoreEntitySet="ClientNeeds">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="StoveOven" ColumnName="StoveOven" />
+                <ScalarProperty Name="Allergies" ColumnName="Allergies" />
+                <ScalarProperty Name="DietRestrictions" ColumnName="DietRestrictions" />
+                <ScalarProperty Name="DietGoals" ColumnName="DietGoals" />
+                <ScalarProperty Name="OrganicMeals" ColumnName="OrganicMeals" />
+                <ScalarProperty Name="PreferredMeats" ColumnName="PreferredMeats" />
+                <ScalarProperty Name="MeatsToAvoid" ColumnName="MeatsToAvoid" />
+                <ScalarProperty Name="PreferredCheeses" ColumnName="PreferredCheeses" />
+                <ScalarProperty Name="CheesesToAvoid" ColumnName="CheesesToAvoid" />
+                <ScalarProperty Name="PreferredGrains" ColumnName="PreferredGrains" />
+                <ScalarProperty Name="GrainsToAvoid" ColumnName="GrainsToAvoid" />
+                <ScalarProperty Name="SpiceLevel" ColumnName="SpiceLevel" />
+                <ScalarProperty Name="OtherToAvoid" ColumnName="OtherToAvoid" />
+                <ScalarProperty Name="MainDishSoupSaladStew" ColumnName="MainDishSoupSaladStew" />
+                <ScalarProperty Name="MealSize" ColumnName="MealSize" />
+                <ScalarProperty Name="StoreContainers" ColumnName="StoreContainers" />
+                <ScalarProperty Name="PreferredGroceryStore" ColumnName="PreferredGroceryStore" />
+                <ScalarProperty Name="ExtraNotes" ColumnName="ExtraNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="SaltedChefModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsChef" ColumnName="IsChef" />
+                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+                <ScalarProperty Name="IsHR" ColumnName="IsHR" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="SaltedChefModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Ingrendients" ColumnName="Ingrendients" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+                <ScalarProperty Name="Servings" ColumnName="Servings" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="MealType" ColumnName="MealType" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="SaltedChefModel.Person">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="SaltedChefModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Charged" ColumnName="Charged" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="SaltedChefModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeSheets">
+            <EntityTypeMapping TypeName="SaltedChefModel.TimeSheet">
+              <MappingFragment StoreEntitySet="TimeSheet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZipAvailabilities">
+            <EntityTypeMapping TypeName="SaltedChefModel.ZipAvailability">
+              <MappingFragment StoreEntitySet="ZipAvailability">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
