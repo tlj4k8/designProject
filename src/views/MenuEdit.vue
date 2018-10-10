@@ -2,17 +2,17 @@
   <div class="menuEdit">
     <h1>Add Master Menu Item</h1>
     <b-card bg-variant="light" class="card">
-    <Menu/>
+    <AddMenu/>
     </b-card>
   </div>
 </template>
 
 <script>
-import Menu from "@/components/Menu/Menu.vue";
+import AddMenu from "@/components/Menu/AddMenu.vue";
 export default {
   name: "MenuEdit",
   components: {
-    Menu
+    AddMenu
   }
 };
 </script>
