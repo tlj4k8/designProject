@@ -1,6 +1,6 @@
 <template>
     <div class="addSchedule">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" :rules="rules" v-if="show" class="form">
         <div class="scheduleVisit">
             <h3>Schedule</h3>
             <hr/>
@@ -11,7 +11,8 @@
                                 label-for="startTime">
                     <b-form-input id="startTime"
                                 type="time"
-                                v-model="visit.startTime"/>
+                                required
+                                v-model="form.startTime"/>
                 </b-form-group>
                 <b-form-group class="flex"
                                 id="endTime"
@@ -19,7 +20,8 @@
                                 label-for="endTime">
                     <b-form-input id="endTime"
                                 type="time"
-                                v-model="visit.endTime"/>
+                                required
+                                v-model="form.endTime"/>
                 </b-form-group>
                 <b-form-group class="flex"
                                 id="date "
@@ -27,7 +29,9 @@
                                 label-for="date">
                     <b-form-input id="date"
                                 type="date"
-                                v-model="visit.date"/>
+                                required
+                                v-on:change="validateDate"
+                                v-model="form.date"/>
                 </b-form-group>
             </div>
         </div>
@@ -40,7 +44,7 @@
                     breakpoint="md"
                     label="Employees"
                     label-for="employee">
-        <b-form-select v-model="selected" :options="options" class="mb-1" />
+        <b-form-select required v-model="form.selected" :options="options" class="mb-1" />
         </b-form-group>
         </div>
         <div class="timestamp">
@@ -49,11 +53,11 @@
             <div class="buttonStamps">
             <div class="button">
                 <b-button v-on:click="clockIn" class="btn">Clock In</b-button>
-                <h5 class="timeflex">Clock In Time: {{ timeIn }}</h5>
+                <h5 class="timeflex">Clock In Time: {{ form.timeIn }}</h5>
             </div>
             <div class="button">
                 <b-button v-on:click="clockOut" class="btn">Clock Out</b-button>
-                <h5 class="timeflex">Clock Out Time: {{ timeOut }}</h5>
+                <h5 class="timeflex">Clock Out Time: {{ form.timeOut }}</h5>
             </div>
             </div>
         </div>
@@ -94,37 +98,47 @@
                                 class="receiptflex"
                                 label="Upload Receipt:"
                                 label-for="receipt">
-                    <b-form-file v-model="form.receipt" :state="Boolean(file)" placeholder="Choose a file...">
+                    <b-form-file v-model="form.receipt" :state="Boolean(form.file)" placeholder="Choose a file...">
                     </b-form-file>
                 </b-form-group>
             </div>
         </div>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <b-button type="submit" @click="handleSubmit('form')" variant="primary">Submit</b-button>
         </b-form>
     </div>
 </template>
 <script>
+import moment from 'moment';
 export default {
   name: 'ScheduleVisit',
   data () {
+    var validateDate = (rule, value, callback) => {
+        const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+        let SpecialToDate = this.form.date;
+        if(value === ''){
+            callback(new Error('Please input a date'));
+        }
+        if (moment(SpecialToDate, "YYYY-MM-DD", true).isBefore(yesterday)){
+            callback(new Error('Please input a valid date'));
+        }
+        else{
+            callback();
+        }
+    }
     return {
         form: {
             receipt: '',
             mealCharged: '',
             paylink: '',
             mealCost: '',
-            file: null
-        },
-        timeIn: null,
-        timeOut: null,
-        visit:{
-            currentDate: new Date(),
+            file: null,
+            timeIn: null,
+            timeOut: null,
             date: '',
             startTime: '',
-            endTime: ''
+            endTime: '',
+            selected: null,
         },
-        selected: null,
         options: [
             { value: 'client1', text: 'Client1' },
             { value: 'client2', text: 'client2' },
@@ -132,28 +146,51 @@ export default {
             { value: 'client4', text: 'client4' },
             { value: 'client5', text: 'client6' }
         ],
-        show: true
-
+        show: true,
+        rules: {
+            date: [{
+                required: true,
+                message: 'Please enter a valid date',
+                trigger: 'blur'
+            }]
+        }
     }
   },
   methods: {
     clockIn: function (){
-        let now = new Date();
-        let timestamp = now.toLocaleTimeString();
-        this.timeIn = timestamp;
+        let timestamp = moment().format('LT');
+        this.form.timeIn = timestamp;
     },
     clockOut: function (){
-        let now = new Date();
-        let timestamp = now.toLocaleTimeString();
-        this.timeOut = timestamp;
+        let timestamp = moment().format('LT');
+        this.form.timeOut = timestamp;
     },
-    validateDate: function(){
-        if(this.visit.currentDate > this.visit.date){
-            console.log('Invalid Date');
-        }
-        else{
-            console.log('Good job!');
-        }
+    // validateDate: function(){
+    //   const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+    //   let SpecialToDate = this.form.date;
+
+    //   if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
+    //     console.log("date is today or in future");
+    // } else {
+    //     console.log("date is in the past");
+    //   }
+    // },
+    handleSubmit: function(form){
+        var self = this;
+        this.$ref[form].validate((valid => {
+            if(valid){
+                    //http request goes here
+            }
+            else{
+                this.emptyFields();
+                    return false;
+                }
+        }))
+    },
+     emptyFields() {
+        this.$alert("Please complete all required fields", "Registration failed", {
+        confirmButtonText: 'OK'
+        });
     }
   }
 }
