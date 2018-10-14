@@ -14,8 +14,9 @@
         <b-form-select v-model="selected" :options="options" class="mb-1" />
         </b-form-group>
     </div>
-        <div class="formUser">
-            <b-form-group id="username"
+        <div class="personflexGroup">
+            <b-form-group class="personflex" 
+                        id="username"
                         label="Username:"
                         label-for="username">
             <b-form-input id="username"
@@ -23,7 +24,8 @@
                         v-model="form.username">
             </b-form-input>
         </b-form-group>
-        <b-form-group id="password"
+        <b-form-group class="personflex"
+                        id="password"
                         label="password:"
                         label-for="password">
             <b-form-input id="password"
@@ -144,93 +146,126 @@
 <script>
 export default {
   name: "editEmployee",
-  data () {
-    return{
-        form: {
-            username: '',
-            password: '',
-            email: '',
-            firstName: '',
-            lastName: '',
-            phone: '',
-            address: '',
-            addressTwo: '',
-            state: null,
-            city: '',
-            zip: ''
-          },
-        selected: null,
-        options: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
-        state: [
-            { text: 'Select One', value: null },
-            'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
-            'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MO', 'MS', 'MT', 
-            'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
-            'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-        ],
-        show: true
-    }
+  data() {
+    return {
+      form: {
+        username: "",
+        password: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        address: "",
+        addressTwo: "",
+        state: null,
+        city: "",
+        zip: ""
+      },
+      selected: null,
+      options: [
+        { value: "client1", text: "Client1" },
+        { value: "client2", text: "client2" },
+        { value: "client3", text: "client3" },
+        { value: "client4", text: "client4" },
+        { value: "client5", text: "client6" }
+      ],
+      state: [
+        { text: "Select One", value: null },
+        "AL",
+        "AK",
+        "AZ",
+        "AR",
+        "CA",
+        "CO",
+        "CT",
+        "DE",
+        "FL",
+        "GA",
+        "HI",
+        "ID",
+        "IL",
+        "IN",
+        "IA",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MA",
+        "MI",
+        "MN",
+        "MO",
+        "MS",
+        "MT",
+        "NE",
+        "NY",
+        "NV",
+        "NH",
+        "NJ",
+        "NM",
+        "NC",
+        "ND",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VT",
+        "VA",
+        "WA",
+        "WV",
+        "WI",
+        "WY"
+      ],
+      show: true
+    };
   },
-    methods: {
-        onSubmit (evt) {
-        evt.preventDefault();
-        alert(JSON.stringify(this.form));
-        },
-        onReset (evt) {
-        evt.preventDefault();
-        /* Reset our form values */
-        this.form.email = '';
-        this.form.name = '';
-        this.form.food = null;
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false;
-        this.$nextTick(() => { this.show = true });
-        }
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      /* Reset our form values */
+      this.form.email = "";
+      this.form.name = "";
+      this.form.food = null;
+      /* Trick to reset/clear native browser form validation state */
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
     }
+  }
 };
 </script>
 
 <style scoped>
-hr{
-    background-color: #0d50bc;
-    height: 1px;
+hr {
+  background-color: #0d50bc;
+  height: 1px;
 }
-.employeeSelect{
+.employeeSelect {
   padding-top: 5px 0px;
 }
-h1{
-  text-align: center;
+.personflexGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
-.form1{
-    width: 60vw;
+.personflex {
+  flex-grow: 1;
+  padding: 0 2px;
 }
-.formUser{
-    display: flex;
-    justify-content: space-evenly;
-}
-.personflexGroup{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.personflex{
-    flex-grow: 1;
-    padding: 0 2px;
-}
-@media(max-width: 440px){
-  .personflexGroup{
+@media (max-width: 440px) {
+  .personflexGroup {
     flex-wrap: wrap;
   }
-  .formUser{
-      flex-wrap: wrap;
-  }
-  
 }
-
 </style>
