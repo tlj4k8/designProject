@@ -6,14 +6,6 @@
             <hr/>
             <div class="flexGroup">
                 <b-form-group class="flex"
-                                id="date "
-                                label="Visit Date:"
-                                label-for="date">
-                    <b-form-input id="date"
-                                type="date"
-                                v-model="visit.date"/>
-                </b-form-group>
-                <b-form-group class="flex"
                                 id="startTime"
                                 label="Start Time:"
                                 label-for="startTime">
@@ -28,6 +20,14 @@
                     <b-form-input id="endTime"
                                 type="time"
                                 v-model="visit.endTime"/>
+                </b-form-group>
+                <b-form-group class="flex"
+                                id="date "
+                                label="Visit Date:"
+                                label-for="date">
+                    <b-form-input id="date"
+                                type="date"
+                                v-model="visit.date"/>
                 </b-form-group>
             </div>
         </div>
@@ -119,6 +119,7 @@ export default {
         timeIn: null,
         timeOut: null,
         visit:{
+            currentDate: new Date(),
             date: '',
             startTime: '',
             endTime: ''
@@ -145,6 +146,14 @@ export default {
         let now = new Date();
         let timestamp = now.toLocaleTimeString();
         this.timeOut = timestamp;
+    },
+    validateDate: function(){
+        if(this.visit.currentDate > this.visit.date){
+            console.log('Invalid Date');
+        }
+        else{
+            console.log('Good job!');
+        }
     }
   }
 }
@@ -179,19 +188,19 @@ hr{
 .timeflex{
     padding: 10px 0;
 }
-.btn{
+.btn.btn-secondary{
     width: 38vw;
 }
 .receiptflexGroup{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .receiptflex{
     flex-grow: 1;
     padding: 0 2px;
 }
-@media(max-width: 440px){
+@media(max-width: 480px){
   .flexGroup{
     flex-wrap: wrap;
   }

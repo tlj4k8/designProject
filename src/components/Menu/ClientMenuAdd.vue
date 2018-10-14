@@ -19,15 +19,29 @@
     </div>
     <h3> Menu </h3>
     <hr/>
-    <div class="menuSelect">
-        <b-form-group id="menu"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md"
-                    label="Menus:"
-                    label-for="menu">
-            <b-form-select v-model="selected" :options="options" class="mb-1" />
-            </b-form-group>
+    <div class="menuSelection">
+      <div class="menuSelect">
+          <b-form-group id="menu"
+                      class="select"
+                      :label-cols="4"
+                      breakpoint="md"
+                      label="Menus:"
+                      label-for="menu">
+              <b-form-select multiple v-model="form.menus" :options="options" />
+              <b-button type="submit" variant="primary">Select Items</b-button>
+              </b-form-group>
+      </div>
+      <div class="menuSelect">
+          <b-form-group id="selectedMenus"
+                      class="select"
+                      :label-cols="4"
+                      breakpoint="md"
+                      label="Selected Menus:"
+                      label-for="selectedMenus">
+              <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
+              <b-button type="submit" variant="primary">Remove Item</b-button>
+              </b-form-group>
+      </div>
     </div>
     <b-button type="submit" variant="primary">Submit</b-button>
     <b-button type="reset" variant="danger">Reset</b-button>
@@ -37,62 +51,71 @@
 
 <script>
 export default {
-  name: 'clientMenuAdd',
-  data () {
+  name: "clientMenuAdd",
+  data() {
     return {
-        form:{
-            client: null,
-            schedule: null
-        },
-        selected: null,
-        options: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
-        scheduleOptions:[
-            { value: 'schedule1', text: 'schedule1' },
-            { value: 'schedule2', text: 'schedule2' },
-        ],
-        clientOptions:[
-            { value: 'option1', text: 'option1' },
-            { value: 'option2', text: 'option2' },
-        ],
-        show: true,
-    }
+      form: {
+        client: null,
+        schedule: null,
+        menus: null,
+        selectedMenus: []
+      },
+      options: [
+        { value: "client1", text: "client1" },
+        { value: "client2", text: "client2" },
+        { value: "client3", text: "client3" },
+        { value: "client4", text: "client4" },
+        { value: "client5", text: "client6" }
+      ],
+      selectedOptions: [],
+      scheduleOptions: [
+        { value: "schedule1", text: "schedule1" },
+        { value: "schedule2", text: "schedule2" }
+      ],
+      clientOptions: [
+        { value: "option1", text: "option1" },
+        { value: "option2", text: "option2" }
+      ],
+      show: true
+    };
   },
-    methods: {
-        handleSubmit: function(form){
-            var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
-            }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Registration failed", {
-            confirmButtonText: 'OK'
-            });
+  methods: {
+    handleSubmit: function(form) {
+      var self = this;
+      this.$ref[form].validate(valid => {
+        if (valid) {
+          //http request goes here
+        } else {
+          this.emptyFields();
+          return false;
         }
+      });
+    },
+    emptyFields() {
+      this.$alert(
+        "Please complete all required fields",
+        "Registration failed",
+        {
+          confirmButtonText: "OK"
+        }
+      );
     }
-}
+  }
+};
 </script>
 <style scoped>
-.clientMenuAdd{
+.clientMenuAdd {
   padding: 0 0;
 }
-.menuSelect{
-    display: flex;
-    justify-content: space-evenly;
+.menuSelect {
+  display: flex;
+  justify-content: space-evenly;
 }
-.select{
-    width: 100vw;
+.select {
+  width: 100vw;
+}
+hr{
+  background-color: #0d50bc;
+  height: 1px;
 }
 </style>

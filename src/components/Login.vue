@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <b-card bg-variant="light" class= "card">
         <div class="form">
             <h1>Welcome to Salted Chef!</h1>
             <div class="flexGroup">
@@ -31,6 +32,7 @@
             </b-form>
             </div>
         </div>
+        </b-card>
     </div>
 </template>
 
@@ -93,9 +95,6 @@ h1{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    border-style: solid;
-    border-width: 3px;
-    border-color: #5cbdf2;
     margin: 20px 10%;
     padding: 10px 15px;
 }

@@ -18,14 +18,13 @@ export default {
 </script>
 
 <style scoped>
-.menuEdit{
+.menuEdit {
   margin-top: 10em;
 }
-h1{
+h1 {
   text-align: center;
 }
-.card{
+.card {
   margin: 15px 15px;
 }
-
 </style>
