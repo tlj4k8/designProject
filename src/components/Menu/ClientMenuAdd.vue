@@ -112,4 +112,8 @@ export default {
 .select {
   width: 100vw;
 }
+hr{
+    background-color: #0d50bc;
+    height: 1px;
+}
 </style>
