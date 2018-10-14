@@ -19,27 +19,29 @@
     </div>
     <h3> Menu </h3>
     <hr/>
-    <div class="menuSelect">
-        <b-form-group id="menu"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md"
-                    label="Menus:"
-                    label-for="menu">
-            <b-form-select multiple v-model="form.menus" :options="options" class="mb-1" />
-            <b-button type="submit" variant="primary">Select Items</b-button>
-            </b-form-group>
-    </div>
-    <div class="selectedMenus">
-        <b-form-group id="selectedMenus"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md"
-                    label="Selected Menus:"
-                    label-for="selectedMenus">
-            <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" class="mb-1" />
-            <b-button type="submit" variant="primary">Remove Item</b-button>
-            </b-form-group>
+    <div class="menuSelection">
+      <div class="menuSelect">
+          <b-form-group id="menu"
+                      class="select"
+                      :label-cols="4"
+                      breakpoint="md"
+                      label="Menus:"
+                      label-for="menu">
+              <b-form-select multiple v-model="form.menus" :options="options" />
+              <b-button type="submit" variant="primary">Select Items</b-button>
+              </b-form-group>
+      </div>
+      <div class="menuSelect">
+          <b-form-group id="selectedMenus"
+                      class="select"
+                      :label-cols="4"
+                      breakpoint="md"
+                      label="Selected Menus:"
+                      label-for="selectedMenus">
+              <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
+              <b-button type="submit" variant="primary">Remove Item</b-button>
+              </b-form-group>
+      </div>
     </div>
     <b-button type="submit" variant="primary">Submit</b-button>
     <b-button type="reset" variant="danger">Reset</b-button>
@@ -56,10 +58,10 @@ export default {
         client: null,
         schedule: null,
         menus: null,
-        selectedMenus: null
+        selectedMenus: []
       },
       options: [
-        { value: "client1", text: "Client1" },
+        { value: "client1", text: "client1" },
         { value: "client2", text: "client2" },
         { value: "client3", text: "client3" },
         { value: "client4", text: "client4" },
@@ -113,7 +115,7 @@ export default {
   width: 100vw;
 }
 hr{
-    background-color: #0d50bc;
-    height: 1px;
+  background-color: #0d50bc;
+  height: 1px;
 }
 </style>
