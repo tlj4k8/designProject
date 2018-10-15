@@ -1,6 +1,6 @@
 <template>
     <div class="addSchedule">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" :rules="rules" v-if="show" class="form">
+    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
         <div class="scheduleVisit">
             <h3>Schedule</h3>
             <hr/>
@@ -30,6 +30,7 @@
                     <b-form-input id="date"
                                 type="date"
                                 required
+                                v-on:blur.native="validateDate"
                                 v-model="form.date"/>
                 </b-form-group>
             </div>
@@ -111,19 +112,6 @@ import moment from 'moment';
 export default {
   name: 'ScheduleVisit',
   data () {
-    var validateDate = (rule, value, callback) => {
-        const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-        let SpecialToDate = this.form.date;
-        if(value === ''){
-            callback(new Error('Please input a date'));
-        }
-        if (moment(SpecialToDate, "YYYY-MM-DD", true).isBefore(yesterday)){
-            callback(new Error('Please input a valid date'));
-        }
-        else{
-            callback();
-        }
-    }
     return {
         form: {
             receipt: '',
@@ -145,14 +133,7 @@ export default {
             { value: 'client4', text: 'client4' },
             { value: 'client5', text: 'client6' }
         ],
-        show: true,
-        rules: {
-            date: [{
-                required: true,
-                message: 'Please enter a valid date',
-                trigger: 'blur'
-            }]
-        }
+        show: true
     }
   },
   methods: {
@@ -164,16 +145,16 @@ export default {
         let timestamp = moment().format('LT');
         this.form.timeOut = timestamp;
     },
-    // validateDate: function(){
-    //   const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-    //   let SpecialToDate = this.form.date;
+    validateDate: function(){
+      const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+      let SpecialToDate = this.form.date;
 
-    //   if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
-    //     console.log("date is today or in future");
-    // } else {
-    //     console.log("date is in the past");
-    //   }
-    // },
+      if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
+        console.log("date is today or in future");
+    } else {
+        console.log("date is in the past");
+      }
+    },
     handleSubmit: function(form){
         var self = this;
         this.$ref[form].validate((valid => {
