@@ -30,7 +30,6 @@
                     <b-form-input id="date"
                                 type="date"
                                 required
-                                v-on:change="validateDate"
                                 v-model="form.date"/>
                 </b-form-group>
             </div>
