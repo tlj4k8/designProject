@@ -35,29 +35,17 @@
                 </b-form-group>
             </div>
         </div>
-        <div class="employeeSelect">
-        <h3> Select Chef </h3>
-        <hr/>
-        <b-form-group id="employee"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md"
-                    label="Employees"
-                    label-for="employee">
-        <b-form-select required v-model="form.selected" :options="options" class="mb-1" />
-        </b-form-group>
-        </div>
         <div class="timestamp">
             <h3>Track Time</h3>
             <hr/>
             <div class="buttonStamps">
             <div class="button">
                 <b-button v-on:click="clockIn" class="btn">Clock In</b-button>
-                <h5 class="timeflex">Clock In Time: {{ form.timeIn }}</h5>
+                <h5 class="timeflex">{{ form.timeIn }}</h5>
             </div>
             <div class="button">
                 <b-button v-on:click="clockOut" class="btn">Clock Out</b-button>
-                <h5 class="timeflex">Clock Out Time: {{ form.timeOut }}</h5>
+                <h5 class="timeflex">{{ form.timeOut }}</h5>
             </div>
             </div>
         </div>

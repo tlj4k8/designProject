@@ -280,6 +280,23 @@
                       v-model="form.notes"/>
       </b-form-group>
     </div>
+    <div class="scheduleNew">
+    <h3>Schedule</h3>
+    <hr/>
+      <div class="scheduleFlexGroup">
+      <div class="scheduleFlex">
+      <b-button  to="/scheduleNew" type="submit" variant="primary" class="button">Schedule New</b-button>
+      </div>
+      <b-form-group class="scheduleFlex"
+                    id="schedule"
+                    :label-cols="4"
+                    breakpoint="md"
+                    label="View Schedule"
+                    label-for="schedule">
+        <b-form-select required v-model="form.selected" :options="schedules"/>
+        </b-form-group>
+      </div>
+    </div>
     <b-button type="submit" variant="primary">Submit</b-button>
     <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -331,7 +348,8 @@ export default {
         endThur: '',
         endFri: '',
         endSat: '',
-        endSun: ''
+        endSun: '',
+        selected: null
       },
       state: [
         { text: 'Select One', value: null },
@@ -339,6 +357,9 @@ export default {
         'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MO', 'MS', 'MT', 
         'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+      ],
+      schedules: [
+        {value: 'Option1', text: 'Option1'}
       ],
       show: true
     }
@@ -377,6 +398,19 @@ hr{
 .flex{
     flex-grow: 1;
     padding: 0 2px;
+}
+.scheduleFlexGroup{
+    display: flex;
+    flex-direction: row;
+}
+.scheduleFlex{
+    flex-grow: 1;
+    padding: 0 2px;
+}
+.button{
+  margin-left: 25%;
+  margin-top: 3.5%;
+  width: 25vw;
 }
 .table{
     overflow-x:auto;
