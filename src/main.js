@@ -8,15 +8,26 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import axios from "axios";
 
 library.add(faCoffee)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+const config = {
+  fieldsBagName: 'validateFields'
+} 
+
 Vue.use(BootstrapVue);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, config);
 
 Vue.config.productionTip = false
-
+Vue.prototype.$axiosServer = axios.create({
+  baseURL: 'https://saltedchefapi-dev.us-east-2.elasticbeanstalk.com',
+  withCredentials: false,
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 new Vue({
   el: '#app',
   router,

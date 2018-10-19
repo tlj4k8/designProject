@@ -1,6 +1,6 @@
 <template>
   <div class="addClient">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
     <hr/>
@@ -297,13 +297,15 @@
         </b-form-group>
       </div>
     </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
+    <b-form-group>
+      <b-button type="primary">Submit</b-button>
+    </b-form-group>
     </b-form>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -317,6 +319,7 @@ export default {
         state: null,
         city: '',
         zip: '',
+        isActive: true,
         meats: '',
         meatAvoid: '',
         meatCookPref: '',
@@ -365,22 +368,29 @@ export default {
     }
   },
     methods: {
-        handleSubmit: function(form){
-            var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
-            }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Registration failed", {
-            confirmButtonText: 'OK'
-            });
+        handleSubmit(form){
+          console.log(form.validate);
+          console.log("WE ARE IN HEEERRREEE")
+          var self = this;
+          this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People', {
+              FirstName: this.form.firstName,
+              LastName: this.form.lastName,
+              CellPhone: this.form.phone,
+              Email: this.form.email,
+              Address1: this.form.address,
+              Address2: this.form.addressTwo,
+              City: this.form.city,
+              State: this.form.state,
+              ZipCode: this.form.zip,
+              IsActive: this.form.isActive
+          })
+          .then(function(response) {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log(error.response);
+             return error;
+          })
         }
     }
 }
