@@ -1,6 +1,6 @@
 <template>
   <div class="addClient">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
     <hr/>
@@ -280,13 +280,32 @@
                       v-model="form.notes"/>
       </b-form-group>
     </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
+    <div class="scheduleNew">
+    <h3>Schedule</h3>
+    <hr/>
+      <div class="scheduleFlexGroup">
+      <div class="scheduleFlex">
+      <b-button  to="/scheduleNew" type="submit" variant="primary" class="button">Schedule New</b-button>
+      </div>
+      <b-form-group class="scheduleFlex"
+                    id="schedule"
+                    :label-cols="4"
+                    breakpoint="md"
+                    label="View Schedule"
+                    label-for="schedule">
+        <b-form-select required v-model="form.selected" :options="schedules"/>
+        </b-form-group>
+      </div>
+    </div>
+    <b-form-group>
+      <b-button type="primary">Submit</b-button>
+    </b-form-group>
     </b-form>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -300,6 +319,7 @@ export default {
         state: null,
         city: '',
         zip: '',
+        isActive: true,
         meats: '',
         meatAvoid: '',
         meatCookPref: '',
@@ -331,7 +351,8 @@ export default {
         endThur: '',
         endFri: '',
         endSat: '',
-        endSun: ''
+        endSun: '',
+        selected: null
       },
       state: [
         { text: 'Select One', value: null },
@@ -340,26 +361,36 @@ export default {
         'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
       ],
+      schedules: [
+        {value: 'Option1', text: 'Option1'}
+      ],
       show: true
     }
   },
     methods: {
-        handleSubmit: function(form){
-            var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
-            }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Registration failed", {
-            confirmButtonText: 'OK'
-            });
+        handleSubmit(form){
+          console.log(form.validate);
+          console.log("WE ARE IN HEEERRREEE")
+          var self = this;
+          this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People', {
+              FirstName: this.form.firstName,
+              LastName: this.form.lastName,
+              CellPhone: this.form.phone,
+              Email: this.form.email,
+              Address1: this.form.address,
+              Address2: this.form.addressTwo,
+              City: this.form.city,
+              State: this.form.state,
+              ZipCode: this.form.zip,
+              IsActive: this.form.isActive
+          })
+          .then(function(response) {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log(error.response);
+             return error;
+          })
         }
     }
 }
@@ -377,6 +408,19 @@ hr{
 .flex{
     flex-grow: 1;
     padding: 0 2px;
+}
+.scheduleFlexGroup{
+    display: flex;
+    flex-direction: row;
+}
+.scheduleFlex{
+    flex-grow: 1;
+    padding: 0 2px;
+}
+.button{
+  margin-left: 25%;
+  margin-top: 3.5%;
+  width: 25vw;
 }
 .table{
     overflow-x:auto;

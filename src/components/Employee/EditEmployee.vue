@@ -29,8 +29,8 @@
                         label="password:"
                         label-for="password">
             <b-form-input id="password"
-                        type="text"
-                        v-model="form.paswword">
+                        type="password"
+                        v-model="form.password">
             </b-form-input>
         </b-form-group>
         </div>
