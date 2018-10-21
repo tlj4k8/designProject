@@ -309,7 +309,6 @@ import axios from 'axios';
 export default {
   data () {
     return {
-      clients: [],
       form: {
         email: '',
         firstName: '',
@@ -374,20 +373,10 @@ export default {
     }
   },
     methods:{
-        // onSelectClient() {
-        //     this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         this.options = res.data.value.map((value)=>{
-        //             value.FirstName = value[key];
-        //             return value;
-        //         })
-        //     })
-        //     .then(json => json.data.filter(data => data.value.FirstName=this.options))
-        // }
+
     },
     mounted: function(){
-        
+
         axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
         // .then(json => {
         //     this.form.firstName = json.data.value[1].FirstName,
