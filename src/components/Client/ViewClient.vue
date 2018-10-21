@@ -4,10 +4,13 @@
     <b-form-group id="clientList"
                 label="Client Search:"
                 label-for="clientList">
-    <b-form-select v-model="selected" :options="options"/>
+        <b-form-select v-model="selected" :options="option" />
+    <!-- <select v-model="selected" :options="options">
+        <option :key="option" v-for="option in options"/>
+    </select> -->
     </b-form-group>
   </div>
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
     <hr/>
@@ -302,9 +305,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data () {
     return {
+      clients: [],
       form: {
         email: '',
         firstName: '',
@@ -349,13 +354,7 @@ export default {
         endSun: ''
       },
         selected: null,
-        options: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
+        option: [''],
         state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -374,24 +373,48 @@ export default {
         show: true
     }
   },
-    methods: {
-        handleSubmit: function(form){
-            var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
+    methods:{
+        // onSelectClient() {
+        //     this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         this.options = res.data.value.map((value)=>{
+        //             value.FirstName = value[key];
+        //             return value;
+        //         })
+        //     })
+        //     .then(json => json.data.filter(data => data.value.FirstName=this.options))
+        // }
+    },
+    mounted: function(){
+        
+        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
+        // .then(json => {
+        //     this.form.firstName = json.data.value[1].FirstName,
+        //     this.form.lastName = json.data.value[1].LastName,
+        //     this.form.email = json.data.value[1].Email,
+        //     this.form.phone = json.data.value[1].CellPhone,
+        //     this.form.address = json.data.value[1].Address1,
+        //     this.form.addressTwo = json.data.value[1].Address2,
+        //     this.form.state = json.data.value[1].State,
+        //     this.form.city = json.data.value[1].City,
+        //     this.form.zip = json.data.value[1].ZipCode
+        // })
+        // .then(json => json.data.value.map(value =>  ({
+        //     firstName: value.FirstName,
+        // })))
+        // .then(options => console.log(options))
+        .then((response) => {
+            console.log(response);
+            this.option = response.data.value.map(value => ({
+                firstName: value.FirstName
             }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Registration failed", {
-            confirmButtonText: 'OK'
-            });
-        }
+            console.log(this.option)
+            console.log(this.option.firstName)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 }
 </script>
@@ -404,6 +427,9 @@ hr{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+select {
+    width: 100%;
 }
 .flex{
     flex-grow: 1;
