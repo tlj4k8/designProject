@@ -395,11 +395,7 @@ export default {
         // .then(options => console.log(options))
         .then((response) => {
             console.log(response);
-            this.option = response.data.value.map(value => ({
-                firstName: value.FirstName
-            }))
-            console.log(this.option)
-            console.log(this.option.firstName)
+            this.option = response.data.value.map(value => (value.FirstName))
         })
         .catch((error) => {
             console.log(error);
