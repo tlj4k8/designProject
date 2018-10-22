@@ -406,9 +406,6 @@ hr{
     flex-direction: row;
     justify-content: space-around;
 }
-select {
-    width: 100%;
-}
 .flex{
     flex-grow: 1;
     padding: 0 2px;
