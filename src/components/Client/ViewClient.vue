@@ -5,9 +5,6 @@
                 label="Client Search:"
                 label-for="clientList">
         <b-form-select v-model="selected" :options="option" />
-    <!-- <select v-model="selected" :options="options">
-        <option :key="option" v-for="option in options"/>
-    </select> -->
     </b-form-group>
   </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
@@ -389,10 +386,6 @@ export default {
         //     this.form.city = json.data.value[1].City,
         //     this.form.zip = json.data.value[1].ZipCode
         // })
-        // .then(json => json.data.value.map(value =>  ({
-        //     firstName: value.FirstName,
-        // })))
-        // .then(options => console.log(options))
         .then((response) => {
             console.log(response);
             this.option = response.data.value.map(value => (value.FirstName))
