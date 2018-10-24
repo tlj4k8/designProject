@@ -376,45 +376,62 @@ export default {
               ZipCode: this.form.zip,
               IsActive: this.form.isActive
           })
+          // .then((response)=>{
+          //   this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availability',{
+          //     PersonId: response.data.Id,
+          //     StartMonday: this.form.mon,
+          //     EndMonday: this.form.endMon,
+          //     StartTuesday: this.form.tue,
+          //     EndTuesday: this.form.endTue,
+          //     StartWednesday: this.form.wed,
+          //     EndWednesday: this.form.endWed,
+          //     StartThursday: this.form.thur,
+          //     EndThursday: this.form.endThur,
+          //     StartFriday: this.form.fri,
+          //     EndFriday: this.form.endFri,
+          //     StartSaturday: this.form.sat,
+          //     EndSaturday: this.form.endSat,
+          //     StartSunday: this.form.sun,
+          //     EndSunday: this.form.endSun
+
+          //   })
+          // })
           .then((response) => {
             console.log(response.data.Id);
             this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
               PersonId: response.data.Id,
               CurrentChefId: 1,
-	            ImportantNotes: "nothing"
+	            ImportantNotes: "I hope this all works"
             })
             .then((response)=>{
-              console.log(response);
+              console.log(response.data.Id);
+              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
+                ClientId: response.data.Id,
+                PreferredMeats: this.form.meats,
+                MeatsToAvoid: this.form.meatAvoid,
+                PreferredCheeses: this.form.cheese,
+                CheesesToAvoid: this.form.cheeseAvoid,
+                PreferredGrains: this.form.grains,
+                GrainsToAvoid: this.form.grainsAvoid,
+                SpiceLevel: this.form.spice,
+                OtherToAvoid: this.form.other,
+                Allergies: this.form.allergies,
+                DietRestrictions: this.form.dietRestrictions,
+                MainDishSoupSaladStew: this.form.mainDish,
+                StoreContainers: this.form.storageContainers,
+                StoveOven: this.form.stove,
+                OrganicMeals: this.form.organic,
+                PreferredGroceryStore: this.form.groceryStore,
+                MealSize: this.form.mealStructure,
+                ExtraNotes: this.form.notes
+              })
+              .then((response)=>{
+                console.log(response)
+              })
+              .catch((error)=>{
+                console.log(error)
+              })
              })
-            .catch((error)=>{
-              console.log(error)
-            })
-            // this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
-            //   ClientId: response.data.Id,
-            //   PreferredMeats: this.form.meats,
-            //   MeatsToAvoid: this.form.meatAvoid,
-            //   PreferredCheeses: this.form.cheese,
-            //   CheesesToAvoid: this.form.cheeseAvoid,
-            //   PreferredGrains: this.form.grains,
-            //   GrainsToAvoid: this.form.grainsAvoid,
-            //   SpiceLevel: this.form.spice,
-            //   OtherToAvoid: this.form.other,
-            //   Allergies: this.form.allergies,
-            //   DietRestrictions: this.form.dietRestrictions,
-            //   MainDishSoupSaladStew: this.form.mainDish,
-            //   StoreContainers: this.form.storageContainers,
-            //   StoveOven: this.form.stove,
-            //   OrganicMeals: this.form.organic,
-            //   PreferredGroceryStore: this.form.groceryStore,
-            //   MealSize: this.form.mealStructure,
-            //   ExtraNotes: this.form.notes
-            // })
-            // .then((response)=>{
-            //   console.log(respone)
-            // })
-            // .catch((error)=>{
-            //   console.log(error)
-            // })
           })
         }
     }
