@@ -303,6 +303,7 @@ export default {
   data () {
     return {
       userId:'',
+      clientId: '',
       form: {
         email: '',
         firstName: '',
@@ -362,7 +363,6 @@ export default {
   },
     methods: {
         handleSubmit(form){
-          console.log("WE ARE IN HEEERRREEE")
           var self = this;
           this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People', {
               FirstName: this.form.firstName,
@@ -376,37 +376,41 @@ export default {
               ZipCode: this.form.zip,
               IsActive: this.form.isActive
           })
-          // .then((response)=>{
-          //   this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availability',{
-          //     PersonId: response.data.Id,
-          //     StartMonday: this.form.mon,
-          //     EndMonday: this.form.endMon,
-          //     StartTuesday: this.form.tue,
-          //     EndTuesday: this.form.endTue,
-          //     StartWednesday: this.form.wed,
-          //     EndWednesday: this.form.endWed,
-          //     StartThursday: this.form.thur,
-          //     EndThursday: this.form.endThur,
-          //     StartFriday: this.form.fri,
-          //     EndFriday: this.form.endFri,
-          //     StartSaturday: this.form.sat,
-          //     EndSaturday: this.form.endSat,
-          //     StartSunday: this.form.sun,
-          //     EndSunday: this.form.endSun
-
-          //   })
-          // })
           .then((response) => {
-            console.log(response.data.Id);
+            console.log(response);
+            console.log("USER ID:" + response.data.Id);
+            this.userId = response.data.Id;
             this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
-              PersonId: response.data.Id,
+              PersonId: this.userId,
               CurrentChefId: 1,
 	            ImportantNotes: "I hope this all works"
             })
             .then((response)=>{
-              console.log(response.data.Id);
+              console.log(response);
+              console.log("CLIENT ID:" + response.data.Id);
+              this.clientId = response.data.Id;
+              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities',{
+                PersonId: this.userId,
+                StartMonday: this.formatTime(this.form.mon),
+                EndMonday: this.formatTime(this.form.endMon),
+                StartTuesday: this.formatTime(this.form.tue),
+                EndTuesday: this.formatTime(this.form.endTue),
+                StartWednesday: this.formatTime(this.form.wed),
+                EndWednesday: this.formatTime(this.form.endWed),
+                StartThursday: this.formatTime(this.form.thur),
+                EndThursday: this.formatTime(this.form.endThur),
+                StartFriday: this.formatTime(this.form.fri),
+                EndFriday: this.formatTime(this.form.endFri),
+                StartSaturday: this.formatTime(this.form.sat),
+                EndSaturday: this.formatTime(this.form.endSat),
+                StartSunday: this.formatTime(this.form.sun),
+                EndSunday: this.formatTime(this.form.endSun)
+              })
+              .then((response)=>{
+              console.log(response);
+              console.log("AVAILABILITY ID:" + response.data.Id);
               this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
-                ClientId: response.data.Id,
+                ClientId: this.clientId,
                 PreferredMeats: this.form.meats,
                 MeatsToAvoid: this.form.meatAvoid,
                 PreferredCheeses: this.form.cheese,
@@ -426,15 +430,25 @@ export default {
                 ExtraNotes: this.form.notes
               })
               .then((response)=>{
-                console.log(response)
+                console.log(response);
+                console.log("NEEDS ID:" + response.data.Id);
               })
               .catch((error)=>{
                 console.log(error)
               })
              })
+            })
           })
-        }
+        },
+            formatTime(time){
+              var timeStamp = time.split(':');
+              var timeHour = timeStamp[0];
+              var timeMinutes = timeStamp[1];
+              var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+              return formatedTime;
     }
+    }
+
 }
 </script>
 <style scoped>
