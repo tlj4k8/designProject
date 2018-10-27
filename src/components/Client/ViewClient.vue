@@ -4,7 +4,7 @@
     <b-form-group id="clientList"
                 label="Client Search:"
                 label-for="clientList">
-        <b-form-select v-model="selected" :options="option" />
+        <b-form-select v-on:select="checkSelected" v-model="selected" :options="option" />
     </b-form-group>
   </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
@@ -369,27 +369,36 @@ export default {
         show: true
     }
   },
-    methods:{
+    computed:{   
+        checkSelected() {                                                                    
+            console.log(this.selected);
+            var clientValue = this.selected - 1;
+            axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
+            .then((response)=>{
+                this.form.firstName = response.data.value[clientValue].FirstName,
+                this.form.lastName = response.data.value[clientValue].LastName,
+                this.form.email = response.data.value[clientValue].Email,
+                this.form.phone = response.data.value[clientValue].CellPhone,
+                this.form.address = response.data.value[clientValue].Address1,
+                this.form.addressTwo = response.data.value[clientValue].Address2,
+                this.form.state = response.data.value[clientValue].State,
+                this.form.city = response.data.value[clientValue].City,
+                this.form.zip = response.data.value[clientValue].ZipCode
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
 
+        }
     },
     mounted: function(){
 
         axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
-        // .then(json => {
-        //     this.form.firstName = json.data.value[1].FirstName,
-        //     this.form.lastName = json.data.value[1].LastName,
-        //     this.form.email = json.data.value[1].Email,
-        //     this.form.phone = json.data.value[1].CellPhone,
-        //     this.form.address = json.data.value[1].Address1,
-        //     this.form.addressTwo = json.data.value[1].Address2,
-        //     this.form.state = json.data.value[1].State,
-        //     this.form.city = json.data.value[1].City,
-        //     this.form.zip = json.data.value[1].ZipCode
-        // })
         .then((response) => {
             console.log(response);
             this.option = response.data.value.map(value => (
-                "Client #: " + value.Id + " " + value.FirstName + " " + value.LastName
+                // "Client #: " + value.Id + " " + value.FirstName + " " + value.LastName
+                value.Id
             ))
         })
         .catch((error) => {
