@@ -388,7 +388,9 @@ export default {
         // })
         .then((response) => {
             console.log(response);
-            this.option = response.data.value.map(value => (value.FirstName))
+            this.option = response.data.value.map(value => (
+                "Client #: " + value.Id + " " + value.FirstName + " " + value.LastName
+            ))
         })
         .catch((error) => {
             console.log(error);
