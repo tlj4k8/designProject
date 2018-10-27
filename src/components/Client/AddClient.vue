@@ -185,13 +185,6 @@
                       type="text"
                       v-model="form.meatAvoid"/>
       </b-form-group>
-      <b-form-group id="meatCookPreferrence"
-                    label="Meat Cooked Preferrence:"
-                    label-for="meatCookPreferrence">
-        <b-form-input id="meatCookPreferrence"
-                      type="text"
-                      v-model="form.meatCookPref"/>
-      </b-form-group>
       <b-form-group id="preferredCheeses"
                     label="Preferred Cheeses:"
                     label-for="preferredCheeses">
@@ -212,6 +205,13 @@
         <b-form-input id="preferredGrains"
                       type="text"
                       v-model="form.grains"/>
+      </b-form-group>
+      <b-form-group id="grainsAvoid"
+                    label="Grains to Avoid:"
+                    label-for="grainsAvoid">
+        <b-form-input id="grainsAvoid"
+                      type="text"
+                      v-model="form.grainsAvoid"/>
       </b-form-group>
       <b-form-group id="spice"
                     label="Spice Level:"
@@ -241,13 +241,6 @@
         <b-form-input id="dietRestrictions"
                       type="text"
                       v-model="form.dietRestrictions"/>
-      </b-form-group>
-      <b-form-group id="dietGoals"
-                    label="Dietary Goals:"
-                    label-for="dietGoals">
-        <b-form-input id="dietGoals"
-                      type="text"
-                      v-model="form.dietGoals"/>
       </b-form-group>
       <b-form-group id="mainDish"
                     label="Main Dish:"
@@ -309,6 +302,8 @@ import axios from 'axios';
 export default {
   data () {
     return {
+      userId:'',
+      clientId: '',
       form: {
         email: '',
         firstName: '',
@@ -322,15 +317,14 @@ export default {
         isActive: true,
         meats: '',
         meatAvoid: '',
-        meatCookPref: '',
         cheese: '',
         cheeseAvoid: '',
         grains: '',
+        grainsAvoid: '',
         spice: '',
         other: '',
         allergies: '',
         dietRestrictions: '',
-        dietGoals: '',
         mainDish: '',
         storageContainers: false,
         stove: false,
@@ -369,8 +363,6 @@ export default {
   },
     methods: {
         handleSubmit(form){
-          console.log(form.validate);
-          console.log("WE ARE IN HEEERRREEE")
           var self = this;
           this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People', {
               FirstName: this.form.firstName,
@@ -384,15 +376,79 @@ export default {
               ZipCode: this.form.zip,
               IsActive: this.form.isActive
           })
-          .then(function(response) {
+          .then((response) => {
             console.log(response);
+            console.log("USER ID:" + response.data.Id);
+            this.userId = response.data.Id;
+            this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
+              PersonId: this.userId,
+              CurrentChefId: 1,
+	            ImportantNotes: "I hope this all works"
+            })
+            .then((response)=>{
+              console.log(response);
+              console.log("CLIENT ID:" + response.data.Id);
+              this.clientId = response.data.Id;
+              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities',{
+                PersonId: this.userId,
+                StartMonday: this.formatTime(this.form.mon),
+                EndMonday: this.formatTime(this.form.endMon),
+                StartTuesday: this.formatTime(this.form.tue),
+                EndTuesday: this.formatTime(this.form.endTue),
+                StartWednesday: this.formatTime(this.form.wed),
+                EndWednesday: this.formatTime(this.form.endWed),
+                StartThursday: this.formatTime(this.form.thur),
+                EndThursday: this.formatTime(this.form.endThur),
+                StartFriday: this.formatTime(this.form.fri),
+                EndFriday: this.formatTime(this.form.endFri),
+                StartSaturday: this.formatTime(this.form.sat),
+                EndSaturday: this.formatTime(this.form.endSat),
+                StartSunday: this.formatTime(this.form.sun),
+                EndSunday: this.formatTime(this.form.endSun)
+              })
+              .then((response)=>{
+              console.log(response);
+              console.log("AVAILABILITY ID:" + response.data.Id);
+              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
+                ClientId: this.clientId,
+                PreferredMeats: this.form.meats,
+                MeatsToAvoid: this.form.meatAvoid,
+                PreferredCheeses: this.form.cheese,
+                CheesesToAvoid: this.form.cheeseAvoid,
+                PreferredGrains: this.form.grains,
+                GrainsToAvoid: this.form.grainsAvoid,
+                SpiceLevel: this.form.spice,
+                OtherToAvoid: this.form.other,
+                Allergies: this.form.allergies,
+                DietRestrictions: this.form.dietRestrictions,
+                MainDishSoupSaladStew: this.form.mainDish,
+                StoreContainers: this.form.storageContainers,
+                StoveOven: this.form.stove,
+                OrganicMeals: this.form.organic,
+                PreferredGroceryStore: this.form.groceryStore,
+                MealSize: this.form.mealStructure,
+                ExtraNotes: this.form.notes
+              })
+              .then((response)=>{
+                console.log(response);
+                console.log("NEEDS ID:" + response.data.Id);
+              })
+              .catch((error)=>{
+                console.log(error)
+              })
+             })
+            })
           })
-          .catch(function(error) {
-            console.log(error.response);
-             return error;
-          })
-        }
+        },
+            formatTime(time){
+              var timeStamp = time.split(':');
+              var timeHour = timeStamp[0];
+              var timeMinutes = timeStamp[1];
+              var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+              return formatedTime;
     }
+    }
+
 }
 </script>
 <style scoped>
