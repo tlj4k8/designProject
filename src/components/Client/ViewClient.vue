@@ -375,8 +375,7 @@ export default {
     }
   },
     computed:{   
-        populateForm() {                                                                    
-            console.log(this.selected);
+        populateForm() {               
             var clientValue = this.selected - 1;
             axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
             .then((response)=>{
@@ -465,11 +464,13 @@ export default {
                     //     this.form.notes = clientMealResponse.ExtraNotes
                         
                     // })
-                    this.getClientNeeds();
+                    axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+                    .then((response)=> {
+                        console.log(response)
+                        this.selectedClient = response.data.value.filter(value => value.PersonId === (this.selected))
+                        console.log(this.selectedClient)
+                    })
                 })
-                // .catch((error)=>{
-                //     console.log(error)
-                // })
             })
             .catch((error)=>{
                 console.log(error);
@@ -492,12 +493,17 @@ export default {
             var timeStamp = moment(time, moment.HTML5_FMT.TIME).format('HH:mm');
             return timeStamp;
         },
-        getClientNeeds(){
-            axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
-            .then((response)=> {
-                console.log(response)
-                this.selectedClient = response.data.value.filter(value => value.PersonId === (this.selected))
-                console.log(this.selectedClient)
+        // getClientNeeds(){
+            // axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+            // .then((response)=> {
+            //     console.log(response)
+            //     console.log(this.clientValue)
+            //     this.selectedClient = response.data.value.filter(value => value.PersonId === (this.selected))
+            //     console.log(this.selectedClient)
+            //     axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients?$select=Id')
+            //     .then((response)=>{
+            //         console.log(response)
+            //     })
                 // axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds')
                 // .then((response)=>{
                 //     console.log(response.data.value[this.selectedClient])
@@ -520,11 +526,11 @@ export default {
                     // this.form.notes = clientMealResponse.ExtraNotes
                     
                 // })
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-        }
+            // })
+            // .catch((error)=>{
+            //     console.log(error)
+            // })
+        // }
 
     }
 }
