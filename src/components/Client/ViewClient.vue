@@ -7,7 +7,9 @@
         <b-form-select v-on:select="checkSelected" v-model="selected" :options="option" />
     </b-form-group>
   </div>
-    <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <!-- <b-button v-if="!update" @click="update=true" type="primary">Update Client</b-button>
+    <b-button v-if="update" @click="alert('updated')" type="primary">Save</b-button> -->
+    <b-form ref="form" :disabled="!update" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
     <hr/>
@@ -303,9 +305,11 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 export default {
   data () {
     return {
+      update: false,
       form: {
         email: '',
         firstName: '',
@@ -384,6 +388,27 @@ export default {
                 this.form.state = response.data.value[clientValue].State,
                 this.form.city = response.data.value[clientValue].City,
                 this.form.zip = response.data.value[clientValue].ZipCode
+                axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities')
+                .then((response)=>{
+                    console.log(response)
+                    this.form.mon = this.formatTime(response.data.value[clientValue].StartMonday)
+                    this.form.tue = this.formatTime(response.data.value[clientValue].StartTuesday)
+                    this.form.wed = this.formatTime(response.data.value[clientValue].StartWednesday)
+                    this.form.thur = this.formatTime(response.data.value[clientValue].StartThursday)
+                    this.form.fri = this.formatTime(response.data.value[clientValue].StartFriday)
+                    this.form.sat = this.formatTime(response.data.value[clientValue].StartSaturday)
+                    this.form.sun = this.formatTime(response.data.value[clientValue].StartSunday)
+                    this.form.endMon = this.formatTime(response.data.value[clientValue].EndMonday)
+                    this.form.endTue = this.formatTime(response.data.value[clientValue].EndTuesday)
+                    this.form.endWed = this.formatTime(response.data.value[clientValue].EndWednesday)
+                    this.form.endThur = this.formatTime(response.data.value[clientValue].EndThursday)
+                    this.form.endFri = this.formatTime(response.data.value[clientValue].EndFriday)
+                    this.form.endSat = this.formatTime(response.data.value[clientValue].EndSaturday)
+                    this.form.endSun = this.formatTime(response.data.value[clientValue].EndSunday)
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })
             })
             .catch((error)=>{
                 console.log(error);
@@ -392,7 +417,6 @@ export default {
         }
     },
     mounted: function(){
-
         axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
         .then((response) => {
             console.log(response);
@@ -404,6 +428,13 @@ export default {
         .catch((error) => {
             console.log(error);
         });
+    },
+    methods:{
+        formatTime(time){
+            var timeStamp = moment(time, moment.HTML5_FMT.TIME).format('HH:mm');
+            return timeStamp;
+        }
+
     }
 }
 </script>
