@@ -4,7 +4,7 @@
     <b-form-group id="clientList"
                 label="Client Search:"
                 label-for="clientList">
-        <b-form-select v-on:select="checkSelected" v-model="selected" :options="option" />
+        <b-form-select v-on:input="populateForm" v-model="selected" :options="option" />
     </b-form-group>
   </div>
     <!-- <b-button v-if="!update" @click="update=true" type="primary">Update Client</b-button>
@@ -354,6 +354,8 @@ export default {
       },
         selected: null,
         option: [],
+        clients: [],
+        selectedClient: null,
         state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -373,7 +375,7 @@ export default {
     }
   },
     computed:{   
-        checkSelected() {                                                                    
+        populateForm() {                                                                    
             console.log(this.selected);
             var clientValue = this.selected - 1;
             axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
@@ -421,52 +423,53 @@ export default {
                     this.form.endFri = this.formatTime(clientTime.EndFriday)
                     this.form.endSat = this.formatTime(clientTime.EndSaturday)
                     this.form.endSun = this.formatTime(clientTime.EndSunday)
-                    axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds')
-                    .then((response)=>{
-                        var clientMealResponse = response.data.value[clientValue];
-                        if(clientMealResponse == null || undefined){
-                            this.form.meats = ''
-                            this.form.meatAvoid = ''
-                            this.form.cheese = ''
-                            this.form.cheeseAvoid = ''
-                            this.form.grains = ''
-                            this.form.grainsAvoid = ''
-                            this.form.spice = ''
-                            this.form.other = ''
-                            this.form.allergies = ''
-                            this.form.dietRestrictions = ''
-                            this.form.mainDish = ''
-                            this.form.storageContainers = ''
-                            this.form.stove = ''
-                            this.form.organic = ''
-                            this.form.groceryStore = ''
-                            this.form.mealStructure = ''
-                            this.form.notes = ''
-                        }
-                        console.log(response.data.value[clientValue])
-                        this.form.meats = clientMealResponse.PreferredMeats
-                        this.form.meatAvoid = clientMealResponse.MeatsToAvoid
-                        this.form.cheese = clientMealResponse.PreferredCheeses
-                        this.form.cheeseAvoid = clientMealResponse.CheesesToAvoid
-                        this.form.grains = clientMealResponse.PreferredGrains
-                        this.form.grainsAvoid = clientMealResponse.GrainsToAvoid
-                        this.form.spice = clientMealResponse.SpiceLevel
-                        this.form.other = clientMealResponse.OtherToAvoid
-                        this.form.allergies = clientMealResponse.Allergies
-                        this.form.dietRestrictions = clientMealResponse.DietRestrictions
-                        this.form.mainDish = clientMealResponse.MainDishSoupSaladStew
-                        this.form.storageContainers = clientMealResponse.StoreContainers
-                        this.form.stove = clientMealResponse.StoveOven
-                        this.form.organic = clientMealResponse.OrganicMeals
-                        this.form.groceryStore = clientMealResponse.PreferredGroceryStore
-                        this.form.mealStructure = clientMealResponse.MealSize
-                        this.form.notes = clientMealResponse.ExtraNotes
+                    // axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds' + clientValue)
+                    // .then((response)=>{
+                    //     var clientMealResponse = response.data.value[clientValue];
+                    //     if(clientMealResponse == null || undefined){
+                    //         this.form.meats = ''
+                    //         this.form.meatAvoid = ''
+                    //         this.form.cheese = ''
+                    //         this.form.cheeseAvoid = ''
+                    //         this.form.grains = ''
+                    //         this.form.grainsAvoid = ''
+                    //         this.form.spice = ''
+                    //         this.form.other = ''
+                    //         this.form.allergies = ''
+                    //         this.form.dietRestrictions = ''
+                    //         this.form.mainDish = ''
+                    //         this.form.storageContainers = ''
+                    //         this.form.stove = ''
+                    //         this.form.organic = ''
+                    //         this.form.groceryStore = ''
+                    //         this.form.mealStructure = ''
+                    //         this.form.notes = ''
+                    //     }
+                    //     console.log(response.data.value[clientValue])
+                    //     this.form.meats = clientMealResponse.PreferredMeats
+                    //     this.form.meatAvoid = clientMealResponse.MeatsToAvoid
+                    //     this.form.cheese = clientMealResponse.PreferredCheeses
+                    //     this.form.cheeseAvoid = clientMealResponse.CheesesToAvoid
+                    //     this.form.grains = clientMealResponse.PreferredGrains
+                    //     this.form.grainsAvoid = clientMealResponse.GrainsToAvoid
+                    //     this.form.spice = clientMealResponse.SpiceLevel
+                    //     this.form.other = clientMealResponse.OtherToAvoid
+                    //     this.form.allergies = clientMealResponse.Allergies
+                    //     this.form.dietRestrictions = clientMealResponse.DietRestrictions
+                    //     this.form.mainDish = clientMealResponse.MainDishSoupSaladStew
+                    //     this.form.storageContainers = clientMealResponse.StoreContainers
+                    //     this.form.stove = clientMealResponse.StoveOven
+                    //     this.form.organic = clientMealResponse.OrganicMeals
+                    //     this.form.groceryStore = clientMealResponse.PreferredGroceryStore
+                    //     this.form.mealStructure = clientMealResponse.MealSize
+                    //     this.form.notes = clientMealResponse.ExtraNotes
                         
-                    })
+                    // })
+                    this.getClientNeeds(clientValue);
                 })
-                .catch((error)=>{
-                    console.log(error)
-                })
+                // .catch((error)=>{
+                //     console.log(error)
+                // })
             })
             .catch((error)=>{
                 console.log(error);
@@ -491,6 +494,56 @@ export default {
         formatTime(time){
             var timeStamp = moment(time, moment.HTML5_FMT.TIME).format('HH:mm');
             return timeStamp;
+        },
+        // getClientNeeds(){
+        //     axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+        //     .then((response)=>{
+        //         console.log(response)
+        //         this.clients = response.data.value.filter(value => value.PersonId == this.selected)
+        //         console.log(this.clients)
+        //         // axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+        //         // .then((response)=>{
+
+        //         // })
+        //     })
+        //     .catch((error)=>{
+        //         console.log(error)
+        //     })
+        // }
+        getClientNeeds(currentClient){
+            axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+            .then((response)=> {
+                console.log(response)
+                console.log(this.clientValue)
+                this.selectedClient = response.data.value.filter(value => value.PersonId === currentClient)
+                // var selectedClientValue = this.selectedClientValue;
+                console.log(this.selectedClient)
+                // axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds')
+                // .then((response)=>{
+                //     console.log(response.data.value[this.selectedClient])
+                    // this.form.meats = clientMealResponse.PreferredMeats
+                    // this.form.meatAvoid = clientMealResponse.MeatsToAvoid
+                    // this.form.cheese = clientMealResponse.PreferredCheeses
+                    // this.form.cheeseAvoid = clientMealResponse.CheesesToAvoid
+                    // this.form.grains = clientMealResponse.PreferredGrains
+                    // this.form.grainsAvoid = clientMealResponse.GrainsToAvoid
+                    // this.form.spice = clientMealResponse.SpiceLevel
+                    // this.form.other = clientMealResponse.OtherToAvoid
+                    // this.form.allergies = clientMealResponse.Allergies
+                    // this.form.dietRestrictions = clientMealResponse.DietRestrictions
+                    // this.form.mainDish = clientMealResponse.MainDishSoupSaladStew
+                    // this.form.storageContainers = clientMealResponse.StoreContainers
+                    // this.form.stove = clientMealResponse.StoveOven
+                    // this.form.organic = clientMealResponse.OrganicMeals
+                    // this.form.groceryStore = clientMealResponse.PreferredGroceryStore
+                    // this.form.mealStructure = clientMealResponse.MealSize
+                    // this.form.notes = clientMealResponse.ExtraNotes
+                    
+                // })
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
         }
 
     }
