@@ -322,15 +322,14 @@ export default {
         zip: '',
         meats: '',
         meatAvoid: '',
-        meatCookPref: '',
         cheese: '',
         cheeseAvoid: '',
         grains: '',
+        grainsAvoid: '',
         spice: '',
         other: '',
         allergies: '',
         dietRestrictions: '',
-        dietGoals: '',
         mainDish: '',
         storageContainers: false,
         stove: false,
@@ -354,7 +353,7 @@ export default {
         endSun: ''
       },
         selected: null,
-        option: [''],
+        option: [],
         state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -391,20 +390,79 @@ export default {
                 axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities')
                 .then((response)=>{
                     console.log(response)
-                    this.form.mon = this.formatTime(response.data.value[clientValue].StartMonday)
-                    this.form.tue = this.formatTime(response.data.value[clientValue].StartTuesday)
-                    this.form.wed = this.formatTime(response.data.value[clientValue].StartWednesday)
-                    this.form.thur = this.formatTime(response.data.value[clientValue].StartThursday)
-                    this.form.fri = this.formatTime(response.data.value[clientValue].StartFriday)
-                    this.form.sat = this.formatTime(response.data.value[clientValue].StartSaturday)
-                    this.form.sun = this.formatTime(response.data.value[clientValue].StartSunday)
-                    this.form.endMon = this.formatTime(response.data.value[clientValue].EndMonday)
-                    this.form.endTue = this.formatTime(response.data.value[clientValue].EndTuesday)
-                    this.form.endWed = this.formatTime(response.data.value[clientValue].EndWednesday)
-                    this.form.endThur = this.formatTime(response.data.value[clientValue].EndThursday)
-                    this.form.endFri = this.formatTime(response.data.value[clientValue].EndFriday)
-                    this.form.endSat = this.formatTime(response.data.value[clientValue].EndSaturday)
-                    this.form.endSun = this.formatTime(response.data.value[clientValue].EndSunday)
+                    var clientTime = response.data.value[clientValue];
+                    if(clientTime == null || undefined){
+                        this.form.mon = '',
+                        this.form.tue = '',
+                        this.form.wed = '',
+                        this.form.thur = '',
+                        this.form.fri = '',
+                        this.form.sat = '',
+                        this.form.sun = '',
+                        this.form.endMon = '',
+                        this.form.endTue = '',
+                        this.form.endWed = '',
+                        this.form.endThur = '',
+                        this.form.endFri = '',
+                        this.form.endSat = '',
+                        this.form.endSun = ''
+                    }
+                    this.form.mon = this.formatTime(clientTime.StartMonday)
+                    this.form.tue = this.formatTime(clientTime.StartTuesday)
+                    this.form.wed = this.formatTime(clientTime.StartWednesday)
+                    this.form.thur = this.formatTime(clientTime.StartThursday)
+                    this.form.fri = this.formatTime(clientTime.StartFriday)
+                    this.form.sat = this.formatTime(clientTime.StartSaturday)
+                    this.form.sun = this.formatTime(clientTime.StartSunday)
+                    this.form.endMon = this.formatTime(clientTime.EndMonday)
+                    this.form.endTue = this.formatTime(clientTime.EndTuesday)
+                    this.form.endWed = this.formatTime(clientTime.EndWednesday)
+                    this.form.endThur = this.formatTime(clientTime.EndThursday)
+                    this.form.endFri = this.formatTime(clientTime.EndFriday)
+                    this.form.endSat = this.formatTime(clientTime.EndSaturday)
+                    this.form.endSun = this.formatTime(clientTime.EndSunday)
+                    axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds')
+                    .then((response)=>{
+                        var clientMealResponse = response.data.value[clientValue];
+                        if(clientMealResponse == null || undefined){
+                            this.form.meats = ''
+                            this.form.meatAvoid = ''
+                            this.form.cheese = ''
+                            this.form.cheeseAvoid = ''
+                            this.form.grains = ''
+                            this.form.grainsAvoid = ''
+                            this.form.spice = ''
+                            this.form.other = ''
+                            this.form.allergies = ''
+                            this.form.dietRestrictions = ''
+                            this.form.mainDish = ''
+                            this.form.storageContainers = ''
+                            this.form.stove = ''
+                            this.form.organic = ''
+                            this.form.groceryStore = ''
+                            this.form.mealStructure = ''
+                            this.form.notes = ''
+                        }
+                        console.log(response.data.value[clientValue])
+                        this.form.meats = clientMealResponse.PreferredMeats
+                        this.form.meatAvoid = clientMealResponse.MeatsToAvoid
+                        this.form.cheese = clientMealResponse.PreferredCheeses
+                        this.form.cheeseAvoid = clientMealResponse.CheesesToAvoid
+                        this.form.grains = clientMealResponse.PreferredGrains
+                        this.form.grainsAvoid = clientMealResponse.GrainsToAvoid
+                        this.form.spice = clientMealResponse.SpiceLevel
+                        this.form.other = clientMealResponse.OtherToAvoid
+                        this.form.allergies = clientMealResponse.Allergies
+                        this.form.dietRestrictions = clientMealResponse.DietRestrictions
+                        this.form.mainDish = clientMealResponse.MainDishSoupSaladStew
+                        this.form.storageContainers = clientMealResponse.StoreContainers
+                        this.form.stove = clientMealResponse.StoveOven
+                        this.form.organic = clientMealResponse.OrganicMeals
+                        this.form.groceryStore = clientMealResponse.PreferredGroceryStore
+                        this.form.mealStructure = clientMealResponse.MealSize
+                        this.form.notes = clientMealResponse.ExtraNotes
+                        
+                    })
                 })
                 .catch((error)=>{
                     console.log(error)
