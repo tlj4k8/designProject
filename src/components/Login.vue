@@ -1,38 +1,29 @@
 <template>
     <div class="login">
-        <b-card bg-variant="light" class= "card">
+        <div class="logo">
+            <img src="../assets/saltedChefLogo.jpg" alt="saltedChefPic"/>
+        </div>
         <div class="form">
-            <h1>Welcome to Salted Chef!</h1>
             <div class="flexGroup">
             <b-form ref="form" @submit.prevent="handleSubmit" :model="form" :rules="rules" v-if="show">
-                <b-form-group class="flex" 
-                            id="email"
-                            label="Email address:"
-                            label-for="email">
-                <b-form-input id="email"
-                            type="email"
-                            v-model="form.email"
-                            required
-                            placeholder="Enter email">
-                </b-form-input>
-                </b-form-group>
-                <b-form-group class="flex" 
-                            id="password"
-                            label="Password:"
-                            label-for="password">
-                <b-form-input id="password"
-                            type="password"
-                            v-model="form.password"
-                            auto-complete="off"
-                            required
-                            placeholder="Enter password">
-                </b-form-input>
-                </b-form-group>
-                <b-button type="submit" variant="primary">Login</b-button>
+            <b-row class="flex">
+                <b-col sm="2"><label for="email">USERNAME</label></b-col>
+                <b-col sm="10">
+                    <b-form-input class="input" id="email" type="email" v-model="form.email" required placeholder="Enter email"/>
+                </b-col>
+            </b-row>
+            <b-row class="flex">
+                <b-col sm="2"><label for="password">PASSWORD</label></b-col>
+                <b-col sm="10">
+                    <b-form-input class="input" id="password" type="password" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
+                </b-col>
+            </b-row>
             </b-form>
-            </div>
         </div>
-        </b-card>
+        <div class="buttonDiv">
+            <b-button to="/dash" type="submit" class="loginButton">Login</b-button>
+        </div>
+        </div>
     </div>
 </template>
 
@@ -86,24 +77,46 @@ export default {
 
 <style scoped>
 .login{
-    margin-top: 10em;
+    margin-top: 9em;
 }
 h1{
     text-align:center;
 }
+.input{
+    border-top:none;
+    border-right: none;
+    border-left: none;
+}
 .flexGroup{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     margin: 20px 10%;
     padding: 10px 15px;
 }
 .flex{
-    width: 50vw;
+    width: 55vw;
+    padding: 15px 15px;
 }
+.logo, .buttonDiv, .flexGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.loginButton{
+    width: 15%;
+    color:black;
+    background-color: white;
+    border-color: lightgray;
+}
+
 @media(max-width: 430px){
     .flex{
-        width: 70vw;
+        width: 90vw;
+        padding: 5px 1px;
+    }
+    .loginButton{
+        width: 95%;
+    }
+    img{
+        width: 70%;
     }
 }
 </style>
