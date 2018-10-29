@@ -35,7 +35,7 @@ export default {
 }    
 </script>
 
-<style scope>
+<style scoped>
 /* .bar {
     display: flex;
     position: fixed;
