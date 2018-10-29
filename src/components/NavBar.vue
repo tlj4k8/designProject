@@ -1,4 +1,4 @@
-<template>
+<template> 
     <!-- <div class="bar">    
         <div class="menu">
                 <router-link to="/dash" class="flex"><b-button>Dashboard</b-button></router-link>
