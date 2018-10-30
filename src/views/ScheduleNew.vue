@@ -22,7 +22,7 @@ export default {
   margin: 15px 15px;
 }
 .scheduleNewPage{
-  margin-top: 10em;
+  margin-top: 8em;
 }
 h1{
   text-align: center;

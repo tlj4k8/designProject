@@ -22,7 +22,7 @@ export default {
   margin: 15px 15px;
 }
 .chef{
-  margin-top: 10em;
+  margin-top: 8em;
 }
 .buttons{
   width: 80vw;

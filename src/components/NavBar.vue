@@ -17,7 +17,7 @@
                 <router-link class="nav-links" to="/menuDash">Menu</router-link>
                 <router-link class="nav-links" to="/chefDash">Chef</router-link>
                 <router-link class="nav-links" to="/employeeDash">Employee</router-link>
-                <router-link class="nav-links" to="/availability">Availability</router-link>
+                <router-link class="nav-links" to="/scheduleDash">Schedule</router-link>
 		    </div>
 	      </div>
     </transition>

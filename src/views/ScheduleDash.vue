@@ -1,23 +1,21 @@
 <template>
-  <div class="chefDash">
-    <h1>Chef Dashboard</h1>
+  <div class="scheduleDash">
+    <h1>Menu Dashboard</h1>
     <b-button-group vertical class="dashGroup">
-        <b-button to="/chef">View Chef</b-button>
+        <b-button to="/scheduleNew">Create Schedule</b-button>
+        <b-button to="/availability">View Schedule</b-button>
     </b-button-group>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ChefDash",
-  components: {
-
-  }
+  name: "ScheduleDash"
 };
 </script>
 
 <style scoped>
-.chefDash{
+.scheduleDash{
   margin-top: 8em;
 }
 .dashGroup{

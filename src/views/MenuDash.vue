@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 .menuDash{
-  margin-top: 10em;
+  margin-top: 8em;
 }
 .dashGroup{
   width: 80vw;

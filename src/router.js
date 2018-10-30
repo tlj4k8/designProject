@@ -16,6 +16,7 @@ import EmployeeDash from './views/EmployeeDash.vue';
 import EmployeeView from './views/EmployeeView.vue';
 import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
+import ScheduleDash from './views/ScheduleDash.vue';
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/scheduleNew',
       name: 'scheduleNew',
       component: ScheduleNew
+    },
+    {
+      path: '/scheduleDash',
+      name: 'scheduleDash',
+      component: ScheduleDash
     },
     {
       path: '/clientDash',

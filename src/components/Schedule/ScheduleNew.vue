@@ -2,7 +2,7 @@
     <div class="scheduleNew">
         <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
         <div class="employeeSelect">
-        <h3> Select Chef </h3>
+        <h3> Select Employee </h3>
         <hr/>
         <b-form-group id="employee"
                     class="select"
@@ -10,7 +10,19 @@
                     breakpoint="md"
                     label="Employees"
                     label-for="employee">
-        <b-form-select required v-model="form.selected" :options="options" class="mb-1" />
+        <b-form-select required v-model="form.selectedEmployee" :options="employeeOptions" class="mb-1" />
+        </b-form-group>
+        </div>
+        <div class="clientSelect">
+        <h3> Select Chef </h3>
+        <hr/>
+        <b-form-group id="client"
+                    class="select"
+                    :label-cols="4"
+                    breakpoint="md"
+                    label="Clients"
+                    label-for="client">
+        <b-form-select required v-model="form.selectedClient" :options="clientOptions" class="mb-1" />
         </b-form-group>
         </div>
             <div class="scheduleVisit">
@@ -60,9 +72,17 @@ export default {
             date: '',
             startTime: '',
             endTime: '',
-            selected: null
+            selectedEmployee: null,
+            selectedClient: null
         },
-        options: [
+        clientOptions: [
+            { value: 'client1', text: 'Client1' },
+            { value: 'client2', text: 'client2' },
+            { value: 'client3', text: 'client3' },
+            { value: 'client4', text: 'client4' },
+            { value: 'client5', text: 'client6' }
+        ],
+        employeeOptions: [
             { value: 'client1', text: 'Client1' },
             { value: 'client2', text: 'client2' },
             { value: 'client3', text: 'client3' },
