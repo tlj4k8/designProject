@@ -3,7 +3,7 @@
     <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <div class="employee">
     <div class="employeeSelect">
-    <h3>Select Chef</h3>
+    <h3>Select Employee</h3>
     <hr/>
         <b-form-group id="employee"
                     class="select"
@@ -26,7 +26,7 @@
         </b-form-group>
         <b-form-group class="personflex"
                         id="password"
-                        label="password:"
+                        label="Password:"
                         label-for="password">
             <b-form-input id="password"
                         type="password"
@@ -149,78 +149,78 @@ export default {
   data() {
     return {
       form: {
-        username: "",
-        password: "",
-        email: "",
-        firstName: "",
-        lastName: "",
-        phone: "",
-        address: "",
-        addressTwo: "",
+        username: '',
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        address: '',
+        addressTwo: '',
         state: null,
-        city: "",
-        zip: ""
+        city: '',
+        zip: ''
       },
       selected: null,
       options: [
-        { value: "client1", text: "Client1" },
-        { value: "client2", text: "client2" },
-        { value: "client3", text: "client3" },
-        { value: "client4", text: "client4" },
-        { value: "client5", text: "client6" }
+        { value: 'client1', text: 'Client1' },
+        { value: 'client2', text: 'client2' },
+        { value: 'client3', text: 'client3' },
+        { value: 'client4', text: 'client4' },
+        { value: 'client5', text: 'client6' }
       ],
       state: [
-        { text: "Select One", value: null },
-        "AL",
-        "AK",
-        "AZ",
-        "AR",
-        "CA",
-        "CO",
-        "CT",
-        "DE",
-        "FL",
-        "GA",
-        "HI",
-        "ID",
-        "IL",
-        "IN",
-        "IA",
-        "KS",
-        "KY",
-        "LA",
-        "ME",
-        "MD",
-        "MA",
-        "MI",
-        "MN",
-        "MO",
-        "MS",
-        "MT",
-        "NE",
-        "NY",
-        "NV",
-        "NH",
-        "NJ",
-        "NM",
-        "NC",
-        "ND",
-        "OH",
-        "OK",
-        "OR",
-        "PA",
-        "RI",
-        "SC",
-        "SD",
-        "TN",
-        "TX",
-        "UT",
-        "VT",
-        "VA",
-        "WA",
-        "WV",
-        "WI",
-        "WY"
+        { text: 'Select One', value: null },
+        'AL',
+        'AK',
+        'AZ',
+        'AR',
+        'CA',
+        'CO',
+        'CT',
+        'DE',
+        'FL',
+        'GA',
+        'HI',
+        'ID',
+        'IL',
+        'IN',
+        'IA',
+        'KS',
+        'KY',
+        'LA',
+        'ME',
+        'MD',
+        'MA',
+        'MI',
+        'MN',
+        'MO',
+        'MS',
+        'MT',
+        'NE',
+        'NY',
+        'NV',
+        'NH',
+        'NJ',
+        'NM',
+        'NC',
+        'ND',
+        'OH',
+        'OK',
+        'OR',
+        'PA',
+        'RI',
+        'SC',
+        'SD',
+        'TN',
+        'TX',
+        'UT',
+        'VT',
+        'VA',
+        'WA',
+        'WV',
+        'WI',
+        'WY'
       ],
       show: true
     };
@@ -233,8 +233,8 @@ export default {
     onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
-      this.form.email = "";
-      this.form.name = "";
+      this.form.email = '';
+      this.form.name = '';
       this.form.food = null;
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
