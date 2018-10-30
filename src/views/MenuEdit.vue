@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .menuEdit {
-  margin-top: 10em;
+  margin-top: 8em;
 }
 h1 {
   text-align: center;

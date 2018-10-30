@@ -58,7 +58,7 @@ export default {
     margin: 15px 15px;
 }
 .employeeView{
-    margin-top: 10em;
+    margin-top: 8em;
 }
 .filter{
     padding: 10px;

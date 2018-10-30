@@ -6,7 +6,7 @@
         <b-button to="/menuDash">Menu</b-button>
         <b-button to="/chefDash">Chef</b-button>
         <b-button to="/employeeDash">Employee</b-button>
-        <b-button to="/availability">Availability</b-button>
+        <b-button to="/scheduleDash">Schedule</b-button>
     </b-button-group>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .dashboard{
-  margin-top: 10em;
+  margin-top: 8em;
 }
 .dashGroup{
   width: 80vw;

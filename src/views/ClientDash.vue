@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .clientDash{
-  margin-top: 10em;
+  margin-top: 8em;
 }
 .dashGroup{
   width: 80vw;
