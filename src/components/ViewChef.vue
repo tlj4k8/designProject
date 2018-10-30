@@ -7,7 +7,7 @@
                     class="select"
                     :label-cols="4"
                     breakpoint="md"
-                    label="Chefs:"
+                    label="Select Chef:"
                     label-for="chef">
         <b-form-select v-model="selected" :options="options" class="mb-1" />
         </b-form-group>
@@ -277,12 +277,24 @@ hr{
     flex-grow: 1;
     padding: 0 2px;
 }
+.flexGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.flex{
+    flex-grow: 1;
+    padding: 0 2px;
+}
 .table{
     overflow-x:auto;
     padding: 5px 15px;
 }
 @media(max-width: 440px){
   .zipflexGroup{
+    flex-wrap: wrap;
+  }
+  .flexGroup{
     flex-wrap: wrap;
   }
 }
