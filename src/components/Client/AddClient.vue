@@ -242,6 +242,13 @@
                       type="text"
                       v-model="form.dietRestrictions"/>
       </b-form-group>
+      <b-form-group id="dietGoals"
+                    label="Diet Goals:"
+                    label-for="dietGoals">
+        <b-form-input id="dietGoals"
+                      type="text"
+                      v-model="form.dietGoals"/>
+      </b-form-group>
       <b-form-group id="mainDish"
                     label="Main Dish:"
                     label-for="mainDish">
@@ -308,6 +315,7 @@ export default {
         other: '',
         allergies: '',
         dietRestrictions: '',
+        dietGoals: '',
         mainDish: '',
         storageContainers: false,
         stove: false,
@@ -343,89 +351,130 @@ export default {
     methods: {
         handleSubmit(form){
           var self = this;
-          this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People', {
-              FirstName: this.form.firstName,
-              LastName: this.form.lastName,
-              CellPhone: this.form.phone,
-              Email: this.form.email,
+          this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients', {
+              ClFirstName: this.form.firstName,
+              ClLastName: this.form.lastName,
+              ClCellPhone: this.form.phone,
+              ClEmail: this.form.email,
               Address1: this.form.address,
               Address2: this.form.addressTwo,
               City: this.form.city,
               State: this.form.state,
               ZipCode: this.form.zip,
-              IsActive: this.form.isActive
+              ClIsActive: this.form.isActive,
+              ClStartMonday: this.formatTime(this.form.mon),
+              ClEndMonday: this.formatTime(this.form.endMon),
+              ClStartTuesday: this.formatTime(this.form.tue),
+              ClEndTuesday: this.formatTime(this.form.endTue),
+              ClStartWednesday: this.formatTime(this.form.wed),
+              ClEndWednesday: this.formatTime(this.form.endWed),
+              ClStartThursday: this.formatTime(this.form.thur),
+              ClEndThursday: this.formatTime(this.form.endThur),
+              ClStartFriday: this.formatTime(this.form.fri),
+              ClEndFriday: this.formatTime(this.form.endFri),
+              ClStartSaturday: this.formatTime(this.form.sat),
+              ClEndSaturday: this.formatTime(this.form.endSat),
+              ClStartSunday: this.formatTime(this.form.sun),
+              ClEndSunday: this.formatTime(this.form.endSun),
+              PreferredMeats: this.form.meats,
+              MeatsToAvoid: this.form.meatAvoid,
+              PreferredCheeses: this.form.cheese,
+              CheesesToAvoid: this.form.cheeseAvoid,
+              PreferredGrains: this.form.grains,
+              GrainsToAvoid: this.form.grainsAvoid,
+              SpiceLevel: this.form.spice,
+              OtherToAvoid: this.form.other,
+              Allergies: this.form.allergies,
+              DietRestrictions: this.form.dietRestrictions,
+              DietGoals: this.form.dietGoals,
+              MainDishSoupSaladStew: this.form.mainDish,
+              StoreContainers: this.form.storageContainers,
+              StoveOven: this.form.stove,
+              OrganicMeals: this.form.organic,
+              PreferredGroceryStore: this.form.groceryStore,
+              MealSize: this.form.mealStructure,
+              ExtraNotes: this.form.notes
           })
-          .then((response) => {
-            console.log(response);
-            console.log("USER ID:" + response.data.Id);
-            this.userId = response.data.Id;
-            this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
-              PersonId: this.userId,
-              CurrentChefId: 1,
-	            ImportantNotes: "I hope this all works"
-            })
-            .then((response)=>{
-              console.log(response);
-              console.log("CLIENT ID:" + response.data.Id);
-              this.clientId = response.data.Id;
-              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities',{
-                PersonId: this.userId,
-                StartMonday: this.formatTime(this.form.mon),
-                EndMonday: this.formatTime(this.form.endMon),
-                StartTuesday: this.formatTime(this.form.tue),
-                EndTuesday: this.formatTime(this.form.endTue),
-                StartWednesday: this.formatTime(this.form.wed),
-                EndWednesday: this.formatTime(this.form.endWed),
-                StartThursday: this.formatTime(this.form.thur),
-                EndThursday: this.formatTime(this.form.endThur),
-                StartFriday: this.formatTime(this.form.fri),
-                EndFriday: this.formatTime(this.form.endFri),
-                StartSaturday: this.formatTime(this.form.sat),
-                EndSaturday: this.formatTime(this.form.endSat),
-                StartSunday: this.formatTime(this.form.sun),
-                EndSunday: this.formatTime(this.form.endSun)
-              })
-              .then((response)=>{
-              console.log(response);
-              console.log("AVAILABILITY ID:" + response.data.Id);
-              this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
-                ClientId: this.clientId,
-                PreferredMeats: this.form.meats,
-                MeatsToAvoid: this.form.meatAvoid,
-                PreferredCheeses: this.form.cheese,
-                CheesesToAvoid: this.form.cheeseAvoid,
-                PreferredGrains: this.form.grains,
-                GrainsToAvoid: this.form.grainsAvoid,
-                SpiceLevel: this.form.spice,
-                OtherToAvoid: this.form.other,
-                Allergies: this.form.allergies,
-                DietRestrictions: this.form.dietRestrictions,
-                MainDishSoupSaladStew: this.form.mainDish,
-                StoreContainers: this.form.storageContainers,
-                StoveOven: this.form.stove,
-                OrganicMeals: this.form.organic,
-                PreferredGroceryStore: this.form.groceryStore,
-                MealSize: this.form.mealStructure,
-                ExtraNotes: this.form.notes
-              })
-              .then((response)=>{
-                console.log(response);
-                console.log("NEEDS ID:" + response.data.Id);
-              })
-              .catch((error)=>{
-                console.log(error)
-              })
-             })
-            })
+          .then((response)=>{
+            console.log(response)
+          })
+          .catch((error)=>{
+            console.log(error);
           })
         },
-            formatTime(time){
-              var timeStamp = time.split(':');
-              var timeHour = timeStamp[0];
-              var timeMinutes = timeStamp[1];
-              var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
-              return formatedTime;
-    }
+          // .then((response) => {
+          //   console.log(response);
+          //   console.log("USER ID:" + response.data.Id);
+          //   this.userId = response.data.Id;
+          //   this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
+          //     PersonId: this.userId,
+          //     CurrentChefId: 1,
+	        //     ImportantNotes: "I hope this all works"
+          //   })
+          //   .then((response)=>{
+          //     console.log(response);
+          //     console.log("CLIENT ID:" + response.data.Id);
+          //     this.clientId = response.data.Id;
+          //     this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities',{
+          //       PersonId: this.userId,
+          //       ClStartMonday: this.formatTime(this.form.mon),
+          //       ClEndMonday: this.formatTime(this.form.endMon),
+          //       ClStartTuesday: this.formatTime(this.form.tue),
+          //       ClEndTuesday: this.formatTime(this.form.endTue),
+          //       ClStartWednesday: this.formatTime(this.form.wed),
+          //       ClEndWednesday: this.formatTime(this.form.endWed),
+          //       ClStartThursday: this.formatTime(this.form.thur),
+          //       ClEndThursday: this.formatTime(this.form.endThur),
+          //       ClStartFriday: this.formatTime(this.form.fri),
+          //       ClEndFriday: this.formatTime(this.form.endFri),
+          //       ClStartSaturday: this.formatTime(this.form.sat),
+          //       ClEndSaturday: this.formatTime(this.form.endSat),
+          //       ClStartSunday: this.formatTime(this.form.sun),
+          //       ClEndSunday: this.formatTime(this.form.endSun)
+          //     })
+              // .then((response)=>{
+              // console.log(response);
+              // console.log("AVAILABILITY ID:" + response.data.Id);
+              // this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
+              //   ClientId: this.clientId,
+              //   PreferredMeats: this.form.meats,
+              //   MeatsToAvoid: this.form.meatAvoid,
+              //   PreferredCheeses: this.form.cheese,
+              //   CheesesToAvoid: this.form.cheeseAvoid,
+              //   PreferredGrains: this.form.grains,
+              //   GrainsToAvoid: this.form.grainsAvoid,
+              //   SpiceLevel: this.form.spice,
+              //   OtherToAvoid: this.form.other,
+              //   Allergies: this.form.allergies,
+              //   DietRestrictions: this.form.dietRestrictions,
+              //   DietGoals: this.form.dietGoals,
+              //   MainDishSoupSaladStew: this.form.mainDish,
+              //   StoreContainers: this.form.storageContainers,
+              //   StoveOven: this.form.stove,
+              //   OrganicMeals: this.form.organic,
+              //   PreferredGroceryStore: this.form.groceryStore,
+              //   MealSize: this.form.mealStructure,
+              //   ExtraNotes: this.form.notes
+              // })
+              // .then((response)=>{
+              //   console.log(response);
+              //   console.log("NEEDS ID:" + response.data.Id);
+              // })
+              // .catch((error)=>{
+              //   console.log(error)
+              // })
+            //  })
+            // })
+          // })
+
+        // },
+      formatTime(time){
+        var timeStamp = time.split(':');
+        var timeHour = timeStamp[0];
+        var timeMinutes = timeStamp[1];
+        var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        return formatedTime;
+      }
     }
 
 }

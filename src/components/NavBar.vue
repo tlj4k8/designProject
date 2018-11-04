@@ -7,7 +7,7 @@
     </div> -->
   <div>
     <div class="menu">
-        <el-col class="menuLogo"><font-awesome-icon icon="coffee" @click="show = !show" class="fontAwesome"/></el-col>
+        <col class="menuLogo"><font-awesome-icon icon="coffee" @click="show = !show" class="fontAwesome"/>
     </div>
     <transition name="fade">
         <div class="overlay" v-if="show" >
