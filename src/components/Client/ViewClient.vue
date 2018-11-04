@@ -4,7 +4,7 @@
     <b-form-group id="clientList"
                 label="Client Search:"
                 label-for="clientList">
-        <b-form-select v-model="selected" :options="option" />
+        <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
     </b-form-group>
   </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
@@ -295,14 +295,13 @@
                         v-model="form.notes"/>
         </b-form-group>
         </div>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 export default {
   data () {
     return {
@@ -350,7 +349,7 @@ export default {
         endSun: ''
       },
         selected: null,
-        option: [''],
+        option: [],
         state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -368,27 +367,87 @@ export default {
         ],
         show: true
     }
-  },
+    },
     methods:{
-
+        formatTime(time){
+            let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
+            return timeStamp;
+        }
+    },
+    computed: {
+        getClient(){
+            const client = this.selected - 1;
+            this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+            .then((response)=>{
+                let clientValue = response.data.value[client]
+                if(clientValue == null || undefined){
+                    this.form.mon = '',
+                    this.form.tue = '',
+                    this.form.wed = '',
+                    this.form.thur = '',
+                    this.form.fri = '',
+                    this.form.sat = '',
+                    this.form.sun = '',
+                    this.form.endMon = '',
+                    this.form.endTue = '',
+                    this.form.endWed = '',
+                    this.form.endThur = '',
+                    this.form.endFri = '',
+                    this.form.endSat = '',
+                    this.form.endSun = ''
+                }
+                this.form.firstName = clientValue.ClFirstName,
+                this.form.lastName = clientValue.ClLastName,
+                this.form.phone = clientValue.ClCellPhone,
+                this.form.email = clientValue.ClEmail,
+                this.form.address = clientValue.Address1,
+                this.form.addressTwo = clientValue.Address2,
+                this.form.city = clientValue.City,
+                this.form.state = clientValue.State,
+                this.form.zip = clientValue.ZipCode,
+                this.form.mon = this.formatTime(clientValue.ClStartMonday),
+                this.form.endMon = this.formatTime(clientValue.ClEndMonday),
+                this.form.tue = this.formatTime(clientValue.ClStartTuesday),
+                this.form.endTue = this.formatTime(clientValue.ClEndTuesday),
+                this.form.wed = this.formatTime(clientValue.ClStartWednesday),
+                this.form.endWed = this.formatTime(clientValue.ClEndWednesday),
+                this.form.thur = this.formatTime(clientValue.ClStartThursday),
+                this.form.endThur = this.formatTime(clientValue.ClEndThursday),
+                this.form.fri = this.formatTime(clientValue.ClStartFriday),
+                this.form.endFri = this.formatTime(clientValue.ClEndFriday),
+                this.form.sat = this.formatTime(clientValue.ClStartSaturday),
+                this.form.endSat = this.formatTime(clientValue.ClEndSaturday),
+                this.form.sun = this.formatTime(clientValue.ClStartSunday),
+                this.form.endSun = this.formatTime(clientValue.ClEndSunday),
+                this.form.meats = clientValue.PreferredMeats,
+                this.form.meatAvoid = clientValue.MeatsToAvoid,
+                this.form.cheese = clientValue.PreferredCheeses,
+                this.form.cheeseAvoid = clientValue.CheesesToAvoid,
+                this.form.grains = clientValue.PreferredGrains,
+                this.form.grainsAvoid = clientValue.GrainsToAvoid,
+                this.form.spice = clientValue.SpiceLevel,
+                this.form.other = clientValue.OtherToAvoid,
+                this.form.allergies = clientValue.Allergies,
+                this.form.dietRestrictions = clientValue.DietRestrictions,
+                this.form.dietGoals = clientValue.DietGoals,
+                this.form.mainDish = clientValue.MainDishSoupSaladStew,
+                this.form.storageContainers = clientValue.StoreContainers,
+                this.form.stove = clientValue.StoveOven,
+                this.form.organic = clientValue.OrganicMeals,
+                this.form.groceryStore = clientValue.PreferredGroceryStore,
+                this.form.mealStructure = clientValue.MealSize,
+                this.form.notes = clientValue.ExtraNotes
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        }
     },
     mounted: function(){
-
-        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/People')
-        // .then(json => {
-        //     this.form.firstName = json.data.value[1].FirstName,
-        //     this.form.lastName = json.data.value[1].LastName,
-        //     this.form.email = json.data.value[1].Email,
-        //     this.form.phone = json.data.value[1].CellPhone,
-        //     this.form.address = json.data.value[1].Address1,
-        //     this.form.addressTwo = json.data.value[1].Address2,
-        //     this.form.state = json.data.value[1].State,
-        //     this.form.city = json.data.value[1].City,
-        //     this.form.zip = json.data.value[1].ZipCode
-        // })
+        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
         .then((response) => {
             console.log(response);
-            this.option = response.data.value.map(value => (value.FirstName))
+            this.option = response.data.value.map(value => value.ClientId)
         })
         .catch((error) => {
             console.log(error);
