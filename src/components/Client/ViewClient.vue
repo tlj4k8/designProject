@@ -371,13 +371,11 @@ export default {
     methods:{
         formatTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
-            console.log(timeStamp)
             return timeStamp;
         }
     },
     computed: {
         getClient(){
-            // var self = this;
             const client = this.selected - 1;
             this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
             .then((response)=>{
