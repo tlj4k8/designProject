@@ -1,13 +1,13 @@
 <template>
     <div class="addMenu">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class="menu">
-        <b-form-group id="name"
+        <b-form-group id="menuName"
                         label="Name:"
-                        label-for="name">
-            <b-form-input id="name"
+                        label-for="menuName">
+            <b-form-input id="menuName"
                         type="text"
-                        v-model="form.name">
+                        v-model="form.menuName">
             </b-form-input>
         </b-form-group>
         <b-form-group id="ingrediants"
@@ -32,7 +32,7 @@
                         label="Servings:"
                         label-for="servings">
             <b-form-input id="servings"
-                        type="text"
+                        type="number"
                         v-model="form.servings">
             </b-form-input>
         </b-form-group>
@@ -64,21 +64,21 @@
         </b-form-group>
         </div>
     <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'menu',
+  name: 'addmenu',
   data () {
     return {
       form: {
-        name: '',
+        menuName: '',
         ingrediants: '',
         instructions: '',
-        servings: '',
+        servings: 0,
         time: '',
         mealType: '',
         menuNotes: ''
@@ -87,22 +87,22 @@ export default {
     }
   },
     methods: {
-        handleSubmit: function(form){
-            var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
-            }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Registration failed", {
-            confirmButtonText: 'OK'
-            });
+        handleSubmit(form){
+            this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Menus', {
+                Name: this.form.menuName,
+                Ingrendients: this.form.ingrediants,
+                Instructions: this.form.instructions,
+                Servings: this.form.servings,
+                Time: this.form.time,
+                MealType: this.form.mealType,
+                Notes: this.form.menuNotes
+            })
+            .then((response)=>{
+                console.log(response)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
         }
     }
 }
