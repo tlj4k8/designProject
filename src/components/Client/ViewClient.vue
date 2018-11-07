@@ -13,103 +13,110 @@
     <h3>Profile</h3>
     <hr/>
     <div class="flexGroup">
-      <b-form-group class="flex"
+      <!-- <b-form-group class="flex"
                     id="firstName"
                     label="First Name:"
-                    label-for="firstName">
-        <b-form-input id="firstName"
+                    label-for="firstName"> -->
+        <b-form-input class="input" id="firstName"
                       type="text"
                       v-model="form.firstName"
+                      placeholder="First Name"
                       required>
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group>
       <b-form-group class="flex"
                     id="lastName"
                     label="Last Name:"
-                    label-for="lastName">
-        <b-form-input id="lastName"
+                    label-for="lastName"> -->
+        <b-form-input class="input" id="lastName"
                       type="text"
                       v-model="form.lastName"
+                      placeholder="Last Name"
                       required>
         </b-form-input>
-        </b-form-group>
+        <!-- </b-form-group> -->
     </div>
     <div class="flexGroup">
-      <b-form-group class="flex"
+      <!-- <b-form-group class="flex"
                     id="email"
                     label="Email:"
-                    label-for="email">
-        <b-form-input id="email"
+                    label-for="email"> -->
+        <b-form-input class="input" id="email"
                       type="email"
                       v-model="form.email"
+                      placeholder="Email"
                       required>
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group>
       <b-form-group class="flex"
                     id="phone"
                     label="Phone:"
-                    label-for="phone">
-        <b-form-input id="phone"
+                    label-for="phone"> -->
+        <b-form-input class="input" id="phone"
                       type="text"
                       v-model="form.phone"
+                      placeholder="Phone"
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>
         </b-form-input>
-        </b-form-group>
+        <!-- </b-form-group> -->
         </div>
       <div class="flexGroup">
-      <b-form-group class="flex"
+      <!-- <b-form-group class="flex"
                     id="address"
                     label="Address:"
-                    label-for="address">
-        <b-form-input id="address"
+                    label-for="address"> -->
+        <b-form-input class="input" id="address"
                       type="text"
+                      placeholder="Address"
                       v-model="form.address"
                       required>
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group>
       <b-form-group class="flex"
                     id="addressTwo"
                     label="Address 2:"
-                    label-for="addressTwo">
-        <b-form-input id="addressTwo"
+                    label-for="addressTwo"> -->
+        <b-form-input class="input" id="addressTwo"
                       type="text"
                       v-model="form.addressTwo"
-                      placeholder="Optional">
+                      placeholder="Address 2 (Optional)">
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group> -->
       </div>
       <div class="flexGroup">
-      <b-form-group class="flex"
+      <!-- <b-form-group class="flex"
                     id="city"
                     label="City:"
-                    label-for="city">
-        <b-form-input id="city"
+                    label-for="city"> -->
+        <b-form-input class="input" id="city"
                       type="text"
+                      placeholder="City"
                       v-model="form.city"
                       required>
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group>
       <b-form-group class="flex"
                     id="state"
                     label="State:"
-                    label-for="state">
-        <b-form-select id="state"
+                    label-for="state"> -->
+        <b-form-select class="input" id="state"
                       :options="state"
                       required
                       v-model="form.state">
         </b-form-select>
-      </b-form-group>
+      <!-- </b-form-group>
       <b-form-group class="flex"
                     id="zip"
                     label="Zip Code:"
-                    label-for="zip">
-        <b-form-input id="zip"
+                    label-for="zip"> -->
+        <b-form-input class="input" id="zip"
                       type="text"
+                      placeholder="Zip Code"
                       v-model="form.zip"
                       required>
         </b-form-input>
-      </b-form-group>
+      <!-- </b-form-group> -->
     </div>
     </div>
     <div class="availability">
@@ -161,140 +168,163 @@
     <div class="needform">
     <h3>Client Need Assessment</h3>
     <hr/>
+    
         <div class="flexGroup">
-        <b-form-group id="stove"
+        <!-- <b-form-group id="stove"
                         class="flex"
                         label="Select if Client has a Stove:"
-                        label-for="stove">
+                        label-for="stove"> -->
+            <div class="card">
             <b-form-checkbox id="form.stove"
                         type="checkbox"
+                        placeholder="Select if Client has a Stove"
                         v-model="form.stove"/>
-        </b-form-group>
+                        <p>Select if Client has a Stove</p></div>
+        <!-- </b-form-group>
         <b-form-group id="organic"
                         class="flex"
                         label="Select if Client is Organic:"
-                        label-for="organic">
+                        label-for="organic"> -->
+            <div class="card">
             <b-form-checkbox id="form.organic"
                         type="checkbox"
                         v-model="form.organic"/>
-        </b-form-group>
+                        <p>Select if Client is Organic</p></div>
+        <!-- </b-form-group>
         <b-form-group id="storageContainers"
                         class="flex"
                         label="Select if Client has Storage Containers:"
-                        label-for="storageContainers">
+                        label-for="storageContainers"> -->
+            <div class="card">
             <b-form-checkbox id="form.storageContainers"
                         type="checkbox"
                         v-model="form.storageContainers"/>
-        </b-form-group>
+                        <p>Select if Client has Storage Containers</p></div>
+        <!-- </b-form-group> -->
         </div>
-        <b-form-group id="preferredMeat"
+        <!-- <b-form-group id="preferredMeat"
                         label="Preferred Meats:"
-                        label-for="preferredMeat">
-            <b-form-input id="preferredMeat"
+                        label-for="preferredMeat"> -->
+            <b-form-input class="input"
+                        id="preferredMeat"
                         type="text"
+                        placeholder="Preferred Meats"
                         v-model="form.meats"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="meatAvoid"
                         label="Meats to Avoid:"
-                        label-for="meatAvoid">
-            <b-form-input id="meatAvoid"
+                        label-for="meatAvoid"> -->
+            <b-form-input class="input"
+                        id="meatAvoid"
                         type="text"
+                        placeholder="Meats to Avoid"
                         v-model="form.meatAvoid"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="meatCookPreferrence"
                         label="Meat Cooked Preferrence:"
-                        label-for="meatCookPreferrence">
-            <b-form-input id="meatCookPreferrence"
+                        label-for="meatCookPreferrence"> -->
+            <b-form-input class="input" id="meatCookPreferrence"
                         type="text"
+                        placeholder="Meat Cooked Preferrence"
                         v-model="form.meatCookPref"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="preferredCheeses"
                         label="Preferred Cheeses:"
-                        label-for="preferredCheeses">
-            <b-form-input id="preferredCheeses"
+                        label-for="preferredCheeses"> -->
+            <b-form-input class="input" id="preferredCheeses"
                         type="text"
+                        placeholder="Preferred Cheeses"
                         v-model="form.cheese"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="cheeseAvoid"
                         label="Cheeses to Avoid:"
-                        label-for="cheeseAvoid">
-            <b-form-input id="cheeseAvoid"
+                        label-for="cheeseAvoid"> -->
+            <b-form-input class="input" id="cheeseAvoid"
                         type="text"
+                        placeholder="Cheeses to Avoid"
                         v-model="form.cheeseAvoid"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="preferredGrains"
                         label="Preferred Grains:"
-                        label-for="preferredGrains">
-            <b-form-input id="preferredGrains"
+                        label-for="preferredGrains"> -->
+            <b-form-input class="input" id="preferredGrains"
                         type="text"
+                        placeholder="Preferred Grains"
                         v-model="form.grains"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="spice"
                         label="Spice Level:"
-                        label-for="spice">
-            <b-form-input id="spice"
+                        label-for="spice"> -->
+            <b-form-input class="input" id="spice"
                         type="text"
-                        placeholder="ex. (1 - 10)"
+                        placeholder="Spice Level ex. (1 - 10)"
                         v-model="form.spice"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="other"
                         label="Other to Avoid:"
-                        label-for="other">
-            <b-form-input id="other"
+                        label-for="other"> -->
+            <b-form-input class="input" id="other"
                         type="text"
+                        placeholder="Other to Avoid"
                         v-model="form.other"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="allergies"
                         label="Allergies:"
-                        label-for="allergies">
-            <b-form-input id="allergies"
+                        label-for="allergies"> -->
+            <b-form-input class="input" id="allergies"
                         type="text"
+                        placeholder="Allergies"
                         v-model="form.allergies"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="dietRestrictions"
                         label="Dietary Restrictions:"
-                        label-for="dietRestrictions">
-            <b-form-input id="dietRestrictions"
+                        label-for="dietRestrictions"> -->
+            <b-form-input class="input" id="dietRestrictions"
                         type="text"
+                        placeholder="Dietary Restrictions"
                         v-model="form.dietRestrictions"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="dietGoals"
                         label="Dietary Goals:"
-                        label-for="dietGoals">
-            <b-form-input id="dietGoals"
+                        label-for="dietGoals"> -->
+            <b-form-input class="input" id="dietGoals"
                         type="text"
+                        placeholder="Dietary Goals"
                         v-model="form.dietGoals"/>
-        </b-form-group>
-        <b-form-group id="mainDish"
+        <!-- </b-form-group> -->
+        <!-- <b-form-group id="mainDish"
                         label="Main Dish:"
-                        label-for="mainDish">
-            <b-form-input id="mainDish"
+                        label-for="mainDish"> -->
+            <b-form-input class="input" id="mainDish"
                         type="text"
+                        placeholder="Main Dish Type"
                         v-model="form.mainDish"/>
-        </b-form-group>
-        <b-form-group id="groceryStore"
+        <!-- </b-form-group> -->
+        <!-- <b-form-group id="groceryStore"
                         label="Grocery Store:"
-                        label-for="groceryStore">
-            <b-form-input id="groceryStore"
+                        label-for="groceryStore"> -->
+            <b-form-input class="input" id="groceryStore"
                         type="text"
+                        placeholder="Grocery Store"
                         v-model="form.groceryStore"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="mealStructure"
                         label="Meal Structure:"
-                        label-for="mealStructure">
-            <b-form-input id="mealStructure"
+                        label-for="mealStructure"> -->
+            <b-form-input class="input" id="mealStructure"
                         type="text"
+                        placeholder="Meal Structure"
                         v-model="form.mealStructure"/>
-        </b-form-group>
+        <!-- </b-form-group>
         <b-form-group id="notes"
-                        label-for="notes">
-            <b-form-textarea id="notes"
+                        label-for="notes"> -->
+            <b-form-textarea  class="input" id="notes"
                         :rows="3"
                         :max-rows="6"
                         type="text"
                         placeholder="Other Notes"
                         v-model="form.notes"/>
-        </b-form-group>
+        <!-- </b-form-group> -->
         </div>
     </b-form>
     </div>
@@ -462,6 +492,10 @@ hr{
     background-color: #0d50bc;
     height: 1px;
 }
+h3{
+    color: white;
+    text-align: center;
+}
 .flexGroup{
     display: flex;
     flex-direction: row;
@@ -474,12 +508,14 @@ hr{
 .table{
     overflow-x:auto;
     padding: 5px 15px;
+    background-color: white;
 }
-/* .backgroundPic{
-    background-image: url("../../../carrots-food-fresh-616404.jpg");
-    background-size: cover;
-
-} */
+.card{
+    width: 100%;
+}
+.input, .card{
+    margin: 5px 2px;
+}
 @media(max-width: 440px){
   .flexGroup{
     flex-wrap: wrap;
