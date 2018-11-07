@@ -1,9 +1,9 @@
 <template>
   <div class="clientPage">
     <h1>Client Page</h1>
-    <b-card bg-variant="light" class="card">
+    <div class="space">
       <ViewClient/>
-    </b-card>
+    </div>
   </div>
 </template>
 
@@ -18,11 +18,13 @@ export default {
 </script>
 
 <style scoped>
-.card{
+.space{
   margin: 15px 15px;
 }
 .clientPage{
   margin-top: 8em;
+  background-image: url("../../carrots-food-fresh-616404.jpg");
+  background-size: cover;
 }
 h1{
   text-align: center;

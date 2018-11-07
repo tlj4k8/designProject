@@ -1,4 +1,5 @@
 <template>
+<div class="backgroundPic">
   <div class="viewClient">
   <div class="client">
     <b-form-group id="clientList"
@@ -297,6 +298,7 @@
         </div>
     </b-form>
     </div>
+    </div>
 </template>
 
 <script>
@@ -473,6 +475,11 @@ hr{
     overflow-x:auto;
     padding: 5px 15px;
 }
+/* .backgroundPic{
+    background-image: url("../../../carrots-food-fresh-616404.jpg");
+    background-size: cover;
+
+} */
 @media(max-width: 440px){
   .flexGroup{
     flex-wrap: wrap;
