@@ -1,8 +1,10 @@
 <template>
   <div class="clientPage">
+    <div class="foodImage">
     <h1>Client Page</h1>
     <div class="space">
       <ViewClient/>
+    </div>
     </div>
   </div>
 </template>
@@ -22,9 +24,15 @@ export default {
   margin: 15px 15px;
 }
 .clientPage{
-  margin-top: 8em;
+  margin-top: 5em;
+}
+.foodImage{
+  padding-top: 40px;
   background-image: url("../../carrots-food-fresh-616404.jpg");
-  background-size: cover;
+  background-attachment: fixed ;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
 }
 h1{
   text-align: center;

@@ -287,12 +287,12 @@
                         v-model="form.mealStructure"/>
         </b-form-group>
         <b-form-group id="notes"
-                        label="Other Notes:"
                         label-for="notes">
             <b-form-textarea id="notes"
                         :rows="3"
                         :max-rows="6"
                         type="text"
+                        placeholder="Other Notes"
                         v-model="form.notes"/>
         </b-form-group>
         </div>
