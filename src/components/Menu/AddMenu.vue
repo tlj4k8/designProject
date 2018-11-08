@@ -88,7 +88,7 @@ export default {
   },
     methods: {
         handleSubmit(form){
-            this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Menus', {
+            this.$axiosServer.post('https://chefemployees.com/odata/Menus', {
                 Name: this.form.menuName,
                 Ingrendients: this.form.ingrediants,
                 Instructions: this.form.instructions,

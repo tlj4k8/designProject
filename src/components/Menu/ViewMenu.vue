@@ -100,7 +100,7 @@ export default {
     computed:{
         getMenus(){
             const menu = this.selected - 1;
-            this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Menus')
+            this.$axiosServer.get('https://chefemployees.com/odata/Menus')
             .then((response)=>{
                 let menuValue = response.data.value[menu]
                 this.form.menuName = menuValue.Name,
@@ -117,7 +117,7 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Menus')
+        axios.get('https://chefemployees.com/odata/Menus')
         .then((response) => {
             console.log(response)
             this.options = response.data.value.map(value => value.MenuId)

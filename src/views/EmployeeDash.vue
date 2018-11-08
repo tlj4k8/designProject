@@ -3,7 +3,8 @@
   <h1>Employee</h1>
     <b-button-group vertical class="dashGroup">
         <b-button to="/employeeView">View Employees</b-button>
-        <b-button to="/employee">Add/Modify/Delete Employee</b-button>
+        <b-button to="/employee">Modify/Delete Employee</b-button>
+        <b-button to="/employeeNew">Add New Employee</b-button>
     </b-button-group>
   </div>
 </template>
