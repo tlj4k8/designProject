@@ -351,7 +351,7 @@ export default {
     methods: {
         handleSubmit(form){
           var self = this;
-          this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients', {
+          this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
               ClFirstName: this.form.firstName,
               ClLastName: this.form.lastName,
               ClCellPhone: this.form.phone,

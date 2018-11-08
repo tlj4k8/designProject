@@ -376,8 +376,8 @@ export default {
     },
     computed: {
         getClient(){
-            const client = this.selected - 1;
-            this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+            const client = this.option.indexOf(this.selected);
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients')
             .then((response)=>{
                 let clientValue = response.data.value[client]
                 if(clientValue == null || undefined){
@@ -444,7 +444,7 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients')
+        axios.get('https://chefemployees.com/odata/Clients')
         .then((response) => {
             console.log(response);
             this.option = response.data.value.map(value => value.ClientId)

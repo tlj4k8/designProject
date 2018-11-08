@@ -14,6 +14,7 @@ import ClientNew from './views/ClientNew.vue';
 import Employee from './views/Employee.vue';
 import EmployeeDash from './views/EmployeeDash.vue';
 import EmployeeView from './views/EmployeeView.vue';
+import EmployeeNew from './views/EmployeeNew.vue';
 import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
 import ScheduleDash from './views/ScheduleDash.vue';
@@ -92,6 +93,11 @@ export default new Router({
     name: 'Employee',
     component: Employee
     },
+    {
+      path: '/employeeNew',
+      name: 'EmployeeNew',
+      component: EmployeeNew
+      },
     {
       path: '/chef',
       name: 'ChefPage',

@@ -13,6 +13,8 @@
           </b-form-group>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
+    <b-button v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
+    <b-button v-if="!disabled" type="submit">Update Employee</b-button><b-button v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
@@ -20,6 +22,7 @@
                         label-for="username">
             <b-form-input id="username"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.username">
             </b-form-input>
         </b-form-group>
@@ -29,6 +32,7 @@
                         label-for="password">
             <b-form-input id="password"
                         type="password"
+                        :disabled="disabled"
                         v-model="form.password">
             </b-form-input>
         </b-form-group>
@@ -43,6 +47,7 @@
                         label-for="firstName">
             <b-form-input id="firstName"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.firstName"
                         required>
             </b-form-input>
@@ -53,6 +58,7 @@
                         label-for="lastName">
             <b-form-input id="lastName"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.lastName"
                         required>
             </b-form-input>
@@ -65,6 +71,7 @@
                         label-for="email">
             <b-form-input id="email"
                         type="email"
+                        :disabled="disabled"
                         v-model="form.email"
                         required>
             </b-form-input>
@@ -76,6 +83,7 @@
             <b-form-input id="phone"
                         type="text"
                         v-model="form.phone"
+                        :disabled="disabled"
                         pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                         required>
             </b-form-input>
@@ -87,6 +95,7 @@
                         label-for="zip">
             <b-form-input id="zip"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.zip"
                         required>
             </b-form-input>
@@ -102,6 +111,7 @@
                     label-for="isMenu">
         <b-form-checkbox id="form.isMenu"
                     type="checkbox"
+                    :disabled="disabled"
                     v-model="form.isMenu"/>
       </b-form-group>
       <b-form-group id="isAdmin"
@@ -110,6 +120,7 @@
                     label-for="isAdmin">
         <b-form-checkbox id="form.isAdmin"
                     type="checkbox"
+                    :disabled="disabled"
                     v-model="form.isAdmin"/>
       </b-form-group>
     </div>
@@ -131,28 +142,27 @@
               </tr>
               <tr>
                   <td>Start</td>
-                  <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.mon" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.tue" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.wed" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.thur" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.fri" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.sat" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.sun" :disabled="disabled"></b-form-input></td>
               </tr>
               <tr>
                   <td>End</td>
-                  <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endMon" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endTue" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endWed" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endThur" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endFri" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endSat" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input type="time" v-model="form.endSun" :disabled="disabled"></b-form-input></td>
               </tr>
           </table>
       </div>
     </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
     </div>
 </template>
@@ -164,6 +174,7 @@ export default {
   name: "editEmployee",
   data() {
     return {
+      disabled: true,
       form: {
         username: '',
         password: '',
@@ -192,7 +203,6 @@ export default {
       },
       selected: null,
       options: [],
-      employee: '',
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
@@ -203,64 +213,65 @@ export default {
     };
   },
   methods: {
-      handleSubmit(form){
-        var self = this;
-        this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Employees', {
-            EmFirstName: this.form.firstName,
-            EmLastName: this.form.lastName,
-            Username: this.form.username,
-            Password: this.form.password,
-            EmCellPhone: this.form.phone,
-            EmEmail: this.form.email,
-            EmZipCodes: this.form.zip,
-            EmStartMonday: this.formatTime(this.form.mon),
-            EmEndMonday: this.formatTime(this.form.endMon),
-            EmStartTuesday: this.formatTime(this.form.tue),
-            EmEndTuesday: this.formatTime(this.form.endTue),
-            EmStartWednesday: this.formatTime(this.form.wed),
-            EmEndWednesday: this.formatTime(this.form.endWed),
-            EmStartThursday: this.formatTime(this.form.thur),
-            EmEndThursday: this.formatTime(this.form.endThur),
-            EmStartFriday: this.formatTime(this.form.fri),
-            EmEndFriday: this.formatTime(this.form.endFri),
-            EmStartSaturday: this.formatTime(this.form.sat),
-            EmEndSaturday: this.formatTime(this.form.endSat),
-            EmStartSunday: this.formatTime(this.form.sun),
-            EmEndSunday: this.formatTime(this.form.endSun),
-            IsMenu: this.form.isMenu,
-            IsAdmin: this.form.isAdmin,
-            IsActive: this.form.IsActive
-        })
-        .then((response)=>{
-          console.log(response)
-          this.form.username = '',
-          this.form.password = '',
-          this.form.email = '',
-          this.form.firstName = '',
-          this.form.lastName = '',
-          this.form.phone = '', 
-          this.form.zip = '',
-          this.form.mon = '',
-          this.form.tue = '',
-          this.form.wed = '',
-          this.form.thur = '',
-          this.form.fri = '',
-          this.form.sat = '',
-          this.form.sun = '',
-          this.form.endMon = '',
-          this.form.endTue = '',
-          this.form.endWed = '',
-          this.form.endThur = '',
-          this.form.endFri = '',
-          this.form.endSat = '',
-          this.form.endSun = '',
-          this.form.isMenu = false,
-          this.form.isAdmin = false
-        })
-        .catch((error)=>{
-          console.log(error);
-        })
-      },
+    //   handleSubmit(form){
+    //     var self = this;
+    //     this.$axiosServer.put('https://chefemployees.com/odata/Employees', {
+    //         EmFirstName: this.form.firstName,
+    //         EmLastName: this.form.lastName,
+    //         Username: this.form.username,
+    //         Password: this.form.password,
+    //         EmCellPhone: this.form.phone,
+    //         EmEmail: this.form.email,
+    //         EmZipCodes: this.form.zip,
+    //         EmStartMonday: this.formatTime(this.form.mon),
+    //         EmEndMonday: this.formatTime(this.form.endMon),
+    //         EmStartTuesday: this.formatTime(this.form.tue),
+    //         EmEndTuesday: this.formatTime(this.form.endTue),
+    //         EmStartWednesday: this.formatTime(this.form.wed),
+    //         EmEndWednesday: this.formatTime(this.form.endWed),
+    //         EmStartThursday: this.formatTime(this.form.thur),
+    //         EmEndThursday: this.formatTime(this.form.endThur),
+    //         EmStartFriday: this.formatTime(this.form.fri),
+    //         EmEndFriday: this.formatTime(this.form.endFri),
+    //         EmStartSaturday: this.formatTime(this.form.sat),
+    //         EmEndSaturday: this.formatTime(this.form.endSat),
+    //         EmStartSunday: this.formatTime(this.form.sun),
+    //         EmEndSunday: this.formatTime(this.form.endSun),
+    //         IsMenu: this.form.isMenu,
+    //         IsAdmin: this.form.isAdmin,
+    //         IsActive: this.form.IsActive
+    //     })
+    //     .then((response)=>{
+    //       console.log(response)
+    //       this.form.username = '',
+    //       this.form.password = '',
+    //       this.form.email = '',
+    //       this.form.firstName = '',
+    //       this.form.lastName = '',
+    //       this.form.phone = '', 
+    //       this.form.zip = '',
+    //       this.form.mon = '',
+    //       this.form.tue = '',
+    //       this.form.wed = '',
+    //       this.form.thur = '',
+    //       this.form.fri = '',
+    //       this.form.sat = '',
+    //       this.form.sun = '',
+    //       this.form.endMon = '',
+    //       this.form.endTue = '',
+    //       this.form.endWed = '',
+    //       this.form.endThur = '',
+    //       this.form.endFri = '',
+    //       this.form.endSat = '',
+    //       this.form.endSun = '',
+    //       this.form.isMenu = false,
+    //       this.form.isAdmin = false
+    //       this.disabled = true
+    //     })
+    //     .catch((error)=>{
+    //       console.log(error);
+    //     })
+    //   },
       formatTime(time){
         var timeStamp = time.split(':');
         var timeHour = timeStamp[0];
@@ -275,8 +286,8 @@ export default {
   },
   computed: {
         getEmployees(){
-            const employee = this.selected - 1;
-            this.$axiosServer.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Employees')
+            let employee = this.options.indexOf(this.selected);
+            this.$axiosServer.get('https://chefemployees.com/odata/Employees')
             .then((response)=>{
                 let employeeValue = response.data.value[employee]
                 if(employeeValue == null || undefined){
@@ -326,9 +337,8 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Employees')
+        axios.get('https://chefemployees.com/odata/Employees')
         .then((response) => {
-            console.log(response);
             this.options = response.data.value.map(value => value.EmployeeId)
         })
         .catch((error) => {
