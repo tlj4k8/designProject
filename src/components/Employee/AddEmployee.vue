@@ -193,7 +193,7 @@ export default {
   },
   methods: {
       handleSubmit(form){
-        var self = this;
+        let self = this;
         this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
             EmFirstName: this.form.firstName,
             EmLastName: this.form.lastName,
@@ -251,10 +251,14 @@ export default {
         })
       },
       formatTime(time){
-        var timeStamp = time.split(':');
-        var timeHour = timeStamp[0];
-        var timeMinutes = timeStamp[1];
-        var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        let timeStamp = time.split(':');
+        let timeHour = timeStamp[0];
+        let timeMinutes = timeStamp[1];
+        let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        if(time === ''){
+          let formatedTime = "PT00H00M00S";
+          return formatedTime;
+        }
         return formatedTime;
       }
   }
