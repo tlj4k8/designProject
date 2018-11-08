@@ -1,24 +1,18 @@
 <template> 
-    <!-- <div class="bar">    
-        <div class="menu">
-                <router-link to="/dash" class="flex"><b-button>Dashboard</b-button></router-link>
-                <router-link to="/" class="flex"><b-button>Login</b-button></router-link>
-        </div>
-    </div> -->
   <div>
     <div class="menu">
-        <col class="menuLogo"><font-awesome-icon icon="coffee" @click="show = !show" class="fontAwesome"/>
+        <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
     </div>
     <transition name="fade">
         <div class="overlay" v-if="show" >
-	        <div class="wrap">
+	        <div class="wrap" v-on:click="show = !show">
             <router-link class="nav-links" to="/">Home</router-link>
-                <router-link class="nav-links" to="/clientDash">Client</router-link>
-                <router-link class="nav-links" to="/menuDash">Menu</router-link>
-                <router-link class="nav-links" to="/chefDash">Chef</router-link>
-                <router-link class="nav-links" to="/employeeDash">Employee</router-link>
-                <router-link class="nav-links" to="/scheduleDash">Schedule</router-link>
-		    </div>
+            <router-link class="nav-links" to="/clientDash">Client</router-link>
+            <router-link class="nav-links" to="/menuDash">Menu</router-link>
+            <router-link class="nav-links" to="/chefDash">Chef</router-link>
+            <router-link class="nav-links" to="/employeeDash">Employee</router-link>
+            <router-link class="nav-links" to="/scheduleDash">Schedule</router-link>
+		      </div>
 	      </div>
     </transition>
   </div>
@@ -36,29 +30,12 @@ export default {
 </script>
 
 <style scoped>
-/* .bar {
-    display: flex;
-    position: fixed;
-    top: 0;
-    z-index: 15;
-    width: 100vw;
-    height: 5em;
-    background: #5ad0ed;
-    justify-content: flex-end;
-}
-.menu{
-    padding: 20px 20px;
-}
-.btn{
-    background-color: #efefef;
-    color: black;
-    border-color: #efefef;
-}
-.flex{
-    padding: 5px 5px;
-} */
 .fontAwesome{
-    color: black;
+  color: black;
+  height: 2em;
+  width: 1.6em;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 .menu {
   display: flex;
@@ -79,7 +56,6 @@ export default {
     color: #fff;
     text-decoration: none;
 }
-
 .menuR {
   display: flex;
 }
