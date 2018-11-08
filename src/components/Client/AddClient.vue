@@ -350,7 +350,7 @@ export default {
   },
     methods: {
         handleSubmit(form){
-          var self = this;
+          let self = this;
           this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
               ClFirstName: this.form.firstName,
               ClLastName: this.form.lastName,
@@ -396,83 +396,62 @@ export default {
               ExtraNotes: this.form.notes
           })
           .then((response)=>{
+            this.form.firstName = '',
+            this.form.lastName = '',
+            this.form.phone = '',
+            this.form.email = '',
+            this.form.address = '',
+            this.form.addressTwo = '',
+            this.form.city = '',
+            this.form.state = '',
+            this.form.zip = '',
+            this.form.meats = '',
+            this.form.meatAvoid = '',
+            this.form.cheese = '',
+            this.form.cheeseAvoid = '',
+            this.form.grains = '',
+            this.form.grainsAvoid = '',
+            this.form.spice = '',
+            this.form.other = '',
+            this.form.allergies = '',
+            this.form.dietRestrictions = '',
+            this.form.dietGoals = '',
+            this.form.mainDish = '',
+            this.form.storageContainers = '',
+            this.form.stove = '',
+            this.form.organic = '',
+            this.form.groceryStore = '',
+            this.form.mealStructure = '',
+            this.form.notes = '',
+            this.form.mon = '',
+            this.form.tue = '',
+            this.form.wed = '',
+            this.form.thur = '',
+            this.form.fri = '',
+            this.form.sat = '',
+            this.form.sun = '',
+            this.form.endMon = '',
+            this.form.endTue = '',
+            this.form.endWed = '',
+            this.form.endThur = '',
+            this.form.endFri = '',
+            this.form.endSat = '',
+            this.form.endSun = ''
             console.log(response)
           })
           .catch((error)=>{
             console.log(error);
           })
         },
-          // .then((response) => {
-          //   console.log(response);
-          //   console.log("USER ID:" + response.data.Id);
-          //   this.userId = response.data.Id;
-          //   this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Clients',{
-          //     PersonId: this.userId,
-          //     CurrentChefId: 1,
-	        //     ImportantNotes: "I hope this all works"
-          //   })
-          //   .then((response)=>{
-          //     console.log(response);
-          //     console.log("CLIENT ID:" + response.data.Id);
-          //     this.clientId = response.data.Id;
-          //     this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/Availabilities',{
-          //       PersonId: this.userId,
-          //       ClStartMonday: this.formatTime(this.form.mon),
-          //       ClEndMonday: this.formatTime(this.form.endMon),
-          //       ClStartTuesday: this.formatTime(this.form.tue),
-          //       ClEndTuesday: this.formatTime(this.form.endTue),
-          //       ClStartWednesday: this.formatTime(this.form.wed),
-          //       ClEndWednesday: this.formatTime(this.form.endWed),
-          //       ClStartThursday: this.formatTime(this.form.thur),
-          //       ClEndThursday: this.formatTime(this.form.endThur),
-          //       ClStartFriday: this.formatTime(this.form.fri),
-          //       ClEndFriday: this.formatTime(this.form.endFri),
-          //       ClStartSaturday: this.formatTime(this.form.sat),
-          //       ClEndSaturday: this.formatTime(this.form.endSat),
-          //       ClStartSunday: this.formatTime(this.form.sun),
-          //       ClEndSunday: this.formatTime(this.form.endSun)
-          //     })
-              // .then((response)=>{
-              // console.log(response);
-              // console.log("AVAILABILITY ID:" + response.data.Id);
-              // this.$axiosServer.post('http://saltedchefapi-dev.us-east-2.elasticbeanstalk.com/odata/ClientNeeds', {
-              //   ClientId: this.clientId,
-              //   PreferredMeats: this.form.meats,
-              //   MeatsToAvoid: this.form.meatAvoid,
-              //   PreferredCheeses: this.form.cheese,
-              //   CheesesToAvoid: this.form.cheeseAvoid,
-              //   PreferredGrains: this.form.grains,
-              //   GrainsToAvoid: this.form.grainsAvoid,
-              //   SpiceLevel: this.form.spice,
-              //   OtherToAvoid: this.form.other,
-              //   Allergies: this.form.allergies,
-              //   DietRestrictions: this.form.dietRestrictions,
-              //   DietGoals: this.form.dietGoals,
-              //   MainDishSoupSaladStew: this.form.mainDish,
-              //   StoreContainers: this.form.storageContainers,
-              //   StoveOven: this.form.stove,
-              //   OrganicMeals: this.form.organic,
-              //   PreferredGroceryStore: this.form.groceryStore,
-              //   MealSize: this.form.mealStructure,
-              //   ExtraNotes: this.form.notes
-              // })
-              // .then((response)=>{
-              //   console.log(response);
-              //   console.log("NEEDS ID:" + response.data.Id);
-              // })
-              // .catch((error)=>{
-              //   console.log(error)
-              // })
-            //  })
-            // })
-          // })
-
-        // },
       formatTime(time){
-        var timeStamp = time.split(':');
-        var timeHour = timeStamp[0];
-        var timeMinutes = timeStamp[1];
-        var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        let timeStamp = time.split(':');
+        let timeHour = timeStamp[0];
+        let timeMinutes = timeStamp[1];
+        let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        if(time === ''){
+          let formatedTime = "PT00H00M00S";
+          return formatedTime;
+        }
         return formatedTime;
       }
     }
