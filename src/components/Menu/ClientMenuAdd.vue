@@ -1,6 +1,6 @@
 <template>
     <div class="clientMenuAdd">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class="clientMenuAdd">
         <b-form-group id="client"
                         label="Client:"
@@ -44,7 +44,6 @@
       </div>
     </div>
     <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
 </template>
@@ -60,45 +59,17 @@ export default {
         menus: null,
         selectedMenus: []
       },
-      options: [
-        { value: "client1", text: "client1" },
-        { value: "client2", text: "client2" },
-        { value: "client3", text: "client3" },
-        { value: "client4", text: "client4" },
-        { value: "client5", text: "client6" }
-      ],
+      options: [],
       selectedOptions: [],
-      scheduleOptions: [
-        { value: "schedule1", text: "schedule1" },
-        { value: "schedule2", text: "schedule2" }
-      ],
-      clientOptions: [
-        { value: "option1", text: "option1" },
-        { value: "option2", text: "option2" }
-      ],
+      scheduleOptions: [],
+      clientOptions: [],
       show: true
     };
   },
   methods: {
-    handleSubmit: function(form) {
+    handleSubmit(form) {
       var self = this;
-      this.$ref[form].validate(valid => {
-        if (valid) {
-          //http request goes here
-        } else {
-          this.emptyFields();
-          return false;
-        }
-      });
-    },
-    emptyFields() {
-      this.$alert(
-        "Please complete all required fields",
-        "Registration failed",
-        {
-          confirmButtonText: "OK"
-        }
-      );
+      
     }
   }
 };

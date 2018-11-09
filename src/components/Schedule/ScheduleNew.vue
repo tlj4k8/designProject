@@ -1,6 +1,6 @@
 <template>
     <div class="scheduleNew">
-        <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+        <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
         <div class="employeeSelect">
         <h3> Select Employee </h3>
         <hr/>
@@ -59,11 +59,13 @@
                     </b-form-group>
                 </div>
             </div>
-            <b-button type="submit" @click="handleSubmit('form')" variant="primary">Submit</b-button>
+            <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
     </div>
 </template>
 <script>
+import axios from 'axios';
+import moment from 'moment';
 export default {
   name: 'ScheduleNew',
   data () {
@@ -75,52 +77,67 @@ export default {
             selectedEmployee: null,
             selectedClient: null
         },
-        clientOptions: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
-        employeeOptions: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
+        clientOptions: [],
+        employeeOptions: [],
         show: true
     }
   },
   methods: {
-    validateDate: function(){
-      const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-      let SpecialToDate = this.form.date;
-
-      if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
-        console.log("date is today or in future");
-    } else {
-        console.log("date is in the past");
-      }
-    },
-    handleSubmit: function(form){
+    handleSubmit(form) {
         var self = this;
-        this.$ref[form].validate((valid => {
-            if(valid){
-                    //http request goes here
-            }
-            else{
-                this.emptyFields();
-                    return false;
-                }
-        }))
+        this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
+            StartDate: this.formatTime(this.form.startTime),
+            EndTime: this.formatTime(this.form.endTime),
+            
+
+        })
+        .then((response)=>{
+            console.log(response)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
     },
-     emptyFields() {
-        this.$alert("Please complete all required fields", "Registration failed", {
-        confirmButtonText: 'OK'
+    validateDate(){
+        const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+        let SpecialToDate = this.form.date;
+
+        if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
+            console.log("date is today or in future");
+        } else {
+            console.log("date is in the past");
+        }
+    },
+    formatTime(time){
+        let timeStamp = time.split(':');
+        let timeHour = timeStamp[0];
+        let timeMinutes = timeStamp[1];
+        let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        if(time === ''){
+            let formatedTime = "PT00H00M00S";
+            return formatedTime;
+        }
+        return formatedTime;
+    }
+  },
+    mounted: function(){
+        axios.get('https://chefemployees.com/odata/Clients')
+        .then((response) => {
+            console.log(response);
+            this.clientOptions = response.data.value.map(value => value.ClientId)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        axios.get('https://chefemployees.com/odata/Employees')
+        .then((response) => {
+            console.log(response);
+            this.employeeOptions = response.data.value.map(value => value.EmployeeId)
+        })
+        .catch((error) => {
+            console.log(error);
         });
     }
-  }
 }
 </script>
 <style scoped>
