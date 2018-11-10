@@ -4,7 +4,7 @@
     <b-button-group vertical class="dashGroup">
         <b-button to="/clientDash">Client</b-button>
         <b-button to="/menuDash">Menu</b-button>
-        <b-button to="/chefDash">Chef</b-button>
+        <b-button to="/profile">Profile</b-button>
         <b-button to="/employeeDash">Employee</b-button>
         <b-button to="/scheduleDash">Schedule</b-button>
     </b-button-group>
