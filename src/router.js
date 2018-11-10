@@ -20,92 +20,158 @@ import ScheduleDash from './views/ScheduleDash.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/scheduleNew',
       name: 'scheduleNew',
-      component: ScheduleNew
+      component: ScheduleNew,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/scheduleDash',
       name: 'scheduleDash',
-      component: ScheduleDash
+      component: ScheduleDash,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/clientDash',
       name: 'clientDash',
-      component: ClientDash
+      component: ClientDash,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/newclient',
       name: 'clientNew',
-      component: ClientNew
+      component: ClientNew,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/clientMenu',
       name: 'clientMenu',
-      component: ClientMenu
+      component: ClientMenu,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/clientPage',
       name: 'clientPage',
-      component: ClientPage
+      component: ClientPage,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/menuDash',
       name: 'menuDash',
-      component: MenuDash
+      component: MenuDash,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/menu',
       name: 'MenuPage',
-      component: MenuPage
+      component: MenuPage,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/menuEdit',
       name: 'menuEdit',
-      component: MenuEdit
+      component: MenuEdit,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/availability',
       name: 'Availability',
-      component: SchedulePage
+      component: SchedulePage,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/dash',
       name: 'Dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
     path: '/employee',
     name: 'Employee',
-    component: Employee
+    component: Employee,
+    meta: { 
+      requiresAuth: true
+    }
     },
     {
       path: '/employeeNew',
       name: 'EmployeeNew',
-      component: EmployeeNew
-      },
+      component: EmployeeNew,
+      meta: { 
+        requiresAuth: true
+      }
+    },
     {
       path: '/profile',
       name: 'ProfilePage',
-      component: ProfilePage
+      component: ProfilePage,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/employeeView',
       name: 'EmployeeView',
-      component: EmployeeView
+      component: EmployeeView,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/employeeDash',
       name: 'EmployeeDash',
-      component: EmployeeDash
+      component: EmployeeDash,
+      meta: { 
+        requiresAuth: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('t');
+
+  if (authRequired && !loggedIn) {
+    return next('/');
+  }
+
+  next();
+})
+
+export default router
