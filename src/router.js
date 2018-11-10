@@ -2,8 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home';
 import Dashboard from './views/Dashboard';
-import ChefPage from './views/ChefPage';
-import ChefDash from './views/ChefDash.vue';
+import ProfilePage from './views/ProfilePage';
 import ClientPage from './views/ClientPage';
 import MenuPage from './views/MenuPage';
 import ClientMenu from './views/ClientMenu';
@@ -59,11 +58,6 @@ export default new Router({
       component: ClientPage
     },
     {
-      path: '/chefDash',
-      name: 'chefDash',
-      component: ChefDash
-    },
-    {
       path: '/menuDash',
       name: 'menuDash',
       component: MenuDash
@@ -99,9 +93,9 @@ export default new Router({
       component: EmployeeNew
       },
     {
-      path: '/chef',
-      name: 'ChefPage',
-      component: ChefPage
+      path: '/profile',
+      name: 'ProfilePage',
+      component: ProfilePage
     },
     {
       path: '/employeeView',

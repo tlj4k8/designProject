@@ -1,18 +1,18 @@
 <template>
-  <div class="chef">
-    <h1> Chef Portal </h1>
+  <div class="profile">
+    <h1> Profile </h1>
     <b-card bg-variant="light" class="card">
-      <ViewChef/>
+      <Profile/>
     </b-card>
   </div>
 </template>
 
 <script>
-import ViewChef from '../components/ViewChef';
+import Profile from '../components/Profile';
 export default {
-  name: "ChefPage",
+  name: "ProfilePage",
   components: {
-    ViewChef
+    Profile
   }
 };
 </script>
@@ -21,7 +21,7 @@ export default {
 .card{
   margin: 15px 15px;
 }
-.chef{
+.profile{
   margin-top: 8em;
 }
 .buttons{
