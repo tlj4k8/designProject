@@ -45,6 +45,9 @@ export default {
   top: 0;
   z-index: 15;
   width: 100%;
+  padding-bottom: 1em;
+  padding-right: .5em;
+  padding-top: .5em;
   justify-content: flex-end;
 }
 .link-inner {
