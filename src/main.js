@@ -31,12 +31,7 @@ Vue.prototype.$axiosServer = axios.create({
     "Content-Type": "application/json"
   }
 });
-// new Vue({
-//   el: '#app',
-//   router,
-//   components: { App },
-//   template: '<App/>'
-// })
+
 new Vue({
   el: '#app',
   router,

@@ -34,7 +34,7 @@ export default {
     data () {
         return {
             form: {
-                usernam: '',
+                username: '',
                 password: '',
             },
             show: true,
