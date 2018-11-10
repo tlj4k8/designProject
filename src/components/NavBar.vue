@@ -1,6 +1,7 @@
 <template> 
   <div>
     <div class="menu">
+        <b-button @click="logout">Logout</b-button><col/>
         <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
     </div>
     <transition name="fade">
@@ -19,16 +20,22 @@
 </template>
 
 <script>
+import store from './../store';
 export default {
     name: "NavBar",
     data(){
         return{
             show: false,
         }
+    },    
+    methods:{
+      logout(){
+        this.$store.dispatch('logout');
+        this.$router.push('/');
+      }
     }
-}    
+}
 </script>
-
 <style scoped>
 .fontAwesome{
   color: black;

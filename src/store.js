@@ -32,11 +32,14 @@ export default new Vuex.Store({
       state.jwt = null;
     }
   },
+  getters: {
+    isLoggedIn: state => !!state.jwt,
+  },
   actions: {
-    // logout({commit}){
-    //   commit('resetUser');
-    //   commit('removeToken');
-    // },
+    logout({commit}){
+      commit('resetUser');
+      commit('removeToken');
+    },
     loginToken({commit}, token){
       commit('updateToken', token);
     },
