@@ -5,11 +5,11 @@
         </div>
         <div class="form">
             <div class="flexGroup">
-            <b-form ref="form" @submit.prevent="handleSubmit" :model="form" :rules="rules" v-if="show">
-            <b-row class="flex">
-                <b-col sm="2"><label for="email">USERNAME</label></b-col>
+            <b-form ref="form" @submit="handleLogin(form)" :model="form" v-if="show" class="form">
+            <b-row>
+                <b-col sm="2"><label for="username">USERNAME</label></b-col>
                 <b-col sm="10">
-                    <b-form-input class="input" id="email" type="email" v-model="form.email" required placeholder="Enter email"/>
+                    <b-form-input class="input" id="username" type="text" v-model="form.username" required placeholder="Enter username"/>
                 </b-col>
             </b-row>
             <b-row class="flex">
@@ -18,22 +18,23 @@
                     <b-form-input class="input" id="password" type="password" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
                 </b-col>
             </b-row>
+            <div class="buttonDiv">
+                <b-button type="submit" class="loginButton">Login</b-button>
+            </div>
             </b-form>
-        </div>
-        <div class="buttonDiv">
-            <b-button to="/dash" type="submit" class="loginButton">Login</b-button>
         </div>
         </div>
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: 'Login',
     data () {
         return {
             form: {
-                email: '',
+                usernam: '',
                 password: '',
             },
             show: true,
@@ -44,34 +45,41 @@ export default {
                     pattern:'^(?=.*)(?=.{8,})',
                     trigger: 'blur'
                     },
-                ],
-                email: { required: true,
-                    message: 'Please enter a valid email address.',
-                    pattern:'.+\@.+\..+',
-                    trigger: 'blur'
-                    }
+                ]
             }
         }
     },
     methods: {
-        handleSubmit: function(form){
+        handleLogin() {
             var self = this;
-            this.$ref[form].validate((valid => {
-                if(valid){
-                    //http request goes here
-                }
-                else{
-                    this.emptyFields();
-                    return false;
-                }
-            }))
-        },
-        emptyFields() {
-            this.$alert("Please complete all required fields", "Login Failed", {
-            confirmButtonText: 'OK'
+            this.$axiosServer.post('https://chefemployees.com/Auth/Login', {
+                Username: this.form.username,
+                Password: this.form.password
+            })
+            .then((response) => {
+                self.$store.dispatch('loginToken', response.data.token);
+                self.successfulLogin();
+            })
+            .catch((error) => {
+                console.log("error");
+                self.failedLogin("Invalid Username or Password");
+                return error;
             });
-        }
+
+    },
+    successfulLogin() {
+        alert("Welcome back to HealthSTLx!", "Login Successful")
+        this.$router.push('/');
+    },
+    failedLogin(errorMessage) {
+        alert(errorMessage, "Login failed");
     }
+    },
+    computed: mapState({
+        getToken(state){
+        return state.jwt;
+        }
+    })
 }
 </script>
 

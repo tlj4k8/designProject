@@ -7,11 +7,17 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
+import { mapState } from 'vuex';
 export default {
   name: 'App',
   components:{
     NavBar
-  }
+  },
+  computed: mapState({
+    getToken(state){
+      return state.jwt;
+    }
+  })
 }
 </script>
 

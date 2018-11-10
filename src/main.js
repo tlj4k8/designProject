@@ -9,6 +9,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from "axios";
+import Vuex from "vuex";
+import store from "./store";
 
 library.add(faBars)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -18,19 +20,26 @@ const config = {
 } 
 
 Vue.use(BootstrapVue);
+Vue.use(Vuex);
 Vue.use(VeeValidate, config);
 
 Vue.config.productionTip = false
 Vue.prototype.$axiosServer = axios.create({
-  baseURL: 'https://saltedchefapi-dev.us-east-2.elasticbeanstalk.com',
+  baseURL: 'https://chefemployees.com',
   withCredentials: false,
   headers: {
     "Content-Type": "application/json"
   }
 });
+// new Vue({
+//   el: '#app',
+//   router,
+//   components: { App },
+//   template: '<App/>'
+// })
 new Vue({
   el: '#app',
   router,
-  components: { App },
-  template: '<App/>'
-})
+  store,
+  render: h => h(App)
+}).$mount("#app");
