@@ -13,8 +13,10 @@
           </b-form-group>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
-    <b-button v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-    <b-button v-if="!disabled" type="submit">Update Employee</b-button><b-button v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    <div class="disabledButtons">
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
+        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    </div>
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
@@ -215,11 +217,11 @@ export default {
   methods: {
     //   handleSubmit(form){
     //     var self = this;
-    //     this.$axiosServer.put('https://chefemployees.com/odata/Employees', {
+    //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees', {
     //         EmFirstName: this.form.firstName,
     //         EmLastName: this.form.lastName,
-    //         Username: this.form.username,
-    //         Password: this.form.password,
+    //         // Username: this.form.username,
+    //         // Password: this.form.password,
     //         EmCellPhone: this.form.phone,
     //         EmEmail: this.form.email,
     //         EmZipCodes: this.form.zip,
@@ -243,29 +245,6 @@ export default {
     //     })
     //     .then((response)=>{
     //       console.log(response)
-    //       this.form.username = '',
-    //       this.form.password = '',
-    //       this.form.email = '',
-    //       this.form.firstName = '',
-    //       this.form.lastName = '',
-    //       this.form.phone = '', 
-    //       this.form.zip = '',
-    //       this.form.mon = '',
-    //       this.form.tue = '',
-    //       this.form.wed = '',
-    //       this.form.thur = '',
-    //       this.form.fri = '',
-    //       this.form.sat = '',
-    //       this.form.sun = '',
-    //       this.form.endMon = '',
-    //       this.form.endTue = '',
-    //       this.form.endWed = '',
-    //       this.form.endThur = '',
-    //       this.form.endFri = '',
-    //       this.form.endSat = '',
-    //       this.form.endSun = '',
-    //       this.form.isMenu = false,
-    //       this.form.isAdmin = false
     //       this.disabled = true
     //     })
     //     .catch((error)=>{
@@ -377,6 +356,18 @@ hr {
 .personflex {
   flex-grow: 1;
   padding: 0 2px;
+}
+.disabledButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.disabled{
+    width: 15%;
+    color:black;
+    background-color:white;
+    border-color: lightgray;
+    padding: 7px 2px;
 }
 @media (max-width: 440px) {
   .personflexGroup {

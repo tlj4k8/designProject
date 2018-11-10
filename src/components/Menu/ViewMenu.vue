@@ -10,6 +10,10 @@
             <b-form-select v-model="selected" v-on:input="getMenus" :options="options" class="mb-1" />
             </b-form-group>
         </div>
+        <div class="disabledButtons">
+            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
+            <b-button class="disabled" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        </div>
         <b-form ref="form" v-if="show" class="form">
         <div class="menu">
             <b-form-group id="menuName"
@@ -83,18 +87,19 @@ export default {
   name: 'viewmenu',
   data () {
     return {
-      form: {
-        menuName: '',
-        ingrediants: '',
-        instructions: '',
-        servings: 0,
-        time: '',
-        mealType: '',
-        menuNotes: ''
-      },
-      selected: null,
-      options: [],
-      show: true,
+        disabled: true,
+        form: {
+            menuName: '',
+            ingrediants: '',
+            instructions: '',
+            servings: 0,
+            time: '',
+            mealType: '',
+            menuNotes: ''
+        },
+        selected: null,
+        options: [],
+        show: true,
     }
   },
     computed:{
@@ -138,5 +143,17 @@ export default {
 }
 .select{
     width: 100vw;
+}
+.disabledButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.disabled{
+    width: 15%;
+    color:black;
+    background-color:white;
+    border-color: lightgray;
+    padding: 7px 2px;
 }
 </style>
