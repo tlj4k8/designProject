@@ -12,7 +12,7 @@ export default new Vuex.Store({
     userId: '',
     jwt: localStorage.getItem('t'),
     endpoints: {
-      obtainJWT: 'https://chefemployees.com/Auth/Login',
+      obtainJWT: 'https://chefemployees.com/api/Auth/Login',
     //   refreshJWT: 'https://slalom-health-api-staging.herokuapp.com/auth/refresh_token'
     }
   },

@@ -52,7 +52,7 @@ export default {
     methods: {
         handleLogin() {
             var self = this;
-            this.$axiosServer.post('https://chefemployees.com/Auth/Login', {
+            this.$axiosServer.post('https://chefemployees.com/api/Auth/Login', {
                 Username: this.form.username,
                 Password: this.form.password
             })
@@ -66,14 +66,14 @@ export default {
                 return error;
             });
 
-    },
-    successfulLogin() {
-        alert("Welcome back to HealthSTLx!", "Login Successful")
-        this.$router.push('/');
-    },
-    failedLogin(errorMessage) {
-        alert(errorMessage, "Login failed");
-    }
+        },
+        successfulLogin() {
+            alert("Welcome back to HealthSTLx!", "Login Successful")
+            this.$router.push('/');
+        },
+        failedLogin(errorMessage) {
+            alert(errorMessage, "Login failed");
+        }
     },
     computed: mapState({
         getToken(state){
