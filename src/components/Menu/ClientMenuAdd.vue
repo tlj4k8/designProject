@@ -1,14 +1,9 @@
 <template>
     <div class="clientMenuAdd">
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
-    <div class="clientMenuAdd">
-        <b-form-group id="client"
-                        label="Client:"
-                        label-for="client">
-            <b-form-select
-                    v-model="form.client" 
-                    :options="clientOptions"/>
-        </b-form-group>
+    <h3> Select Schedule </h3>
+    <hr/>
+    <div class="schedule">
         <b-form-group id="schedule"
                         label="Schedule:"
                         label-for="schedule">
@@ -42,6 +37,15 @@
               <b-button type="submit" variant="primary">Remove Item</b-button>
               </b-form-group>
       </div>
+      <b-form-group id="notes"
+        label="Menu Notes:"
+        label-for="notes">
+      <b-form-textarea id="notes"
+        :rows="3"
+        :max-rows="6"
+        type="text"
+        v-model="form.notes"/>
+      </b-form-group>
     </div>
     <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
@@ -54,15 +58,14 @@ export default {
   data() {
     return {
       form: {
-        client: null,
         schedule: null,
         menus: null,
+        notes: '',
         selectedMenus: []
       },
       options: [],
       selectedOptions: [],
       scheduleOptions: [],
-      clientOptions: [],
       show: true
     };
   },
@@ -75,7 +78,7 @@ export default {
 };
 </script>
 <style scoped>
-.clientMenuAdd {
+.schedule {
   padding: 0 0;
 }
 .menuSelect {

@@ -1,6 +1,6 @@
 <template>
     <div class="scheduleNew">
-        <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
+        <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
         <div class="employeeSelect">
         <h3> Select Employee </h3>
         <hr/>
@@ -25,41 +25,41 @@
         <b-form-select required v-model="form.selectedClient" :options="clientOptions" class="mb-1" />
         </b-form-group>
         </div>
-            <div class="scheduleVisit">
-                <h3>Schedule New</h3>
-                <hr/>
-                <div class="flexGroup">
-                    <b-form-group class="flex"
-                                    id="startTime"
-                                    label="Start Time:"
-                                    label-for="startTime">
-                        <b-form-input id="startTime"
-                                    type="time"
-                                    required
-                                    v-model="form.startTime"/>
-                    </b-form-group>
-                    <b-form-group class="flex"
-                                    id="endTime"
-                                    label="End Time:"
-                                    label-for="endTime">
-                        <b-form-input id="endTime"
-                                    type="time"
-                                    required
-                                    v-model="form.endTime"/>
-                    </b-form-group>
-                    <b-form-group class="flex"
-                                    id="date "
-                                    label="Visit Date:"
-                                    label-for="date">
-                        <b-form-input id="date"
-                                    type="date"
-                                    required
-                                    v-on:blur.native="validateDate"
-                                    v-model="form.date"/>
-                    </b-form-group>
-                </div>
+        <div class="scheduleVisit">
+            <h3>Schedule New</h3>
+            <hr/>
+            <div class="flexGroup">
+                <b-form-group class="flex"
+                                id="startTime"
+                                label="Start Time:"
+                                label-for="startTime">
+                    <b-form-input id="startTime"
+                                type="time"
+                                required
+                                v-model="form.startTime"/>
+                </b-form-group>
+                <b-form-group class="flex"
+                                id="endTime"
+                                label="End Time:"
+                                label-for="endTime">
+                    <b-form-input id="endTime"
+                                type="time"
+                                required
+                                v-model="form.endTime"/>
+                </b-form-group>
+                <b-form-group class="flex"
+                                id="date "
+                                label="Visit Date:"
+                                label-for="date">
+                    <b-form-input id="date"
+                                type="date"
+                                required
+                                v-on:blur.native="validateDate"
+                                v-model="form.date"/>
+                </b-form-group>
             </div>
-            <b-button type="submit" variant="primary">Submit</b-button>
+        </div>
+        <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
     </div>
 </template>
@@ -88,7 +88,6 @@ export default {
         this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
             StartDate: this.formatTime(this.form.startTime),
             EndTime: this.formatTime(this.form.endTime),
-            
 
         })
         .then((response)=>{
