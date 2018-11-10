@@ -113,7 +113,10 @@ const router = new Router({
     {
       path: '/dash',
       name: 'Dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
     path: '/employee',

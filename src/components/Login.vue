@@ -49,49 +49,9 @@ export default {
             }
         }
     },
-
-// export class AuthService {
-
-//   constructor(
-//     private http: HttpClient
-//   ) { }
-
-//   logIn(username: string, password: string): Observable<any> {
-//     const params = new HttpParams().set('username', username).set('password', password);
-//     return this.http.get(api_url + '/Auth/Login', { params: params });
-//   }
-
-//   logOut() {
-//     localStorage.clear();
-//   }
-
-//   isAuthenticated() {
-//     return !!localStorage.getItem('auth');
-//   }
-
-//   getExpiration() {
-
-//   }
-
-
     methods: {
         handleLogin() {
             var self = this;
-            // this.$axiosServer.post('https://chefemployees.com/api/Auth/Login', {
-            //     Usename: this.form.username,
-            //     Password: this.form.password
-            // })
-            // .then((response) =>{
-            //     this.$axiosServer.get('https://chefemployees.com/api/Auth/Login')
-            //     console.log(response.data.token);
-            //     self.$store.dispatch('loginToken', response.data.token);
-            //     self.successfulLogin();
-            // })
-            // .catch((error) => {
-            //     console.log("error");
-            //     self.failedLogin("Invalid Username or Password");
-            //     return error;
-            // });
             this.$axiosServer.get('https://chefemployees.com/api/Auth/Login', {
                 params:{
                     Username: this.form.username,
@@ -117,7 +77,7 @@ export default {
     },
     computed: mapState({
         getToken(state){
-        return state.jwt;
+            return state.jwt;
         }
     })
 }
