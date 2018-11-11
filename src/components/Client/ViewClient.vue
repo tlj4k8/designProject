@@ -316,8 +316,8 @@
         </div>
     </b-form>
     <div class="disabledButtons">
-        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
+        <b-button class="disabled" v-if="!disabled" type="submit">Update Client</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
     </div>
 </template>

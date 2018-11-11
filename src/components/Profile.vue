@@ -1,6 +1,6 @@
 <template>
     <div class="profilePage">
-    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
+    <b-form ref="form" :model="form" v-if="show" class="form">
       <div class="person">
         <h3>Profile</h3>
         <hr/>
@@ -59,7 +59,7 @@
                         required>
             </b-form-input>
         </b-form-group>
-        <div class="personflexGroup">
+        <!-- <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
                         label="Username:"
@@ -78,7 +78,7 @@
                             v-model="form.password">
                 </b-form-input>
             </b-form-group>
-        </div>
+        </div> -->
     </div>
     <div class="availability">
     <h3>Availability</h3>
@@ -139,8 +139,7 @@
                   type="text"/>
       </b-form-group>
       </div>
-  </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
+    </div>
     </b-form>
     </div>
 </template>
