@@ -149,14 +149,6 @@
         </table>
     </div>
     </div>
-    <div class="visitDate">
-    <h3>Scheduled Visit</h3>
-    <hr/>
-        <b-form-group id="visit"
-                    class="select">
-        <b-form-select v-model="visit" :options="visitDates" />
-        </b-form-group>
-    </div>
     <div class="needform">
     <h3>Client Need Assessment</h3>
     <hr/>
