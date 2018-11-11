@@ -1,19 +1,17 @@
 <template>
     <div class="viewMenu">
+        <h3>Select Menu</h3>
+        <hr/>
         <div class="menuSelect">
             <b-form-group id="menu"
                         class="select"
                         :label-cols="4"
-                        breakpoint="md"
-                        label="Menus:"
-                        label-for="menu">
+                        breakpoint="md">
             <b-form-select v-model="selected" v-on:input="getMenus" :options="options" class="mb-1" />
             </b-form-group>
         </div>
-        <div class="disabledButtons">
-            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
-            <b-button class="disabled" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
-        </div>
+        <h3>Menu Info</h3>
+        <hr/>
         <b-form ref="form" v-if="show" class="form">
         <div class="menu">
             <b-form-group id="menuName"
@@ -21,6 +19,7 @@
                             label-for="menuName">
                 <b-form-input id="menuName"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.menuName">
                 </b-form-input>
             </b-form-group>
@@ -29,6 +28,7 @@
                             label-for="ingrediants">
                 <b-form-input id="ingrediants"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.ingrediants">
                 </b-form-input>
             </b-form-group>
@@ -39,6 +39,7 @@
                             type="text"
                             :rows="3"
                             :max-rows="6"
+                            :disabled="disabled"
                             v-model="form.instructions">
                 </b-form-textarea>
             </b-form-group>
@@ -47,6 +48,7 @@
                             label-for="servings">
                 <b-form-input id="servings"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.servings">
                 </b-form-input>
             </b-form-group>
@@ -55,6 +57,7 @@
                             label-for="time">
                 <b-form-input id="time"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.time">
                 </b-form-input>
             </b-form-group>
@@ -63,6 +66,7 @@
                             label-for="mealType">
                 <b-form-input id="mealType"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.mealType">
                 </b-form-input>
             </b-form-group>
@@ -73,11 +77,16 @@
                             :rows="3"
                             :max-rows="6"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.menuNotes">
                 </b-form-textarea>
             </b-form-group>
             </div>
         </b-form>
+        <div class="disabledButtons">
+            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
+            <b-button class="disabled" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        </div>
   </div>
 </template>
 
@@ -155,5 +164,9 @@ export default {
     background-color:white;
     border-color: lightgray;
     padding: 7px 2px;
+}
+hr{
+  background-color: #0d50bc;
+  height: 1px;
 }
 </style>

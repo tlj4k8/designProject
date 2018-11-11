@@ -1,12 +1,12 @@
 <template>
   <div class="viewClient">
-  <div class="client">
-    <b-form-group id="clientList"
-                label="Client Search:"
-                label-for="clientList">
-        <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
-    </b-form-group>
-  </div>
+    <h3>Select Client</h3>
+    <hr/>
+    <div class="client">
+        <b-form-group id="clientList">
+            <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
+        </b-form-group>
+    </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
@@ -18,6 +18,7 @@
                     label-for="firstName">
         <b-form-input id="firstName"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.firstName"
                       required>
         </b-form-input>
@@ -28,6 +29,7 @@
                     label-for="lastName">
         <b-form-input id="lastName"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.lastName"
                       required>
         </b-form-input>
@@ -40,6 +42,7 @@
                     label-for="email">
         <b-form-input id="email"
                       type="email"
+                      :disabled="disabled"
                       v-model="form.email"
                       required>
         </b-form-input>
@@ -50,6 +53,7 @@
                     label-for="phone">
         <b-form-input id="phone"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.phone"
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>
@@ -63,6 +67,7 @@
                     label-for="address">
         <b-form-input id="address"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.address"
                       required>
         </b-form-input>
@@ -73,6 +78,7 @@
                     label-for="addressTwo">
         <b-form-input id="addressTwo"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.addressTwo"
                       placeholder="Optional">
         </b-form-input>
@@ -85,6 +91,7 @@
                     label-for="city">
         <b-form-input id="city"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.city"
                       required>
         </b-form-input>
@@ -96,6 +103,7 @@
         <b-form-select id="state"
                       :options="state"
                       required
+                      :disabled="disabled"
                       v-model="form.state">
         </b-form-select>
       </b-form-group>
@@ -105,6 +113,7 @@
                     label-for="zip">
         <b-form-input id="zip"
                       type="text"
+                      :disabled="disabled"
                       v-model="form.zip"
                       required>
         </b-form-input>
@@ -128,34 +137,26 @@
             </tr>
             <tr>
                 <td>Start</td>
-                <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
             </tr>
             <tr>
                 <td>End</td>
-                <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
+                <td><b-form-input type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
             </tr>
         </table>
     </div>
-    </div>
-    <div class="visitDate">
-    <h3>Scheduled Visit</h3>
-    <hr/>
-        <b-form-group id="visit"
-                    class="select">
-        <b-form-select v-model="visit" :options="visitDates" />
-        </b-form-group>
     </div>
     <div class="needform">
     <h3>Client Need Assessment</h3>
@@ -167,6 +168,7 @@
                         label-for="stove">
             <b-form-checkbox id="form.stove"
                         type="checkbox"
+                        :disabled="disabled"
                         v-model="form.stove"/>
         </b-form-group>
         <b-form-group id="organic"
@@ -175,6 +177,7 @@
                         label-for="organic">
             <b-form-checkbox id="form.organic"
                         type="checkbox"
+                        :disabled="disabled"
                         v-model="form.organic"/>
         </b-form-group>
         <b-form-group id="storageContainers"
@@ -183,6 +186,7 @@
                         label-for="storageContainers">
             <b-form-checkbox id="form.storageContainers"
                         type="checkbox"
+                        :disabled="disabled"
                         v-model="form.storageContainers"/>
         </b-form-group>
         </div>
@@ -191,6 +195,7 @@
                         label-for="preferredMeat">
             <b-form-input id="preferredMeat"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.meats"/>
         </b-form-group>
         <b-form-group id="meatAvoid"
@@ -198,6 +203,7 @@
                         label-for="meatAvoid">
             <b-form-input id="meatAvoid"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.meatAvoid"/>
         </b-form-group>
         <b-form-group id="meatCookPreferrence"
@@ -205,6 +211,7 @@
                         label-for="meatCookPreferrence">
             <b-form-input id="meatCookPreferrence"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.meatCookPref"/>
         </b-form-group>
         <b-form-group id="preferredCheeses"
@@ -212,6 +219,7 @@
                         label-for="preferredCheeses">
             <b-form-input id="preferredCheeses"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.cheese"/>
         </b-form-group>
         <b-form-group id="cheeseAvoid"
@@ -219,6 +227,7 @@
                         label-for="cheeseAvoid">
             <b-form-input id="cheeseAvoid"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.cheeseAvoid"/>
         </b-form-group>
         <b-form-group id="preferredGrains"
@@ -226,6 +235,7 @@
                         label-for="preferredGrains">
             <b-form-input id="preferredGrains"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.grains"/>
         </b-form-group>
         <b-form-group id="spice"
@@ -234,6 +244,7 @@
             <b-form-input id="spice"
                         type="text"
                         placeholder="ex. (1 - 10)"
+                        :disabled="disabled"
                         v-model="form.spice"/>
         </b-form-group>
         <b-form-group id="other"
@@ -241,6 +252,7 @@
                         label-for="other">
             <b-form-input id="other"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.other"/>
         </b-form-group>
         <b-form-group id="allergies"
@@ -248,6 +260,7 @@
                         label-for="allergies">
             <b-form-input id="allergies"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.allergies"/>
         </b-form-group>
         <b-form-group id="dietRestrictions"
@@ -255,6 +268,7 @@
                         label-for="dietRestrictions">
             <b-form-input id="dietRestrictions"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.dietRestrictions"/>
         </b-form-group>
         <b-form-group id="dietGoals"
@@ -262,6 +276,7 @@
                         label-for="dietGoals">
             <b-form-input id="dietGoals"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.dietGoals"/>
         </b-form-group>
         <b-form-group id="mainDish"
@@ -269,6 +284,7 @@
                         label-for="mainDish">
             <b-form-input id="mainDish"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.mainDish"/>
         </b-form-group>
         <b-form-group id="groceryStore"
@@ -276,6 +292,7 @@
                         label-for="groceryStore">
             <b-form-input id="groceryStore"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.groceryStore"/>
         </b-form-group>
         <b-form-group id="mealStructure"
@@ -283,6 +300,7 @@
                         label-for="mealStructure">
             <b-form-input id="mealStructure"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.mealStructure"/>
         </b-form-group>
         <b-form-group id="notes"
@@ -292,10 +310,15 @@
                         :rows="3"
                         :max-rows="6"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.notes"/>
         </b-form-group>
         </div>
     </b-form>
+    <div class="disabledButtons">
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
+        <b-button class="disabled" v-if="!disabled" type="submit">Update Client</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    </div>
     </div>
 </template>
 
@@ -348,6 +371,7 @@ export default {
         endSat: '',
         endSun: ''
       },
+        disabled: true,
         selected: null,
         option: [],
         state: [
@@ -472,6 +496,18 @@ hr{
 .table{
     overflow-x:auto;
     padding: 5px 15px;
+}
+.disabledButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.disabled{
+    width: 15%;
+    color:black;
+    background-color:white;
+    border-color: lightgray;
+    padding: 7px 2px;
 }
 @media(max-width: 440px){
   .flexGroup{

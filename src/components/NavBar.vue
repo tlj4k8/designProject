@@ -1,5 +1,5 @@
 <template> 
-  <div>
+  <div v-if="isLoggedIn">
     <div class="menu">
         <b-button @click="logout">Logout</b-button><col/>
         <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import store from './../store';
+import { mapState } from 'vuex';
 export default {
     name: "NavBar",
     data(){
@@ -33,7 +33,12 @@ export default {
         this.$store.dispatch('logout');
         this.$router.push('/');
       }
+    },
+    computed: mapState({
+      isLoggedIn (state){
+      return !(state.jwt === null);
     }
+    })
 }
 </script>
 <style scoped>

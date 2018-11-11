@@ -1,8 +1,18 @@
 <template>
     <div class="addSchedule">
-    <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+   <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+        <div class="employeeSelect">
+        <h3> Select Schedule </h3>
+        <hr/>
+        <b-form-group id="schedule"
+                    class="select"
+                    :label-cols="4"
+                    breakpoint="md">
+        <b-form-select required v-model="form.selectedSchedule" :options="scheduleOptions" class="mb-1" />
+        </b-form-group>
+        </div>
         <div class="scheduleVisit">
-            <h3>Schedule</h3>
+            <h3>Schedule Date/Time</h3>
             <hr/>
             <div class="flexGroup">
                 <b-form-group class="flex"
@@ -71,27 +81,16 @@
                                 v-model="form.mealCost">
                     </b-form-input>
                 </b-form-group>
-            </div>
-            <div class="receiptflexGroup">
-                <b-form-group id="paylink"
-                                class="receiptflex"
-                                label="Pay Link:"
-                                label-for="paylink">
-                    <b-form-input id="paylink"
-                                type="text"
-                                v-model="form.paylink">
-                    </b-form-input>
-                </b-form-group>
                 <b-form-group id="receipt"
-                                class="receiptflex"
-                                label="Upload Receipt:"
-                                label-for="receipt">
+                    class="receiptflex"
+                    label="Upload Receipt:"
+                    label-for="receipt">
                     <b-form-file v-model="form.receipt" :state="Boolean(form.file)" placeholder="Choose a file...">
                     </b-form-file>
                 </b-form-group>
             </div>
         </div>
-        <b-button type="submit" @click="handleSubmit('form')" variant="primary">Submit</b-button>
+        <b-button class="submitButton" type="submit" variant="primary">Submit</b-button>
         </b-form>
     </div>
 </template>
@@ -104,7 +103,6 @@ export default {
         form: {
             receipt: '',
             mealCharged: '',
-            paylink: '',
             mealCost: '',
             file: null,
             timeIn: null,
@@ -112,15 +110,9 @@ export default {
             date: '',
             startTime: '',
             endTime: '',
-            selected: null,
+            selectedSchedule: null
         },
-        options: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
+        scheduleOptions: [],
         show: true
     }
   },
@@ -143,7 +135,7 @@ export default {
         console.log("date is in the past");
       }
     },
-    handleSubmit: function(form){
+    handleSubmit(){
         var self = this;
         this.$ref[form].validate((valid => {
             if(valid){
@@ -204,6 +196,11 @@ hr{
 .receiptflex{
     flex-grow: 1;
     padding: 0 2px;
+}
+.submitButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 @media(max-width: 480px){
   .flexGroup{

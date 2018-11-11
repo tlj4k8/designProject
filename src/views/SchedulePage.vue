@@ -2,17 +2,17 @@
   <div class="schedulePage">
     <h1>Schedule</h1>
     <b-card bg-variant="light" class="card">
-        <AddSchedule/>
+        <ViewSchedule/>
     </b-card>
   </div>
 </template>
 
 <script>
-import AddSchedule from '../components/Schedule/AddSchedule.vue';
+import ViewSchedule from '../components/Schedule/ViewSchedule.vue';
 export default {
   name: "SchedulePage",
   components: {
-    AddSchedule
+    ViewSchedule
   }
 };
 </script>

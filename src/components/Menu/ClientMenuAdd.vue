@@ -1,14 +1,9 @@
 <template>
     <div class="clientMenuAdd">
     <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <h3> Select Schedule </h3>
+    <hr/>
     <div class="clientMenuAdd">
-        <b-form-group id="client"
-                        label="Client:"
-                        label-for="client">
-            <b-form-select
-                    v-model="form.client" 
-                    :options="clientOptions"/>
-        </b-form-group>
         <b-form-group id="schedule"
                         label="Schedule:"
                         label-for="schedule">
@@ -28,7 +23,7 @@
                       label="Menus:"
                       label-for="menu">
               <b-form-select multiple v-model="form.menus" :options="options" />
-              <b-button type="submit" variant="primary">Select Items</b-button>
+              <b-button type="submit" variant="primary">Select Menu</b-button>
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -39,12 +34,11 @@
                       label="Selected Menus:"
                       label-for="selectedMenus">
               <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
-              <b-button type="submit" variant="primary">Remove Item</b-button>
+              <b-button type="submit" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
     </div>
     <b-button type="submit" variant="primary">Submit</b-button>
-    <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
 </template>
@@ -55,26 +49,15 @@ export default {
   data() {
     return {
       form: {
-        client: null,
         schedule: null,
         menus: null,
         selectedMenus: []
       },
-      options: [
-        { value: "client1", text: "client1" },
-        { value: "client2", text: "client2" },
-        { value: "client3", text: "client3" },
-        { value: "client4", text: "client4" },
-        { value: "client5", text: "client6" }
-      ],
+      options: [],
       selectedOptions: [],
       scheduleOptions: [
         { value: "schedule1", text: "schedule1" },
         { value: "schedule2", text: "schedule2" }
-      ],
-      clientOptions: [
-        { value: "option1", text: "option1" },
-        { value: "option2", text: "option2" }
       ],
       show: true
     };

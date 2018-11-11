@@ -13,10 +13,6 @@
           </b-form-group>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
-    <div class="disabledButtons">
-        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
-    </div>
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
@@ -24,7 +20,7 @@
                         label-for="username">
             <b-form-input id="username"
                         type="text"
-                        :disabled="disabled"
+                        :disabled="userDisabled"
                         v-model="form.username">
             </b-form-input>
         </b-form-group>
@@ -34,11 +30,15 @@
                         label-for="password">
             <b-form-input id="password"
                         type="password"
-                        :disabled="disabled"
+                        :disabled="passwordDisabled"
                         v-model="form.password">
             </b-form-input>
         </b-form-group>
         </div>
+        <div class="disabledButtons">
+            <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
+            <b-button class="disabled" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="disabled" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+         </div>
       <div class="person">
         <h3>Profile</h3>
         <hr/>
@@ -166,6 +166,10 @@
       </div>
     </div>
     </b-form>
+    <div class="disabledButtons">
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
+        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    </div>
     </div>
 </template>
 
@@ -177,6 +181,8 @@ export default {
   data() {
     return {
       disabled: true,
+      userDisabled: true,
+      passwordDisabled: true,
       form: {
         username: '',
         password: '',
