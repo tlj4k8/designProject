@@ -48,15 +48,21 @@
         <div class="timestamp">
             <h3>Track Time</h3>
             <hr/>
-            <div class="buttonStamps">
-            <div class="button">
-                <b-button v-on:click="clockIn" class="btn">Clock In</b-button>
-                <h5 class="timeflex">{{ form.timeIn }}</h5>
-            </div>
-            <div class="button">
-                <b-button v-on:click="clockOut" class="btn">Clock Out</b-button>
-                <h5 class="timeflex">{{ form.timeOut }}</h5>
-            </div>
+            <div class="timeflexGroup">
+                <b-form-group class="timeflex"
+                                id="clockIn">
+                    <b-button v-on:click="clockIn" class="btn">Clock In</b-button>
+                    <b-form-input id="clockIn"
+                                required
+                                v-model="form.timeIn"/>
+                </b-form-group>
+                <b-form-group class="timeflex"
+                                id="clockOut">
+                    <b-button v-on:click="clockOut" class="btn">Clock Out</b-button>
+                    <b-form-input id="clockOut"
+                                required
+                                v-model="form.timeOut"/>
+                </b-form-group>
             </div>
         </div>
         <div class="receipt">
@@ -173,14 +179,14 @@ hr{
 .employeeSelect{
   padding-top: 5px 0px;
 }
-.buttonStamps{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
 .button{
     flex-grow: 1;
     padding: 0 2px;
+}
+.timeflexGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .timeflex{
     padding: 10px 0;
@@ -206,5 +212,14 @@ hr{
   .flexGroup{
     flex-wrap: wrap;
   }
+  .timeflexGroup{
+      flex-wrap: wrap;
+  }
+  .receiptflexGroup{
+      flex-wrap: wrap;
+  }
+  .btn.btn.btn-secondary{
+    width: 100%;
+}
 }
 </style>
