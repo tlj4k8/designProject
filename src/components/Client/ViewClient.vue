@@ -1,12 +1,12 @@
 <template>
   <div class="viewClient">
-  <div class="client">
-    <b-form-group id="clientList"
-                label="Client Search:"
-                label-for="clientList">
-        <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
-    </b-form-group>
-  </div>
+    <h3>Select Client</h3>
+    <hr/>
+    <div class="client">
+        <b-form-group id="clientList">
+            <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
+        </b-form-group>
+    </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>

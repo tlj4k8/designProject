@@ -1,6 +1,8 @@
 <template>
     <div class="addEmpployee">
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
+        <h3>Login Credentials</h3>
+        <hr/>
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"

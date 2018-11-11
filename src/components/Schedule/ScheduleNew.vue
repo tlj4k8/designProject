@@ -1,28 +1,28 @@
 <template>
     <div class="scheduleNew">
         <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
-        <div class="employeeSelect">
-        <h3> Select Employee </h3>
-        <hr/>
-        <b-form-group id="employee"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md">
-        <b-form-select required v-model="form.selectedEmployee" :options="employeeOptions" class="mb-1" />
-        </b-form-group>
-        </div>
-        <div class="clientSelect">
-        <h3> Select Chef </h3>
-        <hr/>
-        <b-form-group id="client"
-                    class="select"
-                    :label-cols="4"
-                    breakpoint="md">
-        <b-form-select required v-model="form.selectedClient" :options="clientOptions" class="mb-1" />
-        </b-form-group>
-        </div>
+            <div class="employeeSelect">
+                <h3> Select Employee </h3>
+                <hr/>
+                <b-form-group id="employee"
+                            class="select"
+                            :label-cols="4"
+                            breakpoint="md">
+                <b-form-select required v-model="form.selectedEmployee" :options="employeeOptions" class="mb-1" />
+                </b-form-group>
+            </div>
+            <div class="clientSelect">
+                <h3> Select Chef </h3>
+                <hr/>
+                <b-form-group id="client"
+                            class="select"
+                            :label-cols="4"
+                            breakpoint="md">
+                <b-form-select required v-model="form.selectedClient" :options="clientOptions" class="mb-1" />
+                </b-form-group>
+            </div>
             <div class="scheduleVisit">
-                <h3>Schedule New</h3>
+                <h3>Schedule Date/Time</h3>
                 <hr/>
                 <div class="flexGroup">
                     <b-form-group class="flex"

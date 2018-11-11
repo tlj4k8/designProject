@@ -13,10 +13,6 @@
           </b-form-group>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
-    <div class="disabledButtons">
-        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
-    </div>
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
@@ -166,6 +162,10 @@
       </div>
     </div>
     </b-form>
+    <div class="disabledButtons">
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
+        <b-button class="disabled" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    </div>
     </div>
 </template>
 

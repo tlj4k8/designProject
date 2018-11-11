@@ -1,19 +1,17 @@
 <template>
     <div class="viewMenu">
+        <h3>Select Menu</h3>
+        <hr/>
         <div class="menuSelect">
             <b-form-group id="menu"
                         class="select"
                         :label-cols="4"
-                        breakpoint="md"
-                        label="Menus:"
-                        label-for="menu">
+                        breakpoint="md">
             <b-form-select v-model="selected" v-on:input="getMenus" :options="options" class="mb-1" />
             </b-form-group>
         </div>
-        <div class="disabledButtons">
-            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
-            <b-button class="disabled" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
-        </div>
+        <h3>Menu Info</h3>
+        <hr/>
         <b-form ref="form" v-if="show" class="form">
         <div class="menu">
             <b-form-group id="menuName"
@@ -78,6 +76,10 @@
             </b-form-group>
             </div>
         </b-form>
+        <div class="disabledButtons">
+            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
+            <b-button class="disabled" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        </div>
   </div>
 </template>
 
@@ -155,5 +157,9 @@ export default {
     background-color:white;
     border-color: lightgray;
     padding: 7px 2px;
+}
+hr{
+  background-color: #0d50bc;
+  height: 1px;
 }
 </style>
