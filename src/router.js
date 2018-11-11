@@ -12,7 +12,6 @@ import ClientDash from './views/ClientDash.vue';
 import ClientNew from './views/ClientNew.vue';
 import Employee from './views/Employee.vue';
 import EmployeeDash from './views/EmployeeDash.vue';
-import EmployeeView from './views/EmployeeView.vue';
 import EmployeeNew from './views/EmployeeNew.vue';
 import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
@@ -138,14 +137,6 @@ const router = new Router({
       path: '/profile',
       name: 'ProfilePage',
       component: ProfilePage,
-      meta: { 
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/employeeView',
-      name: 'EmployeeView',
-      component: EmployeeView,
       meta: { 
         requiresAuth: true
       }
