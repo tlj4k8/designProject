@@ -102,8 +102,8 @@ const router = new Router({
       }
     },
     {
-      path: '/availability',
-      name: 'Availability',
+      path: '/viewSchedule',
+      name: 'SchedulePage',
       component: SchedulePage,
       meta: { 
         requiresAuth: true

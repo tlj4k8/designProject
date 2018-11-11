@@ -3,7 +3,7 @@
     <h1>Menu Dashboard</h1>
     <b-button-group vertical class="dashGroup">
         <b-button to="/scheduleNew">Add Schedule</b-button>
-        <b-button to="/availability">View Schedule</b-button>
+        <b-button to="/viewSchedule">View Schedule</b-button>
     </b-button-group>
   </div>
 </template>

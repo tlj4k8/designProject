@@ -19,6 +19,7 @@
                             label-for="menuName">
                 <b-form-input id="menuName"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.menuName">
                 </b-form-input>
             </b-form-group>
@@ -27,6 +28,7 @@
                             label-for="ingrediants">
                 <b-form-input id="ingrediants"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.ingrediants">
                 </b-form-input>
             </b-form-group>
@@ -37,6 +39,7 @@
                             type="text"
                             :rows="3"
                             :max-rows="6"
+                            :disabled="disabled"
                             v-model="form.instructions">
                 </b-form-textarea>
             </b-form-group>
@@ -45,6 +48,7 @@
                             label-for="servings">
                 <b-form-input id="servings"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.servings">
                 </b-form-input>
             </b-form-group>
@@ -53,6 +57,7 @@
                             label-for="time">
                 <b-form-input id="time"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.time">
                 </b-form-input>
             </b-form-group>
@@ -61,6 +66,7 @@
                             label-for="mealType">
                 <b-form-input id="mealType"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.mealType">
                 </b-form-input>
             </b-form-group>
@@ -71,6 +77,7 @@
                             :rows="3"
                             :max-rows="6"
                             type="text"
+                            :disabled="disabled"
                             v-model="form.menuNotes">
                 </b-form-textarea>
             </b-form-group>
