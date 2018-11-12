@@ -12,7 +12,7 @@
                 </b-form-group>
             </div>
             <div class="clientSelect">
-                <h3> Select Chef </h3>
+                <h3> Select Client </h3>
                 <hr/>
                 <b-form-group id="client"
                             class="select"
@@ -50,12 +50,11 @@
                         <b-form-input id="date"
                                     type="date"
                                     required
-                                    v-on:blur.native="validateDate"
                                     v-model="form.date"/>
                     </b-form-group>
                 </div>
             </div>
-            <b-button type="submit" @click="handleSubmit('form')" variant="primary">Submit</b-button>
+            <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
     </div>
 </template>
@@ -80,14 +79,21 @@ export default {
   },
   methods: {
     handleSubmit(form) {
-        var self = this;
+        let self = this;
         this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
-            StartDate: this.formatTime(this.form.startTime),
+            EmployeeId: this.form.selectedEmployee,
+            ClientId: this.form.selectedClient,
+            StartTime: this.formatTime(this.form.startTime),
             EndTime: this.formatTime(this.form.endTime),
-
+            ScheduleDate: this.formatDate(this.form.date)
         })
         .then((response)=>{
-            console.log(response)
+            console.log(response);
+            this.form.selectedEmployee = null,
+            this.form.selectedClient =  null,
+            this.form.startTime = '',
+            this.form.endTime = '',
+            this.form.date = ''
         })
         .catch((error)=>{
             console.log(error)
@@ -100,7 +106,7 @@ export default {
         if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
             console.log("date is today or in future");
         } else {
-            console.log("date is in the past");
+            alert("Please enter a valid date. The date entered has passed.");
         }
     },
     formatTime(time){
@@ -113,6 +119,13 @@ export default {
             return formatedTime;
         }
         return formatedTime;
+    },
+    formatDate(){
+        this.validateDate();
+        let dateStamp = this.form.date.split('/').reverse().join('-');
+        let formatedDate = dateStamp + "T00:00:00";
+        return formatedDate;
+
     }
   },
     mounted: function(){

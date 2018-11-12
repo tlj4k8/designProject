@@ -1,6 +1,5 @@
 <template>
     <div class="addSchedule">
-   <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
         <div class="employeeSelect">
         <h3> Select Schedule </h3>
         <hr/>
@@ -8,9 +7,10 @@
                     class="select"
                     :label-cols="4"
                     breakpoint="md">
-        <b-form-select required v-model="form.selectedSchedule" :options="scheduleOptions" class="mb-1" />
+            <b-form-select v-on:input="getSchedules" v-model="form.selectedSchedule" :options="scheduleOptions" class="mb-1" />
         </b-form-group>
         </div>
+        <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
         <div class="scheduleVisit">
             <h3>Schedule Date/Time</h3>
             <hr/>
@@ -40,7 +40,6 @@
                     <b-form-input id="date"
                                 type="date"
                                 required
-                                v-on:blur.native="validateDate"
                                 v-model="form.date"/>
                 </b-form-group>
             </div>
@@ -101,6 +100,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 import moment from 'moment';
 export default {
   name: 'ScheduleVisit',
@@ -123,41 +123,69 @@ export default {
     }
   },
   methods: {
-    clockIn: function (){
+    clockIn(){
         let timestamp = moment().format('LT');
         this.form.timeIn = timestamp;
     },
-    clockOut: function (){
+    clockOut(){
         let timestamp = moment().format('LT');
         this.form.timeOut = timestamp;
     },
-    validateDate: function(){
-      const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-      let SpecialToDate = this.form.date;
+    validateDate(){
+        const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+        let SpecialToDate = this.form.date;
 
-      if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
-        console.log("date is today or in future");
-    } else {
-        console.log("date is in the past");
-      }
+        if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
+            console.log("date is today or in future");
+        } else {
+            alert("Please enter a valid date. The date entered has passed.");
+        }
     },
-    handleSubmit(){
-        var self = this;
-        this.$ref[form].validate((valid => {
-            if(valid){
-                    //http request goes here
+    formatTime(time){
+        let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
+        return timeStamp;
+    },
+    formatDate(date){
+        let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');
+        return dateStamp;
+    }
+  },
+  computed: {
+      getSchedules(){
+        const schedule = this.scheduleOptions.indexOf(this.form.selectedSchedule);
+        this.$axiosServer.get('https://chefemployees.com/odata/Schedules')
+        .then((response)=>{
+            let scheduleValue = response.data.value[schedule];
+            if(scheduleValue == null || undefined){
+                this.form.endTime = '',
+                this.form.startTime = '',
+                this.form.timeIn = '',
+                this.form.timeOut = ''
             }
             else{
-                this.emptyFields();
-                    return false;
-                }
-        }))
-    },
-     emptyFields() {
-        this.$alert("Please complete all required fields", "Registration failed", {
-        confirmButtonText: 'OK'
+                this.form.date = this.formatDate(scheduleValue.ScheduleDate),
+                this.form.startTime = this.formatTime(scheduleValue.StartTime),
+                this.form.endTime = this.formatTime(scheduleValue.EndTime),
+                this.form.timeIn = this.formatTime(scheduleValue.Clockin),
+                this.form.timeOut = this.formatTime(scheduleValue.Clockout),
+                this.form.mealCharged = scheduleValue.Charged,
+                this.form.mealCost = scheduleValue.Cost
+            }
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+      }
+  },
+  mounted: function() {
+      axios.get('https://chefemployees.com/odata/Schedules')
+        .then((response) => {
+            console.log(response);
+            this.scheduleOptions = response.data.value.map(value => value.ScheduleId)
+        })
+        .catch((error) => {
+            console.log(error);
         });
-    }
   }
 }
 </script>
