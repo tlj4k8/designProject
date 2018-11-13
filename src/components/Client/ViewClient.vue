@@ -159,7 +159,7 @@
     </div>
     </div>
     <div class="needform">
-    <h3>Client Need Assessment</h3>
+    <h3>Client Needs Assessment</h3>
     <hr/>
         <div class="flexGroup">
         <b-form-group id="stove"
@@ -317,7 +317,7 @@
     </b-form>
     <div class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
-        <b-button class="disabled" v-if="!disabled" type="submit">Update Client</b-button><b-button class="disabled" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="update" v-if="!disabled" type="submit">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
     </div>
 </template>
@@ -504,6 +504,20 @@ hr{
     flex-direction: row;
     justify-content: flex-end;
 }
+.cancel{
+    width: 15%;
+    color:white;
+    background-color:red;
+    border-color: darkred;  
+    padding: 7px 2px;
+}
+.update{
+    width: 15%;
+    color:white;
+    background-color: #0d50bc;
+    border-color: darkblue;
+    padding: 7px 2px;
+}
 .disabled{
     width: 15%;
     color:black;
@@ -514,6 +528,32 @@ hr{
 @media(max-width: 440px){
   .flexGroup{
     flex-wrap: wrap;
+  }
+  .disabledButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 60%
+  }
+  .cancel{
+      width: 60%;
+  }
+}
+@media (max-width: 810px) {
+  .disabledButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 40%
+  }
+  .cancel{
+      width: 40%;
   }
 }
 </style>

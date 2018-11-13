@@ -1,7 +1,7 @@
 <template> 
   <div v-if="isLoggedIn">
     <div class="menu">
-        <b-button @click="logout">Logout</b-button><col/>
+        <b-button class="logoutButton" @click="logout">Logout</b-button><col/>
         <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
     </div>
     <transition name="fade">
@@ -20,6 +20,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import * as decoded from 'jwt-decode';
 export default {
     name: "NavBar",
     data(){
@@ -39,7 +40,10 @@ export default {
       let token = localStorage.getItem('t');
       this.$store.dispatch('storeUserInfo',token);
       this.employeeInfo = decoded(token)
-      if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'True'){
+      if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'False'){
+        this.showNavigation = false
+      }
+      else if(this.employeeInfo.admin === "True" && this.employeeInfo.menu === "False"){
         this.showNavigation = true
       }
     },
@@ -51,6 +55,13 @@ export default {
 }
 </script>
 <style scoped>
+.logoutButton{
+  padding-bottom: 1.8em;
+  margin-top: .8em;
+  height: 2em;
+  background-color: steelblue;
+  border-color: steelblue;
+}
 .fontAwesome{
   color: black;
   height: 2em;
