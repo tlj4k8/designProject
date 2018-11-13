@@ -281,7 +281,9 @@
       </b-form-group>
     </div>
     <b-form-group>
-      <b-button type="primary">Submit</b-button>
+      <div class="submit">
+        <b-button type="submit">Submit</b-button>
+      </div>
     </b-form-group>
     </b-form>
     </div>
@@ -488,6 +490,11 @@ hr{
 .table{
     overflow-x:auto;
     padding: 5px 15px;
+}
+.submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 @media(max-width: 440px){
   .flexGroup{

@@ -63,7 +63,9 @@
             </b-form-textarea>
         </b-form-group>
         </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
+        <div class="submit">
+            <b-button type="submit">Submit</b-button>
+        </div>
     </b-form>
   </div>
 </template>
@@ -110,5 +112,10 @@ export default {
 <style scoped>
 .menu{
   padding: 0 0;
+}
+.submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 </style>

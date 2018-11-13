@@ -23,7 +23,7 @@
                       label="Menus:"
                       label-for="menu">
               <b-form-select multiple v-model="form.menus" :options="options" />
-              <b-button type="submit" variant="primary">Select Menu</b-button>
+              <b-button class="menuBtn" type="submit" variant="primary">Select Menu</b-button>
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -34,11 +34,13 @@
                       label="Selected Menus:"
                       label-for="selectedMenus">
               <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
-              <b-button type="submit" variant="primary">Remove Menu</b-button>
+              <b-button class="menuBtn" type="submit" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
     </div>
-    <b-button type="submit" variant="primary">Submit</b-button>
+    <div class="submit">
+      <b-button type="submit">Submit</b-button>
+    </div>
     </b-form>
   </div>
 </template>
@@ -100,5 +102,13 @@ export default {
 hr{
   background-color: #0d50bc;
   height: 1px;
+}
+.submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.menuBtn{
+  padding-top: 10px;
 }
 </style>

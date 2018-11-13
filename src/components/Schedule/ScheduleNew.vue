@@ -54,7 +54,9 @@
                     </b-form-group>
                 </div>
             </div>
-            <b-button type="submit" variant="primary">Submit</b-button>
+            <div class="submit">
+                <b-button type="submit">Submit</b-button>
+            </div>
         </b-form>
     </div>
 </template>
@@ -161,6 +163,11 @@ hr{
 .flex{
     flex-grow: 1;
     padding: 0 2px;
+}
+.submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 @media(max-width: 480px){
   .flexGroup{
