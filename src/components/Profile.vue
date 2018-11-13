@@ -11,6 +11,7 @@
                         label-for="firstName">
             <b-form-input id="firstName"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.firstName"
                         required>
             </b-form-input>
@@ -21,6 +22,7 @@
                         label-for="lastName">
             <b-form-input id="lastName"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.lastName"
                         required>
             </b-form-input>
@@ -33,6 +35,7 @@
                         label-for="email">
             <b-form-input id="email"
                         type="email"
+                        :disabled="disabled"
                         v-model="form.email"
                         required>
             </b-form-input>
@@ -44,6 +47,7 @@
             <b-form-input id="phone"
                         type="text"
                         v-model="form.phone"
+                        :disabled="disabled"
                         pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                         required>
             </b-form-input>
@@ -55,6 +59,7 @@
                         label-for="zip">
             <b-form-input id="zip"
                         type="text"
+                        :disabled="disabled"
                         v-model="form.zip"
                         required>
             </b-form-input>
@@ -97,28 +102,32 @@
               </tr>
               <tr>
                   <td>Start</td>
-                  <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
               </tr>
               <tr>
                   <td>End</td>
-                  <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
-                  <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
+                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
               </tr>
           </table>
       </div>
     </div>
     </b-form>
+    <div class="disabledButtons">
+        <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Profile</b-button>
+        <b-button class="update" v-if="!disabled" type="submit">Update Profile</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+    </div>
     </div>
 </template>
 
@@ -239,9 +248,60 @@ hr {
   flex-grow: 1;
   padding: 0 2px;
 }
+.cancel{
+    width: 15%;
+    color:white;
+    background-color:red;
+    border-color: darkred;  
+    padding: 7px 2px;
+}
+.disabledButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.update{
+    width: 15%;
+    color:white;
+    background-color: #0d50bc;
+    border-color: darkblue;
+    padding: 7px 2px;
+}
+.disabled{
+    width: 15%;
+    color:black;
+    background-color:white;
+    border-color: lightgray;
+}
 @media (max-width: 440px) {
   .personflexGroup {
     flex-wrap: wrap;
+  }
+  .disabledButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 60%
+  }
+  .cancel{
+      width: 60%;
+  }
+}
+@media (max-width: 810px) {
+  .disabledButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 40%
+  }
+  .cancel{
+      width: 40%;
   }
 }
 </style>

@@ -20,6 +20,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import * as decoded from 'jwt-decode';
 export default {
     name: "NavBar",
     data(){
@@ -39,7 +40,10 @@ export default {
       let token = localStorage.getItem('t');
       this.$store.dispatch('storeUserInfo',token);
       this.employeeInfo = decoded(token)
-      if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'True'){
+      if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'False'){
+        this.showNavigation = false
+      }
+      else if(this.employeeInfo.admin === "True" && this.employeeInfo.menu === "False"){
         this.showNavigation = true
       }
     },
