@@ -95,7 +95,6 @@ export default new Vuex.Store({
     // },
     storeUserInfo({commit},token){
       let userInfo = jwtDecoded(token);
-      console.log("IN STOREUSERINFO")
       commit('setUserInfo', userInfo);
     }
 
