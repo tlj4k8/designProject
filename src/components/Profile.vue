@@ -168,9 +168,10 @@ export default {
     };
   },
   methods: {
-        getProfile(data){
-
-        },
+        returnTime(time){
+            let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
+            return timeStamp;
+      } 
   },
     computed: mapState({
         getToken(state){
