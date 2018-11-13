@@ -20,7 +20,6 @@ export default {
     }
   }),
   mounted: function(){
-    console.log("UPDATED")
     let token = localStorage.getItem('t');
     this.$store.dispatch('storeUserInfo',token);
   }
