@@ -314,7 +314,8 @@ export default {
                     this.form.sun = this.returnTime(employeeValue.EmStartSunday),
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
                     this.form.isAdmin = employeeValue.IsAdmin,
-                    this.form.isMenu = employeeValue.IsMenu
+                    this.form.isMenu = employeeValue.IsMenu,
+                    this.form.isActive = employeeValue.IsActive
                 }
 
             })

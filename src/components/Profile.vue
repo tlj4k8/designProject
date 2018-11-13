@@ -118,28 +118,6 @@
           </table>
       </div>
     </div>
-    <div class="zipCode">
-    <h3> Zip Radius </h3>
-    <hr/>
-      <div class="zipflexGroup">
-      <b-form-group class="zipflex"
-                  id="zip"
-                  label="Zip Code"
-                  label-for="zip">
-      <b-form-select 
-                  v-model="form.zipSelected" 
-                  :options="zipOptions"/>
-      </b-form-group>
-      <b-form-group class="zipflex"
-                  id="zipCode"
-                  label="Add Zip Code"
-                  label-for="zipCode">
-          <b-form-input
-                  v-model="form.zipCode"
-                  type="text"/>
-      </b-form-group>
-      </div>
-    </div>
     </b-form>
     </div>
 </template>
@@ -147,6 +125,8 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import { mapState } from 'vuex';
+import * as decoded from 'jwt-decode';
 export default {
   name: "profile",
   data() {
@@ -174,13 +154,10 @@ export default {
         endFri: '',
         endSat: '',
         endSun: '',
-        zipSelected: '',
-        zipOptions: [],
-        zipCode: []
-      },
-      selected: null,
-      options: [],
+        zipSelected: ''
+        },
       employee: '',
+      employeeInfo: {},
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
@@ -191,64 +168,44 @@ export default {
     };
   },
   methods: {
-    getProfile(){
-            let profileSelection = this.options.indexOf(this.selected);
-            this.$axiosServer.get('https://chefemployees.com/odata/Employees')
-            .then((response)=>{
-                let profileValue = response.data.value[profileSelection]
-                if(profileValue == null || undefined){
-                    this.form.mon = '',
-                    this.form.tue = '',
-                    this.form.wed = '',
-                    this.form.thur = '',
-                    this.form.fri = '',
-                    this.form.sat = '',
-                    this.form.sun = '',
-                    this.form.endMon = '',
-                    this.form.endTue = '',
-                    this.form.endWed = '',
-                    this.form.endThur = '',
-                    this.form.endFri = '',
-                    this.form.endSat = '',
-                    this.form.endSun = ''
-                }
-                this.form.firstName = profileValue.EmFirstName,
-                this.form.lastName = profileValue.EmLastName,
-                this.form.username = profileValue.Username,
-                this.form.password = profileValue.Password,
-                this.form.phone = profileValue.EmCellPhone,
-                this.form.email = profileValue.EmEmail,
-                this.form.zip = profileValue.EmZipCode,
-                this.form.mon = this.returnTime(profileValue.EmStartMonday),
-                this.form.endMon = this.returnTime(profileValue.EmEndMonday),
-                this.form.tue = this.returnTime(profileValue.EmStartTuesday),
-                this.form.endTue = this.returnTime(profileValue.EmEndTuesday),
-                this.form.wed = this.returnTime(profileValue.EmStartWednesday),
-                this.form.endWed = this.returnTime(profileValue.EmEndWednesday),
-                this.form.thur = this.returnTime(profileValue.EmStartThursday),
-                this.form.endThur = this.returnTime(profileValue.EmEndThursday),
-                this.form.fri = this.returnTime(profileValue.EmStartFriday),
-                this.form.endFri = this.returnTime(profileValue.EmEndFriday),
-                this.form.sat = this.returnTime(profileValue.EmStartSaturday),
-                this.form.endSat = this.returnTime(profileValue.EmEndSaturday),
-                this.form.sun = this.returnTime(profileValue.EmStartSunday),
-                this.form.endSun = this.returnTime(profileValue.EmEndSunday),
-                this.form.isAdmin = profileValue.IsAdmin,
-                this.form.isMenu = profileValue.IsMenu
+        getProfile(data){
 
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
+        },
+  },
+    computed: mapState({
+        getToken(state){
+            return state.jwt;
         }
-    },
+    }),
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Employees')
+        let token = localStorage.getItem('t');
+        this.$store.dispatch('storeUserInfo',token);
+        this.employeeInfo = decoded(token)
+        axios.get('https://chefemployees.com/odata/Employees(' + this.employeeInfo.nameid + ')')
         .then((response) => {
-            this.options = response.data.value.map(value => value.EmployeeId)
+            this.form.firstName = response.data.EmFirstName;
+            this.form.lastName = response.data.EmLastName;
+            this.form.phone = response.data.EmCellPhone;
+            this.form.email = response.data.EmEmail;
+            this.form.zip = response.data.EmZipCode;
+            this.form.mon = this.returnTime(response.data.EmStartMonday);
+            this.form.endMon = this.returnTime(response.data.EmEndMonday);
+            this.form.tue = this.returnTime(response.data.EmStartTuesday);
+            this.form.endTue = this.returnTime(response.data.EmEndTuesday);
+            this.form.wed = this.returnTime(response.data.EmStartWednesday);
+            this.form.endWed = this.returnTime(response.data.EmEndWednesday);
+            this.form.thur = this.returnTime(response.data.EmStartThursday);
+            this.form.endThur = this.returnTime(response.data.EmEndThursday);
+            this.form.fri = this.returnTime(response.data.EmStartFriday);
+            this.form.endFri = this.returnTime(response.data.EmEndFriday);
+            this.form.sat = this.returnTime(response.data.EmStartSaturday);
+            this.form.endSat = this.returnTime(response.data.EmEndSaturday);
+            this.form.sun = this.returnTime(response.data.EmStartSunday);
+            this.form.endSun = this.returnTime(response.data.EmEndSunday);
         })
         .catch((error) => {
             console.log(error);
+            return error;
         });
     }
 }
