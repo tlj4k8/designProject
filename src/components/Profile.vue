@@ -188,7 +188,7 @@ export default {
             this.form.lastName = response.data.EmLastName;
             this.form.phone = response.data.EmCellPhone;
             this.form.email = response.data.EmEmail;
-            this.form.zip = response.data.EmZipCode;
+            this.form.zip = response.data.EmZipCodes;
             this.form.mon = this.returnTime(response.data.EmStartMonday);
             this.form.endMon = this.returnTime(response.data.EmEndMonday);
             this.form.tue = this.returnTime(response.data.EmStartTuesday);

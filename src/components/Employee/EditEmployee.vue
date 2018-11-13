@@ -298,7 +298,7 @@ export default {
                     this.form.password = employeeValue.Password,
                     this.form.phone = employeeValue.EmCellPhone,
                     this.form.email = employeeValue.EmEmail,
-                    this.form.zip = employeeValue.EmZipCode,
+                    this.form.zip = employeeValue.EmZipCodes,
                     this.form.mon = this.returnTime(employeeValue.EmStartMonday),
                     this.form.endMon = this.returnTime(employeeValue.EmEndMonday),
                     this.form.tue = this.returnTime(employeeValue.EmStartTuesday),
