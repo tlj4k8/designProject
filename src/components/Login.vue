@@ -29,6 +29,7 @@
 
 <script>
 import {mapState} from 'vuex';
+const jwtDecoded = require('jwt-decode');
 export default {
   name: 'Login',
     data () {
@@ -60,7 +61,9 @@ export default {
             })
             .then((response)=>{
                 console.log(response.data)
+                console.log(jwtDecoded(response.data))
                 this.$store.dispatch('loginToken', response.data)
+                this.$store.dispatch('storeUserInfo',response.data);
                 this.successfulLogin();
             })
             .catch((error)=>{

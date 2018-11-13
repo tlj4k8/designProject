@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VueAxios from 'vue-axios';
 import axios from "axios";
+const jwtDecoded = require('jwt-decode');
 
 Vue.use(VueAxios, axios);
 Vue.use(Vuex);
@@ -10,6 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userId: '',
+    userInfo:{},
     jwt: localStorage.getItem('t'),
     endpoints: {
       obtainJWT: 'https://chefemployees.com/api/Auth/Login',
@@ -30,6 +32,12 @@ export default new Vuex.Store({
     removeToken(state){
       localStorage.removeItem('t');
       state.jwt = null;
+    },
+    setUserInfo(state, userInfo){
+      state.userInfo = userInfo;
+    },
+    resetUserInfo(state){
+      state.userInfo = {}
     }
   },
   getters: {
@@ -39,6 +47,7 @@ export default new Vuex.Store({
     logout({commit}){
       commit('resetUser');
       commit('removeToken');
+      commit('resetUserInfo');
     },
     loginToken({commit}, token){
       commit('updateToken', token);
@@ -84,8 +93,10 @@ export default new Vuex.Store({
     //   }
 
     // },
-    getProfile({commit}, id){
-      commit('setUser', id);
+    storeUserInfo({commit},token){
+      let userInfo = jwtDecoded(token);
+      console.log("IN STOREUSERINFO")
+      commit('setUserInfo', userInfo);
     }
 
   }

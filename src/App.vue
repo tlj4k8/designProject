@@ -8,6 +8,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import { mapState } from 'vuex';
+import * as decoded from 'jwt-decode';
 export default {
   name: 'App',
   components:{
@@ -17,7 +18,12 @@ export default {
     getToken(state){
       return state.jwt;
     }
-  })
+  }),
+  mounted: function(){
+    console.log("UPDATED")
+    let token = localStorage.getItem('t');
+    this.$store.dispatch('storeUserInfo',token);
+  }
 }
 </script>
 

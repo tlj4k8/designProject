@@ -118,28 +118,6 @@
           </table>
       </div>
     </div>
-    <div class="zipCode">
-    <h3> Zip Radius </h3>
-    <hr/>
-      <div class="zipflexGroup">
-      <b-form-group class="zipflex"
-                  id="zip"
-                  label="Zip Code"
-                  label-for="zip">
-      <b-form-select 
-                  v-model="form.zipSelected" 
-                  :options="form.zipOptions"/>
-      </b-form-group>
-      <b-form-group class="zipflex"
-                  id="zipCode"
-                  label="Add Zip Code"
-                  label-for="zipCode">
-          <b-form-input
-                  v-model="form.zipCode"
-                  type="text"/>
-      </b-form-group>
-      </div>
-    </div>
     </b-form>
     </div>
 </template>
@@ -148,6 +126,7 @@
 import moment from 'moment';
 import axios from 'axios';
 import { mapState } from 'vuex';
+import * as decoded from 'jwt-decode';
 export default {
   name: "profile",
   data() {
@@ -175,10 +154,10 @@ export default {
         endFri: '',
         endSat: '',
         endSun: '',
-        zipSelected: '',
-        zipOptions: [],
-        zipCode: []
-      },
+        zipSelected: ''
+        },
+      employee: '',
+      employeeInfo: {},
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
@@ -190,30 +169,7 @@ export default {
   },
   methods: {
         getProfile(data){
-            this.$store.dispatch('getProfile', data.EmployeeId);
-            this.form.firstName = data.user.EmFirstName;
-            this.form.lastName = data.user.EmLastName;
-            this.form.username = data.user.Username;
-            this.form.password = data.user.Password;
-            this.form.phone = data.user.EmCellPhone;
-            this.form.email = data.user.EmEmail;
-            this.form.zip = data.user.EmZipCode;
-            this.form.mon = this.returnTime(data.user.EmStartMonday);
-            this.form.endMon = this.returnTime(data.user.EmEndMonday);
-            this.form.tue = this.returnTime(data.user.EmStartTuesday);
-            this.form.endTue = this.returnTime(data.user.EmEndTuesday);
-            this.form.wed = this.returnTime(data.user.EmStartWednesday);
-            this.form.endWed = this.returnTime(data.user.EmEndWednesday);
-            this.form.thur = this.returnTime(data.user.EmStartThursday);
-            this.form.endThur = this.returnTime(data.user.EmEndThursday);
-            this.form.fri = this.returnTime(data.user.EmStartFriday);
-            this.form.endFri = this.returnTime(data.user.EmEndFriday);
-            this.form.sat = this.returnTime(data.user.EmStartSaturday);
-            this.form.endSat = this.returnTime(data.user.EmEndSaturday);
-            this.form.sun = this.returnTime(data.user.EmStartSunday);
-            this.form.endSun = this.returnTime(data.user.EmEndSunday);
-            this.form.isAdmin = data.user.IsAdmin;
-            this.form.isMenu = data.user.IsMenu;
+
         },
   },
     computed: mapState({
@@ -222,11 +178,34 @@ export default {
         }
     }),
     mounted: function(){
-        axios.post('https://chefemployees.com/odata/Employees', {
-            jwt: this.getToken
-        })
+        let token = localStorage.getItem('t');
+        this.$store.dispatch('storeUserInfo',token);
+        this.employeeInfo = decoded(token)
+        axios.get('https://chefemployees.com/odata/Employees(' + this.employeeInfo.nameid + ')')
         .then((response) => {
-            this.getProfile(response.data);
+            this.form.firstName = response.data.EmFirstName;
+            this.form.lastName = response.data.EmLastName;
+            this.form.username = response.data.Username;
+            this.form.password = response.data.Password;
+            this.form.phone = response.data.EmCellPhone;
+            this.form.email = response.data.EmEmail;
+            this.form.zip = response.data.EmZipCode;
+            this.form.mon = this.returnTime(response.data.EmStartMonday);
+            this.form.endMon = this.returnTime(response.data.EmEndMonday);
+            this.form.tue = this.returnTime(response.data.EmStartTuesday);
+            this.form.endTue = this.returnTime(response.data.EmEndTuesday);
+            this.form.wed = this.returnTime(response.data.EmStartWednesday);
+            this.form.endWed = this.returnTime(response.data.EmEndWednesday);
+            this.form.thur = this.returnTime(response.data.EmStartThursday);
+            this.form.endThur = this.returnTime(response.data.EmEndThursday);
+            this.form.fri = this.returnTime(response.data.EmStartFriday);
+            this.form.endFri = this.returnTime(response.data.EmEndFriday);
+            this.form.sat = this.returnTime(response.data.EmStartSaturday);
+            this.form.endSat = this.returnTime(response.data.EmEndSaturday);
+            this.form.sun = this.returnTime(response.data.EmStartSunday);
+            this.form.endSun = this.returnTime(response.data.EmEndSunday);
+            this.form.isAdmin = response.data.IsAdmin;
+            this.form.isMenu = response.data.IsMenu;
         })
         .catch((error) => {
             console.log(error);
