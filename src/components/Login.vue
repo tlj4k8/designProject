@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <div class="logo">
-            <img src="../assets/saltedChefLogo.jpg" alt="saltedChefPic"/>
+            <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
         </div>
         <div class="form">
             <div class="flexGroup">
@@ -35,7 +35,7 @@ export default {
     data () {
         return {
             form: {
-                usernam: '',
+                username: '',
                 password: '',
             },
             show: true,
