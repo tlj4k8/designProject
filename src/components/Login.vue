@@ -6,7 +6,7 @@
         <div class="form">
             <div class="flexGroup">
             <b-form ref="form" @submit="handleLogin(form)" :model="form" v-if="show" class="form">
-            <b-row>
+            <b-row class="flex">
                 <b-col sm="2"><label for="username">USERNAME</label></b-col>
                 <b-col sm="10">
                     <b-form-input class="input" id="username" type="text" v-model="form.username" required placeholder="Enter username"/>
@@ -117,17 +117,28 @@ h1{
     background-color: white;
     border-color: lightgray;
 }
-
-@media(max-width: 430px){
+@media(max-width: 1200px){
+    .flex{
+        width: 50vw;
+        padding: 10px 1px;
+    }
+    .loginButton{
+        width: 50%;
+    } 
+}
+@media(max-width: 1000px){
+    .flex{
+        width: 70vw;
+        padding: 10px 1px;
+    }
+}
+@media(max-width: 800px){
     .flex{
         width: 90vw;
         padding: 5px 1px;
     }
     .loginButton{
         width: 95%;
-    }
-    img{
-        width: 70%;
     }
 }
 </style>
