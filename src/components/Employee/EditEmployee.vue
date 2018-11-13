@@ -37,7 +37,7 @@
         </div>
         <div class="disabledButtons">
             <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
-            <b-button class="disabled" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="disabled" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+            <b-button class="update" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
          </div>
       <div class="person">
         <h3>Profile</h3>

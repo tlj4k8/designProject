@@ -49,8 +49,11 @@ export default {
     },
     computed: mapState({
       isLoggedIn (state){
-      return !(state.jwt === null);
-    }
+        return !(state.jwt === null);
+      },
+      getToken(state){
+        return state.jwt;
+      }
     })
 }
 </script>
