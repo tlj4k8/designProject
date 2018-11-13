@@ -185,8 +185,6 @@ export default {
         .then((response) => {
             this.form.firstName = response.data.EmFirstName;
             this.form.lastName = response.data.EmLastName;
-            this.form.username = response.data.Username;
-            this.form.password = response.data.Password;
             this.form.phone = response.data.EmCellPhone;
             this.form.email = response.data.EmEmail;
             this.form.zip = response.data.EmZipCode;
@@ -204,8 +202,6 @@ export default {
             this.form.endSat = this.returnTime(response.data.EmEndSaturday);
             this.form.sun = this.returnTime(response.data.EmStartSunday);
             this.form.endSun = this.returnTime(response.data.EmEndSunday);
-            this.form.isAdmin = response.data.IsAdmin;
-            this.form.isMenu = response.data.IsMenu;
         })
         .catch((error) => {
             console.log(error);
