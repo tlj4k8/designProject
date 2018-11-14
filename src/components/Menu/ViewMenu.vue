@@ -113,7 +113,7 @@ export default {
   },
     computed:{
         getMenus(){
-            const menu = this.selected - 1;
+            const menu = this.options.indexOf(this.selected);
             this.$axiosServer.get('https://chefemployees.com/odata/Menus')
             .then((response)=>{
                 let menuValue = response.data.value[menu]

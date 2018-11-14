@@ -22,8 +22,8 @@
                       breakpoint="md"
                       label="Menus:"
                       label-for="menu">
-              <b-form-select multiple v-model="form.menus" :options="options" />
-              <b-button class="menuBtn" type="submit" variant="primary">Select Menu</b-button>
+              <b-form-select v-model="form.menus" :options="menuOptions" />
+              <b-button @click="addMenu" class="menuBtn" variant="primary">Select Menu</b-button>
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -33,10 +33,19 @@
                       breakpoint="md"
                       label="Selected Menus:"
                       label-for="selectedMenus">
-              <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
-              <b-button class="menuBtn" type="submit" variant="primary">Remove Menu</b-button>
+              <b-form-select v-model="form.selectedMenus" :options="selectedOptions" />
+              <b-button @click="removeMenu" class="menuBtn" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
+      <b-form-group id="notes"
+                    label="Menu Notes:"
+                    label-for="notes">
+        <b-form-textarea id="notes"
+                      :rows="3"
+                      :max-rows="6"
+                      type="text"
+                      v-model="form.notes"/>
+      </b-form-group>
     </div>
     <div class="submit">
       <b-button type="submit">Submit</b-button>
@@ -46,35 +55,44 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "clientMenuAdd",
   data() {
     return {
       form: {
         schedule: null,
-        menus: null,
-        selectedMenus: []
+        menus: [],
+        selectedMenus: [],
+        notes: ''
       },
-      options: [],
+      menuOptions: [],
       selectedOptions: [],
-      scheduleOptions: [
-        { value: "schedule1", text: "schedule1" },
-        { value: "schedule2", text: "schedule2" }
-      ],
+      scheduleOptions: [],
       show: true
     };
   },
   methods: {
-    handleSubmit: function(form) {
-      var self = this;
-      this.$ref[form].validate(valid => {
-        if (valid) {
-          //http request goes here
-        } else {
-          this.emptyFields();
-          return false;
-        }
-      });
+    handleSubmit() {
+      this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
+        ScheduleId: this.form.schedule,
+        MenuNotes: this.form.notes,
+        MenuId: this.selectedOptions,
+        // ClientId: 1
+      })
+      .then((response)=>{
+        console.log(response);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    },
+    addMenu(){
+      this.selectedOptions.push(this.form.menus);
+      console.log('button works');
+    },
+    removeMenu(){
+      this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
     },
     emptyFields() {
       this.$alert(
@@ -85,7 +103,25 @@ export default {
         }
       );
     }
-  }
+  },
+    mounted(){
+      axios.get('https://chefemployees.com/odata/Menus')
+      .then((response) => {
+          console.log(response)
+          this.menuOptions = response.data.value.map(value => value.MenuId)
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+      axios.get('https://chefemployees.com/odata/Schedules')
+      .then((response) => {
+          console.log(response)
+          this.scheduleOptions = response.data.value.map(value => value.ScheduleId)
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+    }
 };
 </script>
 <style scoped>
