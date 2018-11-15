@@ -8,8 +8,12 @@
                         id="username"
                         label="Username:"
                         label-for="username">
-            <b-form-input id="username"
+            <b-form-input class="input" 
+                        id="username"
                         type="text"
+                        :value="form.username"
+                        v-on:input.native="checkName"
+                        v-bind:style="{ 'border-color' : valid }"
                         v-model="form.username">
             </b-form-input>
         </b-form-group>
@@ -185,7 +189,9 @@ export default {
       },
       selected: null,
       options: [],
-      employee: '',
+      employeeNames: [],
+      names: [],
+      valid: '', 
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
@@ -196,7 +202,15 @@ export default {
     };
   },
   methods: {
+      checkName(){
+        if(this.employeeNames.includes(this.form.username)){
+          this.valid = 'red';
+        }else{
+          this.valid = 'lightgreen';
+        }
+      },
       handleSubmit(form){
+        if(this.valid === 'lightgreen'){
         let self = this;
         this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
             EmFirstName: this.form.firstName,
@@ -248,11 +262,16 @@ export default {
           this.form.endSat = '',
           this.form.endSun = '',
           this.form.isMenu = false,
-          this.form.isAdmin = false
+          this.form.isAdmin = false,
+          this.valid = ''
         })
         .catch((error)=>{
           console.log(error);
         })
+      }
+      else{
+        alert('Please check your form for missing or invalid input');
+      }
       },
       formatTime(time){
         let timeStamp = time.split(':');
@@ -265,6 +284,15 @@ export default {
         }
         return formatedTime;
       }
+  },
+  mounted(){
+    axios.get('https://chefemployees.com/odata/Employees')
+    .then((response) => {
+      this.employeeNames = response.data.value.map(value => value.Username)
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
   }
 }
 </script>
