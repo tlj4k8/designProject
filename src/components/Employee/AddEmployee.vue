@@ -11,7 +11,6 @@
             <b-form-input class="input" 
                         id="username"
                         type="text"
-                        :value="form.username"
                         v-on:input.native="checkName"
                         v-bind:style="{ 'border-color' : valid }"
                         v-model="form.username">
@@ -201,6 +200,7 @@ export default {
   methods: {
       checkName(){
         this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';
+        if(this.form.username === '') { this.valid = ''}
       },
       handleSubmit(form){
         if(this.valid === 'lightgreen'){
