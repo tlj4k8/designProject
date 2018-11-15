@@ -93,6 +93,7 @@
                     <b-form-file v-model="form.receipt" :state="Boolean(form.file)" placeholder="Choose a file...">
                     </b-form-file>
                 </b-form-group>
+                <b-button @click="uploadImage">upload</b-button>
             </div>
         </div>
         <b-button class="submitButton" type="submit" variant="primary">Submit</b-button>
@@ -175,6 +176,12 @@ export default {
         .catch((error)=>{
             console.log(error);
         })
+      },
+      uploadImage(){
+          this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
+
+          })
+
       }
   },
   mounted: function() {
