@@ -83,7 +83,7 @@
             </b-form-group>
             </div>
         </b-form>
-        <div class="disabledButtons">
+        <div v-if="isAdmin=='True' || isMenu=='True'" class="disabledButtons">
             <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
             <b-button class="update" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
@@ -92,6 +92,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 export default {
   name: 'viewmenu',
   data () {
@@ -112,6 +113,17 @@ export default {
     }
   },
     computed:{
+          ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            },
+            isMenu (state){
+                return state.userInfo.menu;
+            }
+        }),
         getMenus(){
             const menu = this.options.indexOf(this.selected);
             this.$axiosServer.get('https://chefemployees.com/odata/Menus')
