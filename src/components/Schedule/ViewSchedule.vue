@@ -179,7 +179,13 @@ export default {
       },
       uploadImage(){
           this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
-
+              UploadedImage: this.form.receipt
+          })
+          .then((response)=>{
+              console.log(response);
+          })
+          .catch((error)=>{
+              console.log(error);
           })
 
       }
