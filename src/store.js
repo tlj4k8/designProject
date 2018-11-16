@@ -43,7 +43,8 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.jwt,
-    isAdmin: state => state.userInfo.admin
+    isAdmin: state => state.userInfo.admin,
+    isMenu: state => state.userInfo.menu
   },
   actions: {
     logout({commit}){

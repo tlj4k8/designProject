@@ -27,19 +27,7 @@ export default {
     isAdmin (state){
       return state.userInfo.admin;
     }
-  }),
-  mounted: function(){
-    let token = localStorage.getItem('t');
-    this.$store.dispatch('storeUserInfo',token);
-    this.employeeInfo = decoded(token)
-    if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'False'){
-      this.show = false
-    }
-    else if(this.employeeInfo.admin === "True" && this.employeeInfo.menu === "False"){
-      this.show = true
-    }
-
-  }
+  })
 };
 </script>
 
