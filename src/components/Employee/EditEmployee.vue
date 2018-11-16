@@ -35,9 +35,22 @@
             </b-form-input>
         </b-form-group>
         </div>
-        <div v-if="isAdmin=='True'" class="disabledButtons">
-            <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
-            <b-button class="update" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+        <div v-if="isAdmin=='True'">
+            <div v-if="!passwordDisabled" class="inputPass">
+                <b-form-group id="resetPass"
+                                label="New Password"
+                                label-for="resetPass">
+                    <b-form-input id="password"
+                                type="password"
+                                :disabled="passwordDisabled"
+                                v-model="form.resetPass">
+                    </b-form-input>
+                </b-form-group>
+            </div>
+            <div class="stackedButtons">
+                <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
+                <b-button class="update" v-if="!passwordDisabled" @click="updatePassword">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+            </div>
          </div>
       <div class="person">
         <h3>Profile</h3>
@@ -187,6 +200,7 @@ export default {
       form: {
         username: '',
         password: '',
+        resetPass: '',
         email: '',
         firstName: '',
         lastName: '',
@@ -268,6 +282,17 @@ export default {
       returnTime(time){
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
+      },
+      updatePassword(){
+          this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
+
+          })
+          .then((response)=>{
+              console.log(response);
+          })
+          .catch((error)=>{
+              console.log(error);
+          })
       } 
   },
   computed: {
@@ -347,16 +372,21 @@ export default {
 
 <style scoped>
 hr {
-  background-color: #0d50bc;
-  height: 1px;
+    background-color: #0d50bc;
+    height: 1px;
 }
 .employeeSelect {
-  padding-top: 5px 0px;
+    padding-top: 5px 0px;
+}
+.resetPassSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;  
 }
 .personflexGroup {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .flexGroup{
     display: flex;
@@ -374,6 +404,14 @@ hr {
 .personflex {
   flex-grow: 1;
   padding: 0 2px;
+}
+.inputPass{
+    width: 100%;
+}
+.stackedButtons{
+    display: flex;
+    flex-direction: row;  
+    justify-content: flex-end;
 }
 .disabledButtons{
     display: flex;
@@ -405,7 +443,21 @@ hr {
   .personflexGroup {
     flex-wrap: wrap;
   }
-  .disabledButtons{
+  .disabledButtons, .stackedButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 70%
+  }
+  .cancel{
+      width: 70%;
+  }
+}
+@media (max-width: 810px) {
+  .disabledButtons, .stackedButtons{
       justify-content: center;
   }
   .disabled{
@@ -416,20 +468,6 @@ hr {
   }
   .cancel{
       width: 60%;
-  }
-}
-@media (max-width: 810px) {
-  .disabledButtons{
-      justify-content: center;
-  }
-  .disabled{
-      width: 90%;
-  }
-  .update{
-      width: 40%
-  }
-  .cancel{
-      width: 40%;
   }
 }
 </style>
