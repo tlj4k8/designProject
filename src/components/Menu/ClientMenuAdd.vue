@@ -24,7 +24,7 @@
                       label="Menus:"
                       label-for="menu">
               <b-form-select v-model="form.menus" :options="menuOptions" />
-              <b-button  class="menuBtn" variant="primary">Select Menu</b-button>
+              <!-- <b-button  class="menuBtn" variant="primary">Select Menu</b-button> -->
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -35,7 +35,7 @@
                       label="Selected Menus:"
                       label-for="selectedMenus">
               <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
-              <!-- <b-button  class="menuBtn" variant="primary">Remove Menu</b-button> -->
+              <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
       <b-form-group id="notes"
