@@ -69,19 +69,31 @@
             <div class="timeflexGroup">
                 <b-form-group class="timeflex"
                                 id="clockIn">
-                    <b-button v-on:click="clockIn" class="btn">Clock In</b-button>
+                    <div>
+                    <b-button v-on:click="clockIn" class="clock">Clock In</b-button>
+                    </div>
                     <b-form-input id="clockIn"
+                                class="clockText"
                                 required
+                                :disabled="disabled"
                                 v-model="form.timeIn"/>
                 </b-form-group>
                 <b-form-group class="timeflex"
                                 id="clockOut">
-                    <b-button v-on:click="clockOut" class="btn">Clock Out</b-button>
+                    <div>
+                    <b-button v-on:click="clockOut" class="clock">Clock Out</b-button>
+                    </div>
                     <b-form-input id="clockOut"
                                 required
+                                class="clockText"
+                                :disabled="disabled"
                                 v-model="form.timeOut"/>
                 </b-form-group>
             </div>
+        </div>
+        <div v-if="isAdmin=='True'" class="disabledButtons">
+            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
+            <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
         <div class="receipt">
         <h3> Customer Receipt Form </h3>
@@ -114,13 +126,18 @@
                 </b-form-group>
             </div>
         </div>
-        <b-button class="submitButton" type="submit" variant="primary">Submit</b-button>
+        <b-form-group>
+            <div class="submitButton">
+                <b-button type="submit">Submit</b-button>
+            </div>
+        </b-form-group>
         </b-form>
     </div>
 </template>
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import { mapState } from 'vuex';
 export default {
   name: 'ScheduleVisit',
   data () {
@@ -140,6 +157,7 @@ export default {
         },
         scheduleOptions: [],
         menuOptions: [],
+        disabled: true,
         show: true
     }
   },
@@ -172,6 +190,14 @@ export default {
     }
   },
   computed: {
+      ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            }
+        }),
       getSchedules(){
         const schedule = this.scheduleOptions.indexOf(this.form.selectedSchedule);
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules')
@@ -223,6 +249,9 @@ hr{
     background-color: #0d50bc;
     height: 1px;
 }
+.clockText{
+    text-align: center;
+}
 .flexGroup{
     display: flex;
     flex-direction: row;
@@ -247,7 +276,7 @@ hr{
 .timeflex{
     padding: 10px 0;
 }
-.btn.btn-secondary{
+.clock{
     width: 38vw;
 }
 .receiptflexGroup{
@@ -264,7 +293,33 @@ hr{
     flex-direction: row;
     justify-content: flex-end;
 }
-@media(max-width: 480px){
+.cancel{
+    width: 15%;
+    color:white;
+    background-color:red;
+    border-color: darkred;  
+    padding: 7px 2px;
+}
+.disabledButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.update{
+    width: 15%;
+    color:white;
+    background-color: #0d50bc;
+    border-color: darkblue;
+    padding: 7px 2px;
+}
+.disabled{
+    width: 15%;
+    color:black;
+    background-color:white;
+    border-color: lightgray;
+    padding: 7px 2px;
+}
+@media(max-width: 500px){
   .flexGroup{
     flex-wrap: wrap;
   }
@@ -274,8 +329,36 @@ hr{
   .receiptflexGroup{
       flex-wrap: wrap;
   }
-  .btn.btn.btn-secondary{
+  .clock{
     width: 100%;
+    }
+  .disabledButtons{
+      justify-content: center;
+  }
 }
+@media(max-width: 440px){
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 60%
+  }
+  .cancel{
+      width: 60%;
+  }
+}
+@media (max-width: 900px) {
+  .disabledButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 40%
+  }
+  .cancel{
+      width: 40%;
+  }
 }
 </style>

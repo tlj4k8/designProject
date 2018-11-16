@@ -35,7 +35,7 @@
             </b-form-input>
         </b-form-group>
         </div>
-        <div class="disabledButtons">
+        <div v-if="isAdmin=='True'" class="disabledButtons">
             <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
             <b-button class="update" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
          </div>
@@ -166,7 +166,7 @@
       </div>
     </div>
     </b-form>
-    <div class="disabledButtons">
+    <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
         <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
@@ -176,6 +176,7 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import { mapState } from 'vuex';
 export default {
   name: "editEmployee",
   data() {
@@ -205,9 +206,9 @@ export default {
         endFri: '',
         endSat: '',
         endSun: '',
-        isActive: true,
-        isMenu: false,
-        isAdmin: false
+        isactive: true,
+        ismenu: false,
+        isadmin: false
       },
       selected: null,
       options: [],
@@ -245,9 +246,9 @@ export default {
     //         EmEndSaturday: this.formatTime(this.form.endSat),
     //         EmStartSunday: this.formatTime(this.form.sun),
     //         EmEndSunday: this.formatTime(this.form.endSun),
-    //         IsMenu: this.form.isMenu,
-    //         IsAdmin: this.form.isAdmin,
-    //         IsActive: this.form.IsActive
+    //         Ismenu: this.form.isMenu,
+    //         Isadmin: this.form.isAdmin,
+    //         Isactive: this.form.IsActive
     //     })
     //     .then((response)=>{
     //       console.log(response)
@@ -270,6 +271,14 @@ export default {
       } 
   },
   computed: {
+      ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            }
+        }),
         getEmployees(){
             let employee = this.options.indexOf(this.selected);
             this.$axiosServer.get('https://chefemployees.com/odata/Employees')
@@ -313,9 +322,9 @@ export default {
                     this.form.endSat = this.returnTime(employeeValue.EmEndSaturday),
                     this.form.sun = this.returnTime(employeeValue.EmStartSunday),
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
-                    this.form.isAdmin = employeeValue.IsAdmin,
-                    this.form.isMenu = employeeValue.IsMenu,
-                    this.form.isActive = employeeValue.IsActive
+                    this.form.isadmin = employeeValue.IsAdmin,
+                    this.form.ismenu = employeeValue.IsMenu,
+                    this.form.isactive = employeeValue.IsActive
                 }
 
             })
