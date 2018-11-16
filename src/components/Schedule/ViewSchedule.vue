@@ -44,6 +44,25 @@
                 </b-form-group>
             </div>
         </div>
+        <h3> Scheduled Meal Items </h3>
+         <hr/>
+         <div>
+             <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
+                 <li>
+                     {{ menuOption }}
+                </li>
+            </ul>
+
+         </div>
+        <!-- <div class="clientMenuAdd">
+            <b-form-group id="menu"
+                        label="Menus:"
+                        label-for="menu">
+            <b-form-select 
+                    v-model="form.menu" 
+                    :options="menuOptions"/>
+            </b-form-group>
+        </div> -->
         <div class="timestamp">
             <h3>Track Time</h3>
             <hr/>
@@ -116,9 +135,11 @@ export default {
             date: '',
             startTime: '',
             endTime: '',
+            menu: [],
             selectedSchedule: null
         },
         scheduleOptions: [],
+        menuOptions: [],
         show: true
     }
   },
@@ -171,6 +192,13 @@ export default {
                 this.form.mealCharged = scheduleValue.Charged,
                 this.form.mealCost = scheduleValue.Cost
             }
+            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus')
+            .then((response)=>{
+                this.menuOptions = response.data.value.map(value => value.MenuId);
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
         })
         .catch((error)=>{
             console.log(error);
