@@ -8,8 +8,11 @@
                         id="username"
                         label="Username:"
                         label-for="username">
-            <b-form-input id="username"
+            <b-form-input class="input" 
+                        id="username"
                         type="text"
+                        v-on:input.native="checkName"
+                        v-bind:style="{ 'border-color' : valid }"
                         v-model="form.username">
             </b-form-input>
         </b-form-group>
@@ -183,9 +186,8 @@ export default {
         isMenu: false,
         isAdmin: false
       },
-      selected: null,
-      options: [],
-      employee: '',
+      employeeNames: [],
+      valid: '', 
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
@@ -196,63 +198,73 @@ export default {
     };
   },
   methods: {
+      checkName(){
+        this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';
+        if(this.form.username === '') { this.valid = ''}
+      },
       handleSubmit(form){
-        let self = this;
-        this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
-            EmFirstName: this.form.firstName,
-            EmLastName: this.form.lastName,
-            Username: this.form.username,
-            Password: this.form.password,
-            EmCellPhone: this.form.phone,
-            EmEmail: this.form.email,
-            EmZipCodes: this.form.zip,
-            EmStartMonday: this.formatTime(this.form.mon),
-            EmEndMonday: this.formatTime(this.form.endMon),
-            EmStartTuesday: this.formatTime(this.form.tue),
-            EmEndTuesday: this.formatTime(this.form.endTue),
-            EmStartWednesday: this.formatTime(this.form.wed),
-            EmEndWednesday: this.formatTime(this.form.endWed),
-            EmStartThursday: this.formatTime(this.form.thur),
-            EmEndThursday: this.formatTime(this.form.endThur),
-            EmStartFriday: this.formatTime(this.form.fri),
-            EmEndFriday: this.formatTime(this.form.endFri),
-            EmStartSaturday: this.formatTime(this.form.sat),
-            EmEndSaturday: this.formatTime(this.form.endSat),
-            EmStartSunday: this.formatTime(this.form.sun),
-            EmEndSunday: this.formatTime(this.form.endSun),
-            IsMenu: this.form.isMenu,
-            IsAdmin: this.form.isAdmin,
-            IsActive: this.form.IsActive
-        })
-        .then((response)=>{
-          console.log(response)
-          this.form.username = '',
-          this.form.password = '',
-          this.form.email = '',
-          this.form.firstName = '',
-          this.form.lastName = '',
-          this.form.phone = '', 
-          this.form.zip = '',
-          this.form.mon = '',
-          this.form.tue = '',
-          this.form.wed = '',
-          this.form.thur = '',
-          this.form.fri = '',
-          this.form.sat = '',
-          this.form.sun = '',
-          this.form.endMon = '',
-          this.form.endTue = '',
-          this.form.endWed = '',
-          this.form.endThur = '',
-          this.form.endFri = '',
-          this.form.endSat = '',
-          this.form.endSun = '',
-          this.form.isMenu = false,
-          this.form.isAdmin = false
-        })
-        .catch((error)=>{
-          console.log(error);
-        })
+        if(this.valid === 'lightgreen'){
+          let self = this;
+          this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
+              EmFirstName: this.form.firstName,
+              EmLastName: this.form.lastName,
+              Username: this.form.username,
+              Password: this.form.password,
+              EmCellPhone: this.form.phone,
+              EmEmail: this.form.email,
+              EmZipCodes: this.form.zip,
+              EmStartMonday: this.formatTime(this.form.mon),
+              EmEndMonday: this.formatTime(this.form.endMon),
+              EmStartTuesday: this.formatTime(this.form.tue),
+              EmEndTuesday: this.formatTime(this.form.endTue),
+              EmStartWednesday: this.formatTime(this.form.wed),
+              EmEndWednesday: this.formatTime(this.form.endWed),
+              EmStartThursday: this.formatTime(this.form.thur),
+              EmEndThursday: this.formatTime(this.form.endThur),
+              EmStartFriday: this.formatTime(this.form.fri),
+              EmEndFriday: this.formatTime(this.form.endFri),
+              EmStartSaturday: this.formatTime(this.form.sat),
+              EmEndSaturday: this.formatTime(this.form.endSat),
+              EmStartSunday: this.formatTime(this.form.sun),
+              EmEndSunday: this.formatTime(this.form.endSun),
+              IsMenu: this.form.isMenu,
+              IsAdmin: this.form.isAdmin,
+              IsActive: this.form.IsActive
+          })
+          .then((response)=>{
+            console.log(response)
+            this.form.username = '',
+            this.form.password = '',
+            this.form.email = '',
+            this.form.firstName = '',
+            this.form.lastName = '',
+            this.form.phone = '', 
+            this.form.zip = '',
+            this.form.mon = '',
+            this.form.tue = '',
+            this.form.wed = '',
+            this.form.thur = '',
+            this.form.fri = '',
+            this.form.sat = '',
+            this.form.sun = '',
+            this.form.endMon = '',
+            this.form.endTue = '',
+            this.form.endWed = '',
+            this.form.endThur = '',
+            this.form.endFri = '',
+            this.form.endSat = '',
+            this.form.endSun = '',
+            this.form.isMenu = false,
+            this.form.isAdmin = false,
+            this.valid = ''
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
+      }
+      else{
+        alert('Please check your form for missing or invalid input');
+      }
       },
       formatTime(time){
         let timeStamp = time.split(':');
@@ -265,6 +277,15 @@ export default {
         }
         return formatedTime;
       }
+  },
+  mounted(){
+    axios.get('https://chefemployees.com/odata/Employees')
+    .then((response) => {
+      this.employeeNames = response.data.value.map(value => value.Username)
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
   }
 }
 </script>
