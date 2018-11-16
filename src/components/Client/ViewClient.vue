@@ -315,7 +315,7 @@
         </b-form-group>
         </div>
     </b-form>
-    <div class="disabledButtons">
+    <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
         <b-button class="update" v-if="!disabled" type="submit">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
@@ -325,6 +325,7 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import { mapState } from 'vuex';
 export default {
   data () {
     return {
@@ -399,6 +400,14 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            }
+        }),
         getClient(){
             const client = this.option.indexOf(this.selected);
             this.$axiosServer.get('https://chefemployees.com/odata/Clients')

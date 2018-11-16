@@ -482,11 +482,6 @@ hr{
     flex-grow: 1;
     padding: 0 2px;
 }
-.button{
-  margin-left: 25%;
-  margin-top: 3.5%;
-  width: 25vw;
-}
 .table{
     overflow-x:auto;
     padding: 5px 15px;

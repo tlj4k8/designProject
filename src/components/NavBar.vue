@@ -21,32 +21,31 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-    name: "NavBar",
-    data(){
-        return{
-            show: false,
-            employeeInfo: {}
-        }
-    },    
-    methods:{
-      logout(){
-        this.$store.dispatch('logout')
-        .then(()=>{
-          this.$router.push('/');
-        })
+  name: "NavBar",
+  data(){
+      return{
+          show: false
       }
+  },    
+  methods:{
+    logout(){
+      this.$store.dispatch('logout')
+      .then(()=>{
+        this.$router.push('/');
+      })
+    }
+  },
+  computed: mapState({
+    isLoggedIn (state){
+      return !(state.jwt === null);
     },
-    computed: mapState({
-      isLoggedIn (state){
-        return !(state.jwt === null);
-      },
-      isAdmin (state){
-        return state.userInfo.admin;
-      },
-      getToken(state){
-        return state.jwt;
-      }
-    })
+    isAdmin (state){
+      return state.userInfo.admin;
+    },
+    getToken(state){
+      return state.jwt;
+    }
+  })
 }
 </script>
 <style scoped>
