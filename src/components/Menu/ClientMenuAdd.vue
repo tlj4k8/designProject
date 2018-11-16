@@ -21,7 +21,7 @@
                       class="select"
                       :label-cols="4"
                       breakpoint="md"
-                      label="Menus:"
+                      label="Master Menu Items:"
                       label-for="menu">
               <b-form-select v-model="form.menus" :options="menuOptions" />
               <!-- <b-button  class="menuBtn" variant="primary">Select Menu</b-button> -->
@@ -32,7 +32,7 @@
                       class="select"
                       :label-cols="4"
                       breakpoint="md"
-                      label="Selected Menus:"
+                      label="Scheduled Menus:"
                       label-for="selectedMenus">
               <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
               <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
