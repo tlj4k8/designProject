@@ -35,7 +35,7 @@
                       label="Selected Menus:"
                       label-for="selectedMenus">
               <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
-              <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
+              <!-- <b-button  class="menuBtn" variant="primary">Remove Menu</b-button> -->
               </b-form-group>
       </div>
       <b-form-group id="notes"
@@ -49,7 +49,7 @@
       </b-form-group>
     </div>
     <div class="submit">
-      <b-button type="submit">Submit</b-button>
+      <b-button type="submit">Add Menu Item</b-button>
     </div>
     </b-form>
   </div>
