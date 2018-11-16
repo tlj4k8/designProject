@@ -8,6 +8,7 @@
                         label="Schedule:"
                         label-for="schedule">
             <b-form-select 
+                    v-on:input="getClientMenusIds"
                     v-model="form.schedule" 
                     :options="scheduleOptions"/>
         </b-form-group>
@@ -23,7 +24,7 @@
                       label="Menus:"
                       label-for="menu">
               <b-form-select v-model="form.menus" :options="menuOptions" />
-              <b-button @click="addMenu" class="menuBtn" variant="primary">Select Menu</b-button>
+              <b-button  class="menuBtn" variant="primary">Select Menu</b-button>
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -33,8 +34,8 @@
                       breakpoint="md"
                       label="Selected Menus:"
                       label-for="selectedMenus">
-              <b-form-select v-model="form.selectedMenus" :options="selectedOptions" />
-              <b-button @click="removeMenu" class="menuBtn" variant="primary">Remove Menu</b-button>
+              <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
+              <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
       <b-form-group id="notes"
@@ -62,11 +63,13 @@ export default {
     return {
       form: {
         schedule: null,
-        menus: [],
-        selectedMenus: [],
+        menus: null,
+        clientMenus: null,
+        selectedMenus: null,
         notes: ''
       },
       menuOptions: [],
+      clientMenuOptions: [],
       selectedOptions: [],
       scheduleOptions: [],
       show: true
@@ -76,52 +79,55 @@ export default {
     handleSubmit() {
       this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
         ScheduleId: this.form.schedule,
-        MenuNotes: this.form.notes,
-        MenuId: this.selectedOptions,
-        // ClientId: 1
+        ClientMenuNotes: this.form.notes,
+        MenuId: this.form.menus,
       })
       .then((response)=>{
         console.log(response);
+        this.getClientMenusIds();
       })
       .catch((error)=>{
         console.log(error);
       })
     },
-    addMenu(){
-      this.selectedOptions.push(this.form.menus);
-      console.log('button works');
-    },
-    removeMenu(){
-      this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
-    },
-    emptyFields() {
-      this.$alert(
-        "Please complete all required fields",
-        "Registration failed",
-        {
-          confirmButtonText: "OK"
-        }
-      );
+    // addMenu(){
+    //   this.selectedOptions.push(this.form.menus);
+    //   console.log('button works');
+    // },
+    // removeMenu(){
+    //   this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
+    // },
+    getClientMenusIds(){
+      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus')
+      .then((response) => {
+        console.log(response);
+        //Need to display menu name and be able to select clientmenuid to update/delete menu item from schedule
+        // this.clientMenuOptions = response.data.value.map(value => value.ClientMenuId);
+        // console.log(this.clientMenuOptions);
+        this.selectedOptions = response.data.value.map(value => value.MenuId);
+        console.log(this.selectedOptions);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
   },
     mounted(){
       axios.get('https://chefemployees.com/odata/Menus')
       .then((response) => {
-          console.log(response)
-          this.menuOptions = response.data.value.map(value => value.MenuId)
+          this.menuOptions = response.data.value.map(value => value.MenuId);
       })
       .catch((error) => {
           console.log(error);
       })
       axios.get('https://chefemployees.com/odata/Schedules')
       .then((response) => {
-          console.log(response)
-          this.scheduleOptions = response.data.value.map(value => value.ScheduleId)
+          this.scheduleOptions = response.data.value.map(value => value.ScheduleId);
       })
       .catch((error) => {
           console.log(error);
       })
-    }
+    },
 };
 </script>
 <style scoped>
