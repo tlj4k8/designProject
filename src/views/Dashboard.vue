@@ -5,7 +5,7 @@
         <b-button to="/clientDash">Client</b-button>
         <b-button to="/menuDash">Menu</b-button>
         <b-button to="/profile">Profile</b-button>
-        <b-button v-if="show" to="/employeeDash">Employee</b-button>
+        <b-button v-if="isAdmin=='True'" to="/employeeDash">Employee</b-button>
         <b-button to="/scheduleDash">Schedule</b-button>
     </b-button-group>
   </div>
@@ -13,18 +13,19 @@
 
 <script>
 import { mapState } from 'vuex';
-import * as decoded from 'jwt-decode';
 export default {
   name: "Dashboard",
   data(){
     return{
-      show: true,
-      employeeInfo: {}
+      show: true
     }
   },
   computed: mapState({
-    getToken(state){
+    getToken (state){
       return state.jwt;
+    },
+    isAdmin (state){
+      return state.userInfo.admin;
     }
   }),
   mounted: function(){
