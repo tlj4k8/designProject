@@ -10,9 +10,9 @@
                         v-model="form.menuName">
             </b-form-input>
         </b-form-group>
-        <b-form-group id="ingrediants"
-                        label="Ingrediants:"
-                        label-for="ingrediants">
+        <b-form-group id="ingredients"
+                        label="Ingredients:"
+                        label-for="ingredients">
             <b-form-input id="ingrediants"
                         type="text"
                         v-model="form.ingredients">

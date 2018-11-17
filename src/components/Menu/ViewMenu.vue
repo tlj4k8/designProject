@@ -23,10 +23,10 @@
                             v-model="form.menuName">
                 </b-form-input>
             </b-form-group>
-            <b-form-group id="ingrediants"
-                            label="Ingrediants:"
-                            label-for="ingrediants">
-                <b-form-input id="ingrediants"
+            <b-form-group id="ingredients"
+                            label="Ingredients:"
+                            label-for="ingredients">
+                <b-form-input id="ingredients"
                             type="text"
                             :disabled="disabled"
                             v-model="form.ingredients">
