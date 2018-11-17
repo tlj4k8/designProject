@@ -181,7 +181,7 @@
     </b-form>
     <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="update" v-if="!disabled" @click="updateEmployee">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
     </div>
 </template>
@@ -230,13 +230,13 @@ export default {
     };
   },
   methods: {
-    //   handleSubmit(form){
-    //     var self = this;
-    //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees', {
+    //   updateEmployee(){
+    //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
+    //         EmployeeId: this.selected,
     //         EmFirstName: this.form.firstName,
     //         EmLastName: this.form.lastName,
-    //         // Username: this.form.username,
-    //         // Password: this.form.password,
+    //         Username: this.form.username,
+    //         Password: this.form.password,
     //         EmCellPhone: this.form.phone,
     //         EmEmail: this.form.email,
     //         EmZipCodes: this.form.zip,
@@ -254,9 +254,9 @@ export default {
     //         EmEndSaturday: this.formatTime(this.form.endSat),
     //         EmStartSunday: this.formatTime(this.form.sun),
     //         EmEndSunday: this.formatTime(this.form.endSun),
-    //         Ismenu: this.form.isMenu,
-    //         Isadmin: this.form.isAdmin,
-    //         EmIsActive: this.form.IsActive
+    //         IsMenu: this.form.ismenu,
+    //         IsAdmin: this.form.isadmin,
+    //         EmIsActive: this.form.isactive
     //     })
     //     .then((response)=>{
     //       console.log(response)
