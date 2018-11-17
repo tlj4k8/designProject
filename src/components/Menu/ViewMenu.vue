@@ -23,13 +23,13 @@
                             v-model="form.menuName">
                 </b-form-input>
             </b-form-group>
-            <b-form-group id="ingrediants"
-                            label="Ingrediants:"
-                            label-for="ingrediants">
-                <b-form-input id="ingrediants"
+            <b-form-group id="ingredients"
+                            label="Ingredients:"
+                            label-for="ingredients">
+                <b-form-input id="ingredients"
                             type="text"
                             :disabled="disabled"
-                            v-model="form.ingrediants">
+                            v-model="form.ingredients">
                 </b-form-input>
             </b-form-group>
             <b-form-group id="instructions"
@@ -83,7 +83,7 @@
             </b-form-group>
             </div>
         </b-form>
-        <div class="disabledButtons">
+        <div v-if="isAdmin=='True' || isMenu=='True'" class="disabledButtons">
             <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
             <b-button class="update" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
@@ -92,6 +92,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 export default {
   name: 'viewmenu',
   data () {
@@ -99,7 +100,7 @@ export default {
         disabled: true,
         form: {
             menuName: '',
-            ingrediants: '',
+            ingredients: '',
             instructions: '',
             servings: 0,
             time: '',
@@ -112,13 +113,24 @@ export default {
     }
   },
     computed:{
+          ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            },
+            isMenu (state){
+                return state.userInfo.menu;
+            }
+        }),
         getMenus(){
-            const menu = this.selected - 1;
+            const menu = this.options.indexOf(this.selected);
             this.$axiosServer.get('https://chefemployees.com/odata/Menus')
             .then((response)=>{
                 let menuValue = response.data.value[menu]
                 this.form.menuName = menuValue.Name,
-                this.form.ingrediants = menuValue.Ingrendients,
+                this.form.ingredients = menuValue.Ingrendients,
                 this.form.instructions = menuValue.Instructions,
                 this.form.servings = menuValue.Servings,
                 this.form.time = menuValue.Time,

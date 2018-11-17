@@ -35,9 +35,22 @@
             </b-form-input>
         </b-form-group>
         </div>
-        <div class="disabledButtons">
-            <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
-            <b-button class="update" v-if="!passwordDisabled" type="submit">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+        <div v-if="isAdmin=='True'">
+            <div v-if="!passwordDisabled" class="inputPass">
+                <b-form-group id="resetPass"
+                                label="New Password"
+                                label-for="resetPass">
+                    <b-form-input id="resetPass"
+                                type="password"
+                                :disabled="passwordDisabled"
+                                v-model="form.resetPass">
+                    </b-form-input>
+                </b-form-group>
+            </div>
+            <div class="stackedButtons">
+                <b-button class="disabled" v-if="passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Edit Password</b-button>
+                <b-button class="update" v-if="!passwordDisabled" @click="updatePassword">Update Password</b-button><b-button class="cancel" v-if="!passwordDisabled" v-on:click="passwordDisabled = !passwordDisabled">Cancel</b-button>
+            </div>
          </div>
       <div class="person">
         <h3>Profile</h3>
@@ -107,23 +120,23 @@
   <h3>Employee Status</h3>
   <hr/>
     <div class="flexGroup">
-      <b-form-group id="isMenu"
+      <b-form-group id="ismenu"
                     class="flex"
                     label="Menu Team:"
-                    label-for="isMenu">
-        <b-form-checkbox id="form.isMenu"
+                    label-for="ismenu">
+        <b-form-checkbox id="form.ismenu"
                     type="checkbox"
                     :disabled="disabled"
-                    v-model="form.isMenu"/>
+                    v-model="form.ismenu"/>
       </b-form-group>
-      <b-form-group id="isAdmin"
+      <b-form-group id="isadmin"
                     class="flex"
                     label="Admin Team:"
-                    label-for="isAdmin">
-        <b-form-checkbox id="form.isAdmin"
+                    label-for="isadmin">
+        <b-form-checkbox id="form.isadmin"
                     type="checkbox"
                     :disabled="disabled"
-                    v-model="form.isAdmin"/>
+                    v-model="form.isadmin"/>
       </b-form-group>
     </div>
     </div>
@@ -166,9 +179,9 @@
       </div>
     </div>
     </b-form>
-    <div class="disabledButtons">
+    <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="update" v-if="!disabled" @click="updateEmployee">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
     </div>
 </template>
@@ -176,6 +189,7 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import { mapState } from 'vuex';
 export default {
   name: "editEmployee",
   data() {
@@ -186,6 +200,7 @@ export default {
       form: {
         username: '',
         password: '',
+        resetPass: '',
         email: '',
         firstName: '',
         lastName: '',
@@ -205,29 +220,23 @@ export default {
         endFri: '',
         endSat: '',
         endSun: '',
-        isActive: true,
-        isMenu: false,
-        isAdmin: false
+        isactive: true,
+        ismenu: false,
+        isadmin: false
       },
       selected: null,
       options: [],
-      state: [
-        { text: 'Select One', value: null },
-        'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
-        'KY','LA','ME','MD','MA','MI','MN','MO','MS','MT','NE','NY','NV','NH','NJ','NM','NC',
-        'ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
-      ],
       show: true
     };
   },
   methods: {
-    //   handleSubmit(form){
-    //     var self = this;
-    //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees', {
+    //   updateEmployee(){
+    //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
+    //         EmployeeId: this.selected,
     //         EmFirstName: this.form.firstName,
     //         EmLastName: this.form.lastName,
-    //         // Username: this.form.username,
-    //         // Password: this.form.password,
+    //         Username: this.form.username,
+    //         Password: this.form.password,
     //         EmCellPhone: this.form.phone,
     //         EmEmail: this.form.email,
     //         EmZipCodes: this.form.zip,
@@ -245,9 +254,9 @@ export default {
     //         EmEndSaturday: this.formatTime(this.form.endSat),
     //         EmStartSunday: this.formatTime(this.form.sun),
     //         EmEndSunday: this.formatTime(this.form.endSun),
-    //         IsMenu: this.form.isMenu,
-    //         IsAdmin: this.form.isAdmin,
-    //         IsActive: this.form.IsActive
+    //         IsMenu: this.form.ismenu,
+    //         IsAdmin: this.form.isadmin,
+    //         EmIsActive: this.form.isactive
     //     })
     //     .then((response)=>{
     //       console.log(response)
@@ -261,17 +270,64 @@ export default {
         var timeStamp = time.split(':');
         var timeHour = timeStamp[0];
         var timeMinutes = timeStamp[1];
-        var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        var formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
         return formatedTime;
       },
       returnTime(time){
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
+      },
+      updatePassword(){
+        this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
+            EmployeeId: this.selected,
+            Username: this.form.username,
+            Password: this.form.resetPass,
+            EmFirstName: this.form.firstName,
+            EmLastName: this.form.lastName,
+            EmCellPhone: this.form.phone,
+            EmEmail: this.form.email,
+            EmZipCodes: this.form.zip,
+            EmStartMonday: this.form.mon,
+            EmEndMonday: this.form.endMon,
+            EmStartTuesday: this.form.tue,
+            EmEndTuesday: this.form.endTue,
+            EmStartWednesday: this.form.wed,
+            EmEndWednesday: this.form.endWed,
+            EmStartThursday: this.form.thur,
+            EmEndThursday: this.form.endThur,
+            EmStartFriday: this.form.fri,
+            EmEndFriday: this.form.endFri,
+            EmStartSaturday: this.form.sat,
+            EmEndSaturday: this.form.endSat,
+            EmStartSunday: this.form.sun,
+            EmEndSunday: this.form.endSun,
+            IsMenu: this.form.ismenu,
+            IsAdmin: this.form.isadmin,
+            EmIsActive: this.form.isactive
+          })
+          .then((response)=>{
+              console.log(response);
+              this.form.password = response.data.Password;
+              this.passwordDisabled = true;
+              this.form.resetPass = '';
+          })
+          .catch((error)=>{
+              console.log(error);
+          })
       } 
   },
   computed: {
+      ...mapState({
+            getToken(state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            }
+        }),
         getEmployees(){
             let employee = this.options.indexOf(this.selected);
+            this.passwordDisabled = true;
             this.$axiosServer.get('https://chefemployees.com/odata/Employees')
             .then((response)=>{
                 let employeeValue = response.data.value[employee]
@@ -313,9 +369,9 @@ export default {
                     this.form.endSat = this.returnTime(employeeValue.EmEndSaturday),
                     this.form.sun = this.returnTime(employeeValue.EmStartSunday),
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
-                    this.form.isAdmin = employeeValue.IsAdmin,
-                    this.form.isMenu = employeeValue.IsMenu,
-                    this.form.isActive = employeeValue.IsActive
+                    this.form.isadmin = employeeValue.IsAdmin,
+                    this.form.ismenu = employeeValue.IsMenu,
+                    this.form.isactive = employeeValue.IsActive
                 }
 
             })
@@ -338,16 +394,21 @@ export default {
 
 <style scoped>
 hr {
-  background-color: #0d50bc;
-  height: 1px;
+    background-color: #0d50bc;
+    height: 1px;
 }
 .employeeSelect {
-  padding-top: 5px 0px;
+    padding-top: 5px 0px;
+}
+.resetPassSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;  
 }
 .personflexGroup {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .flexGroup{
     display: flex;
@@ -365,6 +426,14 @@ hr {
 .personflex {
   flex-grow: 1;
   padding: 0 2px;
+}
+.inputPass{
+    width: 100%;
+}
+.stackedButtons{
+    display: flex;
+    flex-direction: row;  
+    justify-content: flex-end;
 }
 .disabledButtons{
     display: flex;
@@ -396,7 +465,21 @@ hr {
   .personflexGroup {
     flex-wrap: wrap;
   }
-  .disabledButtons{
+  .disabledButtons, .stackedButtons{
+      justify-content: center;
+  }
+  .disabled{
+      width: 90%;
+  }
+  .update{
+      width: 70%
+  }
+  .cancel{
+      width: 70%;
+  }
+}
+@media (max-width: 810px) {
+  .disabledButtons, .stackedButtons{
       justify-content: center;
   }
   .disabled{
@@ -407,20 +490,6 @@ hr {
   }
   .cancel{
       width: 60%;
-  }
-}
-@media (max-width: 810px) {
-  .disabledButtons{
-      justify-content: center;
-  }
-  .disabled{
-      width: 90%;
-  }
-  .update{
-      width: 40%
-  }
-  .cancel{
-      width: 40%;
   }
 }
 </style>

@@ -8,6 +8,7 @@
                         label="Schedule:"
                         label-for="schedule">
             <b-form-select 
+                    v-on:input="getClientMenusIds"
                     v-model="form.schedule" 
                     :options="scheduleOptions"/>
         </b-form-group>
@@ -20,10 +21,10 @@
                       class="select"
                       :label-cols="4"
                       breakpoint="md"
-                      label="Menus:"
+                      label="Master Menu Items:"
                       label-for="menu">
-              <b-form-select multiple v-model="form.menus" :options="options" />
-              <b-button class="menuBtn" type="submit" variant="primary">Select Menu</b-button>
+              <b-form-select v-model="form.menus" :options="menuOptions" />
+              <!-- <b-button  class="menuBtn" variant="primary">Select Menu</b-button> -->
               </b-form-group>
       </div>
       <div class="menuSelect">
@@ -31,21 +32,31 @@
                       class="select"
                       :label-cols="4"
                       breakpoint="md"
-                      label="Selected Menus:"
+                      label="Scheduled Menus:"
                       label-for="selectedMenus">
-              <b-form-select multiple v-model="form.selectedMenus" :options="selectedOptions" />
-              <b-button class="menuBtn" type="submit" variant="primary">Remove Menu</b-button>
+              <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
+              <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
               </b-form-group>
       </div>
+      <b-form-group id="notes"
+                    label="Menu Notes:"
+                    label-for="notes">
+        <b-form-textarea id="notes"
+                      :rows="3"
+                      :max-rows="6"
+                      type="text"
+                      v-model="form.notes"/>
+      </b-form-group>
     </div>
     <div class="submit">
-      <b-button type="submit">Submit</b-button>
+      <b-button type="submit">Add Menu Item</b-button>
     </div>
     </b-form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "clientMenuAdd",
   data() {
@@ -53,39 +64,70 @@ export default {
       form: {
         schedule: null,
         menus: null,
-        selectedMenus: []
+        clientMenus: null,
+        selectedMenus: null,
+        notes: ''
       },
-      options: [],
+      menuOptions: [],
+      clientMenuOptions: [],
       selectedOptions: [],
-      scheduleOptions: [
-        { value: "schedule1", text: "schedule1" },
-        { value: "schedule2", text: "schedule2" }
-      ],
+      scheduleOptions: [],
       show: true
     };
   },
   methods: {
-    handleSubmit: function(form) {
-      var self = this;
-      this.$ref[form].validate(valid => {
-        if (valid) {
-          //http request goes here
-        } else {
-          this.emptyFields();
-          return false;
-        }
-      });
+    handleSubmit() {
+      this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
+        ScheduleId: this.form.schedule,
+        ClientMenuNotes: this.form.notes,
+        MenuId: this.form.menus,
+      })
+      .then((response)=>{
+        console.log(response);
+        this.getClientMenusIds();
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
     },
-    emptyFields() {
-      this.$alert(
-        "Please complete all required fields",
-        "Registration failed",
-        {
-          confirmButtonText: "OK"
-        }
-      );
+    // addMenu(){
+    //   this.selectedOptions.push(this.form.menus);
+    //   console.log('button works');
+    // },
+    // removeMenu(){
+    //   this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
+    // },
+    getClientMenusIds(){
+      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus')
+      .then((response) => {
+        console.log(response);
+        //Need to display menu name and be able to select clientmenuid to update/delete menu item from schedule
+        // this.clientMenuOptions = response.data.value.map(value => value.ClientMenuId);
+        // console.log(this.clientMenuOptions);
+        this.selectedOptions = response.data.value.map(value => value.MenuId);
+        console.log(this.selectedOptions);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
-  }
+  },
+    mounted(){
+      axios.get('https://chefemployees.com/odata/Menus')
+      .then((response) => {
+          this.menuOptions = response.data.value.map(value => value.MenuId);
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+      axios.get('https://chefemployees.com/odata/Schedules')
+      .then((response) => {
+          this.scheduleOptions = response.data.value.map(value => value.ScheduleId);
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+    },
 };
 </script>
 <style scoped>

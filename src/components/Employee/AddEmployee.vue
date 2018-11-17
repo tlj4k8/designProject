@@ -206,10 +206,10 @@ export default {
         if(this.valid === 'lightgreen'){
           let self = this;
           this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
-              EmFirstName: this.form.firstName,
-              EmLastName: this.form.lastName,
               Username: this.form.username,
               Password: this.form.password,
+              EmFirstName: this.form.firstName,
+              EmLastName: this.form.lastName,
               EmCellPhone: this.form.phone,
               EmEmail: this.form.email,
               EmZipCodes: this.form.zip,

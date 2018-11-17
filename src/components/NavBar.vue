@@ -10,7 +10,7 @@
             <router-link class="nav-links" to="/clientDash">Client</router-link>
             <router-link class="nav-links" to="/menuDash">Menu</router-link>
             <router-link class="nav-links" to="/profile">Profile</router-link>
-            <router-link v-if="showNavigation" class="nav-links" to="/employeeDash">Employee</router-link>
+            <router-link v-if="isAdmin=='True'" class="nav-links" to="/employeeDash">Employee</router-link>
             <router-link class="nav-links" to="/scheduleDash">Schedule</router-link>
 		      </div>
 	      </div>
@@ -20,41 +20,32 @@
 
 <script>
 import { mapState } from 'vuex';
-import * as decoded from 'jwt-decode';
 export default {
-    name: "NavBar",
-    data(){
-        return{
-            show: false,
-            employeeInfo: {},
-            showNavigation: false,
-        }
-    },    
-    methods:{
-      logout(){
-        this.$store.dispatch('logout');
+  name: "NavBar",
+  data(){
+      return{
+          show: false
+      }
+  },    
+  methods:{
+    logout(){
+      this.$store.dispatch('logout')
+      .then(()=>{
         this.$router.push('/');
-      }
+      })
+    }
+  },
+  computed: mapState({
+    isLoggedIn (state){
+      return !(state.jwt === null);
     },
-    mounted: function(){
-      let token = localStorage.getItem('t');
-      this.$store.dispatch('storeUserInfo',token);
-      this.employeeInfo = decoded(token)
-      if(this.employeeInfo.menu === 'False' && this.employeeInfo.admin === 'False'){
-        this.showNavigation = false
-      }
-      else if(this.employeeInfo.admin === "True" && this.employeeInfo.menu === "False"){
-        this.showNavigation = true
-      }
+    isAdmin (state){
+      return state.userInfo.admin;
     },
-    computed: mapState({
-      isLoggedIn (state){
-        return !(state.jwt === null);
-      },
-      getToken(state){
-        return state.jwt;
-      }
-    })
+    getToken(state){
+      return state.jwt;
+    }
+  })
 }
 </script>
 <style scoped>

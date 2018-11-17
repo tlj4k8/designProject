@@ -31,6 +31,7 @@ export default new Vuex.Store({
     },
     removeToken(state){
       localStorage.removeItem('t');
+      localStorage.clear();
       state.jwt = null;
     },
     setUserInfo(state, userInfo){
@@ -42,6 +43,8 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.jwt,
+    isAdmin: state => state.userInfo.admin,
+    isMenu: state => state.userInfo.menu
   },
   actions: {
     logout({commit}){
