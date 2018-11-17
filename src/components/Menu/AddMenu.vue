@@ -10,12 +10,12 @@
                         v-model="form.menuName">
             </b-form-input>
         </b-form-group>
-        <b-form-group id="ingrediants"
-                        label="Ingrediants:"
-                        label-for="ingrediants">
+        <b-form-group id="ingredients"
+                        label="Ingredients:"
+                        label-for="ingredients">
             <b-form-input id="ingrediants"
                         type="text"
-                        v-model="form.ingrediants">
+                        v-model="form.ingredients">
             </b-form-input>
         </b-form-group>
         <b-form-group id="instructions"
@@ -78,7 +78,7 @@ export default {
     return {
       form: {
         menuName: '',
-        ingrediants: '',
+        ingredients: '',
         instructions: '',
         servings: 0,
         time: '',
@@ -92,7 +92,7 @@ export default {
         handleSubmit(form){
             this.$axiosServer.post('https://chefemployees.com/odata/Menus', {
                 Name: this.form.menuName,
-                Ingrendients: this.form.ingrediants,
+                Ingrendients: this.form.ingredients,
                 Instructions: this.form.instructions,
                 Servings: this.form.servings,
                 Time: this.form.time,

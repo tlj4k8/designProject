@@ -19,10 +19,19 @@
                 </b-col>
             </b-row>
             <div class="buttonDiv">
-                <b-button type="submit" class="loginButton">Login</b-button>
+                <div class="buttonInfo">
+                    <b-button type="submit" class="loginButton">Login</b-button>
+                    <p>Forgot Password? Click<a class="passwordText" @click="modalShow = !modalShow"> here</a></p>
+                </div>
             </div>
             </b-form>
         </div>
+        </div>
+        <div>
+            <b-modal v-model="modalShow" id="myModal">
+                <p class="text">Please contact administrator to reset password:</p>
+                <p class="text">(Email goes here)</p>
+            </b-modal>
         </div>
     </div>
 </template>
@@ -39,6 +48,7 @@ export default {
                 password: '',
             },
             show: true,
+            modalShow: false,
             rules: {
                 password: [
                     { required: true,
@@ -67,7 +77,7 @@ export default {
                 this.successfulLogin();
             })
             .catch((error)=>{
-                console.log(error)
+                this.failedLogin();
             })
          },
         successfulLogin() {
@@ -87,6 +97,9 @@ export default {
 </script>
 
 <style scoped>
+.text{
+    text-align: center;
+}
 .login{
     margin-top: 9em;
 }
@@ -111,20 +124,25 @@ h1{
     flex-direction: row;
     justify-content: space-around;
 }
+.buttonInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+}
 .loginButton{
-    width: 15%;
+    width: 100%;
     color:black;
     background-color: white;
     border-color: lightgray;
+}
+a.passwordText{
+    color: blue;
 }
 @media(max-width: 1200px){
     .flex{
         width: 50vw;
         padding: 10px 1px;
     }
-    .loginButton{
-        width: 50%;
-    } 
 }
 @media(max-width: 1000px){
     .flex{
@@ -136,9 +154,6 @@ h1{
     .flex{
         width: 90vw;
         padding: 5px 1px;
-    }
-    .loginButton{
-        width: 95%;
     }
 }
 </style>
