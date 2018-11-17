@@ -40,7 +40,7 @@
                 <b-form-group id="resetPass"
                                 label="New Password"
                                 label-for="resetPass">
-                    <b-form-input id="password"
+                    <b-form-input id="resetPass"
                                 type="password"
                                 :disabled="passwordDisabled"
                                 v-model="form.resetPass">
@@ -284,11 +284,36 @@ export default {
         return timeStamp;
       },
       updatePassword(){
-          this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
-
+        this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
+            EmployeeId: this.selected,
+            EmFirstName: this.form.firstName,
+            EmLastName: this.form.lastName,
+            Username: this.form.username,
+            Password: this.form.resetPass,
+            EmCellPhone: this.form.phone,
+            EmEmail: this.form.email,
+            EmZipCodes: this.form.zip,
+            EmStartMonday: this.formatTime(this.form.mon),
+            EmEndMonday: this.formatTime(this.form.endMon),
+            EmStartTuesday: this.formatTime(this.form.tue),
+            EmEndTuesday: this.formatTime(this.form.endTue),
+            EmStartWednesday: this.formatTime(this.form.wed),
+            EmEndWednesday: this.formatTime(this.form.endWed),
+            EmStartThursday: this.formatTime(this.form.thur),
+            EmEndThursday: this.formatTime(this.form.endThur),
+            EmStartFriday: this.formatTime(this.form.fri),
+            EmEndFriday: this.formatTime(this.form.endFri),
+            EmStartSaturday: this.formatTime(this.form.sat),
+            EmEndSaturday: this.formatTime(this.form.endSat),
+            EmStartSunday: this.formatTime(this.form.sun),
+            EmEndSunday: this.formatTime(this.form.endSun),
+            IsMenu: this.form.ismenu,
+            IsAdmin: this.form.isadmin,
+            IsActive: this.form.isactive
           })
           .then((response)=>{
               console.log(response);
+              this.form.resetPass = response.data.value.Password
           })
           .catch((error)=>{
               console.log(error);
