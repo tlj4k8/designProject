@@ -120,23 +120,23 @@
   <h3>Employee Status</h3>
   <hr/>
     <div class="flexGroup">
-      <b-form-group id="isMenu"
+      <b-form-group id="ismenu"
                     class="flex"
                     label="Menu Team:"
-                    label-for="isMenu">
-        <b-form-checkbox id="form.isMenu"
+                    label-for="ismenu">
+        <b-form-checkbox id="form.ismenu"
                     type="checkbox"
                     :disabled="disabled"
-                    v-model="form.isMenu"/>
+                    v-model="form.ismenu"/>
       </b-form-group>
-      <b-form-group id="isAdmin"
+      <b-form-group id="isadmin"
                     class="flex"
                     label="Admin Team:"
-                    label-for="isAdmin">
-        <b-form-checkbox id="form.isAdmin"
+                    label-for="isadmin">
+        <b-form-checkbox id="form.isadmin"
                     type="checkbox"
                     :disabled="disabled"
-                    v-model="form.isAdmin"/>
+                    v-model="form.isadmin"/>
       </b-form-group>
     </div>
     </div>
@@ -226,12 +226,6 @@ export default {
       },
       selected: null,
       options: [],
-      state: [
-        { text: 'Select One', value: null },
-        'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
-        'KY','LA','ME','MD','MA','MI','MN','MO','MS','MT','NE','NY','NV','NH','NJ','NM','NC',
-        'ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
-      ],
       show: true
     };
   },
@@ -262,7 +256,7 @@ export default {
     //         EmEndSunday: this.formatTime(this.form.endSun),
     //         Ismenu: this.form.isMenu,
     //         Isadmin: this.form.isAdmin,
-    //         Isactive: this.form.IsActive
+    //         EmIsActive: this.form.IsActive
     //     })
     //     .then((response)=>{
     //       console.log(response)
@@ -276,7 +270,7 @@ export default {
         var timeStamp = time.split(':');
         var timeHour = timeStamp[0];
         var timeMinutes = timeStamp[1];
-        var formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        var formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
         return formatedTime;
       },
       returnTime(time){
@@ -286,10 +280,10 @@ export default {
       updatePassword(){
         this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
             EmployeeId: this.selected,
-            EmFirstName: this.form.firstName,
-            EmLastName: this.form.lastName,
             Username: this.form.username,
             Password: this.form.resetPass,
+            EmFirstName: this.form.firstName,
+            EmLastName: this.form.lastName,
             EmCellPhone: this.form.phone,
             EmEmail: this.form.email,
             EmZipCodes: this.form.zip,
@@ -309,11 +303,11 @@ export default {
             EmEndSunday: this.formatTime(this.form.endSun),
             IsMenu: this.form.ismenu,
             IsAdmin: this.form.isadmin,
-            IsActive: this.form.isactive
+            EmIsActive: this.form.isactive
           })
           .then((response)=>{
               console.log(response);
-              this.form.resetPass = response.data.value.Password
+            //   this.form.resetPass = response.data.value.Password
           })
           .catch((error)=>{
               console.log(error);
@@ -331,6 +325,7 @@ export default {
         }),
         getEmployees(){
             let employee = this.options.indexOf(this.selected);
+            this.passwordDisabled = true;
             this.$axiosServer.get('https://chefemployees.com/odata/Employees')
             .then((response)=>{
                 let employeeValue = response.data.value[employee]
