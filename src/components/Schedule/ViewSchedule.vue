@@ -117,14 +117,24 @@
                                 v-model="form.mealCost">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="receipt"
+                <!-- <b-form-group id="receipt"
                     class="receiptflex"
                     label="Upload Receipt:"
                     label-for="receipt">
-                    <b-form-file v-model="form.receipt" :state="Boolean(form.file)" placeholder="Choose a file...">
+                    <b-form-file v-model="form.receipt" placeholder="Choose a file...">
                     </b-form-file>
-                </b-form-group>
-                <b-button @click="uploadImage">upload</b-button>
+                </b-form-group> -->
+                <div class="receiptflex">
+                    <b-form-group id="receipt"
+                        class="receiptflex"
+                        label="Upload Receipt:"
+                        label-for="receipt">
+                        <input type="file" @change="onFileSelected"/>
+                    </b-form-group>
+                </div>
+            </div>
+            <div class="submitButton">
+                <b-button class="imageButton" @click="onUpload">Upload</b-button>
             </div>
         </div>
         <b-form-group>
@@ -147,7 +157,6 @@ export default {
             receipt: '',
             mealCharged: '',
             mealCost: '',
-            file: null,
             timeIn: null,
             timeOut: null,
             date: '',
@@ -157,12 +166,60 @@ export default {
             selectedSchedule: null
         },
         scheduleOptions: [],
+        selectedFile: null,
+        dataFile: {},
         menuOptions: [],
         disabled: true,
         show: true
     }
   },
+
   methods: {
+      onFileSelected(event){
+        this.selectedFile = event.target.files[0];
+      },
+      onUpload(){
+        let formData = new FormData();
+        formData.append('file', this.selectedFile, this.selectedFile.name);
+        for (let value of formData.values()) {
+            this.dataFile = value;
+        }
+        //logs my file info in formData
+        console.log(this.dataFile);
+        //sends empty formData object but can log above
+        this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
+            UploadedImage: this.dataFile
+        })
+        .then((response)=>{
+            console.log(response);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+      },
+    // submitFile(){
+    //     let formData = new FormData();
+    //     formData.append('fileId', this.file);
+    //     this.$axiosServer.post( 'https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
+    //         UploadedImage: formData
+    //     })
+    //     .then((response)=>{
+    //         console.log('SUCCESS!!');
+    //         console.log(response)
+    //     })
+    //     .catch((error)=>{
+    //         console.log('FAILURE!!');
+    //         console.log(error);
+    //     })
+    // },
+    // handleFileUpload(){
+    //     let reader  = new FileReader();
+    //     if(this.file){
+    //         if ( /\.(jpe?g|png|gif)$/i.test( this.file.name ) ) {
+    //             reader.readAsDataURL(this.file);
+    //         }
+    //     }
+    // },
     clockIn(){
         let timestamp = moment().format('LT');
         this.form.timeIn = timestamp;
@@ -280,6 +337,9 @@ hr{
 .button{
     flex-grow: 1;
     padding: 0 2px;
+}
+.imageButton{
+
 }
 .timeflexGroup{
     display: flex;
