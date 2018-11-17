@@ -287,27 +287,29 @@ export default {
             EmCellPhone: this.form.phone,
             EmEmail: this.form.email,
             EmZipCodes: this.form.zip,
-            EmStartMonday: this.formatTime(this.form.mon),
-            EmEndMonday: this.formatTime(this.form.endMon),
-            EmStartTuesday: this.formatTime(this.form.tue),
-            EmEndTuesday: this.formatTime(this.form.endTue),
-            EmStartWednesday: this.formatTime(this.form.wed),
-            EmEndWednesday: this.formatTime(this.form.endWed),
-            EmStartThursday: this.formatTime(this.form.thur),
-            EmEndThursday: this.formatTime(this.form.endThur),
-            EmStartFriday: this.formatTime(this.form.fri),
-            EmEndFriday: this.formatTime(this.form.endFri),
-            EmStartSaturday: this.formatTime(this.form.sat),
-            EmEndSaturday: this.formatTime(this.form.endSat),
-            EmStartSunday: this.formatTime(this.form.sun),
-            EmEndSunday: this.formatTime(this.form.endSun),
+            EmStartMonday: this.form.mon,
+            EmEndMonday: this.form.endMon,
+            EmStartTuesday: this.form.tue,
+            EmEndTuesday: this.form.endTue,
+            EmStartWednesday: this.form.wed,
+            EmEndWednesday: this.form.endWed,
+            EmStartThursday: this.form.thur,
+            EmEndThursday: this.form.endThur,
+            EmStartFriday: this.form.fri,
+            EmEndFriday: this.form.endFri,
+            EmStartSaturday: this.form.sat,
+            EmEndSaturday: this.form.endSat,
+            EmStartSunday: this.form.sun,
+            EmEndSunday: this.form.endSun,
             IsMenu: this.form.ismenu,
             IsAdmin: this.form.isadmin,
             EmIsActive: this.form.isactive
           })
           .then((response)=>{
               console.log(response);
-            //   this.form.resetPass = response.data.value.Password
+              this.form.password = response.data.Password;
+              this.passwordDisabled = true;
+              this.form.resetPass = '';
           })
           .catch((error)=>{
               console.log(error);
