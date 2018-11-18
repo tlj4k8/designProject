@@ -409,10 +409,9 @@ export default {
             }
         }),
         getClient(){
-            const client = this.option.indexOf(this.selected);
-            this.$axiosServer.get('https://chefemployees.com/odata/Clients')
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')')
             .then((response)=>{
-                let clientValue = response.data.value[client]
+                let clientValue = response.data;
                 if(clientValue == null || undefined){
                     this.form.mon = '',
                     this.form.tue = '',
@@ -482,7 +481,9 @@ export default {
         axios.get('https://chefemployees.com/odata/Clients')
         .then((response) => {
             console.log(response);
-            this.option = response.data.value.map(value => value.ClientId)
+            response.data.value.forEach((value) => {
+                this.option.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
+            })
         })
         .catch((error) => {
             console.log(error);
