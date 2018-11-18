@@ -117,13 +117,24 @@
                                 v-model="form.mealCost">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="receipt"
+                <!-- <b-form-group id="receipt"
                     class="receiptflex"
                     label="Upload Receipt:"
                     label-for="receipt">
-                    <b-form-file v-model="form.receipt" :state="Boolean(form.file)" placeholder="Choose a file...">
+                    <b-form-file v-model="form.receipt" placeholder="Choose a file...">
                     </b-form-file>
-                </b-form-group>
+                </b-form-group> -->
+                <div class="receiptflex">
+                    <b-form-group id="receipt"
+                        class="receiptflex"
+                        label="Upload Receipt:"
+                        label-for="receipt">
+                        <input type="file" @change="onFileSelected"/>
+                    </b-form-group>
+                </div>
+            </div>
+            <div class="submitButton">
+                <b-button class="imageButton" @click="onUpload">Upload</b-button>
             </div>
         </div>
         <b-form-group>
@@ -146,7 +157,6 @@ export default {
             receipt: '',
             mealCharged: '',
             mealCost: '',
-            file: null,
             timeIn: null,
             timeOut: null,
             date: '',
@@ -156,12 +166,30 @@ export default {
             selectedSchedule: null
         },
         scheduleOptions: [],
+        selectedFile: null,
         menuOptions: [],
         disabled: true,
         show: true
     }
   },
+
   methods: {
+    onFileSelected(event){
+        this.selectedFile = event.target.files[0];
+    },
+    onUpload(){
+        let formData = new FormData();
+        formData.append('file', this.selectedFile, this.selectedFile.name);
+        this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', formData, {
+            headers:{'Content-Type':'multipart/form-data'}
+        })
+        .then((response)=>{
+            console.log(response);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    },
     clockIn(){
         let timestamp = moment().format('LT');
         this.form.timeIn = timestamp;
@@ -267,6 +295,9 @@ hr{
 .button{
     flex-grow: 1;
     padding: 0 2px;
+}
+.imageButton{
+
 }
 .timeflexGroup{
     display: flex;
