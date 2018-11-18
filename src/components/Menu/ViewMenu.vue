@@ -125,10 +125,9 @@ export default {
             }
         }),
         getMenus(){
-            const menu = this.options.indexOf(this.selected);
-            this.$axiosServer.get('https://chefemployees.com/odata/Menus')
+            this.$axiosServer.get('https://chefemployees.com/odata/Menus(' + this.selected + ')')
             .then((response)=>{
-                let menuValue = response.data.value[menu]
+                let menuValue = response.data;
                 this.form.menuName = menuValue.Name,
                 this.form.ingredients = menuValue.Ingrendients,
                 this.form.instructions = menuValue.Instructions,
@@ -146,7 +145,10 @@ export default {
         axios.get('https://chefemployees.com/odata/Menus')
         .then((response) => {
             console.log(response)
-            this.options = response.data.value.map(value => value.MenuId)
+            response.data.value.forEach((value) => {
+                this.options.push({ value: value.MenuId, text: value.Name })
+            })
+            console.log(this.options);
         })
         .catch((error) => {
             console.log(error);

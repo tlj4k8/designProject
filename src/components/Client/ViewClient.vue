@@ -382,14 +382,6 @@ export default {
         'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
         ],
-        visit: null,
-        visitDates: [
-            { value: 'client1', text: 'Client1' },
-            { value: 'client2', text: 'client2' },
-            { value: 'client3', text: 'client3' },
-            { value: 'client4', text: 'client4' },
-            { value: 'client5', text: 'client6' }
-        ],
         show: true
     }
     },
@@ -409,10 +401,9 @@ export default {
             }
         }),
         getClient(){
-            const client = this.option.indexOf(this.selected);
-            this.$axiosServer.get('https://chefemployees.com/odata/Clients')
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')')
             .then((response)=>{
-                let clientValue = response.data.value[client]
+                let clientValue = response.data;
                 if(clientValue == null || undefined){
                     this.form.mon = '',
                     this.form.tue = '',
@@ -482,7 +473,9 @@ export default {
         axios.get('https://chefemployees.com/odata/Clients')
         .then((response) => {
             console.log(response);
-            this.option = response.data.value.map(value => value.ClientId)
+            response.data.value.forEach((value) => {
+                this.option.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
+            })
         })
         .catch((error) => {
             console.log(error);

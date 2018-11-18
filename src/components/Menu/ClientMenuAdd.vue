@@ -101,11 +101,10 @@ export default {
       this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus')
       .then((response) => {
         console.log(response);
-        //Need to display menu name and be able to select clientmenuid to update/delete menu item from schedule
-        // this.clientMenuOptions = response.data.value.map(value => value.ClientMenuId);
-        // console.log(this.clientMenuOptions);
-        this.selectedOptions = response.data.value.map(value => value.MenuId);
-        console.log(this.selectedOptions);
+        //Figure out how to get name of menu a layer deep
+        response.data.value.forEach((value) => {
+                this.selectedOptions.push({ value: value.MenuId, text: value.MenuId })
+            })
       })
       .catch((error) => {
         console.log(error);
@@ -115,14 +114,19 @@ export default {
     mounted(){
       axios.get('https://chefemployees.com/odata/Menus')
       .then((response) => {
-          this.menuOptions = response.data.value.map(value => value.MenuId);
+        response.data.value.forEach((value) => {
+          this.menuOptions.push({ value: value.MenuId, text: value.Name })
+        })
       })
       .catch((error) => {
           console.log(error);
       })
+      //Need to filter based on employeeId so chefs can only see their schedules.
       axios.get('https://chefemployees.com/odata/Schedules')
       .then((response) => {
-          this.scheduleOptions = response.data.value.map(value => value.ScheduleId);
+        response.data.value.forEach((value) => {
+            this.scheduleOptions.push({ value: value.ScheduleId, text: value.ScheduleId })
+        })
       })
       .catch((error) => {
           console.log(error);
