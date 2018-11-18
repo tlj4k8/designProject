@@ -257,10 +257,9 @@ export default {
             }
         }),
       getSchedules(){
-        const schedule = this.scheduleOptions.indexOf(this.form.selectedSchedule);
-        this.$axiosServer.get('https://chefemployees.com/odata/Schedules')
+        this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')')
         .then((response)=>{
-            let scheduleValue = response.data.value[schedule];
+            let scheduleValue = response.data;
             if(scheduleValue == null || undefined){
                 this.form.endTime = '',
                 this.form.startTime = '',
@@ -304,8 +303,9 @@ export default {
   mounted: function() {
       axios.get('https://chefemployees.com/odata/Schedules')
         .then((response) => {
-            console.log(response);
-            this.scheduleOptions = response.data.value.map(value => value.ScheduleId)
+            response.data.value.forEach((value) => {
+                this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
+            })
         })
         .catch((error) => {
             console.log(error);

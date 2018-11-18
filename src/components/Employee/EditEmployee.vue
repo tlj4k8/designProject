@@ -224,7 +224,7 @@ export default {
         ismenu: false,
         isadmin: false
       },
-      selected: null,
+      selected: '',
       options: [],
       show: true
     };
@@ -326,11 +326,10 @@ export default {
             }
         }),
         getEmployees(){
-            let employee = this.options.indexOf(this.selected);
             this.passwordDisabled = true;
-            this.$axiosServer.get('https://chefemployees.com/odata/Employees')
+            this.$axiosServer.get('https://chefemployees.com/odata/Employees(' + this.selected + ')')
             .then((response)=>{
-                let employeeValue = response.data.value[employee]
+                let employeeValue = response.data;
                 if(employeeValue == null || undefined){
                     this.form.mon = '',
                     this.form.tue = '',
@@ -370,8 +369,7 @@ export default {
                     this.form.sun = this.returnTime(employeeValue.EmStartSunday),
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
                     this.form.isadmin = employeeValue.IsAdmin,
-                    this.form.ismenu = employeeValue.IsMenu,
-                    this.form.isactive = employeeValue.IsActive
+                    this.form.ismenu = employeeValue.IsMenu
                 }
 
             })
@@ -383,7 +381,10 @@ export default {
     mounted: function(){
         axios.get('https://chefemployees.com/odata/Employees')
         .then((response) => {
-            this.options = response.data.value.map(value => value.EmployeeId)
+            response.data.value.forEach((value) => {
+                this.options.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
+            })
+            console.log(this.options);
         })
         .catch((error) => {
             console.log(error);
