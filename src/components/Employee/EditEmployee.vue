@@ -226,6 +226,7 @@ export default {
       },
       selected: null,
       options: [],
+      employees: [],
       show: true
     };
   },
@@ -383,7 +384,10 @@ export default {
     mounted: function(){
         axios.get('https://chefemployees.com/odata/Employees')
         .then((response) => {
-            this.options = response.data.value.map(value => value.EmployeeId)
+            response.data.value.forEach((value) => {
+                this.options.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
+            })
+            console.log(this.options);
         })
         .catch((error) => {
             console.log(error);
