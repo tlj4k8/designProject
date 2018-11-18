@@ -326,13 +326,10 @@ export default {
             }
         }),
         getEmployees(){
-            console.log(this.selected);
-            let employee = this.options.indexOf(this.selected);
-            console.log(employee);
             this.passwordDisabled = true;
-            this.$axiosServer.get('https://chefemployees.com/odata/Employees')
+            this.$axiosServer.get('https://chefemployees.com/odata/Employees(' + this.selected + ')')
             .then((response)=>{
-                let employeeValue = response.data.value[employee]
+                let employeeValue = response.data;
                 if(employeeValue == null || undefined){
                     this.form.mon = '',
                     this.form.tue = '',
@@ -372,8 +369,7 @@ export default {
                     this.form.sun = this.returnTime(employeeValue.EmStartSunday),
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
                     this.form.isadmin = employeeValue.IsAdmin,
-                    this.form.ismenu = employeeValue.IsMenu,
-                    this.form.isactive = employeeValue.EmIsActive
+                    this.form.ismenu = employeeValue.IsMenu
                 }
 
             })
