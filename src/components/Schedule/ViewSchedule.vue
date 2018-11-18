@@ -167,7 +167,6 @@ export default {
         },
         scheduleOptions: [],
         selectedFile: null,
-        dataFile: {},
         menuOptions: [],
         disabled: true,
         show: true
@@ -175,20 +174,14 @@ export default {
   },
 
   methods: {
-      onFileSelected(event){
+    onFileSelected(event){
         this.selectedFile = event.target.files[0];
-      },
-      onUpload(){
+    },
+    onUpload(){
         let formData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
-        for (let value of formData.values()) {
-            this.dataFile = value;
-        }
-        //logs my file info in formData
-        console.log(this.dataFile);
-        //sends empty formData object but can log above
-        this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
-            UploadedImage: this.dataFile
+        this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', formData, {
+            headers:{'Content-Type':'multipart/form-data'}
         })
         .then((response)=>{
             console.log(response);
@@ -196,30 +189,7 @@ export default {
         .catch((error)=>{
             console.log(error);
         })
-      },
-    // submitFile(){
-    //     let formData = new FormData();
-    //     formData.append('fileId', this.file);
-    //     this.$axiosServer.post( 'https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
-    //         UploadedImage: formData
-    //     })
-    //     .then((response)=>{
-    //         console.log('SUCCESS!!');
-    //         console.log(response)
-    //     })
-    //     .catch((error)=>{
-    //         console.log('FAILURE!!');
-    //         console.log(error);
-    //     })
-    // },
-    // handleFileUpload(){
-    //     let reader  = new FileReader();
-    //     if(this.file){
-    //         if ( /\.(jpe?g|png|gif)$/i.test( this.file.name ) ) {
-    //             reader.readAsDataURL(this.file);
-    //         }
-    //     }
-    // },
+    },
     clockIn(){
         let timestamp = moment().format('LT');
         this.form.timeIn = timestamp;
@@ -286,18 +256,6 @@ export default {
         .catch((error)=>{
             console.log(error);
         })
-      },
-      uploadImage(){
-          this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', {
-              UploadedImage: this.form.receipt
-          })
-          .then((response)=>{
-              console.log(response);
-          })
-          .catch((error)=>{
-              console.log(error);
-          })
-
       }
   },
   mounted: function() {
