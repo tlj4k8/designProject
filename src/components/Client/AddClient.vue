@@ -142,16 +142,18 @@
         </table>
     </div>
     </div>
+    <div class="chef">
     <h3>Assign Chef</h3>
-        <hr/>
-        <div class="chef">
-            <b-form-group id="chef"
-                        class="select"
-                        :label-cols="4"
-                        breakpoint="md">
-            <b-form-select v-model="selected" :options="options" class="mb-1" />
-            </b-form-group>
-        </div>
+      <hr/>
+      <div class="chef">
+          <b-form-group id="chef"
+                      class="select"
+                      :label-cols="4"
+                      breakpoint="md">
+          <b-form-select v-model="selected" :options="options" class="mb-1" />
+          </b-form-group>
+      </div>
+    </div>
   <div class="needform">
   <h3>Client Needs Assessment</h3>
   <hr/>
