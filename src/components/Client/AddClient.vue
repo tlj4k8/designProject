@@ -142,6 +142,16 @@
         </table>
     </div>
     </div>
+    <h3>Assign Chef</h3>
+        <hr/>
+        <div class="chef">
+            <b-form-group id="chef"
+                        class="select"
+                        :label-cols="4"
+                        breakpoint="md">
+            <b-form-select v-model="selected" :options="options" class="mb-1" />
+            </b-form-group>
+        </div>
   <div class="needform">
   <h3>Client Needs Assessment</h3>
   <hr/>
@@ -294,8 +304,6 @@ import axios from 'axios';
 export default {
   data () {
     return {
-      userId:'',
-      clientId: '',
       form: {
         email: '',
         firstName: '',
@@ -340,6 +348,8 @@ export default {
         endSat: '',
         endSun: ''
       },
+      selected: null,
+      options: [],
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -456,6 +466,18 @@ export default {
         }
         return formatedTime;
       }
+    },
+    mounted: function(){
+        axios.get('https://chefemployees.com/odata/Employees')
+        .then((response) => {
+          let optionFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+          optionFiltered.forEach((item) => {
+              this.options.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
+          })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
 }
