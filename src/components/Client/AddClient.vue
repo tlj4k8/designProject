@@ -350,6 +350,7 @@ export default {
       },
       selected: null,
       options: [],
+      chefFiltered: [],
       state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -470,8 +471,8 @@ export default {
     mounted: function(){
         axios.get('https://chefemployees.com/odata/Employees')
         .then((response) => {
-          let optionFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
-          optionFiltered.forEach((item) => {
+          this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+          this.chefFiltered.forEach((item) => {
               this.options.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
           })
         })
