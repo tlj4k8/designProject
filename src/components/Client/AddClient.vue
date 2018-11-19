@@ -365,6 +365,7 @@ export default {
         handleSubmit(form){
           let self = this;
           this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
+              EmployeeId: this.selected,
               ClFirstName: this.form.firstName,
               ClLastName: this.form.lastName,
               ClCellPhone: this.form.phone,
@@ -409,6 +410,7 @@ export default {
               ExtraNotes: this.form.notes
           })
           .then((response)=>{
+            this.selected = null,
             this.form.firstName = '',
             this.form.lastName = '',
             this.form.phone = '',
