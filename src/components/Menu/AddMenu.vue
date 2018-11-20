@@ -1,5 +1,8 @@
 <template>
     <div class="addMenu">
+    <div class="end">
+          <font-awesome-icon icon="question"/>
+    </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class="menu">
         <b-form-group id="menuName"
@@ -112,6 +115,11 @@ export default {
 <style scoped>
 .menu{
   padding: 0 0;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .submit{
     display: flex;

@@ -1,5 +1,8 @@
 <template>
     <div class="profilePage">
+    <div class="end">
+        <font-awesome-icon icon="question"/>
+    </div>
     <b-form ref="form" :model="form" v-if="show" class="form">
       <div class="person">
         <h3>Profile</h3>
@@ -266,6 +269,11 @@ hr {
     background-color: #0d50bc;
     border-color: darkblue;
     padding: 7px 2px;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .disabled{
     width: 15%;

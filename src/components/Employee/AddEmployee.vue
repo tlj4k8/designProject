@@ -1,5 +1,8 @@
 <template>
     <div class="addEmpployee">
+      <div class="end">
+          <font-awesome-icon icon="question"/>
+      </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
         <h3>Login Credentials</h3>
         <hr/>
@@ -246,7 +249,7 @@ export default {
               EmEndSunday: this.formatTime(this.form.endSun),
               IsMenu: this.form.isMenu,
               IsAdmin: this.form.isAdmin,
-              IsActive: this.form.EmIsActive
+              EmIsActive: this.form.IsActive
           })
           .then((response)=>{
             console.log(response)
@@ -319,6 +322,11 @@ hr {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .flexGroup{
     display: flex;

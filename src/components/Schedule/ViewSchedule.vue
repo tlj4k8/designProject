@@ -1,5 +1,8 @@
 <template>
     <div class="addSchedule">
+        <div class="end">
+          <font-awesome-icon icon="question"/>
+        </div>
         <div class="employeeSelect">
         <h3> Select Schedule </h3>
         <hr/>
@@ -330,6 +333,11 @@ hr{
     background-color:red;
     border-color: darkred;  
     padding: 7px 2px;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .disabledButtons{
     display: flex;

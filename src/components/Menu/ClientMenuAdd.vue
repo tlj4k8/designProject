@@ -1,5 +1,8 @@
 <template>
     <div class="clientMenuAdd">
+    <div class="end">
+          <font-awesome-icon icon="question"/>
+    </div>
     <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <h3> Select Schedule </h3>
     <hr/>
@@ -150,6 +153,11 @@ hr{
   height: 1px;
 }
 .submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.end{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

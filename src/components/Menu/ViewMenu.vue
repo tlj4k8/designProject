@@ -1,5 +1,8 @@
 <template>
     <div class="viewMenu">
+        <div class="end">
+          <font-awesome-icon icon="question"/>
+        </div>
         <h3>Select Menu</h3>
         <hr/>
         <div class="menuSelect">
@@ -166,6 +169,11 @@ export default {
 }
 .select{
     width: 100vw;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .disabledButtons{
     display: flex;
