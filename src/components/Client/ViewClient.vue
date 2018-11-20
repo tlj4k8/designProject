@@ -4,7 +4,7 @@
     <hr/>
     <div class="client">
         <b-form-group id="clientList">
-            <b-form-select v-model="selected" v-on:input="getClient" :options="option" />
+            <b-form-select v-model="selected" v-on:input="getClient" :options="options" />
         </b-form-group>
     </div>
     <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
@@ -157,6 +157,25 @@
             </tr>
         </table>
     </div>
+    </div>
+    <div class="chef">
+    <h3>Assigned Chef</h3>
+    <hr/>
+        <div class="flexGroup">
+        <b-form-group id="chef"
+                        class="flex"
+                        label="Assigned Chef:"
+                        label-for="chef">
+            <b-form-input id="chef"
+                        type="text"
+                        :disabled="disabled"
+                        v-model="form.chef"/>
+        </b-form-group>
+        <b-form-group v-if="!disabled" class="flex" id="chefAvailable" label="Available Chef:" label-for="chefAvailable">
+            <b-form-select :disabled="disabled" v-model="selectedChef" :options="chefOptions" />
+            <b-button  class="menuBtn" @click="updateChef" variant="primary">Reassign Chef</b-button>
+        </b-form-group>
+        </div>
     </div>
     <div class="needform">
     <h3>Client Needs Assessment</h3>
@@ -370,11 +389,15 @@ export default {
         endThur: '',
         endFri: '',
         endSat: '',
-        endSun: ''
+        endSun: '',
+        chef: ''
       },
         disabled: true,
         selected: null,
-        option: [],
+        selectedChef: null,
+        chefOptions: [],
+        chefFiltered: [],
+        options: [],
         state: [
         { text: 'Select One', value: null },
         'AL', 'AK', 'AZ', 'AR','CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',
@@ -389,7 +412,11 @@ export default {
         formatTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
             return timeStamp;
+        },
+        updateChef(){
+            this.form.chef = this.selectedChef;
         }
+        
     },
     computed: {
         ...mapState({
@@ -421,6 +448,7 @@ export default {
                     this.form.endSun = ''
                 }
                 else{
+                    this.form.chef = clientValue.EmployeeId,
                     this.form.firstName = clientValue.ClFirstName,
                     this.form.lastName = clientValue.ClLastName,
                     this.form.phone = clientValue.ClCellPhone,
@@ -472,10 +500,19 @@ export default {
     mounted: function(){
         axios.get('https://chefemployees.com/odata/Clients')
         .then((response) => {
-            console.log(response);
             response.data.value.forEach((value) => {
-                this.option.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
+                this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
             })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        axios.get('https://chefemployees.com/odata/Employees')
+        .then((response) => {
+          this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+          this.chefFiltered.forEach((item) => {
+              this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
+          })
         })
         .catch((error) => {
             console.log(error);
