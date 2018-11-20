@@ -159,16 +159,23 @@
     </div>
     </div>
     <div class="chef">
-    <h3>Assign Chef</h3>
-      <hr/>
-      <div class="chef">
-          <b-form-group id="chef"
-                      class="select"
-                      :label-cols="4"
-                      breakpoint="md">
-          <b-form-select v-model="selectedChef" :options="chefOptions" class="mb-1" />
-          </b-form-group>
-      </div>
+    <h3>Assigned Chef</h3>
+    <hr/>
+        <div class="flexGroup">
+        <b-form-group id="chef"
+                        class="flex"
+                        label="Assigned Chef:"
+                        label-for="chef">
+            <b-form-input id="chef"
+                        type="text"
+                        :disabled="disabled"
+                        v-model="form.chef"/>
+        </b-form-group>
+        <b-form-group v-if="!disabled" class="flex" id="chefAvailable" label="Available Chef:" label-for="chefAvailable">
+            <b-form-select :disabled="disabled" v-model="selectedChef" :options="chefOptions" />
+            <b-button  class="menuBtn" @click="updateChef" variant="primary">Reassign Chef</b-button>
+        </b-form-group>
+        </div>
     </div>
     <div class="needform">
     <h3>Client Needs Assessment</h3>
@@ -382,12 +389,14 @@ export default {
         endThur: '',
         endFri: '',
         endSat: '',
-        endSun: ''
+        endSun: '',
+        chef: ''
       },
         disabled: true,
         selected: null,
         selectedChef: null,
         chefOptions: [],
+        chefFiltered: [],
         options: [],
         state: [
         { text: 'Select One', value: null },
@@ -404,6 +413,9 @@ export default {
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
             return timeStamp;
         },
+        updateChef(){
+            this.form.chef = this.selectedChef;
+        }
         
     },
     computed: {
@@ -433,11 +445,10 @@ export default {
                     this.form.endThur = '',
                     this.form.endFri = '',
                     this.form.endSat = '',
-                    this.form.endSun = '',
-                    this.selectedChef = null,
-                    this.chefOptions - []
+                    this.form.endSun = ''
                 }
                 else{
+                    this.form.chef = clientValue.EmployeeId,
                     this.form.firstName = clientValue.ClFirstName,
                     this.form.lastName = clientValue.ClLastName,
                     this.form.phone = clientValue.ClCellPhone,
@@ -478,18 +489,7 @@ export default {
                     this.form.organic = clientValue.OrganicMeals,
                     this.form.groceryStore = clientValue.PreferredGroceryStore,
                     this.form.mealStructure = clientValue.MealSize,
-                    this.form.notes = clientValue.ExtraNotes,
-                    
-                    this.chefOptions.push({ value: clientValue.EmployeeId, text: clientValue.EmployeeId })
-                    // this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')')
-                    // .then((response) => {
-                    // response.data.value.forEach((value) => {
-                    //     this.chefOptions.push({ value: value.EmployeeId, text: value.EmployeeId })
-                    // })
-                    // })
-                    // .catch((error) => {
-                    //     console.log(error);
-                    // })
+                    this.form.notes = clientValue.ExtraNotes
                 }
             })
             .catch((error)=>{
@@ -500,10 +500,19 @@ export default {
     mounted: function(){
         axios.get('https://chefemployees.com/odata/Clients')
         .then((response) => {
-            console.log(response);
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
             })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        axios.get('https://chefemployees.com/odata/Employees')
+        .then((response) => {
+          this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+          this.chefFiltered.forEach((item) => {
+              this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
+          })
         })
         .catch((error) => {
             console.log(error);
