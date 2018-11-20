@@ -231,6 +231,7 @@ export default {
   },
   methods: {
     //   updateEmployee(){
+    //      this.checkType();
     //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
     //         EmployeeId: this.selected,
     //         EmFirstName: this.form.firstName,
@@ -277,6 +278,12 @@ export default {
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
       },
+      checkType(){
+        if(this.form.ismenu === true && this.form.isadmin === true){
+          alert('Employee cannot be admin and menu team. Please check your selection.');
+        }
+     }
+    },
       updatePassword(){
         this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
             EmployeeId: this.selected,
@@ -314,8 +321,8 @@ export default {
           .catch((error)=>{
               console.log(error);
           })
-      } 
-  },
+    },
+
   computed: {
       ...mapState({
             getToken(state){

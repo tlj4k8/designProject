@@ -95,6 +95,8 @@
                     label-for="isMenu">
         <b-form-checkbox id="form.isMenu"
                     type="checkbox"
+                    v-on:input="checkType"
+                    :disabled="disabledMenu"
                     v-model="form.isMenu"/>
       </b-form-group>
       <b-form-group id="isAdmin"
@@ -103,6 +105,8 @@
                     label-for="isAdmin">
         <b-form-checkbox id="form.isAdmin"
                     type="checkbox"
+                    v-on:input="checkType"
+                    :disabled="disabledAdmin"
                     v-model="form.isAdmin"/>
       </b-form-group>
     </div>
@@ -159,7 +163,8 @@ export default {
   name: "editEmployee",
   data() {
     return {
-      disabled: true,
+      disabledAdmin: false,
+      disabledMenu: false,
       form: {
         username: '',
         password: '',
@@ -202,6 +207,18 @@ export default {
         this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';
         if(this.form.username === '') { this.valid = ''}
       },
+      checkType(){
+        if(this.form.isMenu === true ){
+          this.disabledAdmin = true;
+        }
+        else if(this.form.isAdmin === true){
+          this.disabledMenu = true;
+        }
+        else{
+          this.disabledAdmin = false;
+          this.disabledMenu = false;
+        }
+      },
       handleSubmit(form){
         if(this.valid === 'lightgreen'){
           let self = this;
@@ -229,7 +246,7 @@ export default {
               EmEndSunday: this.formatTime(this.form.endSun),
               IsMenu: this.form.isMenu,
               IsAdmin: this.form.isAdmin,
-              IsActive: this.form.IsActive
+              IsActive: this.form.EmIsActive
           })
           .then((response)=>{
             console.log(response)
