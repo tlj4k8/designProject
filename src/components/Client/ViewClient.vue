@@ -1,5 +1,8 @@
 <template>
   <div class="viewClient">
+    <div class="end">
+        <font-awesome-icon icon="question" @click="help"/>
+    </div>
     <h3>Select Client</h3>
     <hr/>
     <div class="client">
@@ -415,6 +418,9 @@ export default {
         },
         updateChef(){
             this.form.chef = this.selectedChef;
+        },
+        help(){
+            alert('HELP ME!!!!');
         }
         
     },
@@ -533,6 +539,11 @@ hr{
 .flex{
     flex-grow: 1;
     padding: 0 2px;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .table{
     overflow-x:auto;

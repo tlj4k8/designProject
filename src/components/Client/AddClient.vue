@@ -1,5 +1,8 @@
 <template>
   <div class="addClient">
+    <div class="end">
+        <font-awesome-icon icon="question"/>
+    </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
@@ -512,6 +515,11 @@ hr{
 .table{
     overflow-x:auto;
     padding: 5px 15px;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .submit{
     display: flex;

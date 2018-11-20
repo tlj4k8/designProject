@@ -1,5 +1,8 @@
 <template>
     <div class="editEmployee">
+    <div class="end">
+        <font-awesome-icon icon="question"/>
+    </div>
       <div class="employeeSelect">
       <h3>Select Employee</h3>
       <hr/>
@@ -437,6 +440,11 @@ hr {
 }
 .inputPass{
     width: 100%;
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .stackedButtons{
     display: flex;
