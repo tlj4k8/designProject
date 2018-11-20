@@ -70,8 +70,6 @@ export default {
                 }
             })
             .then((response)=>{
-                console.log(response.data)
-                console.log(decoded(response.data))
                 this.$store.dispatch('loginToken', response.data)
                 this.$store.dispatch('storeUserInfo',response.data);
                 this.successfulLogin();
