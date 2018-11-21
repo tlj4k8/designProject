@@ -499,7 +499,7 @@ export default {
         }),
         getClient(){
             let token = localStorage.getItem('t');
-            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', {headers: {Authorization: "Bearer " + token}})
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', {headers: {Authorization: token}})
             .then((response)=>{
                 let clientValue = response.data;
                 if(clientValue == null || undefined){
@@ -570,7 +570,7 @@ export default {
     },
     mounted: function(){
         const token = localStorage.getItem('t');
-        axios.get('https://chefemployees.com/odata/Clients', {headers: {Authorization: "Bearer " + token}})
+        axios.get('https://chefemployees.com/odata/Clients', {headers: {Authorization: token}})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
