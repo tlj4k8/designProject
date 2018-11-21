@@ -434,7 +434,7 @@ export default {
             return formatedTime;
         },
         updateClient(){
-            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')', {
+            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')' ,{
                 ClientId: this.selected,
                 EmployeeId: this.form.chef,
                 ClFirstName: this.form.firstName,
@@ -498,7 +498,8 @@ export default {
             }
         }),
         getClient(){
-            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')')
+            let token = localStorage.getItem('t');
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', {headers: {Authorization: "Bearer " + token}})
             .then((response)=>{
                 let clientValue = response.data;
                 if(clientValue == null || undefined){
@@ -568,7 +569,8 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Clients')
+        const token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Clients', {headers: {Authorization: "Bearer " + token}})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
