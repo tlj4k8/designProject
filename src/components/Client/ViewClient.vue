@@ -435,7 +435,8 @@ export default {
         },
         updateClient(){
             let token = localStorage.getItem('t');
-            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')' ,{ headers: { 'Authorization': "Bearer " + token }},{
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
                 ClientId: this.selected,
                 EmployeeId: this.form.chef,
                 ClFirstName: this.form.firstName,
@@ -479,7 +480,8 @@ export default {
                 PreferredGroceryStore: this.form.groceryStore,
                 MealSize: this.form.mealStructure,
                 ExtraNotes: this.form.notes
-            })
+                }, {headers: headers}
+            )
             .then((response)=>{
                 console.log(response);
             })

@@ -234,7 +234,7 @@ export default {
   },
   methods: {
     //   updateEmployee(){
-    //      this.checkType();
+    //     this.checkType();
     //     this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
     //         EmployeeId: this.selected,
     //         EmFirstName: this.form.firstName,
