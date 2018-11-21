@@ -195,13 +195,7 @@ export default {
         isAdmin: false
       },
       employeeNames: [],
-      valid: '', 
-      state: [
-        { text: 'Select One', value: null },
-        'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
-        'KY','LA','ME','MD','MA','MI','MN','MO','MS','MT','NE','NY','NV','NH','NJ','NM','NC',
-        'ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
-      ],
+      valid: '',
       show: true
     };
   },
@@ -223,8 +217,9 @@ export default {
         }
       },
       handleSubmit(form){
+        let token = localStorage.getItem('t');
+        let headers = {'Authorization': "Bearer " + token};
         if(this.valid === 'lightgreen'){
-          let self = this;
           this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
               Username: this.form.username,
               Password: this.form.password,
@@ -250,7 +245,8 @@ export default {
               IsMenu: this.form.isMenu,
               IsAdmin: this.form.isAdmin,
               EmIsActive: this.form.IsActive
-          })
+            },{headers: headers}
+          )
           .then((response)=>{
             console.log(response)
             this.form.username = '',
@@ -299,7 +295,8 @@ export default {
       }
   },
   mounted(){
-    axios.get('https://chefemployees.com/odata/Employees')
+    let token = localStorage.getItem('t');
+    axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
     .then((response) => {
       this.employeeNames = response.data.value.map(value => value.Username)
     })

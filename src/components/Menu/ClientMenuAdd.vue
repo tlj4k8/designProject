@@ -80,11 +80,14 @@ export default {
   },
   methods: {
     handleSubmit() {
+      let token = localStorage.getItem('t');
+      let headers = {'Authorization': "Bearer " + token};
       this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
         ScheduleId: this.form.schedule,
         ClientMenuNotes: this.form.notes,
-        MenuId: this.form.menus,
-      })
+        MenuId: this.form.menus
+      },{headers: headers}
+      )
       .then((response)=>{
         console.log(response);
         this.getClientMenusIds();
@@ -93,18 +96,13 @@ export default {
         console.log(error);
       })
     },
-    // addMenu(){
-    //   this.selectedOptions.push(this.form.menus);
-    //   console.log('button works');
-    // },
     // removeMenu(){
     //   this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
     // },
     getClientMenusIds(){
-      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus')
+      let token = localStorage.getItem('t');
+      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
-        console.log(response);
-        //Figure out how to get name of menu a layer deep
         response.data.value.forEach((value) => {
                 this.selectedOptions.push({ value: value.MenuId, text: value.MenuId })
             })
@@ -115,7 +113,8 @@ export default {
     }
   },
     mounted(){
-      axios.get('https://chefemployees.com/odata/Menus')
+      let token = localStorage.getItem('t');
+      axios.get('https://chefemployees.com/odata/Menus', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
         response.data.value.forEach((value) => {
           this.menuOptions.push({ value: value.MenuId, text: value.Name })
@@ -125,7 +124,7 @@ export default {
           console.log(error);
       })
       //Need to filter based on employeeId so chefs can only see their schedules.
-      axios.get('https://chefemployees.com/odata/Schedules')
+      axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
         response.data.value.forEach((value) => {
             this.scheduleOptions.push({ value: value.ScheduleId, text: value.ScheduleId })

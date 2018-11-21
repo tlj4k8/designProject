@@ -478,7 +478,8 @@ export default {
       }
     },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Employees')
+        let token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
           this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
           this.chefFiltered.forEach((item) => {

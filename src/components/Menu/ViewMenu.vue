@@ -128,7 +128,8 @@ export default {
             }
         }),
         getMenus(){
-            this.$axiosServer.get('https://chefemployees.com/odata/Menus(' + this.selected + ')')
+            let token = localStorage.getItem('t');
+            this.$axiosServer.get('https://chefemployees.com/odata/Menus(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 let menuValue = response.data;
                 this.form.menuName = menuValue.Name,
@@ -145,13 +146,12 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Menus')
+        let token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Menus', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            console.log(response)
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.MenuId, text: value.Name })
             })
-            console.log(this.options);
         })
         .catch((error) => {
             console.log(error);
