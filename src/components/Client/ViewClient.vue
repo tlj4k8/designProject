@@ -10,7 +10,7 @@
             <b-form-select v-model="selected" v-on:input="getClient" :options="options" />
         </b-form-group>
     </div>
-    <b-form ref="form"  @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+    <b-form ref="form" :model="form" v-if="show" class="form">
     <div class= "person">
     <h3>Profile</h3>
     <hr/>
@@ -339,7 +339,7 @@
     </b-form>
     <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
-        <b-button class="update" v-if="!disabled" type="submit">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="update" v-if="!disabled" @click="updateClient">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
     </div>
 </template>
@@ -412,7 +412,7 @@ export default {
     }
     },
     methods:{
-        formatTime(time){
+        returnTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
             return timeStamp;
         },
@@ -421,6 +421,70 @@ export default {
         },
         help(){
             alert('HELP ME!!!!');
+        },
+        formatTime(time){
+            let timeStamp = time.split(':');
+            let timeHour = timeStamp[0];
+            let timeMinutes = timeStamp[1];
+            let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+            if(time === ''){
+                let formatedTime = "PT00H00M00S";
+                return formatedTime;
+            }
+            return formatedTime;
+        },
+        updateClient(){
+            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')', {
+                ClientId: this.selected,
+                EmployeeId: this.form.chef,
+                ClFirstName: this.form.firstName,
+                ClLastName: this.form.lastName,
+                ClCellPhone: this.form.phone,
+                Address1: this.form.address,
+                Address2: this.form.addressTwo,
+                ClEmail: this.form.email,
+                City: this.form.city,
+                State: this.form.state,
+                ZipCode: this.form.zip,
+                ClStartMonday: this.formatTime(this.form.mon),
+                ClEndMonday: this.formatTime(this.form.endMon),
+                ClStartTuesday: this.formatTime(this.form.tue),
+                ClEndTuesday: this.formatTime(this.form.endTue),
+                ClStartWednesday: this.formatTime(this.form.wed),
+                ClEndWednesday: this.formatTime(this.form.endWed),
+                ClStartThursday: this.formatTime(this.form.thur),
+                ClEndThursday: this.formatTime(this.form.endThur),
+                ClStartFriday: this.formatTime(this.form.fri),
+                ClEndFriday: this.formatTime(this.form.endFri),
+                ClStartSaturday: this.formatTime(this.form.sat),
+                ClEndSaturday: this.formatTime(this.form.endSat),
+                ClStartSunday: this.formatTime(this.form.sun),
+                ClEndSunday: this.formatTime(this.form.endSun),
+                PreferredMeats: this.form.meats,
+                MeatsToAvoid: this.form.meatAvoid,
+                PreferredCheeses: this.form.cheese,
+                CheesesToAvoid: this.form.cheeseAvoid,
+                PreferredGrains: this.form.grains,
+                GrainsToAvoid: this.form.grainsAvoid,
+                SpiceLevel: this.form.spice,
+                OtherToAvoid: this.other,
+                Allergies: this.form.allergies,
+                DietRestrictions: this.form.dietRestrictions,
+                DietGoals: this.form.dietGoals,
+                MainDishSoupSaladStew: this.form.mainDish,
+                StoreContainers: this.form.storageContainers,
+                StoveOven: this.form.stove,
+                OrganicMeals: this.form.organic,
+                PreferredGroceryStore: this.form.groceryStore,
+                MealSize: this.form.mealStructure,
+                ExtraNotes: this.form.notes
+            })
+            .then((response)=>{
+                console.log(response);
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
         }
         
     },
@@ -464,20 +528,20 @@ export default {
                     this.form.city = clientValue.City,
                     this.form.state = clientValue.State,
                     this.form.zip = clientValue.ZipCode,
-                    this.form.mon = this.formatTime(clientValue.ClStartMonday),
-                    this.form.endMon = this.formatTime(clientValue.ClEndMonday),
-                    this.form.tue = this.formatTime(clientValue.ClStartTuesday),
-                    this.form.endTue = this.formatTime(clientValue.ClEndTuesday),
-                    this.form.wed = this.formatTime(clientValue.ClStartWednesday),
-                    this.form.endWed = this.formatTime(clientValue.ClEndWednesday),
-                    this.form.thur = this.formatTime(clientValue.ClStartThursday),
-                    this.form.endThur = this.formatTime(clientValue.ClEndThursday),
-                    this.form.fri = this.formatTime(clientValue.ClStartFriday),
-                    this.form.endFri = this.formatTime(clientValue.ClEndFriday),
-                    this.form.sat = this.formatTime(clientValue.ClStartSaturday),
-                    this.form.endSat = this.formatTime(clientValue.ClEndSaturday),
-                    this.form.sun = this.formatTime(clientValue.ClStartSunday),
-                    this.form.endSun = this.formatTime(clientValue.ClEndSunday),
+                    this.form.mon = this.returnTime(clientValue.ClStartMonday),
+                    this.form.endMon = this.returnTime(clientValue.ClEndMonday),
+                    this.form.tue = this.returnTime(clientValue.ClStartTuesday),
+                    this.form.endTue = this.returnTime(clientValue.ClEndTuesday),
+                    this.form.wed = this.returnTime(clientValue.ClStartWednesday),
+                    this.form.endWed = this.returnTime(clientValue.ClEndWednesday),
+                    this.form.thur = this.returnTime(clientValue.ClStartThursday),
+                    this.form.endThur = this.returnTime(clientValue.ClEndThursday),
+                    this.form.fri = this.returnTime(clientValue.ClStartFriday),
+                    this.form.endFri = this.returnTime(clientValue.ClEndFriday),
+                    this.form.sat = this.returnTime(clientValue.ClStartSaturday),
+                    this.form.endSat = this.returnTime(clientValue.ClEndSaturday),
+                    this.form.sun = this.returnTime(clientValue.ClStartSunday),
+                    this.form.endSun = this.returnTime(clientValue.ClEndSunday),
                     this.form.meats = clientValue.PreferredMeats,
                     this.form.meatAvoid = clientValue.MeatsToAvoid,
                     this.form.cheese = clientValue.PreferredCheeses,
