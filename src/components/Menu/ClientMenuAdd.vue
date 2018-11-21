@@ -28,7 +28,22 @@
                       label-for="menu">
               <b-form-select v-model="form.menus" :options="menuOptions" />
               <!-- <b-button  class="menuBtn" variant="primary">Select Menu</b-button> -->
-              </b-form-group>
+          </b-form-group>
+          
+      </div>
+      <div class="menuNotes">
+        <b-form-group id="notes"
+                  label="Menu Notes:"
+                  label-for="notes">
+              <b-form-textarea id="notes"
+                    :rows="3"
+                    :max-rows="6"
+                    type="text"
+                    v-model="form.notes"/>
+        </b-form-group>
+      </div>
+      <div class="submit">
+        <b-button @click="submitMenu">Add Menu Item</b-button>
       </div>
       <div class="menuSelect">
           <b-form-group id="selectedMenus"
@@ -37,22 +52,12 @@
                       breakpoint="md"
                       label="Scheduled Menus:"
                       label-for="selectedMenus">
-              <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
-              <b-button  class="menuBtn" variant="primary">Remove Menu</b-button>
-              </b-form-group>
+            <b-form-select v-model="form.clientMenus" :options="selectedOptions" />
+          </b-form-group>
       </div>
-      <b-form-group id="notes"
-                    label="Menu Notes:"
-                    label-for="notes">
-        <b-form-textarea id="notes"
-                      :rows="3"
-                      :max-rows="6"
-                      type="text"
-                      v-model="form.notes"/>
-      </b-form-group>
-    </div>
-    <div class="submit">
-      <b-button type="submit">Add Menu Item</b-button>
+       <div class="submit">
+        <b-button  class="menuBtn" @click="removeMenu">Remove Menu</b-button>
+      </div>
     </div>
     </b-form>
   </div>
@@ -79,7 +84,7 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
+    submitMenu() {
       this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
         ScheduleId: this.form.schedule,
         ClientMenuNotes: this.form.notes,
@@ -97,16 +102,24 @@ export default {
     //   this.selectedOptions.push(this.form.menus);
     //   console.log('button works');
     // },
-    // removeMenu(){
-    //   this.selectedOptions = this.selectedOptions.filter(item => item !== this.form.selectedMenus)
-    // },
+    removeMenu(){
+      this.$axiosServer.delete('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', {
+        params: {ClientMenuId: this.form.clientMenus}
+      })
+      .then((response)=>{
+        console.log(response);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    },
     getClientMenusIds(){
       this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus')
       .then((response) => {
         console.log(response);
         //Figure out how to get name of menu a layer deep
         response.data.value.forEach((value) => {
-                this.selectedOptions.push({ value: value.MenuId, text: value.MenuId })
+                this.selectedOptions.push({ value: value.ClientMenuId, text: value.MenuId })
             })
       })
       .catch((error) => {
