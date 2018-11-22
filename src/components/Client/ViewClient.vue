@@ -434,7 +434,9 @@ export default {
             return formatedTime;
         },
         updateClient(){
-            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')', {
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
                 ClientId: this.selected,
                 EmployeeId: this.form.chef,
                 ClFirstName: this.form.firstName,
@@ -478,7 +480,8 @@ export default {
                 PreferredGroceryStore: this.form.groceryStore,
                 MealSize: this.form.mealStructure,
                 ExtraNotes: this.form.notes
-            })
+                }, {headers: headers}
+            )
             .then((response)=>{
                 console.log(response);
             })
@@ -498,7 +501,8 @@ export default {
             }
         }),
         getClient(){
-            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')')
+            let token = localStorage.getItem('t');
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 let clientValue = response.data;
                 if(clientValue == null || undefined){
@@ -568,7 +572,8 @@ export default {
         }
     },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Clients')
+        const token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
@@ -577,7 +582,7 @@ export default {
         .catch((error) => {
             console.log(error);
         });
-        axios.get('https://chefemployees.com/odata/Employees')
+        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
           this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
           this.chefFiltered.forEach((item) => {

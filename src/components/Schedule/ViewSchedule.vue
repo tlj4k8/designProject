@@ -181,10 +181,14 @@ export default {
         this.selectedFile = event.target.files[0];
     },
     onUpload(){
+        let token = localStorage.getItem('t');
         let formData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
         this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', formData, {
-            headers:{'Content-Type':'multipart/form-data'}
+            headers:{
+                'Content-Type':'multipart/form-data',
+                'Authorization': 'Bearer ' + token
+            }
         })
         .then((response)=>{
             console.log(response);
@@ -230,7 +234,8 @@ export default {
             }
         }),
       getSchedules(){
-        this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')')
+        let token = localStorage.getItem('t');
+        this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
             let scheduleValue = response.data;
             if(scheduleValue == null || undefined){
@@ -248,7 +253,7 @@ export default {
                 this.form.mealCharged = scheduleValue.Charged,
                 this.form.mealCost = scheduleValue.Cost
             }
-            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus')
+            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 this.menuOptions = response.data.value.map(value => value.MenuId);
             })
@@ -262,7 +267,8 @@ export default {
       }
   },
   mounted: function() {
-      axios.get('https://chefemployees.com/odata/Schedules')
+      let token = localStorage.getItem('t');
+      axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })

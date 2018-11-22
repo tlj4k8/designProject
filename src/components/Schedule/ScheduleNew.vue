@@ -84,14 +84,16 @@ export default {
   },
   methods: {
     handleSubmit(form) {
-        let self = this;
+        let token = localStorage.getItem('t');
+        let headers = {'Authorization': "Bearer " + token};
         this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
             EmployeeId: this.form.selectedEmployee,
             ClientId: this.form.selectedClient,
             StartTime: this.formatTime(this.form.startTime),
             EndTime: this.formatTime(this.form.endTime),
             ScheduleDate: this.formatDate(this.form.date)
-        })
+        },{headers: headers}
+        )
         .then((response)=>{
             console.log(response);
             this.form.selectedEmployee = null,
@@ -134,7 +136,8 @@ export default {
     }
   },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Clients')
+        let token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             console.log(response);
             this.clientOptions = response.data.value.map(value => value.ClientId)
@@ -142,7 +145,7 @@ export default {
         .catch((error) => {
             console.log(error);
         });
-        axios.get('https://chefemployees.com/odata/Employees')
+        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             console.log(response);
             this.employeeOptions = response.data.value.map(value => value.EmployeeId)
