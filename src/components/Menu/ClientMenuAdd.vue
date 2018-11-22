@@ -102,17 +102,17 @@ export default {
         console.log(error);
       })
     },
-    removeMenu(){
-      this.$axiosServer.delete('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', {
-        params: {ClientMenuId: this.form.clientMenus}
-      })
-      .then((response)=>{
-        console.log(response);
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-    },
+    // removeMenu(){
+    //   this.$axiosServer.delete('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', {
+    //     params: {ClientMenuId: this.form.clientMenus}
+    //   })
+    //   .then((response)=>{
+    //     console.log(response);
+    //   })
+    //   .catch((error)=>{
+    //     console.log(error);
+    //   })
+    // },
     getClientMenusIds(){
       let token = localStorage.getItem('t');
       this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
