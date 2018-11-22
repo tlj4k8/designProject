@@ -33,14 +33,19 @@
                 <p class="text">(Email goes here)</p>
             </b-modal>
         </div>
+    <Spinner v-if="loading"/>
     </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 import * as decoded from 'jwt-decode';
+import Spinner from '././Spinner';
 export default {
-  name: 'Login',
+    name: 'Login',
+    components:{
+      Spinner
+    },
     data () {
         return {
             form: {
@@ -48,12 +53,14 @@ export default {
                 password: '',
             },
             show: true,
-            modalShow: false
+            modalShow: false,
+            loading: false
         }
     },
     methods: {
         handleLogin() {
             var self = this;
+            this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/api/Auth/Login', {
                 params:{
@@ -71,10 +78,11 @@ export default {
             })
          },
         successfulLogin() {
-            alert("Logged In!")
+            this.loading = false;
             this.$router.push('/dash');
         },
         failedLogin() {
+            this.loading = false;
             if (this.form.username === ''){
                 alert('Please enter a username');
             }
