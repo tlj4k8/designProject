@@ -1,6 +1,6 @@
 <template>
   <div class="employeeDash">
-  <h1>Employee</h1>
+  <h1>Employee Dashboard</h1>
     <b-button-group vertical class="dashGroup">
         <b-button to="/employee">View Employee</b-button>
         <b-button to="/employeeNew">Add New Employee</b-button>
