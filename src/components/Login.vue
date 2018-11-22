@@ -48,16 +48,7 @@ export default {
                 password: '',
             },
             show: true,
-            modalShow: false,
-            rules: {
-                password: [
-                    { required: true,
-                    message: 'Passwords must be at least 8 characters.',
-                    pattern:'^(?=.*)(?=.{8,})',
-                    trigger: 'blur'
-                    }
-                ]
-            }
+            modalShow: false
         }
     },
     methods: {
@@ -83,8 +74,16 @@ export default {
             alert("Logged In!")
             this.$router.push('/dash');
         },
-        failedLogin(errorMessage) {
-            alert(errorMessage, "Login failed");
+        failedLogin() {
+            if (this.form.username === ''){
+                alert('Please enter a username');
+            }
+            else if (this.form.password === ''){
+                alert('Please enter a password');
+            }
+            else{
+                alert('Please check that username and/or password are correct.');
+            }
         }
     },
     computed: mapState({
