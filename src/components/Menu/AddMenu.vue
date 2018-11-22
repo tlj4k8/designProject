@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'addmenu',
   data () {
@@ -93,6 +93,8 @@ export default {
   },
     methods: {
         handleSubmit(form){
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
             this.$axiosServer.post('https://chefemployees.com/odata/Menus', {
                 Name: this.form.menuName,
                 Ingrendients: this.form.ingredients,
@@ -101,7 +103,8 @@ export default {
                 Time: this.form.time,
                 MealType: this.form.mealType,
                 Notes: this.form.menuNotes
-            })
+                },{headers:headers}
+            )
             .then((response)=>{
                 console.log(response)
             })

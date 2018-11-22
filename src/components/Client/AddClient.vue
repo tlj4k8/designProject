@@ -368,7 +368,8 @@ export default {
   },
     methods: {
         handleSubmit(form){
-          let self = this;
+          let token = localStorage.getItem('t');
+          let headers = {'Authorization': "Bearer " + token};
           this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
               EmployeeId: this.selected,
               ClFirstName: this.form.firstName,
@@ -412,8 +413,9 @@ export default {
               OrganicMeals: this.form.organic,
               PreferredGroceryStore: this.form.groceryStore,
               MealSize: this.form.mealStructure,
-              ExtraNotes: this.form.notes
-          })
+              ExtraNotes: this.form.notes,
+              }, {headers: headers}
+          )
           .then((response)=>{
             this.selected = null,
             this.form.firstName = '',
@@ -476,7 +478,8 @@ export default {
       }
     },
     mounted: function(){
-        axios.get('https://chefemployees.com/odata/Employees')
+        let token = localStorage.getItem('t');
+        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
           this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
           this.chefFiltered.forEach((item) => {

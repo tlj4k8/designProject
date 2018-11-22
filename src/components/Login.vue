@@ -63,12 +63,13 @@ export default {
     methods: {
         handleLogin() {
             var self = this;
+            let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/api/Auth/Login', {
                 params:{
                     Username: this.form.username,
                     Password: this.form.password
                 }
-            })
+            }, { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 this.$store.dispatch('loginToken', response.data)
                 this.$store.dispatch('storeUserInfo',response.data);
