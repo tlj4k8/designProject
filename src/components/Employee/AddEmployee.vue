@@ -165,6 +165,9 @@ import axios from 'axios';
 import Spinner from './../Spinner';
 export default {
   name: "editEmployee",
+  components:{
+    Spinner
+  },
   data() {
     return {
       disabledAdmin: false,

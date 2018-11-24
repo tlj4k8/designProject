@@ -142,6 +142,9 @@ import * as decoded from 'jwt-decode';
 import Spinner from '././Spinner';
 export default {
   name: "profile",
+  components:{
+    Spinner
+  },
   data() {
     return {
       disabled: true,

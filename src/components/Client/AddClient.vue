@@ -471,6 +471,7 @@ export default {
             console.log(response)
           })
           .catch((error)=>{
+            this.loading = false;
             this.unsuccessfulAdd();
             console.log(error);
           })

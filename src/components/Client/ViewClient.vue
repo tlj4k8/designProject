@@ -341,6 +341,7 @@
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
         <b-button class="update" v-if="!disabled" @click="updateClient">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    <Spinner v-if="loading"/>
     </div>
 </template>
 
@@ -350,6 +351,9 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
+  components:{
+    Spinner
+  },
   data () {
     return {
       form: {
@@ -409,7 +413,8 @@ export default {
         'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
         ],
-        show: true
+        show: true,
+        loading: false
     }
     },
     methods:{
@@ -435,6 +440,7 @@ export default {
             return formatedTime;
         },
         updateClient(){
+            this.loading = true;
             let token = localStorage.getItem('t');
             let headers = {'Authorization': "Bearer " + token};
             this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
@@ -485,10 +491,28 @@ export default {
             )
             .then((response)=>{
                 console.log(response);
+                this.loading = false;
+                alert('Client updated successfully!');
+                this.options = [];
+                this.updateClientList();
             })
             .catch((error)=>{
                 console.log(error);
+                this.loading = false;
+                alert('Client not updated. Check to make sure fields are filled correctly.');
             })
+        },
+        updateClientList(){
+            let token = localStorage.getItem('t');
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
+            .then((response) => {
+                response.data.value.forEach((value) => {
+                    this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         }
         
     },
@@ -573,7 +597,7 @@ export default {
         }
     },
     mounted: function(){
-        const token = localStorage.getItem('t');
+        let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {

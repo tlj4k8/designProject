@@ -196,6 +196,9 @@ import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
   name: "editEmployee",
+  components:{
+    Spinner
+  },
   data() {
     return {
       disabled: true,
@@ -230,49 +233,80 @@ export default {
       },
       selected: '',
       options: [],
-      show: true
+      show: true,
+      loading: false,
+      checked: false
     };
   },
   methods: {
       updateEmployee(){
+        this.loading = true;
         this.checkType();
+        if(this.checked === true){
+            this.loading = true;
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
+                EmployeeId: this.selected,
+                EmFirstName: this.form.firstName,
+                EmLastName: this.form.lastName,
+                Username: this.form.username,
+                Password: this.form.password,
+                EmCellPhone: this.form.phone,
+                EmEmail: this.form.email,
+                EmZipCodes: this.form.zip,
+                EmStartMonday: this.formatTime(this.form.mon),
+                EmEndMonday: this.formatTime(this.form.endMon),
+                EmStartTuesday: this.formatTime(this.form.tue),
+                EmEndTuesday: this.formatTime(this.form.endTue),
+                EmStartWednesday: this.formatTime(this.form.wed),
+                EmEndWednesday: this.formatTime(this.form.endWed),
+                EmStartThursday: this.formatTime(this.form.thur),
+                EmEndThursday: this.formatTime(this.form.endThur),
+                EmStartFriday: this.formatTime(this.form.fri),
+                EmEndFriday: this.formatTime(this.form.endFri),
+                EmStartSaturday: this.formatTime(this.form.sat),
+                EmEndSaturday: this.formatTime(this.form.endSat),
+                EmStartSunday: this.formatTime(this.form.sun),
+                EmEndSunday: this.formatTime(this.form.endSun),
+                IsMenu: this.form.ismenu,
+                IsAdmin: this.form.isadmin,
+                EmIsActive: this.form.isactive
+                }, {headers: headers}
+            )
+            .then((response)=>{
+                this.loading = false;
+                console.log(response)
+                this.disabled = true
+                alert('Employee updated successfully!');
+                this.options = [];
+                this.updateEmployeeList();
+            })
+            .catch((error)=>{
+                this.loading = false;
+                console.log(error);
+                alert('Employee not updated. Check to make sure fields are filled correctly.');
+            })
+        }
+        else{
+            this.loading = false;
+            alert('Employee cannot be admin and menu team. Please check your selection.');
+        }
+      },
+      updateEmployeeList(){
+        this.loading = true;
         let token = localStorage.getItem('t');
-        let headers = {'Authorization': "Bearer " + token};
-        this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
-            EmployeeId: this.selected,
-            EmFirstName: this.form.firstName,
-            EmLastName: this.form.lastName,
-            Username: this.form.username,
-            Password: this.form.password,
-            EmCellPhone: this.form.phone,
-            EmEmail: this.form.email,
-            EmZipCodes: this.form.zip,
-            EmStartMonday: this.formatTime(this.form.mon),
-            EmEndMonday: this.formatTime(this.form.endMon),
-            EmStartTuesday: this.formatTime(this.form.tue),
-            EmEndTuesday: this.formatTime(this.form.endTue),
-            EmStartWednesday: this.formatTime(this.form.wed),
-            EmEndWednesday: this.formatTime(this.form.endWed),
-            EmStartThursday: this.formatTime(this.form.thur),
-            EmEndThursday: this.formatTime(this.form.endThur),
-            EmStartFriday: this.formatTime(this.form.fri),
-            EmEndFriday: this.formatTime(this.form.endFri),
-            EmStartSaturday: this.formatTime(this.form.sat),
-            EmEndSaturday: this.formatTime(this.form.endSat),
-            EmStartSunday: this.formatTime(this.form.sun),
-            EmEndSunday: this.formatTime(this.form.endSun),
-            IsMenu: this.form.ismenu,
-            IsAdmin: this.form.isadmin,
-            EmIsActive: this.form.isactive
-            }, {headers: headers}
-        )
-        .then((response)=>{
-          console.log(response)
-          this.disabled = true
+        this.$axiosServer.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
+        .then((response) => {
+            response.data.value.forEach((value) => {
+                this.options.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
+            })
+            this.loading = false;
         })
-        .catch((error)=>{
-          console.log(error);
-        })
+        .catch((error) => {
+            this.loading = false;
+            console.log(error);
+        });
       },
       formatTime(time){
         var timeStamp = time.split(':');
@@ -287,10 +321,15 @@ export default {
       },
       checkType(){
         if(this.form.ismenu === true && this.form.isadmin === true){
-          alert('Employee cannot be admin and menu team. Please check your selection.');
+            this.loading = false;
+            this.checked = false;
+        }
+        else{
+            this.checked = true;
         }
      },
     updatePassword(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
         this.$axiosServer.post('https://chefemployees.com/api/EmployeesPW', {
@@ -322,13 +361,19 @@ export default {
             },{headers: headers}
         )
           .then((response)=>{
-              console.log(response);
-              this.form.password = response.data.Password;
-              this.passwordDisabled = true;
-              this.form.resetPass = '';
+            this.loading = false;
+            console.log(response);
+            this.form.password = response.data.Password;
+            this.passwordDisabled = true;
+            this.form.resetPass = '';
+            alert('Employee password updated successfully!');
+            this.options = [];
+            this.updateEmployeeList();
           })
           .catch((error)=>{
-              console.log(error);
+            this.loading = false;
+            console.log(error);
+            alert('Password updated. Check to make sure fields are filled correctly.');
           })
         },
   },
@@ -397,15 +442,17 @@ export default {
         }
     },
     mounted: function(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
             })
-            console.log(this.options);
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
     }

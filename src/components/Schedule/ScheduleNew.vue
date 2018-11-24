@@ -69,6 +69,9 @@ import moment from 'moment';
 import Spinner from './../Spinner';
 export default {
   name: 'ScheduleNew',
+  components:{
+    Spinner
+  },
   data () {
     return {
         form: {

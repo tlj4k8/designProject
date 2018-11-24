@@ -23,6 +23,9 @@ import { mapState } from 'vuex';
 import Spinner from '././Spinner';
 export default {
   name: "NavBar",
+  components:{
+    Spinner
+  },
   data(){
       return{
           show: false

@@ -155,6 +155,9 @@ import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
   name: 'ScheduleVisit',
+  components:{
+    Spinner
+  },
   data () {
     return {
         form: {

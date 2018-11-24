@@ -99,6 +99,9 @@ import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
   name: 'viewmenu',
+  components:{
+    Spinner
+  },
   data () {
     return {
         disabled: true,
