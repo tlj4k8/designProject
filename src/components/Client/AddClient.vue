@@ -301,12 +301,17 @@
       </div>
     </b-form-group>
     </b-form>
+    <Spinner v-if="loading"/>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Spinner from './../Spinner';
 export default {
+  components:{
+    Spinner
+  },
   data () {
     return {
       form: {
@@ -363,11 +368,13 @@ export default {
         'NE', 'NY', 'NV', 'NH', 'NJ', 'NM','NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
       ],
-      show: true
+      show: true,
+      loading: false
     }
   },
     methods: {
         handleSubmit(form){
+          this.loading = true;
           let token = localStorage.getItem('t');
           let headers = {'Authorization': "Bearer " + token};
           this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
@@ -417,6 +424,8 @@ export default {
               }, {headers: headers}
           )
           .then((response)=>{
+            this.loading = false,
+            this.successfulAdd(),
             this.selected = null,
             this.form.firstName = '',
             this.form.lastName = '',
@@ -462,6 +471,8 @@ export default {
             console.log(response)
           })
           .catch((error)=>{
+            this.loading = false;
+            this.unsuccessfulAdd();
             console.log(error);
           })
         },
@@ -475,6 +486,12 @@ export default {
           return formatedTime;
         }
         return formatedTime;
+      },
+      successfulAdd(){
+        alert(this.form.firstName + ' ' + this.form.lastName + ' successfully added to clients!');
+      },
+      unsuccessfulAdd(){
+        alert('Please check to make sure the fields were filled out correctly.')
       }
     },
     mounted: function(){

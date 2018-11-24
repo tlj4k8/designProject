@@ -61,13 +61,18 @@
                 <b-button type="submit">Submit</b-button>
             </div>
         </b-form>
+        <Spinner v-if="loading" />
     </div>
 </template>
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import Spinner from './../Spinner';
 export default {
   name: 'ScheduleNew',
+  components:{
+    Spinner
+  },
   data () {
     return {
         form: {
@@ -79,32 +84,40 @@ export default {
         },
         clientOptions: [],
         employeeOptions: [],
-        show: true
+        show: true,
+        loading: false,
+        checked: false
     }
   },
   methods: {
     handleSubmit(form) {
-        let token = localStorage.getItem('t');
-        let headers = {'Authorization': "Bearer " + token};
-        this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
-            EmployeeId: this.form.selectedEmployee,
-            ClientId: this.form.selectedClient,
-            StartTime: this.formatTime(this.form.startTime),
-            EndTime: this.formatTime(this.form.endTime),
-            ScheduleDate: this.formatDate(this.form.date)
-        },{headers: headers}
-        )
-        .then((response)=>{
-            console.log(response);
-            this.form.selectedEmployee = null,
-            this.form.selectedClient =  null,
-            this.form.startTime = '',
-            this.form.endTime = '',
-            this.form.date = ''
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+        this.validateDate();
+        if(this.checked === true){
+            this.loading = true;
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
+                EmployeeId: this.form.selectedEmployee,
+                ClientId: this.form.selectedClient,
+                StartTime: this.formatTime(this.form.startTime),
+                EndTime: this.formatTime(this.form.endTime),
+                ScheduleDate: this.formatDate(this.form.date)
+            },{headers: headers}
+            )
+            .then((response)=>{
+                this.loading = false;
+                console.log(response);
+                this.form.selectedEmployee = null,
+                this.form.selectedClient =  null,
+                this.form.startTime = '',
+                this.form.endTime = '',
+                this.form.date = ''
+            })
+            .catch((error)=>{
+                this.loading = false;
+                console.log(error)
+            })
+        }
     },
     validateDate(){
         const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
@@ -112,7 +125,9 @@ export default {
 
         if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
             console.log("date is today or in future");
+            this.checked = true;
         } else {
+            this.checked = false;
             alert("Please enter a valid date. The date entered has passed.");
         }
     },
@@ -135,22 +150,27 @@ export default {
 
     }
   },
-    mounted: function(){
+    mounted(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             console.log(response);
             this.clientOptions = response.data.value.map(value => value.ClientId)
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             console.log(response);
             this.employeeOptions = response.data.value.map(value => value.EmployeeId)
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
     }

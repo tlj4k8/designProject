@@ -23,9 +23,9 @@ import { mapState } from 'vuex';
 export default {
   name: "NavBar",
   data(){
-      return{
-          show: false
-      }
+    return{
+      show: false
+    }
   },    
   methods:{
     logout(){
@@ -69,7 +69,7 @@ export default {
   position: fixed;
   background-color: #fff;
   top: 0;
-  z-index: 15;
+  z-index: 5;
   width: 100%;
   padding-bottom: 1em;
   padding-right: .5em;

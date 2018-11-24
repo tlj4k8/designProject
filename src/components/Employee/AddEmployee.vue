@@ -156,14 +156,19 @@
       <b-button type="submit">Submit</b-button>
     </div>
     </b-form>
+    <Spinner v-if="loading"/>
     </div>
 </template>
 
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import Spinner from './../Spinner';
 export default {
   name: "editEmployee",
+  components:{
+    Spinner
+  },
   data() {
     return {
       disabledAdmin: false,
@@ -196,7 +201,8 @@ export default {
       },
       employeeNames: [],
       valid: '',
-      show: true
+      show: true,
+      loading: false
     };
   },
   methods: {
@@ -217,6 +223,7 @@ export default {
         }
       },
       handleSubmit(form){
+        this.loading = true;
         let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
         if(this.valid === 'lightgreen'){
@@ -272,13 +279,16 @@ export default {
             this.form.endSun = '',
             this.form.isMenu = false,
             this.form.isAdmin = false,
-            this.valid = ''
+            this.valid = '',
+            this.loading = false
           })
           .catch((error)=>{
+            this.loading = false;
             console.log(error);
           })
       }
       else{
+        this.loading = false;
         alert('Please check your form for missing or invalid input');
       }
       },
@@ -295,12 +305,15 @@ export default {
       }
   },
   mounted(){
+    this.loading = true;
     let token = localStorage.getItem('t');
     axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
     .then((response) => {
       this.employeeNames = response.data.value.map(value => value.Username)
+      this.loading = false;
     })
     .catch((error)=>{
+      this.loading = false;
       console.log(error);
     })
   }

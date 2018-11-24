@@ -90,14 +90,19 @@
             <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
             <b-button class="update" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
+        <Spinner v-if="loading" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { mapState } from 'vuex';
+import Spinner from './../Spinner';
 export default {
   name: 'viewmenu',
+  components:{
+    Spinner
+  },
   data () {
     return {
         disabled: true,
@@ -113,6 +118,7 @@ export default {
         selected: null,
         options: [],
         show: true,
+        loading: false
     }
   },
     computed:{
@@ -128,6 +134,7 @@ export default {
             }
         }),
         getMenus(){
+            this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/odata/Menus(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
@@ -139,21 +146,26 @@ export default {
                 this.form.time = menuValue.Time,
                 this.form.mealType = menuValue.MealType,
                 this.form.menuNotes = menuValue.Notes
+                this.loading = false
             })
             .catch((error)=>{
+                this.loading = false
                 console.log(error)
             })
         }
     },
-    mounted: function(){
+    mounted(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Menus', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.MenuId, text: value.Name })
             })
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         })
     }

@@ -18,11 +18,14 @@ export default {
 .loading{
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 100vh;
     width: 100vw;
     background: rgb(136, 136, 136);
     overflow: auto;
-    z-index: 3;
+    z-index: 10;
     opacity: 0.80;
     display: flex;
     justify-content: center;

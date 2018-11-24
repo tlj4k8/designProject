@@ -10,6 +10,7 @@
                         label-for="menuName">
             <b-form-input id="menuName"
                         type="text"
+                        required
                         v-model="form.menuName">
             </b-form-input>
         </b-form-group>
@@ -18,6 +19,7 @@
                         label-for="ingredients">
             <b-form-input id="ingrediants"
                         type="text"
+                        required
                         v-model="form.ingredients">
             </b-form-input>
         </b-form-group>
@@ -28,6 +30,7 @@
                         type="text"
                         :rows="3"
                         :max-rows="6"
+                        required
                         v-model="form.instructions">
             </b-form-textarea>
         </b-form-group>
@@ -36,6 +39,7 @@
                         label-for="servings">
             <b-form-input id="servings"
                         type="number"
+                        required
                         v-model="form.servings">
             </b-form-input>
         </b-form-group>
@@ -44,6 +48,7 @@
                         label-for="time">
             <b-form-input id="time"
                         type="text"
+                        required
                         v-model="form.time">
             </b-form-input>
         </b-form-group>
@@ -52,6 +57,7 @@
                         label-for="mealType">
             <b-form-input id="mealType"
                         type="text"
+                        required
                         v-model="form.mealType">
             </b-form-input>
         </b-form-group>
@@ -62,6 +68,7 @@
                         :rows="3"
                         :max-rows="6"
                         type="text"
+                        required
                         v-model="form.menuNotes">
             </b-form-textarea>
         </b-form-group>
@@ -70,13 +77,18 @@
             <b-button type="submit">Submit</b-button>
         </div>
     </b-form>
+    <Spinner v-if="loading" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Spinner from './../Spinner';
 export default {
   name: 'addmenu',
+  components:{
+    Spinner
+  },
   data () {
     return {
       form: {
@@ -89,10 +101,13 @@ export default {
         menuNotes: ''
       },
       show: true,
+      loading: false
+
     }
   },
     methods: {
         handleSubmit(form){
+            this.loading = true;
             let token = localStorage.getItem('t');
             let headers = {'Authorization': "Bearer " + token};
             this.$axiosServer.post('https://chefemployees.com/odata/Menus', {
@@ -106,9 +121,18 @@ export default {
                 },{headers:headers}
             )
             .then((response)=>{
+                this.loading = false;
+                this.form.menuName = '',
+                this.form.ingredients = '',
+                this.form.instructions = '',
+                this.form.servings = '',
+                this.form.time = '',
+                this.form.mealType = '',
+                this.form.menuNotes = ''
                 console.log(response)
             })
             .catch((error)=>{
+                this.loading = false;
                 console.log(error)
             })
         }

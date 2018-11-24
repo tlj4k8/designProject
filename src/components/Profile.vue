@@ -131,6 +131,7 @@
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Profile</b-button>
         <b-button class="update" v-if="!disabled" @click="updateProfile">Update Profile</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    <Spinner v-if="loading"/>
     </div>
 </template>
 
@@ -139,8 +140,12 @@ import moment from 'moment';
 import axios from 'axios';
 import { mapState } from 'vuex';
 import * as decoded from 'jwt-decode';
+import Spinner from '././Spinner';
 export default {
   name: "profile",
+  components:{
+    Spinner
+  },
   data() {
     return {
       disabled: true,
@@ -170,13 +175,8 @@ export default {
         },
       employee: '',
       employeeInfo: {},
-      state: [
-        { text: 'Select One', value: null },
-        'AL', 'AK', 'AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
-        'KY','LA','ME','MD','MA','MI','MN','MO','MS','MT','NE','NY','NV','NH','NJ','NM','NC',
-        'ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
-      ],
-      show: true
+      show: true,
+      loading: true
     };
   },
   methods: {
@@ -192,6 +192,7 @@ export default {
             return formatedTime;
         },
     //     updateProfile(){
+    //       this.loading = true;
     //       let token = localStorage.getItem('t');
     //       let headers = {'Authorization' : 'Bearer ' + token}
     //       this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {
@@ -220,8 +221,10 @@ export default {
     //     .then((response)=>{
     //       console.log(response)
     //       this.disabled = true
+    //       this.loading = false;
     //     })
     //     .catch((error)=>{
+    //       this.loading = false;
     //       console.log(error);
     //     })
     //   } 
@@ -231,7 +234,8 @@ export default {
             return state.jwt;
         }
     }),
-    mounted: function(){
+    mounted(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         this.$store.dispatch('storeUserInfo',token);
         this.employeeInfo = decoded(token)
@@ -256,10 +260,11 @@ export default {
             this.form.endSat = this.returnTime(response.data.EmEndSaturday);
             this.form.sun = this.returnTime(response.data.EmStartSunday);
             this.form.endSun = this.returnTime(response.data.EmEndSunday);
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
-            return error;
         });
     }
 }
