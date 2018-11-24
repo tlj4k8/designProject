@@ -503,14 +503,17 @@ export default {
             })
         },
         updateClientList(){
+            this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
             .then((response) => {
                 response.data.value.forEach((value) => {
                     this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
                 })
+                this.loading = false;
             })
             .catch((error) => {
+                this.loading = false;
                 console.log(error);
             });
         }
