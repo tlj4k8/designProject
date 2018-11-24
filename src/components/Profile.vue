@@ -139,6 +139,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { mapState } from 'vuex';
 import * as decoded from 'jwt-decode';
+import Spinner from '././Spinner';
 export default {
   name: "profile",
   data() {

@@ -66,6 +66,7 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import Spinner from './../Spinner';
 export default {
   name: 'ScheduleNew',
   data () {

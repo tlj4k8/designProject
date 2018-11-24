@@ -20,6 +20,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import Spinner from '././Spinner';
 export default {
   name: "NavBar",
   data(){
@@ -69,7 +70,7 @@ export default {
   position: fixed;
   background-color: #fff;
   top: 0;
-  z-index: 15;
+  z-index: 5;
   width: 100%;
   padding-bottom: 1em;
   padding-right: .5em;

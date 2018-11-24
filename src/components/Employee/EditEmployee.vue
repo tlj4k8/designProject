@@ -193,6 +193,7 @@
 import moment from 'moment';
 import axios from 'axios';
 import { mapState } from 'vuex';
+import Spinner from './../Spinner';
 export default {
   name: "editEmployee",
   data() {

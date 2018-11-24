@@ -162,6 +162,7 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+import Spinner from './../Spinner';
 export default {
   name: "editEmployee",
   data() {
