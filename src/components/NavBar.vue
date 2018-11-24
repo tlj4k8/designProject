@@ -7,11 +7,12 @@
     <transition name="fade">
         <div class="overlay" v-if="show" >
 	        <div class="wrap" v-on:click="show = !show">
+            <router-link class="nav-links" to="/dash">Home</router-link>
             <router-link class="nav-links" to="/clientDash">Client</router-link>
             <router-link class="nav-links" to="/menuDash">Menu</router-link>
             <router-link class="nav-links" to="/profile">Profile</router-link>
             <router-link v-if="isAdmin=='True'" class="nav-links" to="/employeeDash">Employee</router-link>
-            <router-link class="nav-links" to="/scheduleDash">Schedule</router-link>
+            <router-link v-if="isAdmin=='True'" class="nav-links" to="/scheduleDash">Schedule</router-link>
 		      </div>
 	      </div>
     </transition>
