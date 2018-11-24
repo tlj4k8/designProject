@@ -186,6 +186,7 @@
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
         <b-button class="update" v-if="!disabled" @click="updateEmployee">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    <Spinner v-if="loading" />
     </div>
 </template>
 
@@ -388,10 +389,12 @@ export default {
             }
         }),
         getEmployees(){
+            this.loading = true;
             this.passwordDisabled = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/odata/Employees(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
+                this.loading = false;
                 let employeeValue = response.data;
                 if(employeeValue == null || undefined){
                     this.form.mon = '',
@@ -437,11 +440,12 @@ export default {
 
             })
             .catch((error)=>{
+                this.loading = false;
                 console.log(error);
             })
         }
     },
-    mounted: function(){
+    mounted(){
         this.loading = true;
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})

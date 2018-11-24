@@ -60,6 +60,7 @@
       </div>
     </div>
     </b-form>
+    <Spinner v-if="loading" />
   </div>
 </template>
 
@@ -84,12 +85,13 @@ export default {
       clientMenuOptions: [],
       selectedOptions: [],
       scheduleOptions: [],
-      show: true
+      show: true,
+      loading: false
     };
   },
   methods: {
-
     submitMenu() {
+      this.loading = true;
       let token = localStorage.getItem('t');
       let headers = {'Authorization': "Bearer " + token};
       this.$axiosServer.post('https://chefemployees.com/odata/ClientMenus', {
@@ -101,8 +103,10 @@ export default {
       .then((response)=>{
         console.log(response);
         this.getClientMenusIds();
+        this.loading = false;
       })
       .catch((error)=>{
+        this.loading = false;
         console.log(error);
       })
     },
@@ -118,28 +122,34 @@ export default {
     //   })
     // },
     getClientMenusIds(){
+      this.loading = true;
       let token = localStorage.getItem('t');
       this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
         response.data.value.forEach((value) => {
                 this.selectedOptions.push({ value: value.ClientMenuId, text: value.MenuId })
             })
+        this.loading = false;
       })
       .catch((error) => {
+        this.loading = false;
         console.log(error);
       })
     }
   },
     mounted(){
+      this.loading = true;
       let token = localStorage.getItem('t');
       axios.get('https://chefemployees.com/odata/Menus', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
         response.data.value.forEach((value) => {
           this.menuOptions.push({ value: value.MenuId, text: value.Name })
         })
+        this.loading = false;
       })
       .catch((error) => {
-          console.log(error);
+        this.loading = false;
+        console.log(error);
       })
       //Need to filter based on employeeId so chefs can only see their schedules.
       axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
@@ -147,9 +157,11 @@ export default {
         response.data.value.forEach((value) => {
             this.scheduleOptions.push({ value: value.ScheduleId, text: value.ScheduleId })
         })
+        this.loading = false;
       })
       .catch((error) => {
-          console.log(error);
+        this.loading = false;
+        console.log(error);
       })
     },
 };

@@ -15,6 +15,7 @@
 		      </div>
 	      </div>
     </transition>
+    <Spinner v-if="loading" />
   </div>
 </template>
 
@@ -27,9 +28,10 @@ export default {
     Spinner
   },
   data(){
-      return{
-          show: false
-      }
+    return{
+      show: false,
+      loading: false
+    }
   },    
   methods:{
     logout(){

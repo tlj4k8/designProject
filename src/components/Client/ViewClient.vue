@@ -596,15 +596,18 @@ export default {
             })
         }
     },
-    mounted: function(){
+    mounted(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
             })
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
@@ -613,8 +616,10 @@ export default {
           this.chefFiltered.forEach((item) => {
               this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
           })
+          this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
     }

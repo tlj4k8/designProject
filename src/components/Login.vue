@@ -59,7 +59,6 @@ export default {
     },
     methods: {
         handleLogin() {
-            var self = this;
             this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/api/Auth/Login', {
@@ -69,11 +68,13 @@ export default {
                 }
             }, { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
+                this.loading = false;
                 this.$store.dispatch('loginToken', response.data)
                 this.$store.dispatch('storeUserInfo',response.data);
                 this.successfulLogin();
             })
             .catch((error)=>{
+                this.loading = false;
                 this.failedLogin();
             })
          },
@@ -98,6 +99,7 @@ export default {
         getToken(state){
             return state.jwt;
         }
+        
     })
 }
 </script>

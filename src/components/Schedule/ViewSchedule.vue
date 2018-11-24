@@ -146,6 +146,7 @@
             </div>
         </b-form-group>
         </b-form>
+        <Spinner v-if="loading"/>
     </div>
 </template>
 <script>
@@ -176,7 +177,8 @@ export default {
         selectedFile: null,
         menuOptions: [],
         disabled: true,
-        show: true
+        show: true,
+        loading: true
     }
   },
 
@@ -185,6 +187,7 @@ export default {
         this.selectedFile = event.target.files[0];
     },
     onUpload(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         let formData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -195,9 +198,13 @@ export default {
             }
         })
         .then((response)=>{
+            this.loading = false;
+            alert('Receipt uploaded for ' + this.form.selectedSchedule);
             console.log(response);
         })
         .catch((error)=>{
+            this.loading = false;
+            alert('Receipt failed to upload. Please try again.');
             console.log(error);
         })
     },
@@ -238,6 +245,7 @@ export default {
             }
         }),
       getSchedules(){
+        this.loading = true;
         let token = localStorage.getItem('t');
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
@@ -260,25 +268,31 @@ export default {
             this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 this.menuOptions = response.data.value.map(value => value.MenuId);
+                this.loading = false;
             })
             .catch((error)=>{
+                this.loading = false;
                 console.log(error);
             })
         })
         .catch((error)=>{
+            this.loading = false;
             console.log(error);
         })
       }
   },
-  mounted: function() {
+  mounted() {
+      this.loading = true;
       let token = localStorage.getItem('t');
       axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.value.forEach((value) => {
                 this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
             })
+            this.loading = false;
         })
         .catch((error) => {
+            this.loading = false;
             console.log(error);
         });
   }
