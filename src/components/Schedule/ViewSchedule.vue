@@ -54,9 +54,9 @@
         <hr/>
         <div>
              <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
-                 <li>
+                 <b-card>
                      {{ menuOption }}
-                </li>
+                </b-card>
             </ul>
 
         </div>
@@ -411,6 +411,9 @@ export default {
 hr{
     background-color: #0d50bc;
     height: 1px;
+}
+ul{
+    padding-inline-start: 0;
 }
 .clockText{
     text-align: center;
