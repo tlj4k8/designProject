@@ -211,7 +211,7 @@ export default {
         })
     },
     openImage(){
-        window.open(this.form.imagePath, "_blank");
+        window.open(this.imagePath, "_blank");
     },
     updateTime(){
         this.loading = true;
