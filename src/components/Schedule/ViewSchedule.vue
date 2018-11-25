@@ -256,7 +256,6 @@ export default {
         return formatedTime;
     },
     formatDate(){
-        this.validateDate();
         let dateStamp = this.form.date.split('/').reverse().join('-');
         let formatedDate = dateStamp + "T00:00:00";
         return formatedDate;
@@ -389,9 +388,11 @@ export default {
                 this.employeeId = scheduleValue.EmployeeId,
                 this.clientId = scheduleValue.ClientId
             }
-            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
+            this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
-                this.menuOptions = response.data.value.map(value => value.MenuId);
+                response.data.forEach((data) => {
+                    this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.MenuNotes )
+                })
                 this.loading = false;
             })
             .catch((error)=>{
@@ -408,22 +409,10 @@ export default {
   mounted() {
       this.loading = true;
       let token = localStorage.getItem('t');
-    //   axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
-    //     .then((response) => {
-    //         response.data.value.forEach((value) => {
-    //             this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
-    //         })
-    //         this.loading = false;
-    //     })
-    //     .catch((error) => {
-    //         this.loading = false;
-    //         console.log(error);
-    //     });
       axios.get('https://chefemployees.com/api/ScheduleEmpClient', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            console.log(response.data);
             response.data.forEach((data) => {
-                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName })
+                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ' Date: ' + this.returnDate(data.ScheduleDate) })
             })
             this.loading = false;
         })
