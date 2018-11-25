@@ -408,10 +408,22 @@ export default {
   mounted() {
       this.loading = true;
       let token = localStorage.getItem('t');
-      axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
+    //   axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
+    //     .then((response) => {
+    //         response.data.value.forEach((value) => {
+    //             this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
+    //         })
+    //         this.loading = false;
+    //     })
+    //     .catch((error) => {
+    //         this.loading = false;
+    //         console.log(error);
+    //     });
+      axios.get('https://chefemployees.com/api/ScheduleEmpClient', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            response.data.value.forEach((value) => {
-                this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
+            console.log(response.data);
+            response.data.forEach((data) => {
+                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName })
             })
             this.loading = false;
         })
