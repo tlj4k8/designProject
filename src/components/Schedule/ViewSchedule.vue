@@ -51,24 +51,15 @@
             </div>
         </div>
         <h3> Scheduled Meal Items </h3>
-         <hr/>
-         <div>
+        <hr/>
+        <div>
              <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
                  <li>
                      {{ menuOption }}
                 </li>
             </ul>
 
-         </div>
-        <!-- <div class="clientMenuAdd">
-            <b-form-group id="menu"
-                        label="Menus:"
-                        label-for="menu">
-            <b-form-select 
-                    v-model="form.menu" 
-                    :options="menuOptions"/>
-            </b-form-group>
-        </div> -->
+        </div>
         <div class="timestamp">
             <h3>Track Time</h3>
             <hr/>
@@ -176,9 +167,9 @@ export default {
             startTime: '',
             endTime: '',
             menu: [],
-            imagePath: '',
             selectedSchedule: null
         },
+        imagePath: '',
         scheduleOptions: [],
         employeeId: null,
         clientId: null,
@@ -256,7 +247,6 @@ export default {
         return formatedTime;
     },
     formatDate(){
-        this.validateDate();
         let dateStamp = this.form.date.split('/').reverse().join('-');
         let formatedDate = dateStamp + "T00:00:00";
         return formatedDate;
@@ -370,28 +360,21 @@ export default {
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
             let scheduleValue = response.data;
-            console.log(scheduleValue);
-            if(scheduleValue == null || undefined){
-                this.form.endTime = '',
-                this.form.startTime = '',
-                this.form.timeIn = '',
-                this.form.timeOut = ''
-            }
-            else{
-                this.form.date = this.returnDate(scheduleValue.ScheduleDate),
-                this.form.startTime = this.returnTime(scheduleValue.StartTime),
-                this.form.endTime = this.returnTime(scheduleValue.EndTime),
-                this.form.timeIn = this.returnTime(scheduleValue.Clockin),
-                this.form.timeOut = this.returnTime(scheduleValue.Clockout),
-                this.form.mealCharged = scheduleValue.Charged,
-                this.form.mealCost = scheduleValue.Cost,
-                this.form.imagePath = scheduleValue.ImagePath,
-                this.employeeId = scheduleValue.EmployeeId,
-                this.clientId = scheduleValue.ClientId
-            }
-            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
+            this.form.date = this.returnDate(scheduleValue.ScheduleDate),
+            this.form.startTime = this.returnTime(scheduleValue.StartTime),
+            this.form.endTime = this.returnTime(scheduleValue.EndTime),
+            this.form.timeIn = this.returnTime(scheduleValue.Clockin),
+            this.form.timeOut = this.returnTime(scheduleValue.Clockout),
+            this.form.mealCharged = scheduleValue.Charged,
+            this.form.mealCost = scheduleValue.Cost,
+            this.imagePath = scheduleValue.ImagePath,
+            this.employeeId = scheduleValue.EmployeeId,
+            this.clientId = scheduleValue.ClientId
+            this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
-                this.menuOptions = response.data.value.map(value => value.MenuId);
+                response.data.forEach((data) => {
+                    this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.MenuNotes )
+                })
                 this.loading = false;
             })
             .catch((error)=>{
@@ -408,10 +391,10 @@ export default {
   mounted() {
       this.loading = true;
       let token = localStorage.getItem('t');
-      axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
+      axios.get('https://chefemployees.com/api/ScheduleEmpClient', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            response.data.value.forEach((value) => {
-                this.scheduleOptions.push({ value: value.ScheduleId, text: 'Employee Id:   ' + value.EmployeeId + '   Schedule Id:   ' + value.ScheduleId })
+            response.data.forEach((data) => {
+                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
             })
             this.loading = false;
         })
@@ -515,6 +498,9 @@ hr{
     padding: 7px 2px;
 }
 @media(max-width: 500px){
+  .imageGroup{
+    flex-wrap: wrap;
+  }
   .flexGroup{
     flex-wrap: wrap;
   }

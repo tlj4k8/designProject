@@ -212,7 +212,8 @@
                         v-model="form.storageContainers"/>
         </b-form-group>
         </div>
-        <b-form-group id="preferredMeat"
+        <div class="flexGroup">
+        <b-form-group class="flex" id="preferredMeat"
                         label="Preferred Meats:"
                         label-for="preferredMeat">
             <b-form-input id="preferredMeat"
@@ -220,7 +221,7 @@
                         :disabled="disabled"
                         v-model="form.meats"/>
         </b-form-group>
-        <b-form-group id="meatAvoid"
+        <b-form-group class="flex" id="meatAvoid"
                         label="Meats to Avoid:"
                         label-for="meatAvoid">
             <b-form-input id="meatAvoid"
@@ -228,7 +229,9 @@
                         :disabled="disabled"
                         v-model="form.meatAvoid"/>
         </b-form-group>
-        <b-form-group id="meatCookPreferrence"
+        </div> 
+        <div class="flexGroup">
+        <b-form-group class="flex" id="meatCookPreferrence"
                         label="Meat Cooked Preferrence:"
                         label-for="meatCookPreferrence">
             <b-form-input id="meatCookPreferrence"
@@ -236,7 +239,7 @@
                         :disabled="disabled"
                         v-model="form.meatCookPref"/>
         </b-form-group>
-        <b-form-group id="preferredCheeses"
+        <b-form-group class="flex" id="preferredCheeses"
                         label="Preferred Cheeses:"
                         label-for="preferredCheeses">
             <b-form-input id="preferredCheeses"
@@ -244,7 +247,9 @@
                         :disabled="disabled"
                         v-model="form.cheese"/>
         </b-form-group>
-        <b-form-group id="cheeseAvoid"
+        </div> 
+        <div class="flexGroup">
+        <b-form-group class="flex" id="cheeseAvoid"
                         label="Cheeses to Avoid:"
                         label-for="cheeseAvoid">
             <b-form-input id="cheeseAvoid"
@@ -252,7 +257,7 @@
                         :disabled="disabled"
                         v-model="form.cheeseAvoid"/>
         </b-form-group>
-        <b-form-group id="preferredGrains"
+        <b-form-group class="flex" id="preferredGrains"
                         label="Preferred Grains:"
                         label-for="preferredGrains">
             <b-form-input id="preferredGrains"
@@ -260,7 +265,9 @@
                         :disabled="disabled"
                         v-model="form.grains"/>
         </b-form-group>
-        <b-form-group id="spice"
+        </div> 
+        <div class="flexGroup">
+        <b-form-group class="flex" id="spice"
                         label="Spice Level:"
                         label-for="spice">
             <b-form-input id="spice"
@@ -269,7 +276,7 @@
                         :disabled="disabled"
                         v-model="form.spice"/>
         </b-form-group>
-        <b-form-group id="other"
+        <b-form-group class="flex" id="other"
                         label="Other to Avoid:"
                         label-for="other">
             <b-form-input id="other"
@@ -277,7 +284,9 @@
                         :disabled="disabled"
                         v-model="form.other"/>
         </b-form-group>
-        <b-form-group id="allergies"
+        </div>
+        <div class="flexGroup">
+        <b-form-group class="flex" id="allergies"
                         label="Allergies:"
                         label-for="allergies">
             <b-form-input id="allergies"
@@ -285,7 +294,7 @@
                         :disabled="disabled"
                         v-model="form.allergies"/>
         </b-form-group>
-        <b-form-group id="dietRestrictions"
+        <b-form-group class="flex" id="dietRestrictions"
                         label="Dietary Restrictions:"
                         label-for="dietRestrictions">
             <b-form-input id="dietRestrictions"
@@ -293,7 +302,9 @@
                         :disabled="disabled"
                         v-model="form.dietRestrictions"/>
         </b-form-group>
-        <b-form-group id="dietGoals"
+        </div>
+        <div class="flexGroup">
+        <b-form-group class="flex" id="dietGoals"
                         label="Dietary Goals:"
                         label-for="dietGoals">
             <b-form-input id="dietGoals"
@@ -301,7 +312,7 @@
                         :disabled="disabled"
                         v-model="form.dietGoals"/>
         </b-form-group>
-        <b-form-group id="mainDish"
+        <b-form-group class="flex" id="mainDish"
                         label="Main Dish:"
                         label-for="mainDish">
             <b-form-input id="mainDish"
@@ -309,7 +320,9 @@
                         :disabled="disabled"
                         v-model="form.mainDish"/>
         </b-form-group>
-        <b-form-group id="groceryStore"
+        </div>
+        <div class="flexGroup">
+        <b-form-group class="flex" id="groceryStore"
                         label="Grocery Store:"
                         label-for="groceryStore">
             <b-form-input id="groceryStore"
@@ -317,7 +330,7 @@
                         :disabled="disabled"
                         v-model="form.groceryStore"/>
         </b-form-group>
-        <b-form-group id="mealStructure"
+        <b-form-group class="flex" id="mealStructure"
                         label="Meal Structure:"
                         label-for="mealStructure">
             <b-form-input id="mealStructure"
@@ -325,6 +338,7 @@
                         :disabled="disabled"
                         v-model="form.mealStructure"/>
         </b-form-group>
+        </div>
         <b-form-group id="notes"
                         label="Other Notes:"
                         label-for="notes">

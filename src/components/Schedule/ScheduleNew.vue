@@ -156,8 +156,9 @@ export default {
         let token = localStorage.getItem('t');
         axios.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            console.log(response);
-            this.clientOptions = response.data.value.map(value => value.ClientId)
+            response.data.value.forEach((value) => {
+                this.clientOptions.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
+            })
             this.loading = false;
         })
         .catch((error) => {
@@ -166,8 +167,9 @@ export default {
         });
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            console.log(response);
-            this.employeeOptions = response.data.value.map(value => value.EmployeeId)
+            response.data.value.forEach((value) => {
+                this.employeeOptions.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
+            })
             this.loading = false;
         })
         .catch((error) => {
