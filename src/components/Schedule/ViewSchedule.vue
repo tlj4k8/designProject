@@ -76,6 +76,7 @@
                     <b-button v-on:click="clockIn" class="clock">Clock In</b-button>
                     </div>
                     <b-form-input id="clockIn"
+                                type="time"
                                 class="clockText"
                                 required
                                 :disabled="disabled"
@@ -87,6 +88,7 @@
                     <b-button v-on:click="clockOut" class="clock">Clock Out</b-button>
                     </div>
                     <b-form-input id="clockOut"
+                                type= "time"
                                 required
                                 class="clockText"
                                 :disabled="disabled"
@@ -95,8 +97,8 @@
             </div>
         </div>
         <div v-if="isAdmin=='True'" class="disabledButtons">
-            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-            <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+            <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Time</b-button>
+            <b-button class="update" v-if="!disabled" type="submit">Update Time</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
         <div class="receipt">
         <h3> Customer Receipt Form </h3>
@@ -120,24 +122,16 @@
                                 v-model="form.mealCost">
                     </b-form-input>
                 </b-form-group>
-                <!-- <b-form-group id="receipt"
+                <b-form-group id="receipt"
                     class="receiptflex"
                     label="Upload Receipt:"
                     label-for="receipt">
-                    <b-form-file v-model="form.receipt" placeholder="Choose a file...">
+                    <b-form-file @change="onFileSelected" v-model="form.imagePath" >
                     </b-form-file>
-                </b-form-group> -->
-                <div class="receiptflex">
-                    <b-form-group id="receipt"
-                        class="receiptflex"
-                        label="Upload Receipt:"
-                        label-for="receipt">
-                        <input type="file" @change="onFileSelected"/>
-                    </b-form-group>
+                </b-form-group>
                 </div>
-            </div>
             <div class="submitButton">
-                <b-button class="imageButton" @click="onUpload">Upload</b-button>
+                <b-button class="imageButton" @click="onUpload">Upload Image</b-button>
             </div>
         </div>
         <b-form-group>
@@ -171,9 +165,12 @@ export default {
             startTime: '',
             endTime: '',
             menu: [],
+            imagePath: '',
             selectedSchedule: null
         },
         scheduleOptions: [],
+        employeeId: null,
+        clientId: null,
         selectedFile: null,
         menuOptions: [],
         disabled: true,
@@ -208,12 +205,44 @@ export default {
             console.log(error);
         })
     },
+    formatTime(time){
+        let timeStamp = time.split(':');
+        let timeHour = timeStamp[0];
+        let timeMinutes = timeStamp[1];
+        let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        if(time === ''){
+            let formatedTime = "PT00H00M00S";
+            return formatedTime;
+        }
+        return formatedTime;
+    },
     clockIn(){
-        let timestamp = moment().format('LT');
+        let timestamp = moment().format("HH:mm");
         this.form.timeIn = timestamp;
+        this.loading = true;
+        let token = localStorage.getItem('t');
+        let headers = {'Authorization': "Bearer " + token};
+        console.log(this.form.selectedSchedule);
+        console.log(this.formatTime(this.form.timeIn));
+        this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+            ScheduleId: this.form.selectedSchedule,
+            Clockin: this.formatTime(this.form.timeIn)
+        }, {headers: headers}
+        )
+        .then((response)=>{
+            console.log(response);
+            this.loading = false;
+            alert('You are clocked in! Don\'t forget to clock out.');
+            this.disabled = true;
+        })
+        .catch((error)=>{
+            this.loading = false;
+            alert('There was a problem clocking in. Please try again.');
+            console.log(error);
+        })
     },
     clockOut(){
-        let timestamp = moment().format('LT');
+        let timestamp = moment().format("HH:mm");
         this.form.timeOut = timestamp;
     },
     validateDate(){
@@ -226,11 +255,11 @@ export default {
             alert("Please enter a valid date. The date entered has passed.");
         }
     },
-    formatTime(time){
+    returnTime(time){
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
     },
-    formatDate(date){
+    returnDate(date){
         let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');
         return dateStamp;
     }
@@ -250,6 +279,7 @@ export default {
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
             let scheduleValue = response.data;
+            console.log(scheduleValue);
             if(scheduleValue == null || undefined){
                 this.form.endTime = '',
                 this.form.startTime = '',
@@ -257,13 +287,16 @@ export default {
                 this.form.timeOut = ''
             }
             else{
-                this.form.date = this.formatDate(scheduleValue.ScheduleDate),
-                this.form.startTime = this.formatTime(scheduleValue.StartTime),
-                this.form.endTime = this.formatTime(scheduleValue.EndTime),
-                this.form.timeIn = this.formatTime(scheduleValue.Clockin),
-                this.form.timeOut = this.formatTime(scheduleValue.Clockout),
+                this.form.date = this.returnDate(scheduleValue.ScheduleDate),
+                this.form.startTime = this.returnTime(scheduleValue.StartTime),
+                this.form.endTime = this.returnTime(scheduleValue.EndTime),
+                this.form.timeIn = this.returnTime(scheduleValue.Clockin),
+                this.form.timeOut = this.returnTime(scheduleValue.Clockout),
                 this.form.mealCharged = scheduleValue.Charged,
-                this.form.mealCost = scheduleValue.Cost
+                this.form.mealCost = scheduleValue.Cost,
+                this.form.imagePath = scheduleValue.ImagePath,
+                this.employeeId = scheduleValue.EmployeeId,
+                this.clientId = scheduleValue.ClientId
             }
             this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
@@ -323,9 +356,6 @@ hr{
     flex-grow: 1;
     padding: 0 2px;
 }
-.imageButton{
-
-}
 .timeflexGroup{
     display: flex;
     flex-direction: row;
@@ -347,6 +377,7 @@ hr{
     padding: 0 2px;
 }
 .submitButton{
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

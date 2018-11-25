@@ -277,7 +277,6 @@ export default {
             )
             .then((response)=>{
                 this.loading = false;
-                console.log(response)
                 this.disabled = true
                 alert('Employee updated successfully!');
                 this.options = [];

@@ -490,8 +490,8 @@ export default {
                 }, {headers: headers}
             )
             .then((response)=>{
-                console.log(response);
                 this.loading = false;
+                this.disabled = true;
                 alert('Client updated successfully!');
                 this.options = [];
                 this.updateClientList();
