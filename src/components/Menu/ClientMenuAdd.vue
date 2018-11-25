@@ -239,6 +239,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 import Spinner from './../Spinner';
 export default {
   name: "clientMenuAdd",
@@ -288,6 +289,10 @@ export default {
     };
   },
   methods: {
+    returnDate(date){
+        let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');
+        return dateStamp;
+    },
     submitMenu() {
       this.loading = true;
       let token = localStorage.getItem('t');
@@ -300,11 +305,14 @@ export default {
       )
       .then((response)=>{
         console.log(response);
-        this.getClientMenusIds();
+        this.selectedOptions = [];
+        this.updateScheduledMenus();
+        alert('Successfully added to the scheduled menu!');
         this.loading = false;
       })
       .catch((error)=>{
         this.loading = false;
+        alert('Issue adding new menu, try again!');
         console.log(error);
       })
     },
@@ -333,12 +341,12 @@ export default {
     updateScheduledMenus(){
       this.loading = true;
       let token = localStorage.getItem('t');
-      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
-      .then((response)=>{
-        response.data.value.forEach((value) => {
-          this.selectedOptions.push({ value: value.ClientMenuId, text: value.MenuId })
-        })
-        this.loading = false;
+      this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.schedule + '',{ headers: { 'Authorization': "Bearer " + token }} )
+        .then((response)=>{
+          response.data.forEach((data) => {
+            this.selectedOptions.push({ value: data.ClientMenuId, text: data.MenuName })
+          })
+          this.loading = false;
       })
       .catch((error)=>{
         this.loading = false;
@@ -348,10 +356,10 @@ export default {
     getClientMenusIds(){
       this.loading = true;
       let token = localStorage.getItem('t');
-      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
-      .then((response) => {
-        response.data.value.forEach((value) => {
-          this.selectedOptions.push({ value: value.ClientMenuId, text: value.MenuId })
+      this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.schedule + '',{ headers: { 'Authorization': "Bearer " + token }} )
+      .then((response)=>{
+        response.data.forEach((data) => {
+          this.selectedOptions.push({ value: data.ClientMenuId, text: data.MenuName })
         })
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
@@ -403,18 +411,17 @@ export default {
         this.loading = false;
         console.log(error);
       })
-      //Need to filter based on employeeId so chefs can only see their schedules.
-      axios.get('https://chefemployees.com/odata/Schedules', { headers: { 'Authorization': "Bearer " + token }})
+      axios.get('https://chefemployees.com/api/ScheduleEmpClient', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
-        response.data.value.forEach((value) => {
-            this.scheduleOptions.push({ value: value.ScheduleId, text: value.ScheduleId })
-        })
-        this.loading = false;
+          response.data.forEach((data) => {
+              this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
+          })
+          this.loading = false;
       })
       .catch((error) => {
-        this.loading = false;
-        console.log(error);
-      })
+          this.loading = false;
+          console.log(error);
+      });
     },
 };
 </script>
