@@ -142,44 +142,46 @@ import { mapState } from 'vuex';
 import * as decoded from 'jwt-decode';
 import Spinner from '././Spinner';
 export default {
-  name: "profile",
-  components:{
-    Spinner
-  },
-  data() {
-    return {
-      disabled: true,
-      form: {
+    name: "profile",
+    components:{
+        Spinner
+    },
+    data() {
+        return {
+        disabled: true,
+        form: {
+            username: '',
+            password: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            zip: '',
+            mon: '',
+            tue: '',
+            wed: '',
+            thur: '',
+            fri: '',
+            sat: '',
+            sun: '',
+            endMon: '',
+            endTue: '',
+            endWed: '',
+            endThur: '',
+            endFri: '',
+            endSat: '',
+            endSun: '',
+            zipSelected: ''
+            },
+        employee: '',
         username: '',
         password: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        zip: '',
-        mon: '',
-        tue: '',
-        wed: '',
-        thur: '',
-        fri: '',
-        sat: '',
-        sun: '',
-        endMon: '',
-        endTue: '',
-        endWed: '',
-        endThur: '',
-        endFri: '',
-        endSat: '',
-        endSun: '',
-        zipSelected: ''
-        },
-      employee: '',
-      employeeInfo: {},
-      show: true,
-      loading: true
-    };
-  },
-  methods: {
+        employeeInfo: {},
+        show: true,
+        loading: true
+        };
+    },
+    methods: {
         returnTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
             return timeStamp;
@@ -191,43 +193,48 @@ export default {
             var formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
             return formatedTime;
         },
-    //     updateProfile(){
-    //       this.loading = true;
-    //       let token = localStorage.getItem('t');
-    //       let headers = {'Authorization' : 'Bearer ' + token}
-    //       this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {
-    //         EmployeeId: this.employeeInfo.employeeid,
-    //         EmFirstName: this.form.firstName,
-    //         EmLastName: this.form.lastName,
-    //         EmCellPhone: this.form.phone,
-    //         EmEmail: this.form.email,
-    //         EmZipCodes: this.form.zip,
-    //         EmStartMonday: this.formatTime(this.form.mon),
-    //         EmEndMonday: this.formatTime(this.form.endMon),
-    //         EmStartTuesday: this.formatTime(this.form.tue),
-    //         EmEndTuesday: this.formatTime(this.form.endTue),
-    //         EmStartWednesday: this.formatTime(this.form.wed),
-    //         EmEndWednesday: this.formatTime(this.form.endWed),
-    //         EmStartThursday: this.formatTime(this.form.thur),
-    //         EmEndThursday: this.formatTime(this.form.endThur),
-    //         EmStartFriday: this.formatTime(this.form.fri),
-    //         EmEndFriday: this.formatTime(this.form.endFri),
-    //         EmStartSaturday: this.formatTime(this.form.sat),
-    //         EmEndSaturday: this.formatTime(this.form.endSat),
-    //         EmStartSunday: this.formatTime(this.form.sun),
-    //         EmEndSunday: this.formatTime(this.form.endSun),
-    //         }, {headers: headers}
-    //     )
-    //     .then((response)=>{
-    //       console.log(response)
-    //       this.disabled = true
-    //       this.loading = false;
-    //     })
-    //     .catch((error)=>{
-    //       this.loading = false;
-    //       console.log(error);
-    //     })
-    //   } 
+        updateProfile(){
+          this.loading = true;
+          console.log(this.employeeInfo);
+          let token = localStorage.getItem('t');
+          let headers = {'Authorization' : 'Bearer ' + token}
+          this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {
+            EmployeeId: this.employeeInfo.employeeid,
+            EmFirstName: this.form.firstName,
+            EmLastName: this.form.lastName,
+            Username: this.username,
+            Password: this.password,
+            EmCellPhone: this.form.phone,
+            EmEmail: this.form.email,
+            EmZipCodes: this.form.zip,
+            IsMenu: this.employeeInfo.menu,
+            IsAdmin: this.employeeInfo.admin,
+            EmStartMonday: this.formatTime(this.form.mon),
+            EmEndMonday: this.formatTime(this.form.endMon),
+            EmStartTuesday: this.formatTime(this.form.tue),
+            EmEndTuesday: this.formatTime(this.form.endTue),
+            EmStartWednesday: this.formatTime(this.form.wed),
+            EmEndWednesday: this.formatTime(this.form.endWed),
+            EmStartThursday: this.formatTime(this.form.thur),
+            EmEndThursday: this.formatTime(this.form.endThur),
+            EmStartFriday: this.formatTime(this.form.fri),
+            EmEndFriday: this.formatTime(this.form.endFri),
+            EmStartSaturday: this.formatTime(this.form.sat),
+            EmEndSaturday: this.formatTime(this.form.endSat),
+            EmStartSunday: this.formatTime(this.form.sun),
+            EmEndSunday: this.formatTime(this.form.endSun),
+            }, {headers: headers}
+        )
+        .then((response)=>{
+          console.log(response)
+          this.disabled = true
+          this.loading = false;
+        })
+        .catch((error)=>{
+          this.loading = false;
+          console.log(error);
+        })
+      } 
     },
     computed: mapState({
         getToken(state){
@@ -241,6 +248,8 @@ export default {
         this.employeeInfo = decoded(token)
         axios.get('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
+            this.username = response.data.Username;
+            this.password = response.data.Password;
             this.form.firstName = response.data.EmFirstName;
             this.form.lastName = response.data.EmLastName;
             this.form.phone = response.data.EmCellPhone;
