@@ -27,7 +27,6 @@
                       label="Master Menu Items:"
                       label-for="menu">
               <b-form-select v-model="form.menus" :options="menuOptions" />
-              <!-- <b-button  class="menuBtn" variant="primary">Select Menu</b-button> -->
           </b-form-group>
           
       </div>

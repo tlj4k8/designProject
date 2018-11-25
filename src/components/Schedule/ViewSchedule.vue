@@ -369,11 +369,12 @@ export default {
             this.form.mealCost = scheduleValue.Cost,
             this.imagePath = scheduleValue.ImagePath,
             this.employeeId = scheduleValue.EmployeeId,
-            this.clientId = scheduleValue.ClientId
+            this.clientId = scheduleValue.ClientId,
+            this.menuOptions = []
             this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 response.data.forEach((data) => {
-                    this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.MenuNotes )
+                    this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.ClientMenuNotes )
                 })
                 this.loading = false;
             })
