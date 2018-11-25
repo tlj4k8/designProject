@@ -112,10 +112,12 @@ export default {
                 this.form.startTime = '',
                 this.form.endTime = '',
                 this.form.date = ''
+                alert('Schedule added successfully!');
             })
             .catch((error)=>{
                 this.loading = false;
                 console.log(error)
+                alert('Schedule not added');
             })
         }
     },
@@ -147,7 +149,6 @@ export default {
         let dateStamp = this.form.date.split('/').reverse().join('-');
         let formatedDate = dateStamp + "T00:00:00";
         return formatedDate;
-
     }
   },
     mounted(){
