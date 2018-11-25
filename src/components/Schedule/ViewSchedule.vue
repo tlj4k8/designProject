@@ -130,8 +130,13 @@
                     </b-form-file>
                 </b-form-group>
                 </div>
-            <div class="submitButton">
-                <b-button class="imageButton" @click="onUpload">Upload Image</b-button>
+            <div class="imageGroup">
+                <div v-if="this.form.imagePath != null">
+                    <b-button @click="openImage">View Uploaded Image</b-button>
+                </div>
+                <div v-if="this.form.imagePath == null">
+                    <b-button @click="onUpload">Upload Image</b-button>
+                </div>
             </div>
         </div>
         <b-form-group>
@@ -205,6 +210,9 @@ export default {
             console.log(error);
         })
     },
+    openImage(){
+        window.open(this.form.imagePath, "_blank");
+    },
     formatTime(time){
         let timeStamp = time.split(':');
         let timeHour = timeStamp[0];
@@ -222,8 +230,6 @@ export default {
         this.loading = true;
         let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
-        console.log(this.form.selectedSchedule);
-        console.log(this.formatTime(this.form.timeIn));
         this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
             ScheduleId: this.form.selectedSchedule,
             Clockin: this.formatTime(this.form.timeIn)
@@ -244,6 +250,25 @@ export default {
     clockOut(){
         let timestamp = moment().format("HH:mm");
         this.form.timeOut = timestamp;
+        this.loading = true;
+        let token = localStorage.getItem('t');
+        let headers = {'Authorization': "Bearer " + token};
+        this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+            ScheduleId: this.form.selectedSchedule,
+            Clockout: this.formatTime(this.form.timeOut)
+        }, {headers: headers}
+        )
+        .then((response)=>{
+            console.log(response);
+            this.loading = false;
+            alert('You are clocked out!');
+            this.disabled = true;
+        })
+        .catch((error)=>{
+            this.loading = false;
+            alert('There was a problem clocking out. Please try again.');
+            console.log(error);
+        })
     },
     validateDate(){
         const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
@@ -360,6 +385,11 @@ hr{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+.imageGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .timeflex{
     padding: 10px 0;
