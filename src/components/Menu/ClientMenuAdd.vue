@@ -308,17 +308,43 @@ export default {
         console.log(error);
       })
     },
-    // removeMenu(){
-    //   this.$axiosServer.delete('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', {
-    //     params: {ClientMenuId: this.form.clientMenus}
-    //   })
-    //   .then((response)=>{
-    //     console.log(response);
-    //   })
-    //   .catch((error)=>{
-    //     console.log(error);
-    //   })
-    // },
+    removeMenu(){
+      this.loading = true;
+      let token = localStorage.getItem('t');
+      this.$axiosServer.delete('https://chefemployees.com/odata/ClientMenus(' + this.form.clientMenus + ')', {
+        params: {
+          ClientMenuId: this.form.clientMenus
+        },
+        headers: { 'Authorization': "Bearer " + token }
+      })
+      .then((response)=>{
+        this.loading = false;
+        alert('Menu item deleted!');
+        this.selectedOptions = [];
+        this.updateScheduledMenus();
+        console.log(response);
+      })
+      .catch((error)=>{
+        this.loading = false;
+        alert('Issue deleting menu, try again!');
+        console.log(error);
+      })
+    },
+    updateScheduledMenus(){
+      this.loading = true;
+      let token = localStorage.getItem('t');
+      this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')ClientMenus', { headers: { 'Authorization': "Bearer " + token }})
+      .then((response)=>{
+        response.data.value.forEach((value) => {
+          this.selectedOptions.push({ value: value.ClientMenuId, text: value.MenuId })
+        })
+        this.loading = false;
+      })
+      .catch((error)=>{
+        this.loading = false;
+        console.log(error);
+      })
+    },
     getClientMenusIds(){
       this.loading = true;
       let token = localStorage.getItem('t');

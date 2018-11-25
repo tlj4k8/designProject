@@ -88,7 +88,7 @@
         </b-form>
         <div v-if="isAdmin=='True' || isMenu=='True'" class="disabledButtons">
             <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
-            <b-button class="update" v-if="!disabled" type="submit">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+            <b-button class="update" v-if="!disabled" @click="updateMenu">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
         <Spinner v-if="loading" />
   </div>
@@ -99,28 +99,72 @@ import axios from 'axios';
 import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
-  name: 'viewmenu',
-  components:{
-    Spinner
-  },
-  data () {
-    return {
-        disabled: true,
-        form: {
-            menuName: '',
-            ingredients: '',
-            instructions: '',
-            servings: 0,
-            time: '',
-            mealType: '',
-            menuNotes: ''
+    name: 'viewmenu',
+    components:{
+        Spinner
+    },
+    data () {
+        return {
+            disabled: true,
+            form: {
+                menuName: '',
+                ingredients: '',
+                instructions: '',
+                servings: 0,
+                time: '',
+                mealType: '',
+                menuNotes: ''
+            },
+            selected: null,
+            options: [],
+            show: true,
+            loading: false
+        }
+    },
+    methods:{
+        updateMenu(){
+            this.loading = true;
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.patch('https://chefemployees.com/odata/Menus(' + this.selected + ')', {
+                Name: this.form.menuName,
+                Ingrendients: this.form.ingredients,
+                Instructions: this.form.instructions,
+                Servings: this.form.servings,
+                Time: this.form.time,
+                MealType: this.form.mealType,
+                Notes: this.form.menuNotes
+            }, {headers: headers}
+            )
+            .then((response)=>{
+                this.disabled = true;
+                this.loading = false;
+                this.options = [];
+                this.updateMenuList();
+                alert('Menu updated!');
+            })
+            .catch((error)=>{
+                this.loading = false;
+                alert('Issue updating menu, please check your fields.');
+                console.log(error)
+            })
         },
-        selected: null,
-        options: [],
-        show: true,
-        loading: false
-    }
-  },
+        updateMenuList(){
+            this.loading = true;
+            let token = localStorage.getItem('t');
+            axios.get('https://chefemployees.com/odata/Menus', { headers: { 'Authorization': "Bearer " + token }})
+            .then((response) => {
+                response.data.value.forEach((value) => {
+                    this.options.push({ value: value.MenuId, text: value.Name })
+                })
+            this.loading = false;
+            })
+            .catch((error) => {
+                this.loading = false;
+                console.log(error);
+            })
+        }
+    },
     computed:{
           ...mapState({
             getToken(state){
