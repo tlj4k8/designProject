@@ -418,7 +418,6 @@ export default {
         selected: null,
         selectedChef: null,
         chefOptions: [],
-        chefFiltered: [],
         options: [],
         state: [
         { text: 'Select One', value: null },
@@ -608,16 +607,10 @@ export default {
                     this.form.notes = clientValue.ExtraNotes
                     this.$axiosServer.get('https://chefemployees.com/api/EmpClientZip/' + this.selected + '', { headers: { 'Authorization': "Bearer " + token }})
                     .then((response)=>{
-                        console.log(response.data);
                         this.loading = false;
-                        //this.chefFiltered = response.data.filter(data => data.IsMenu === false && data.IsAdmin === false);
                         response.data.forEach((data) => {
                             this.chefOptions.push({ value: data.EmployeeId, text: data.EmFirstName + ' ' + data.EmLastName });
                         })
-                        // this.chefFiltered.forEach((item) => {
-                        //     this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
-                        // })
-                        console.log(this.chefFiltered);
                     })
                     .catch((error)=>{
                         this.loading = false;
