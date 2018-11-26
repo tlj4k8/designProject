@@ -11,7 +11,7 @@
                             class="select"
                             :label-cols="4"
                             breakpoint="md">
-                <b-form-select required v-model="form.selectedEmployee" :options="employeeOptions" class="mb-1" />
+                <b-form-select required @input="filterClients" v-model="form.selectedEmployee" :options="employeeOptions" class="mb-1" />
                 </b-form-group>
             </div>
             <div class="clientSelect">
@@ -67,90 +67,119 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import { mapState } from 'vuex';
 import Spinner from './../Spinner';
 export default {
-  name: 'ScheduleNew',
-  components:{
-    Spinner
-  },
-  data () {
-    return {
-        form: {
-            date: '',
-            startTime: '',
-            endTime: '',
-            selectedEmployee: null,
-            selectedClient: null
+    name: 'ScheduleNew',
+    components:{
+        Spinner
+    },
+    data () {
+        return {
+            form: {
+                date: '',
+                startTime: '',
+                endTime: '',
+                selectedEmployee: null,
+                selectedClient: null
+            },
+            clientOptions: [],
+            employeeOptions: [],
+            show: true,
+            loading: false,
+            checked: false
+        }
+    },
+    methods: {
+        handleSubmit(form) {
+            this.validateDate();
+            if(this.checked === true){
+                this.loading = true;
+                let token = localStorage.getItem('t');
+                let headers = {'Authorization': "Bearer " + token};
+                this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
+                    EmployeeId: this.form.selectedEmployee,
+                    ClientId: this.form.selectedClient,
+                    StartTime: this.formatTime(this.form.startTime),
+                    EndTime: this.formatTime(this.form.endTime),
+                    ScheduleDate: this.formatDate(this.form.date)
+                },{headers: headers}
+                )
+                .then((response)=>{
+                    this.loading = false;
+                    console.log(response);
+                    this.form.selectedEmployee = null,
+                    this.form.selectedClient =  null,
+                    this.form.startTime = '',
+                    this.form.endTime = '',
+                    this.form.date = ''
+                    alert('Schedule added successfully!');
+                })
+                .catch((error)=>{
+                    this.loading = false;
+                    console.log(error)
+                    alert('Schedule not added');
+                })
+            }
         },
-        clientOptions: [],
-        employeeOptions: [],
-        show: true,
-        loading: false,
-        checked: false
-    }
-  },
-  methods: {
-    handleSubmit(form) {
-        this.validateDate();
-        if(this.checked === true){
+        filterClients(){
             this.loading = true;
             let token = localStorage.getItem('t');
-            let headers = {'Authorization': "Bearer " + token};
-            this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
-                EmployeeId: this.form.selectedEmployee,
-                ClientId: this.form.selectedClient,
-                StartTime: this.formatTime(this.form.startTime),
-                EndTime: this.formatTime(this.form.endTime),
-                ScheduleDate: this.formatDate(this.form.date)
-            },{headers: headers}
-            )
+            this.$axiosServer.get('https://chefemployees.com/odata/Clients', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
+                this.clientOptions = [];
+                let filterClients = response.data.value.filter(value => value.EmployeeId == this.form.selectedEmployee);
+                filterClients.forEach((item) =>{
+                    this.clientOptions.push({ value: item.ClientId, text: item.ClFirstName + ' ' + item.ClLastName })
+                })
                 this.loading = false;
-                console.log(response);
-                this.form.selectedEmployee = null,
-                this.form.selectedClient =  null,
-                this.form.startTime = '',
-                this.form.endTime = '',
-                this.form.date = ''
-                alert('Schedule added successfully!');
             })
             .catch((error)=>{
-                this.loading = false;
+                this.loading = false
                 console.log(error)
-                alert('Schedule not added');
             })
-        }
-    },
-    validateDate(){
-        const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
-        let SpecialToDate = this.form.date;
+        },
+        validateDate(){
+            const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
+            let SpecialToDate = this.form.date;
 
-        if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
-            console.log("date is today or in future");
-            this.checked = true;
-        } else {
-            this.checked = false;
-            alert("Please enter a valid date. The date entered has passed.");
-        }
-    },
-    formatTime(time){
-        let timeStamp = time.split(':');
-        let timeHour = timeStamp[0];
-        let timeMinutes = timeStamp[1];
-        let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
-        if(time === ''){
-            let formatedTime = "PT00H00M00S";
+            if (moment(SpecialToDate, "YYYY-MM-DD", true).isAfter(yesterday)) {
+                console.log("date is today or in future");
+                this.checked = true;
+            } else {
+                this.checked = false;
+                alert("Please enter a valid date. The date entered has passed.");
+            }
+        },
+        formatTime(time){
+            let timeStamp = time.split(':');
+            let timeHour = timeStamp[0];
+            let timeMinutes = timeStamp[1];
+            let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+            if(time === ''){
+                let formatedTime = "PT00H00M00S";
+                return formatedTime;
+            }
             return formatedTime;
+        },
+        formatDate(){
+            this.validateDate();
+            let dateStamp = this.form.date.split('/').reverse().join('-');
+            let formatedDate = dateStamp + "T00:00:00";
+            return formatedDate;
         }
-        return formatedTime;
-    },
-    formatDate(){
-        this.validateDate();
-        let dateStamp = this.form.date.split('/').reverse().join('-');
-        let formatedDate = dateStamp + "T00:00:00";
-        return formatedDate;
-    }
-  },
+        },
+    computed: mapState({
+        getToken (state){
+            return state.jwt;
+        },
+        isAdmin (state){
+            return state.userInfo.admin;
+        },
+        isMenu (state){
+            return state.userInfo.menu;
+        }
+    }),
     mounted(){
         this.loading = true;
         let token = localStorage.getItem('t');
@@ -167,8 +196,9 @@ export default {
         });
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            response.data.value.forEach((value) => {
-                this.employeeOptions.push({ value: value.EmployeeId, text: value.EmFirstName + ' ' + value.EmLastName })
+            let filteredEmployees = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+            filteredEmployees.forEach((item) => {
+                this.employeeOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName })
             })
             this.loading = false;
         })
