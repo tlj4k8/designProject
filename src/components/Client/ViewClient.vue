@@ -130,13 +130,13 @@
         <table>
             <tr>
                 <th></th>
-                <th>Mon.</th>
-                <th>Tue.</th>
-                <th>Wed.</th>
-                <th>Thur.</th>
-                <th>Fri.</th>
-                <th>Sat.</th>
-                <th>Sun.</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
             </tr>
             <tr>
                 <td>Start</td>
