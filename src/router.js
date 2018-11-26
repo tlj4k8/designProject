@@ -16,6 +16,7 @@ import EmployeeNew from './views/EmployeeNew.vue';
 import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
 import ScheduleDash from './views/ScheduleDash.vue';
+import HelpManuel from './HelpManuel.vue';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ const router = new Router({
       meta: { 
         requiresAuth: true
       }
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: HelpManuel,
     },
     {
       path: '/scheduleNew',
