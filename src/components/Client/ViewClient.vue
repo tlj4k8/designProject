@@ -606,6 +606,23 @@ export default {
                     this.form.groceryStore = clientValue.PreferredGroceryStore,
                     this.form.mealStructure = clientValue.MealSize,
                     this.form.notes = clientValue.ExtraNotes
+                    this.$axiosServer.get('https://chefemployees.com/api/EmpClientZip/' + this.selected + '', { headers: { 'Authorization': "Bearer " + token }})
+                    .then((response)=>{
+                        console.log(response.data);
+                        this.loading = false;
+                        //this.chefFiltered = response.data.filter(data => data.IsMenu === false && data.IsAdmin === false);
+                        response.data.forEach((data) => {
+                            this.chefOptions.push({ value: data.EmployeeId, text: data.EmFirstName + ' ' + data.EmLastName });
+                        })
+                        // this.chefFiltered.forEach((item) => {
+                        //     this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
+                        // })
+                        console.log(this.chefFiltered);
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        console.log(error);
+                    })
                 }
             })
             .catch((error)=>{
@@ -622,18 +639,6 @@ export default {
                 this.options.push({ value: value.ClientId, text: value.ClFirstName + ' ' + value.ClLastName })
             })
             this.loading = false;
-        })
-        .catch((error) => {
-            this.loading = false;
-            console.log(error);
-        });
-        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
-        .then((response) => {
-          this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
-          this.chefFiltered.forEach((item) => {
-              this.chefOptions.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
-          })
-          this.loading = false;
         })
         .catch((error) => {
             this.loading = false;
