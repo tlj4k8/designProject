@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <div v-if="!isLoggedIn" class="loggedOut">
         <div class="logo">
             <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
         </div>
@@ -33,6 +34,10 @@
                 <p class="text">(Email goes here)</p>
             </b-modal>
         </div>
+        </div>
+        <div v-else-if="isLoggedIn" class="loggedIn">
+            <Dashboard />
+        </div>
     <Spinner v-if="loading"/>
     </div>
 </template>
@@ -41,10 +46,12 @@
 import {mapState} from 'vuex';
 import * as decoded from 'jwt-decode';
 import Spinner from '././Spinner';
+import Dashboard from '../views/Dashboard';
 export default {
     name: 'Login',
     components:{
-      Spinner
+      Spinner,
+      Dashboard
     },
     data () {
         return {
@@ -98,7 +105,10 @@ export default {
     computed: mapState({
         getToken(state){
             return state.jwt;
-        }
+        },
+        isLoggedIn (state){
+            return !(state.jwt === null);
+        },
         
     })
 }
@@ -109,7 +119,7 @@ export default {
     text-align: center;
 }
 .login{
-    margin-top: 9em;
+    margin-top: 8em;
 }
 h1{
     text-align:center;
