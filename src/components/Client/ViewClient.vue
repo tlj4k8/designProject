@@ -546,77 +546,60 @@ export default {
             this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 let clientValue = response.data;
-                if(clientValue == null || undefined){
-                    this.form.mon = '',
-                    this.form.tue = '',
-                    this.form.wed = '',
-                    this.form.thur = '',
-                    this.form.fri = '',
-                    this.form.sat = '',
-                    this.form.sun = '',
-                    this.form.endMon = '',
-                    this.form.endTue = '',
-                    this.form.endWed = '',
-                    this.form.endThur = '',
-                    this.form.endFri = '',
-                    this.form.endSat = '',
-                    this.form.endSun = ''
-                }
-                else{
-                    this.form.chef = clientValue.EmployeeId,
-                    this.form.firstName = clientValue.ClFirstName,
-                    this.form.lastName = clientValue.ClLastName,
-                    this.form.phone = clientValue.ClCellPhone,
-                    this.form.email = clientValue.ClEmail,
-                    this.form.address = clientValue.Address1,
-                    this.form.addressTwo = clientValue.Address2,
-                    this.form.city = clientValue.City,
-                    this.form.state = clientValue.State,
-                    this.form.zip = clientValue.ZipCode,
-                    this.form.mon = this.returnTime(clientValue.ClStartMonday),
-                    this.form.endMon = this.returnTime(clientValue.ClEndMonday),
-                    this.form.tue = this.returnTime(clientValue.ClStartTuesday),
-                    this.form.endTue = this.returnTime(clientValue.ClEndTuesday),
-                    this.form.wed = this.returnTime(clientValue.ClStartWednesday),
-                    this.form.endWed = this.returnTime(clientValue.ClEndWednesday),
-                    this.form.thur = this.returnTime(clientValue.ClStartThursday),
-                    this.form.endThur = this.returnTime(clientValue.ClEndThursday),
-                    this.form.fri = this.returnTime(clientValue.ClStartFriday),
-                    this.form.endFri = this.returnTime(clientValue.ClEndFriday),
-                    this.form.sat = this.returnTime(clientValue.ClStartSaturday),
-                    this.form.endSat = this.returnTime(clientValue.ClEndSaturday),
-                    this.form.sun = this.returnTime(clientValue.ClStartSunday),
-                    this.form.endSun = this.returnTime(clientValue.ClEndSunday),
-                    this.form.meats = clientValue.PreferredMeats,
-                    this.form.meatAvoid = clientValue.MeatsToAvoid,
-                    this.form.cheese = clientValue.PreferredCheeses,
-                    this.form.cheeseAvoid = clientValue.CheesesToAvoid,
-                    this.form.grains = clientValue.PreferredGrains,
-                    this.form.grainsAvoid = clientValue.GrainsToAvoid,
-                    this.form.spice = clientValue.SpiceLevel,
-                    this.form.other = clientValue.OtherToAvoid,
-                    this.form.allergies = clientValue.Allergies,
-                    this.form.dietRestrictions = clientValue.DietRestrictions,
-                    this.form.dietGoals = clientValue.DietGoals,
-                    this.form.mainDish = clientValue.MainDishSoupSaladStew,
-                    this.form.storageContainers = clientValue.StoreContainers,
-                    this.form.stove = clientValue.StoveOven,
-                    this.form.organic = clientValue.OrganicMeals,
-                    this.form.groceryStore = clientValue.PreferredGroceryStore,
-                    this.form.mealStructure = clientValue.MealSize,
-                    this.form.notes = clientValue.ExtraNotes
-                    this.$axiosServer.get('https://chefemployees.com/api/EmpClientZip/' + this.selected + '', { headers: { 'Authorization': "Bearer " + token }})
-                    .then((response)=>{
-                        this.loading = false;
-                        response.data.forEach((data) => {
-                            this.chefOptions.push({ value: data.EmployeeId, text: data.EmFirstName + ' ' + data.EmLastName });
-                        })
+                this.form.chef = clientValue.EmployeeId,
+                this.form.firstName = clientValue.ClFirstName,
+                this.form.lastName = clientValue.ClLastName,
+                this.form.phone = clientValue.ClCellPhone,
+                this.form.email = clientValue.ClEmail,
+                this.form.address = clientValue.Address1,
+                this.form.addressTwo = clientValue.Address2,
+                this.form.city = clientValue.City,
+                this.form.state = clientValue.State,
+                this.form.zip = clientValue.ZipCode,
+                this.form.mon = this.returnTime(clientValue.ClStartMonday),
+                this.form.endMon = this.returnTime(clientValue.ClEndMonday),
+                this.form.tue = this.returnTime(clientValue.ClStartTuesday),
+                this.form.endTue = this.returnTime(clientValue.ClEndTuesday),
+                this.form.wed = this.returnTime(clientValue.ClStartWednesday),
+                this.form.endWed = this.returnTime(clientValue.ClEndWednesday),
+                this.form.thur = this.returnTime(clientValue.ClStartThursday),
+                this.form.endThur = this.returnTime(clientValue.ClEndThursday),
+                this.form.fri = this.returnTime(clientValue.ClStartFriday),
+                this.form.endFri = this.returnTime(clientValue.ClEndFriday),
+                this.form.sat = this.returnTime(clientValue.ClStartSaturday),
+                this.form.endSat = this.returnTime(clientValue.ClEndSaturday),
+                this.form.sun = this.returnTime(clientValue.ClStartSunday),
+                this.form.endSun = this.returnTime(clientValue.ClEndSunday),
+                this.form.meats = clientValue.PreferredMeats,
+                this.form.meatAvoid = clientValue.MeatsToAvoid,
+                this.form.cheese = clientValue.PreferredCheeses,
+                this.form.cheeseAvoid = clientValue.CheesesToAvoid,
+                this.form.grains = clientValue.PreferredGrains,
+                this.form.grainsAvoid = clientValue.GrainsToAvoid,
+                this.form.spice = clientValue.SpiceLevel,
+                this.form.other = clientValue.OtherToAvoid,
+                this.form.allergies = clientValue.Allergies,
+                this.form.dietRestrictions = clientValue.DietRestrictions,
+                this.form.dietGoals = clientValue.DietGoals,
+                this.form.mainDish = clientValue.MainDishSoupSaladStew,
+                this.form.storageContainers = clientValue.StoreContainers,
+                this.form.stove = clientValue.StoveOven,
+                this.form.organic = clientValue.OrganicMeals,
+                this.form.groceryStore = clientValue.PreferredGroceryStore,
+                this.form.mealStructure = clientValue.MealSize,
+                this.form.notes = clientValue.ExtraNotes
+                this.$axiosServer.get('https://chefemployees.com/api/EmpClientZip/' + this.selected + '', { headers: { 'Authorization': "Bearer " + token }})
+                .then((response)=>{
+                    this.loading = false;
+                    this.chefOptions = [];
+                    response.data.forEach((data) => {
+                        this.chefOptions.push({ value: data.EmployeeId, text: data.EmFirstName + ' ' + data.EmLastName });
                     })
-                    .catch((error)=>{
-                        this.loading = false;
-                        console.log(error);
-                    })
-                }
+                })
+                .catch((error)=>{
+                    this.loading = false;
+                    console.log(error);
+                })
             })
             .catch((error)=>{
                 console.log(error);
