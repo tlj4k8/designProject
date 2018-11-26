@@ -12,7 +12,7 @@
             <router-link class="nav-links" to="/menuDash">Menu</router-link>
             <router-link class="nav-links" to="/profile">Profile</router-link>
             <router-link v-if="isAdmin=='True'" class="nav-links" to="/employeeDash">Employee</router-link>
-            <router-link v-if="isAdmin=='True'" class="nav-links" to="/scheduleDash">Schedule</router-link>
+            <router-link v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" class="nav-links" to="/scheduleDash">Schedule</router-link>
 		      </div>
 	      </div>
     </transition>
@@ -43,7 +43,10 @@ export default {
     isAdmin (state){
       return state.userInfo.admin;
     },
-    getToken(state){
+    isMenu (state){
+      return state.userInfo.menu;
+    },
+    getToken (state){
       return state.jwt;
     }
   })

@@ -6,7 +6,7 @@
         <b-button to="/menuDash">Menu</b-button>
         <b-button to="/profile">Profile</b-button>
         <b-button v-if="isAdmin=='True'" to="/employeeDash">Employee</b-button>
-        <b-button v-if="isAdmin=='True'" to="/scheduleDash">Schedule</b-button>
+        <b-button v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" to="/scheduleDash">Schedule</b-button>
     </b-button-group>
   </div>
 </template>
@@ -26,6 +26,9 @@ export default {
     },
     isAdmin (state){
       return state.userInfo.admin;
+    },
+    isMenu (state){
+      return state.userInfo.menu;
     }
   })
 };
