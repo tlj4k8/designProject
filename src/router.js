@@ -17,6 +17,7 @@ import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
 import ScheduleDash from './views/ScheduleDash.vue';
 import HelpManuel from './HelpManuel.vue';
+import Decoded from 'jwt-decode';
 
 Vue.use(Router);
 
@@ -25,22 +26,19 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
-      meta: { 
-        requiresAuth: true
-      }
+      component: Home
     },
     {
       path: '/help',
       name: 'help',
-      component: HelpManuel,
+      component: HelpManuel
     },
     {
       path: '/scheduleNew',
       name: 'scheduleNew',
       component: ScheduleNew,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, chefAuth: false, menuAuth: false
       }
     },
     {
@@ -48,7 +46,7 @@ const router = new Router({
       name: 'scheduleDash',
       component: ScheduleDash,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, chefAuth: true, menuAuth: false
       }
     },
     {
@@ -56,7 +54,7 @@ const router = new Router({
       name: 'clientDash',
       component: ClientDash,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -64,7 +62,7 @@ const router = new Router({
       name: 'clientNew',
       component: ClientNew,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: false, chefAuth: false
       }
     },
     {
@@ -72,7 +70,7 @@ const router = new Router({
       name: 'clientMenu',
       component: ClientMenu,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -80,7 +78,7 @@ const router = new Router({
       name: 'clientPage',
       component: ClientPage,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -88,7 +86,7 @@ const router = new Router({
       name: 'menuDash',
       component: MenuDash,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -96,7 +94,7 @@ const router = new Router({
       name: 'MenuPage',
       component: MenuPage,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: false
       }
     },
     {
@@ -104,7 +102,7 @@ const router = new Router({
       name: 'menuEdit',
       component: MenuEdit,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -112,7 +110,7 @@ const router = new Router({
       name: 'SchedulePage',
       component: SchedulePage,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, chefAuth: true, menuAuth: false
       }
     },
     {
@@ -120,23 +118,23 @@ const router = new Router({
       name: 'Dashboard',
       component: Dashboard,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
-    path: '/employee',
-    name: 'Employee',
-    component: Employee,
-    meta: { 
-      requiresAuth: true
-    }
+      path: '/employee',
+      name: 'Employee',
+      component: Employee,
+      meta: { 
+        requiresAuth: true, adminAuth: true, menuAuth: false, chefAuth: false
+      }
     },
     {
       path: '/employeeNew',
       name: 'EmployeeNew',
       component: EmployeeNew,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: false, chefAuth: false
       }
     },
     {
@@ -144,7 +142,7 @@ const router = new Router({
       name: 'ProfilePage',
       component: ProfilePage,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -152,23 +150,106 @@ const router = new Router({
       name: 'EmployeeDash',
       component: EmployeeDash,
       meta: { 
-        requiresAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: false, chefAuth: false
       }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/'];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('t');
+  // const publicPages = ['/'];
+  // const authRequired = !publicPages.includes(to.path);
+  // const loggedIn = localStorage.getItem('t');
 
-  if (authRequired && !loggedIn) {
-    return next('/');
+  // if (authRequired && !loggedIn) {
+  //   return next('/');
+  // }
+
+  // next();
+if(to.meta.requiresAuth){
+  const token = localStorage.getItem('t');
+  const user = Decoded(token);
+  // console.log(user);
+  if(!user){
+    next({name: 'home'})
   }
-
+  else if(to.meta.adminAuth){
+    const token = localStorage.getItem('t');
+    const user = Decoded(token);
+    if(user.admin == 'True'){
+      next()
+    }else{
+      next('/dash')
+    }
+  }
+  else if(to.meta.menuAuth){
+    const token = localStorage.getItem('t');
+    const user = Decoded(token);
+    if(user.menu == 'True'){
+      next()
+    }else{
+      next('/dash')
+    }
+  }
+  else if(to.meta.chefAuth){
+    const token = localStorage.getItem('t');
+    const user = Decoded(token);
+    if(user.menu == 'False' && user.admin == 'False'){
+      next()
+    }else{
+      next('/dash')
+    }
+  }
+  else{
+    next();
+  }
+}
   next();
+
+
+
+  // const publicPages = ['/'];
+  // const authRequired = !publicPages.includes(to.fullPath);
+
+  // const token = localStorage.getItem('t');
+  // console.log(token)
+  // if (authRequired && !token) {
+  //   return next('/');
+  // }  
+  // if (to.fullPath === '/employeeDash') {
+  //   if (userType.admin !== 'true') {
+  //     return next('/dash');
+  //   }
+  // }
+  // next();
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // redirect to login page if not logged in and trying to access a restricted page
+  // const publicPages = ['/'];
+  // const authRequired = !publicPages.includes(to.path);
+  // const loggedIn = localStorage.getItem('t');
+
+  // if (authRequired && !loggedIn) {
+  //   return next('/');
+  // }
+
+  // next();
+// })
 
 export default router
