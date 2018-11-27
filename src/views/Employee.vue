@@ -1,6 +1,6 @@
 <template>
   <div class="employee">
-  <h1>Edit/Add/Delete Employee</h1>
+  <h1>View/Edit Employee</h1>
   <b-card bg-variant="light" class="card">
     <EditEmployee/>
   </b-card>

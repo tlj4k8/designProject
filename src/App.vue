@@ -21,7 +21,12 @@ export default {
   }),
   mounted: function(){
     let token = localStorage.getItem('t');
+    if (!token){
+      let token = {};
+    }
+    else{
     this.$store.dispatch('storeUserInfo',token);
+    }
   }
 }
 </script>
