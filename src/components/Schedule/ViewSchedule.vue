@@ -201,7 +201,7 @@ export default {
         .then((response)=>{
             this.loading = false;
             alert('Receipt uploaded for ' + this.form.selectedSchedule);
-            this.form.imagePath = response.data;
+            this.imagePath = response.data;
             console.log(response);
         })
         .catch((error)=>{
