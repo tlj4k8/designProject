@@ -176,7 +176,7 @@
         </b-form-group>
         <b-form-group v-if="!disabled" class="flex" id="chefAvailable" label="Available Chef:" label-for="chefAvailable">
             <b-form-select :disabled="disabled" v-model="selectedChef" :options="chefOptions" />
-            <b-button  class="menuBtn" @click="updateChef" variant="primary">Reassign Chef</b-button>
+            <b-button  class="menuBtn" @click="updateChef">Reassign Chef</b-button>
         </b-form-group>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <template> 
   <div v-if="isLoggedIn">
     <div class="menu">
-        <b-button class="logoutButton" @click="logout">Logout</b-button><col/>
+        <b-button class="logoutButton" @click="logout"><b>Logout</b></b-button><col/>
         <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
     </div>
     <transition name="fade">
@@ -54,12 +54,20 @@ export default {
 </script>
 <style scoped>
 .logoutButton{
+  border-color: rgba(110, 110, 110, 0.781);
+  background-color: rgb(235, 235, 235);
+  color: rgb(68, 68, 68);
+  padding-bottom: 1.8em;
+  margin-top: .8em;
+  height: 2em;
+}
+/* .logoutButton{
   padding-bottom: 1.8em;
   margin-top: .8em;
   height: 2em;
   background-color: steelblue;
   border-color: steelblue;
-}
+} */
 .fontAwesome{
   color: black;
   height: 2em;
