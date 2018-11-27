@@ -155,105 +155,100 @@ const router = new Router({
     }
   ]
 })
-const token = localStorage.getItem('t');
-const user = Decoded(token);
+
 router.beforeEach((to, from, next) => {
-  // const publicPages = ['/'];
-  // const authRequired = !publicPages.includes(to.path);
-  // const loggedIn = localStorage.getItem('t');
+//Attempt 2
+// if(to.meta.requiresAuth == true){
+//   const token = localStorage.getItem('t');
+//   const user = Decoded(token);
+//   console.log(user);
+//   if(!token){
+//     next('/');
+//   }
+//   else if(to.meta.adminAuth == true){
+//     const token = localStorage.getItem('t');
+//     const user = Decoded(token);
+//     console.log('DASH');
+//     if(user.admin === 'True'){
+//       next()
+//     }else{
+//       next('/dash');
+//     }
+//   }
+//   else if(to.meta.menuAuth == true){
+//     const token = localStorage.getItem('t');
+//     const user = Decoded(token);
+//     if(user.menu === 'True'){
+//       next()
+//     }else{
+//       next('/dash');
+//     }
+//   }
+//   else if(to.meta.chefAuth == true){
+//     const token = localStorage.getItem('t');
+//     const user = Decoded(token);
+//     console.log(user);
+//     console.log('ANYTHING!!!!!!!!!!!!!!!!!!');
+//     if(user.menu === 'False' && user.admin === 'False'){
+//       next()
+//     }else{
+//       next('/dash');
+//     }
+//   }
+//   else{
+//     next();
+//   }
+// }else{
+//   next();
+// }
+// next();
 
-  // if (authRequired && !loggedIn) {
-  //   return next('/');
-  // }
+  //Attempt 1
+  const publicPages = ['/'];
 
-  // next();
-if(to.meta.requiresAuth == true){
-  const token = localStorage.getItem('t');
-  const user = Decoded(token);
-  console.log(user);
-  if(!token){
-    next('/');
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('t');
+  const userType = Decoded(loggedIn);
+
+  if (authRequired && !loggedIn) {
+    return next('/');
   }
-  else if(to.meta.adminAuth == true){
-    const token = localStorage.getItem('t');
-    const user = Decoded(token);
-    if(user.admin === 'True'){
-      next()
-    }else{
-      next('/dash');
+  else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == true){
+    if(userType.admin === 'True' || userType.menu === 'True' || (userType.menu === 'False' && userType.admin === 'False')){
+      next();
+    }
+    else{
+      return next('/dash');
     }
   }
-  else if(to.meta.menuAuth == true){
-    const token = localStorage.getItem('t');
-    const user = Decoded(token);
-    if(user.menu === 'True'){
-      next()
-    }else{
-      next('/dash');
+  else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == false){
+    if(userType.admin === 'True' || userType.menu === 'False'){
+      next();
+    }
+    else{
+      return next('/dash');
     }
   }
-  else if(to.meta.chefAuth == true){
-    const token = localStorage.getItem('t');
-    const user = Decoded(token);
-    if(user.menu === 'False' && user.admin === 'False'){
-      next()
-    }else{
-      next('/dash');
+  else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == false){
+    if(userType.admin === 'True'){
+      next();
+    }
+    else{
+      return next('/dash');
     }
   }
-  else{
-    next();
+  else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == true){
+    if(userType.admin === 'True' || (userType.admin === 'False' && userType.menu === 'False')){
+      next();
+    }
+    else{
+      return next('/dash');
+    }
   }
-}else{
+
   next();
-}
-next();
-  
 
-
-
-  // const publicPages = ['/'];
-  // const authRequired = !publicPages.includes(to.fullPath);
-
-  // const token = localStorage.getItem('t');
-  // console.log(token)
-  // if (authRequired && !token) {
-  //   return next('/');
-  // }  
-  // if (to.fullPath === '/employeeDash') {
-  //   if (userType.admin !== 'true') {
-  //     return next('/dash');
-  //   }
-  // }
-  // next();
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // redirect to login page if not logged in and trying to access a restricted page
-  // const publicPages = ['/'];
-  // const authRequired = !publicPages.includes(to.path);
-  // const loggedIn = localStorage.getItem('t');
-
-  // if (authRequired && !loggedIn) {
-  //   return next('/');
-  // }
-
-  // next();
-// })
 
 export default router
