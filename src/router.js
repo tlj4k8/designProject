@@ -155,7 +155,8 @@ const router = new Router({
     }
   ]
 })
-
+const token = localStorage.getItem('t');
+const user = Decoded(token);
 router.beforeEach((to, from, next) => {
   // const publicPages = ['/'];
   // const authRequired = !publicPages.includes(to.path);
@@ -166,45 +167,48 @@ router.beforeEach((to, from, next) => {
   // }
 
   // next();
-if(to.meta.requiresAuth){
+if(to.meta.requiresAuth == true){
   const token = localStorage.getItem('t');
   const user = Decoded(token);
-  // console.log(user);
-  if(!user){
-    next({name: 'home'})
+  console.log(user);
+  if(!token){
+    next('/');
   }
-  else if(to.meta.adminAuth){
+  else if(to.meta.adminAuth == true){
     const token = localStorage.getItem('t');
     const user = Decoded(token);
-    if(user.admin == 'True'){
+    if(user.admin === 'True'){
       next()
     }else{
-      next('/dash')
+      next('/dash');
     }
   }
-  else if(to.meta.menuAuth){
+  else if(to.meta.menuAuth == true){
     const token = localStorage.getItem('t');
     const user = Decoded(token);
-    if(user.menu == 'True'){
+    if(user.menu === 'True'){
       next()
     }else{
-      next('/dash')
+      next('/dash');
     }
   }
-  else if(to.meta.chefAuth){
+  else if(to.meta.chefAuth == true){
     const token = localStorage.getItem('t');
     const user = Decoded(token);
-    if(user.menu == 'False' && user.admin == 'False'){
+    if(user.menu === 'False' && user.admin === 'False'){
       next()
     }else{
-      next('/dash')
+      next('/dash');
     }
   }
   else{
     next();
   }
-}
+}else{
   next();
+}
+next();
+  
 
 
 
