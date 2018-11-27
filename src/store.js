@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VueAxios from 'vue-axios';
 import axios from "axios";
-const jwtDecoded = require('jwt-decode');
+import jwtDecoded from "jwt-decode";
 
 Vue.use(VueAxios, axios);
 Vue.use(Vuex);

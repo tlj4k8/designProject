@@ -94,7 +94,7 @@ const router = new Router({
       name: 'MenuPage',
       component: MenuPage,
       meta: { 
-        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: false
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
       }
     },
     {
@@ -102,7 +102,7 @@ const router = new Router({
       name: 'menuEdit',
       component: MenuEdit,
       meta: { 
-        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: true
+        requiresAuth: true, adminAuth: true, menuAuth: true, chefAuth: false
       }
     },
     {
@@ -155,59 +155,14 @@ const router = new Router({
     }
   ]
 })
-
 router.beforeEach((to, from, next) => {
-//Attempt 2
-// if(to.meta.requiresAuth == true){
-//   const token = localStorage.getItem('t');
-//   const user = Decoded(token);
-//   console.log(user);
-//   if(!token){
-//     next('/');
-//   }
-//   else if(to.meta.adminAuth == true){
-//     const token = localStorage.getItem('t');
-//     const user = Decoded(token);
-//     console.log('DASH');
-//     if(user.admin === 'True'){
-//       next()
-//     }else{
-//       next('/dash');
-//     }
-//   }
-//   else if(to.meta.menuAuth == true){
-//     const token = localStorage.getItem('t');
-//     const user = Decoded(token);
-//     if(user.menu === 'True'){
-//       next()
-//     }else{
-//       next('/dash');
-//     }
-//   }
-//   else if(to.meta.chefAuth == true){
-//     const token = localStorage.getItem('t');
-//     const user = Decoded(token);
-//     console.log(user);
-//     console.log('ANYTHING!!!!!!!!!!!!!!!!!!');
-//     if(user.menu === 'False' && user.admin === 'False'){
-//       next()
-//     }else{
-//       next('/dash');
-//     }
-//   }
-//   else{
-//     next();
-//   }
-// }else{
-//   next();
-// }
-// next();
-
-  //Attempt 1
   const publicPages = ['/'];
-
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('t');
+  if(!loggedIn){
+    return next();
+  }
+
   const userType = Decoded(loggedIn);
 
   if (authRequired && !loggedIn) {
@@ -222,7 +177,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == false){
-    if(userType.admin === 'True' || userType.menu === 'False'){
+    if(userType.admin === 'True' || userType.menu === 'True'){
       next();
     }
     else{
@@ -245,9 +200,7 @@ router.beforeEach((to, from, next) => {
       return next('/dash');
     }
   }
-
   next();
-
 })
 
 
