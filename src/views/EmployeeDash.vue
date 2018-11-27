@@ -46,7 +46,7 @@ h1{
   text-align: center;
   padding-top: 10px;
 }
-@media(max-width: 440px){
+@media only screen and (max-width: 480px){
   .btn-secondary{
     width: 100vw;
   }

@@ -63,7 +63,7 @@ export default {
 h1{
   text-align: center;
 }
-@media(max-width: 440px){
+@media only screen and (max-width: 480px){
   .btn-secondary{
     width: 100vw;
   }
