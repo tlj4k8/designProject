@@ -118,7 +118,7 @@ export default {
                 .catch((error)=>{
                     this.loading = false;
                     console.log(error)
-                    alert('Schedule not added');
+                    alert('Please select a new date. This employee is already scheduled at this date');
                 })
             }
         },
