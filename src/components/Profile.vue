@@ -67,26 +67,6 @@
                         required>
             </b-form-input>
         </b-form-group>
-        <!-- <div class="personflexGroup">
-            <b-form-group class="personflex" 
-                        id="username"
-                        label="Username:"
-                        label-for="username">
-                <b-form-input id="username"
-                            type="text"
-                            v-model="form.username">
-                </b-form-input>
-            </b-form-group>
-            <b-form-group class="personflex"
-                            id="password"
-                            label="Password:"
-                            label-for="password">
-                <b-form-input id="password"
-                            type="password"
-                            v-model="form.password">
-                </b-form-input>
-            </b-form-group>
-        </div> -->
     </div>
     <div class="availability">
     <h3>Availability</h3>

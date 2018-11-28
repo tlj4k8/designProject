@@ -141,6 +141,15 @@
                     :disabled="disabled"
                     v-model="form.isadmin"/>
       </b-form-group>
+      <b-form-group id="isChef"
+                    class="flex"
+                    label="Chef Team:"
+                    label-for="isChef">
+        <b-form-checkbox id="form.isChef"
+                    type="checkbox"
+                    :disabled="disabled"
+                    v-model="form.ischef"/>
+      </b-form-group>
     </div>
     </div>
     <div class="availability">
@@ -230,7 +239,8 @@ export default {
         endSun: '',
         isactive: true,
         ismenu: false,
-        isadmin: false
+        isadmin: false,
+        ischef: false
       },
       selected: '',
       options: [],
@@ -290,7 +300,7 @@ export default {
         }
         else{
             this.loading = false;
-            alert('Employee cannot be admin and menu team. Please check your selection.');
+            alert('Employee can only have one employee status. Please check your selection.');
         }
       },
       updateEmployeeList(){
@@ -320,8 +330,16 @@ export default {
         return timeStamp;
       },
       checkType(){
-        if(this.form.ismenu === true && this.form.isadmin === true){
-            this.loading = false;
+        if(this.form.ismenu === true && this.form.isadmin === true && this.form.ischef === true){
+            this.checked = false;
+        }
+        else if(this.form.ismenu === true && this.form.isadmin === true){
+            this.checked = false;
+        }
+        else if(this.form.ismenu === true && this.form.ischef === true){
+            this.checked = false;
+        }
+        else if (this.form.isadmin === true && this.form.ischef === true){
             this.checked = false;
         }
         else{
@@ -435,6 +453,9 @@ export default {
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
                     this.form.isadmin = employeeValue.IsAdmin,
                     this.form.ismenu = employeeValue.IsMenu
+                    if(this.form.isadmin === false && this.form.ismenu === false){
+                        this.form.ischef = true;
+                    }
                 }
 
             })

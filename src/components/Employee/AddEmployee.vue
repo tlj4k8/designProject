@@ -112,6 +112,16 @@
                     :disabled="disabledAdmin"
                     v-model="form.isAdmin"/>
       </b-form-group>
+      <b-form-group id="isChef"
+                    class="flex"
+                    label="Chef Team:"
+                    label-for="isChef">
+        <b-form-checkbox id="form.isChef"
+                    type="checkbox"
+                    v-on:input="checkType"
+                    :disabled="disabledChef"
+                    v-model="form.isChef"/>
+      </b-form-group>
     </div>
     </div>
     <div class="availability">
@@ -173,6 +183,7 @@ export default {
     return {
       disabledAdmin: false,
       disabledMenu: false,
+      disabledChef: false,
       form: {
         username: '',
         password: '',
@@ -197,6 +208,7 @@ export default {
         endSun: '',
         isActive: true,
         isMenu: false,
+        isChef: false,
         isAdmin: false
       },
       employeeNames: [],
@@ -213,13 +225,20 @@ export default {
       checkType(){
         if(this.form.isMenu === true ){
           this.disabledAdmin = true;
+          this.disabledChef = true;
         }
         else if(this.form.isAdmin === true){
           this.disabledMenu = true;
+          this.disabledChef = true;
+        }
+        else if(this.form.isChef === true){
+          this.disabledMenu = true;
+          this.disabledAdmin = true;
         }
         else{
           this.disabledAdmin = false;
           this.disabledMenu = false;
+          this.disabledChef = false;
         }
       },
       handleSubmit(form){
