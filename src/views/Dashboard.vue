@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard">
-  <h1>Dashboard</h1>
+    <div class="logo">
+      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
+    </div>
     <b-button-group vertical class="dashGroup">
         <b-button to="/profile"><b>Profile</b></b-button>
         <b-button to="/clientDash"><b>Client</b></b-button>
@@ -47,14 +49,15 @@ export default {
   padding: 20px 0px;
 }
 .dashGroup{
+  padding-top: 20px;
   width: 80vw;
   margin: 0 10%;
 }
-h1{
-  text-align: center;
-  padding-top: 10px;
+.logo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
-
 @media(max-width: 440px){
   .dashGroup{
     width: 100vw;

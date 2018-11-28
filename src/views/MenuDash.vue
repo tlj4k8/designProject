@@ -1,12 +1,12 @@
 <template>
   <div class="menuDash">
-    <h1>Menu Dashboard</h1>
+    <div class="logo">
+      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
+    </div>
     <b-button-group vertical class="dashGroup">
-      <div class="buttons">
-        <b-button to="/menu"><b>View Master Menu</b></b-button>
-        <b-button v-if="isAdmin=='True' || isMenu=='True'" to="/menuEdit"><b>Add Master Menu Item</b></b-button>
-        <b-button to="/clientMenu"><b>Create Customer Menu</b></b-button>
-      </div>
+      <b-button to="/menu"><b>View Menu</b></b-button>
+      <b-button v-if="isAdmin=='True' || isMenu=='True'" to="/menuEdit"><b>Add Menu</b></b-button>
+      <b-button to="/clientMenu"><b>Create Customer Menu</b></b-button>
     </b-button-group>
   </div>
 </template>
@@ -38,37 +38,28 @@ export default {
 .menuDash{
   margin-top: 8em;
 }
-.dashGroup{
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-.buttons{
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: center;    
-}
 .btn-secondary{
-  padding: 20px 0px;
-  width: 80vw;
   border-left: none;
-  border-top: none;
   border-right: none;
   border-color: rgba(110, 110, 110, 0.781);
   background-color: rgb(235, 235, 235);
   color: rgb(68, 68, 68);
+  padding: 20px 0px;
 }
-h1{
-  text-align: center;
+.dashGroup{
+  padding-top: 20px;
+  width: 80vw;
+  margin: 0 10%;
 }
-@media only screen and (max-width: 480px){
-  .btn-secondary{
-    width: 100vw;
-  }
+.logo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+@media(max-width: 440px){
   .dashGroup{
-    margin: 0 0;
+    width: 100vw;
+    margin: 0px 0px;
   }
 }
 </style>
