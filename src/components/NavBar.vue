@@ -61,13 +61,6 @@ export default {
   margin-top: .8em;
   height: 2em;
 }
-/* .logoutButton{
-  padding-bottom: 1.8em;
-  margin-top: .8em;
-  height: 2em;
-  background-color: steelblue;
-  border-color: steelblue;
-} */
 .fontAwesome{
   color: black;
   height: 2em;
