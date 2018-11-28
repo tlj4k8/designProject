@@ -38,6 +38,14 @@ export default {
 .dashboard{
   margin-top: 8em;
 }
+.btn-secondary{
+  border-left: none;
+  border-right: none;
+  border-color: rgba(110, 110, 110, 0.781);
+  background-color: rgb(235, 235, 235);
+  color: rgb(68, 68, 68);
+  padding: 20px 0px;
+}
 .dashGroup{
   width: 80vw;
   margin: 0 10%;
@@ -46,5 +54,10 @@ h1{
   text-align: center;
   padding-top: 10px;
 }
-
+@media(max-width: 440px){
+  .dashGroup{
+    width: 100vw;
+    margin: 0px 0px;
+  }
+}
 </style>
