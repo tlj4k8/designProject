@@ -2,11 +2,11 @@
   <div class="dashboard">
   <h1>Dashboard</h1>
     <b-button-group vertical class="dashGroup">
-        <b-button to="/clientDash">Client</b-button>
-        <b-button to="/menuDash">Menu</b-button>
-        <b-button to="/profile">Profile</b-button>
-        <b-button v-if="isAdmin=='True'" to="/employeeDash">Employee</b-button>
-        <b-button v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" to="/scheduleDash">Schedule</b-button>
+        <b-button to="/profile"><b>Profile</b></b-button>
+        <b-button to="/clientDash"><b>Client</b></b-button>
+        <b-button to="/menuDash"><b>Menu</b></b-button>
+        <b-button v-if="isAdmin=='True'" to="/employeeDash"><b>Employee</b></b-button>
+        <b-button v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" to="/scheduleDash"><b>Schedule</b></b-button>
     </b-button-group>
   </div>
 </template>
@@ -54,10 +54,12 @@ h1{
   text-align: center;
   padding-top: 10px;
 }
+
 @media(max-width: 440px){
   .dashGroup{
     width: 100vw;
     margin: 0px 0px;
   }
 }
+
 </style>
