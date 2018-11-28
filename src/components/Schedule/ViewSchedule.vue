@@ -10,7 +10,7 @@
                     class="select"
                     :label-cols="4"
                     breakpoint="md">
-            <b-form-select v-on:input="getSchedules" v-model="form.selectedSchedule" :options="scheduleOptions" class="mb-1" />
+            <b-form-select @input="getSchedules" v-model="form.selectedSchedule" :options="scheduleOptions" class="mb-1" />
         </b-form-group>
         </div>
         <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
@@ -179,39 +179,62 @@ export default {
         disabledTime: true,
         show: true,
         checked: false,
-        loading: true
+        loading: true,
+        ready: false,
+        timeInReady: false,
+        timeOutReady: false,
+        clockedIn: false,
+        imageUploaded: false,
+        fileSelected: false
     }
   },
 
   methods: {
     onFileSelected(event){
+        this.fileSelected = true;
         this.selectedFile = event.target.files[0];
     },
     onUpload(){
-        this.loading = true;
-        let token = localStorage.getItem('t');
-        let formData = new FormData();
-        formData.append('file', this.selectedFile, this.selectedFile.name);
-        this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', formData, {
-            headers:{
-                'Content-Type':'multipart/form-data',
-                'Authorization': 'Bearer ' + token
+        if(this.ready === true){
+            if(this.fileSelected === true){
+                if(this.imageUploaded === false){
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let formData = new FormData();
+                    formData.append('file', this.selectedFile, this.selectedFile.name);
+                    this.$axiosServer.post('https://chefemployees.com/api/' + this.form.selectedSchedule +'/AddImage', formData, {
+                        headers:{
+                            'Content-Type':'multipart/form-data',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    .then((response)=>{
+                        this.loading = false;
+                        alert('Receipt uploaded for ' + this.form.selectedSchedule);
+                        this.imagePath = response.data;
+                        console.log(response);
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        alert('Receipt failed to upload. Please try again.');
+                        console.log(error);
+                    })
+                }else{
+                    alert('Image has already been uploaded for this schedule.');
+                }
+            }else{
+                alert('File must be selected before upload.');
             }
-        })
-        .then((response)=>{
-            this.loading = false;
-            alert('Receipt uploaded for ' + this.form.selectedSchedule);
-            this.imagePath = response.data;
-            console.log(response);
-        })
-        .catch((error)=>{
-            this.loading = false;
-            alert('Receipt failed to upload. Please try again.');
-            console.log(error);
-        })
+        }else{
+            alert('Schedule must be selected to upload an image.');
+        }
     },
     openImage(){
-        window.open(this.imagePath, "_blank");
+        if(this.ready === true){
+            window.open(this.imagePath, "_blank");
+        }else{
+            alert('Schedule must be selected before viewing image.')
+        }
     },
     updateTime(){
         this.loading = true;
@@ -252,49 +275,71 @@ export default {
         return formatedDate;
     },
     clockIn(){
-        let timestamp = moment().format("HH:mm");
-        this.form.timeIn = timestamp;
-        this.loading = true;
-        let token = localStorage.getItem('t');
-        let headers = {'Authorization': "Bearer " + token};
-        this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
-            ScheduleId: this.form.selectedSchedule,
-            Clockin: this.formatTime(this.form.timeIn)
-        }, {headers: headers}
-        )
-        .then((response)=>{
-            console.log(response);
-            this.loading = false;
-            alert('You are clocked in! Don\'t forget to clock out.');
-        })
-        .catch((error)=>{
-            this.loading = false;
-            alert('There was a problem clocking in. Please try again.');
-            console.log(error);
-        })
+        if(this.ready === true){
+            if(this.timeInReady === false){
+                let timestamp = moment().format("HH:mm");
+                this.form.timeIn = timestamp;
+                this.loading = true;
+                let token = localStorage.getItem('t');
+                let headers = {'Authorization': "Bearer " + token};
+                this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+                    ScheduleId: this.form.selectedSchedule,
+                    Clockin: this.formatTime(this.form.timeIn)
+                }, {headers: headers}
+                )
+                .then((response)=>{
+                    console.log(response);
+                    this.clockedIn = true;
+                    this.loading = false;
+                    alert('You are clocked in! Don\'t forget to clock out.');
+                })
+                .catch((error)=>{
+                    this.loading = false;
+                    alert('There was a problem clocking in. Please try again.');
+                    console.log(error);
+                })
+            }else{
+                alert('You are already clocked in!');
+            }
+        }else{
+            alert('Schedule must be selected before clock in.')
+        }
     },
     clockOut(){
-        let timestamp = moment().format("HH:mm");
-        this.form.timeOut = timestamp;
-        this.loading = true;
-        let token = localStorage.getItem('t');
-        let headers = {'Authorization': "Bearer " + token};
-        this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
-            ScheduleId: this.form.selectedSchedule,
-            Clockout: this.formatTime(this.form.timeOut)
-        }, {headers: headers}
-        )
-        .then((response)=>{
-            console.log(response);
-            this.loading = false;
-            alert('You are clocked out!');
-            this.disabled = true;
-        })
-        .catch((error)=>{
-            this.loading = false;
-            alert('There was a problem clocking out. Please try again.');
-            console.log(error);
-        })
+        if(this.ready === true){
+            if(this.clockedIn === true){
+                let time = this.form.timeIn;
+                if(time != null){
+                    let timestamp = moment().format("HH:mm");
+                    this.form.timeOut = timestamp;
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let headers = {'Authorization': "Bearer " + token};
+                    this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+                        ScheduleId: this.form.selectedSchedule,
+                        Clockout: this.formatTime(this.form.timeOut)
+                    }, {headers: headers}
+                    )
+                    .then((response)=>{
+                        console.log(response);
+                        this.loading = false;
+                        alert('You are clocked out!');
+                        this.disabled = true;
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        alert('There was a problem clocking out. Please try again.');
+                        console.log(error);
+                    })
+                }else{
+                    alert('You are already clocked out!');
+                }
+            }else{
+                alert('You must clock in before you can clock out.');
+            }
+        }else{
+            alert('Schedule must be selected before clock out.')
+        }
     },
     validateDate(){
         const yesterday = moment().subtract(1, "day").format("YYYY-MM-DD");
@@ -359,6 +404,7 @@ export default {
         let token = localStorage.getItem('t');
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
+            console.log(response);
             let scheduleValue = response.data;
             this.form.date = this.returnDate(scheduleValue.ScheduleDate),
             this.form.startTime = this.returnTime(scheduleValue.StartTime),
@@ -371,11 +417,21 @@ export default {
             this.employeeId = scheduleValue.EmployeeId,
             this.clientId = scheduleValue.ClientId,
             this.menuOptions = []
+            if(scheduleValue.ImagePath !== null){
+                this.imageUploaded = true;
+            }
+            if(scheduleValue.Clockin !== null){
+                this.timeInReady = true;
+            }
+            if(scheduleValue.Clockout !== null){
+                this.timeOutReady = true;
+            }
             this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 response.data.forEach((data) => {
                     this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.ClientMenuNotes )
                 })
+                this.ready = true;
                 this.loading = false;
             })
             .catch((error)=>{
