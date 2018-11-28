@@ -522,14 +522,17 @@ ul{
   }
 }
 @media(max-width: 440px){
+    .disabledButtons{
+      justify-content: center;
+  }
   .disabled{
       width: 90%;
   }
   .update{
-      width: 60%
+      width: 70%
   }
   .cancel{
-      width: 60%;
+      width: 70%;
   }
 }
 @media (max-width: 900px) {
@@ -540,10 +543,10 @@ ul{
       width: 90%;
   }
   .update{
-      width: 40%
+      width: 60%
   }
   .cancel{
-      width: 40%;
+      width: 60%;
   }
 }
 </style>

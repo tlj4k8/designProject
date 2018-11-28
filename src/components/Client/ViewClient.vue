@@ -684,10 +684,10 @@ hr{
       width: 90%;
   }
   .update{
-      width: 60%
+      width: 70%
   }
   .cancel{
-      width: 60%;
+      width: 70%;
   }
 }
 @media (max-width: 810px) {
@@ -698,10 +698,10 @@ hr{
       width: 90%;
   }
   .update{
-      width: 40%
+      width: 60%
   }
   .cancel{
-      width: 40%;
+      width: 60%;
   }
 }
 </style>
