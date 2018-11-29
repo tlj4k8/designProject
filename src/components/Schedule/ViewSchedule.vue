@@ -53,12 +53,12 @@
         <div class="menu">
         <h3> Scheduled Meal Items </h3>
         <hr/>
-            <div v-if="this.menuOptions.length == 0">
+            <div v-if="menuOptions.length == 0">
                 <p class="menuError">* No menus have been scheduled *</p>
             </div>
-            <div v-if="this.menuOptions.length !== 0">
+            <div v-if="menuOptions.length > 0">
                 <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
-                    <b-card>
+                    <b-card v-if="ready == true">
                         <h5> {{menuOption.name}}</h5>
                         <p class="card-text"><b>Notes:</b> {{ menuOption.notes}}</p>
                     </b-card>
@@ -266,10 +266,6 @@ export default {
         let timeHour = timeStamp[0];
         let timeMinutes = timeStamp[1];
         let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
-        if(time === '' || 'Invalid date' || undefined){
-            let formatedTime = "PT00H00M00S";
-            return formatedTime;
-        }
         return formatedTime;
     },
     formatDate(){
@@ -284,6 +280,7 @@ export default {
                 let timestamp = moment().format("HH:mm");
                 this.form.timeIn = timestamp;
                 this.loading = true;
+                console.log(this.form.timeIn);
                 let token = localStorage.getItem('t');
                 let headers = {'Authorization': "Bearer " + token};
                 this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
@@ -292,6 +289,7 @@ export default {
                 }, {headers: headers}
                 )
                 .then((response)=>{
+                    console.log(this.form.timeIn);
                     this.loading = false;
                     alert('You are clocked in! Don\'t forget to clock out.');
                 })
