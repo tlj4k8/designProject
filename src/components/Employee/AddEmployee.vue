@@ -94,7 +94,7 @@
     <div class="flexGroup">
       <b-form-group id="isMenu"
                     class="flex"
-                    label="Menu Team:"
+                    label="Menu:"
                     label-for="isMenu">
         <b-form-checkbox id="form.isMenu"
                     type="checkbox"
@@ -104,7 +104,7 @@
       </b-form-group>
       <b-form-group id="isAdmin"
                     class="flex"
-                    label="Admin Team:"
+                    label="Admin:"
                     label-for="isAdmin">
         <b-form-checkbox id="form.isAdmin"
                     type="checkbox"
@@ -114,7 +114,7 @@
       </b-form-group>
       <b-form-group id="isChef"
                     class="flex"
-                    label="Chef Team:"
+                    label="Chef:"
                     label-for="isChef">
         <b-form-checkbox id="form.isChef"
                     type="checkbox"

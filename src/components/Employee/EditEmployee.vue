@@ -115,6 +115,7 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.zip"
+                        pattern="^\d{5}(?:[-\s])?$"
                         required>
             </b-form-input>
         </b-form-group>
@@ -125,7 +126,7 @@
     <div class="flexGroup">
       <b-form-group id="ismenu"
                     class="flex"
-                    label="Menu Team:"
+                    label="Menu:"
                     label-for="ismenu">
         <b-form-checkbox id="form.ismenu"
                     type="checkbox"
@@ -134,7 +135,7 @@
       </b-form-group>
       <b-form-group id="isadmin"
                     class="flex"
-                    label="Admin Team:"
+                    label="Admin:"
                     label-for="isadmin">
         <b-form-checkbox id="form.isadmin"
                     type="checkbox"
@@ -143,7 +144,7 @@
       </b-form-group>
       <b-form-group id="isChef"
                     class="flex"
-                    label="Chef Team:"
+                    label="Chef:"
                     label-for="isChef">
         <b-form-checkbox id="form.isChef"
                     type="checkbox"
@@ -190,6 +191,30 @@
           </table>
       </div>
     </div>
+    <div class="zip">
+      <h3>zip</h3>
+      <div class="flexGroup">
+      <b-form-group class="flex"
+                        id="zip1"
+                        label="Zip Code:"
+                        label-for="zip1">
+            <b-form-input id="zip1"
+                        type="text"
+                        v-model="newZip"
+                        required>
+            </b-form-input>
+        </b-form-group>
+        <b-button @click="addZip">Add Zip</b-button>
+          <b-form-group id="zip2"
+                      class="flex"
+                      :label-cols="4"
+                      breakpoint="md"
+                      label="zip2"
+                      label-for="zip2">
+          <b-form-select v-model="zipSelected" :options="zipOptions" class="mb-1" />
+          </b-form-group>
+      </div>
+      </div>
     </b-form>
     <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
@@ -244,12 +269,25 @@ export default {
       },
       selected: '',
       options: [],
+      zipOptions: [],
+      zipSelected: '',
+      newZip: '',
       show: true,
       loading: false,
       checked: false
     };
   },
   methods: {
+      addZip(){
+        console.log(this.newZip);
+        console.log(this.zipOptions);
+        console.log('before');
+        let op = [];
+        op.push(this.newZip);
+        console.log(op);
+        this.zipOptions.push(this.newZip);
+        console.log(this.zipOptions);
+      },
       updateEmployee(){
         this.loading = true;
         this.checkType();
@@ -437,6 +475,8 @@ export default {
                     this.form.phone = employeeValue.EmCellPhone,
                     this.form.email = employeeValue.EmEmail,
                     this.form.zip = employeeValue.EmZipCodes,
+                    this.zipOptions = employeeValue.EmZipCodes,
+                    console.log('ZIP ' + this.zipOptions)
                     this.form.mon = this.returnTime(employeeValue.EmStartMonday),
                     this.form.endMon = this.returnTime(employeeValue.EmEndMonday),
                     this.form.tue = this.returnTime(employeeValue.EmStartTuesday),
@@ -457,7 +497,6 @@ export default {
                         this.form.ischef = true;
                     }
                 }
-
             })
             .catch((error)=>{
                 this.loading = false;
