@@ -118,7 +118,6 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.zip"
-                      pattern="^[0-9]{5}(?:-[0-9]{4})?$"
                       required>
         </b-form-input>
       </b-form-group>
