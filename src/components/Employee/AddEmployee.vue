@@ -94,7 +94,7 @@
     <div class="flexGroup">
       <b-form-group id="isMenu"
                     class="flex"
-                    label="Menu Team:"
+                    label="Menu:"
                     label-for="isMenu">
         <b-form-checkbox id="form.isMenu"
                     type="checkbox"
@@ -104,13 +104,23 @@
       </b-form-group>
       <b-form-group id="isAdmin"
                     class="flex"
-                    label="Admin Team:"
+                    label="Admin:"
                     label-for="isAdmin">
         <b-form-checkbox id="form.isAdmin"
                     type="checkbox"
                     v-on:input="checkType"
                     :disabled="disabledAdmin"
                     v-model="form.isAdmin"/>
+      </b-form-group>
+      <b-form-group id="isChef"
+                    class="flex"
+                    label="Chef:"
+                    label-for="isChef">
+        <b-form-checkbox id="form.isChef"
+                    type="checkbox"
+                    v-on:input="checkType"
+                    :disabled="disabledChef"
+                    v-model="form.isChef"/>
       </b-form-group>
     </div>
     </div>
@@ -173,6 +183,7 @@ export default {
     return {
       disabledAdmin: false,
       disabledMenu: false,
+      disabledChef: false,
       form: {
         username: '',
         password: '',
@@ -197,12 +208,14 @@ export default {
         endSun: '',
         isActive: true,
         isMenu: false,
+        isChef: false,
         isAdmin: false
       },
       employeeNames: [],
       valid: '',
       show: true,
-      loading: false
+      loading: false,
+      zipRegex: false
     };
   },
   methods: {
@@ -213,20 +226,40 @@ export default {
       checkType(){
         if(this.form.isMenu === true ){
           this.disabledAdmin = true;
+          this.disabledChef = true;
         }
         else if(this.form.isAdmin === true){
           this.disabledMenu = true;
+          this.disabledChef = true;
+        }
+        else if(this.form.isChef === true){
+          this.disabledMenu = true;
+          this.disabledAdmin = true;
         }
         else{
           this.disabledAdmin = false;
           this.disabledMenu = false;
+          this.disabledChef = false;
+        }
+      },
+      checkRegex(){
+        let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+        let letterPatt = new RegExp(/[^\d,\s]/g);
+        let letterPattResult = letterPatt.test(this.form.zip);
+        let pattResult = patt.test(this.form.zip);
+        if(letterPattResult === true){
+            this.zipRegex = false;
+        }else
+        if(pattResult === true){
+            this.zipRegex = true;
         }
       },
       handleSubmit(form){
+        this.checkRegex();
         this.loading = true;
         let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
-        if(this.valid === 'lightgreen'){
+        if(this.valid === 'lightgreen' && this.zipRegex == true){
           this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
               Username: this.form.username,
               Password: this.form.password,

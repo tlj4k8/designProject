@@ -125,21 +125,33 @@
     <div class="flexGroup">
       <b-form-group id="ismenu"
                     class="flex"
-                    label="Menu Team:"
+                    label="Menu:"
                     label-for="ismenu">
         <b-form-checkbox id="form.ismenu"
                     type="checkbox"
                     :disabled="disabled"
+                    @input="checkType"
                     v-model="form.ismenu"/>
       </b-form-group>
       <b-form-group id="isadmin"
                     class="flex"
-                    label="Admin Team:"
+                    label="Admin:"
                     label-for="isadmin">
         <b-form-checkbox id="form.isadmin"
                     type="checkbox"
                     :disabled="disabled"
+                    @input="checkType"
                     v-model="form.isadmin"/>
+      </b-form-group>
+      <b-form-group id="isChef"
+                    class="flex"
+                    label="Chef:"
+                    label-for="isChef">
+        <b-form-checkbox id="form.isChef"
+                    type="checkbox"
+                    :disabled="disabled"
+                    @input="checkType"
+                    v-model="form.ischef"/>
       </b-form-group>
     </div>
     </div>
@@ -230,20 +242,22 @@ export default {
         endSun: '',
         isactive: true,
         ismenu: false,
-        isadmin: false
+        isadmin: false,
+        ischef: false
       },
       selected: '',
       options: [],
       show: true,
       loading: false,
-      checked: false
+      checked: false,
+      zipRegex: false
     };
   },
   methods: {
       updateEmployee(){
+        this.checkRegex();
         this.loading = true;
-        this.checkType();
-        if(this.checked === true){
+        if(this.checked == true && this.zipRegex == true){
             this.loading = true;
             let token = localStorage.getItem('t');
             let headers = {'Authorization': "Bearer " + token};
@@ -251,8 +265,6 @@ export default {
                 EmployeeId: this.selected,
                 EmFirstName: this.form.firstName,
                 EmLastName: this.form.lastName,
-                Username: this.form.username,
-                Password: this.form.password,
                 EmCellPhone: this.form.phone,
                 EmEmail: this.form.email,
                 EmZipCodes: this.form.zip,
@@ -290,7 +302,7 @@ export default {
         }
         else{
             this.loading = false;
-            alert('Employee cannot be admin and menu team. Please check your selection.');
+            alert('Please check your input');
         }
       },
       updateEmployeeList(){
@@ -313,21 +325,17 @@ export default {
         var timeHour = timeStamp[0];
         var timeMinutes = timeStamp[1];
         var formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+        if(time === ''){
+            let formatedTime = "PT00H00M00S";
+            return formatedTime;
+        }
         return formatedTime;
       },
       returnTime(time){
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
       },
-      checkType(){
-        if(this.form.ismenu === true && this.form.isadmin === true){
-            this.loading = false;
-            this.checked = false;
-        }
-        else{
-            this.checked = true;
-        }
-     },
+      
     updatePassword(){
         this.loading = true;
         let token = localStorage.getItem('t');
@@ -376,6 +384,18 @@ export default {
             alert('Password updated. Check to make sure fields are filled correctly.');
           })
         },
+        checkRegex(){
+            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+            let letterPatt = new RegExp(/[^\d,\s]/g);
+            let letterPattResult = letterPatt.test(this.form.zip);
+            let pattResult = patt.test(this.form.zip);
+            if(letterPattResult === true){
+                this.zipRegex = false;
+            }else
+            if(pattResult === true){
+                this.zipRegex = true;
+            }
+        },
   },
 
   computed: {
@@ -387,6 +407,24 @@ export default {
                 return state.userInfo.admin;
             }
         }),
+        checkType(){
+            if(this.form.ismenu === true && this.form.isadmin === true && this.form.ischef === true){
+                this.checked = false;
+            }
+            else if(this.form.ismenu === true && this.form.isadmin === true){
+                this.checked = false;
+            }
+            else if(this.form.ismenu === true && this.form.ischef === true){
+                this.checked = false;
+            }
+            else if (this.form.isadmin === true && this.form.ischef === true){
+                this.checked = false;
+            }
+            else{
+                this.checked = true;
+            }
+        },
+
         getEmployees(){
             this.loading = true;
             this.passwordDisabled = true;
@@ -435,8 +473,10 @@ export default {
                     this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
                     this.form.isadmin = employeeValue.IsAdmin,
                     this.form.ismenu = employeeValue.IsMenu
+                    if(this.form.isadmin === false && this.form.ismenu === false){
+                        this.form.ischef = true;
+                    }
                 }
-
             })
             .catch((error)=>{
                 this.loading = false;

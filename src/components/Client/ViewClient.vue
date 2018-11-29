@@ -427,7 +427,8 @@ export default {
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
         ],
         show: true,
-        loading: false
+        loading: false,
+        zipRegex: false
     }
     },
     methods:{
@@ -452,68 +453,86 @@ export default {
             }
             return formatedTime;
         },
+        checkRegex(){
+            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+            let letterPatt = new RegExp(/[^\d,\s]/g);
+            let letterPattResult = letterPatt.test(this.form.zip);
+            let pattResult = patt.test(this.form.zip);
+            if(letterPattResult === true){
+                this.zipRegex = false;
+            }else
+            if(pattResult === true){
+                this.zipRegex = true;
+            }
+        },
         updateClient(){
+            this.checkRegex()
             this.loading = true;
-            let token = localStorage.getItem('t');
-            let headers = {'Authorization': "Bearer " + token};
-            this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
-                ClientId: this.selected,
-                EmployeeId: this.form.chef,
-                ClFirstName: this.form.firstName,
-                ClLastName: this.form.lastName,
-                ClCellPhone: this.form.phone,
-                Address1: this.form.address,
-                Address2: this.form.addressTwo,
-                ClEmail: this.form.email,
-                City: this.form.city,
-                State: this.form.state,
-                ZipCode: this.form.zip,
-                ClStartMonday: this.formatTime(this.form.mon),
-                ClEndMonday: this.formatTime(this.form.endMon),
-                ClStartTuesday: this.formatTime(this.form.tue),
-                ClEndTuesday: this.formatTime(this.form.endTue),
-                ClStartWednesday: this.formatTime(this.form.wed),
-                ClEndWednesday: this.formatTime(this.form.endWed),
-                ClStartThursday: this.formatTime(this.form.thur),
-                ClEndThursday: this.formatTime(this.form.endThur),
-                ClStartFriday: this.formatTime(this.form.fri),
-                ClEndFriday: this.formatTime(this.form.endFri),
-                ClStartSaturday: this.formatTime(this.form.sat),
-                ClEndSaturday: this.formatTime(this.form.endSat),
-                ClStartSunday: this.formatTime(this.form.sun),
-                ClEndSunday: this.formatTime(this.form.endSun),
-                PreferredMeats: this.form.meats,
-                MeatsToAvoid: this.form.meatAvoid,
-                PreferredCheeses: this.form.cheese,
-                CheesesToAvoid: this.form.cheeseAvoid,
-                PreferredGrains: this.form.grains,
-                GrainsToAvoid: this.form.grainsAvoid,
-                SpiceLevel: this.form.spice,
-                OtherToAvoid: this.other,
-                Allergies: this.form.allergies,
-                DietRestrictions: this.form.dietRestrictions,
-                DietGoals: this.form.dietGoals,
-                MainDishSoupSaladStew: this.form.mainDish,
-                StoreContainers: this.form.storageContainers,
-                StoveOven: this.form.stove,
-                OrganicMeals: this.form.organic,
-                PreferredGroceryStore: this.form.groceryStore,
-                MealSize: this.form.mealStructure,
-                ExtraNotes: this.form.notes
-                }, {headers: headers}
-            )
-            .then((response)=>{
-                this.loading = false;
-                this.disabled = true;
-                alert('Client updated successfully!');
-                this.options = [];
-                this.updateClientList();
-            })
-            .catch((error)=>{
-                console.log(error);
+            if(this.zipRegex == true){
+                let token = localStorage.getItem('t');
+                let headers = {'Authorization': "Bearer " + token};
+                this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
+                    ClientId: this.selected,
+                    EmployeeId: this.form.chef,
+                    ClFirstName: this.form.firstName,
+                    ClLastName: this.form.lastName,
+                    ClCellPhone: this.form.phone,
+                    Address1: this.form.address,
+                    Address2: this.form.addressTwo,
+                    ClEmail: this.form.email,
+                    City: this.form.city,
+                    State: this.form.state,
+                    ZipCode: this.form.zip,
+                    ClStartMonday: this.formatTime(this.form.mon),
+                    ClEndMonday: this.formatTime(this.form.endMon),
+                    ClStartTuesday: this.formatTime(this.form.tue),
+                    ClEndTuesday: this.formatTime(this.form.endTue),
+                    ClStartWednesday: this.formatTime(this.form.wed),
+                    ClEndWednesday: this.formatTime(this.form.endWed),
+                    ClStartThursday: this.formatTime(this.form.thur),
+                    ClEndThursday: this.formatTime(this.form.endThur),
+                    ClStartFriday: this.formatTime(this.form.fri),
+                    ClEndFriday: this.formatTime(this.form.endFri),
+                    ClStartSaturday: this.formatTime(this.form.sat),
+                    ClEndSaturday: this.formatTime(this.form.endSat),
+                    ClStartSunday: this.formatTime(this.form.sun),
+                    ClEndSunday: this.formatTime(this.form.endSun),
+                    PreferredMeats: this.form.meats,
+                    MeatsToAvoid: this.form.meatAvoid,
+                    PreferredCheeses: this.form.cheese,
+                    CheesesToAvoid: this.form.cheeseAvoid,
+                    PreferredGrains: this.form.grains,
+                    GrainsToAvoid: this.form.grainsAvoid,
+                    SpiceLevel: this.form.spice,
+                    OtherToAvoid: this.other,
+                    Allergies: this.form.allergies,
+                    DietRestrictions: this.form.dietRestrictions,
+                    DietGoals: this.form.dietGoals,
+                    MainDishSoupSaladStew: this.form.mainDish,
+                    StoreContainers: this.form.storageContainers,
+                    StoveOven: this.form.stove,
+                    OrganicMeals: this.form.organic,
+                    PreferredGroceryStore: this.form.groceryStore,
+                    MealSize: this.form.mealStructure,
+                    ExtraNotes: this.form.notes
+                    }, {headers: headers}
+                )
+                .then((response)=>{
+                    this.loading = false;
+                    this.disabled = true;
+                    alert('Client updated successfully!');
+                    this.options = [];
+                    this.updateClientList();
+                })
+                .catch((error)=>{
+                    console.log(error);
+                    this.loading = false;
+                    alert('Client not updated. Check to make sure fields are filled correctly.');
+                })
+            }else{
                 this.loading = false;
                 alert('Client not updated. Check to make sure fields are filled correctly.');
-            })
+            }
         },
         updateClientList(){
             this.loading = true;
@@ -683,10 +702,10 @@ hr{
       width: 90%;
   }
   .update{
-      width: 60%
+      width: 70%
   }
   .cancel{
-      width: 60%;
+      width: 70%;
   }
 }
 @media (max-width: 810px) {
@@ -697,10 +716,10 @@ hr{
       width: 90%;
   }
   .update{
-      width: 40%
+      width: 60%
   }
   .cancel{
-      width: 40%;
+      width: 60%;
   }
 }
 </style>
