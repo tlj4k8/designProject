@@ -183,10 +183,14 @@ export default {
             return timeStamp;
         },
         formatTime(time){
-            var timeStamp = time.split(':');
-            var timeHour = timeStamp[0];
-            var timeMinutes = timeStamp[1];
-            var formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+            let timeStamp = time.split(':');
+            let timeHour = timeStamp[0];
+            let timeMinutes = timeStamp[1];
+            let formatedTime = "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
+            if(time === '' || 'Invalid date' || undefined){
+                let formatedTime = "PT00H00M00S";
+                return formatedTime;
+            }
             return formatedTime;
         },
         updateProfile(){
