@@ -50,15 +50,19 @@
                 </b-form-group>
             </div>
         </div>
+        <div class="menu">
         <h3> Scheduled Meal Items </h3>
         <hr/>
-        <div>
-             <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
-                 <b-card>
-                     {{ menuOption }}
-                </b-card>
-            </ul>
-
+            <div v-if="this.menuOptions.length == 0">
+                <p>* No menus have been scheduled *</p>
+            </div>
+            <div v-if="this.menuOptions.length !== 0">
+                <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
+                    <b-card>
+                        {{ menuOption }}
+                    </b-card>
+                </ul>
+            </div>
         </div>
         <div class="timestamp">
             <h3>Track Time</h3>
@@ -178,7 +182,7 @@ export default {
         disabledTime: true,
         show: true,
         checked: false,
-        loading: true,
+        loading: false,
         ready: false,
         selectedFile: null,
         imageUploaded: false
@@ -238,6 +242,7 @@ export default {
     },
     updateTime(){
         this.loading = true;
+        let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
         this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
             ScheduleId: this.form.selectedSchedule,
@@ -261,7 +266,7 @@ export default {
         let timeHour = timeStamp[0];
         let timeMinutes = timeStamp[1];
         let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
-        if(time === ''){
+        if(time === '' || 'Invalid date' || undefined){
             let formatedTime = "PT00H00M00S";
             return formatedTime;
         }
@@ -275,7 +280,7 @@ export default {
     clockIn(){
         if(this.ready == true){
             let time = this.form.timeIn;
-            if(time === 'Invalid date' || null || ''){
+            if(time === 'Invalid date' || time === null || time ==='' || time === '00:00'){
                 let timestamp = moment().format("HH:mm");
                 this.form.timeIn = timestamp;
                 this.loading = true;
@@ -305,9 +310,9 @@ export default {
     clockOut(){
         if(this.ready == true){
             let time = this.form.timeIn;
-            if(time !== 'Invalid date' || null || ''){
+            if(time !== 'Invalid date' && time !== null & (time !== '' && time !== '00:00')){
                 let clockout = this.form.timeOut;
-                if(clockout === 'Invalid date' || null || '' ){
+                if(clockout === 'Invalid date' || clockout === null || clockout === '' || clockout === '00:00' ){
                     let timestamp = moment().format("HH:mm");
                     this.form.timeOut = timestamp;
                     this.loading = true;
@@ -417,6 +422,7 @@ export default {
                 response.data.forEach((data) => {
                     this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.ClientMenuNotes )
                 })
+                console.log(this.menuOptions);
                 this.ready = true;
                 this.loading = false;
             })
@@ -453,6 +459,9 @@ export default {
 hr{
     background-color: #0d50bc;
     height: 1px;
+}
+p{
+    text-align: center;
 }
 ul{
     padding-inline-start: 0;
