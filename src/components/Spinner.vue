@@ -40,5 +40,6 @@ export default {
     width: 100px !important;
     height: 100px !important;
     border-width: 10px !important;
+    border-color: rgb(53, 73, 94) rgb(23, 172, 209) rgb(23, 172, 209) !important;
 }
 </style>

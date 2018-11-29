@@ -145,7 +145,7 @@
         </table>
     </div>
     </div>
-    <div class="chef">
+    <!-- <div class="chef">
     <h3>Assign Chef</h3>
       <hr/>
       <div class="chef">
@@ -156,7 +156,7 @@
           <b-form-select v-model="selected" :options="options" class="mb-1" />
           </b-form-group>
       </div>
-    </div>
+    </div> -->
   <div class="needform">
   <h3>Client Needs Assessment</h3>
   <hr/>
@@ -269,6 +269,7 @@
                     label-for="mainDish">
         <b-form-input id="mainDish"
                       type="text"
+                      placeholder="Ex. Soup, Salad, Stew, etc."
                       v-model="form.mainDish"/>
       </b-form-group>
       <b-form-group id="groceryStore"
@@ -283,6 +284,7 @@
                     label-for="mealStructure">
         <b-form-input id="mealStructure"
                       type="text"
+                      placeholder="Ex. # of meals per/day"
                       v-model="form.mealStructure"/>
       </b-form-group>
       <b-form-group id="notes"
@@ -369,74 +371,74 @@ export default {
         'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
       ],
       show: true,
-      loading: false,
+      loading: true,
       zipRegex: false
     }
   },
     methods: {
       checkRegex(){
-            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
-            let letterPatt = new RegExp(/[^\d,\s]/g);
-            let letterPattResult = letterPatt.test(this.form.zip);
-            let pattResult = patt.test(this.form.zip);
-            if(letterPattResult === true){
-                this.zipRegex = false;
-            }else
-            if(pattResult === true){
-                this.zipRegex = true;
-            }
-        },
-        handleSubmit(form){
-          this.checkRegex();
-          this.loading = true;
-          if(this.zipRegex == true){
-            let token = localStorage.getItem('t');
-            let headers = {'Authorization': "Bearer " + token};
-            this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
-                EmployeeId: this.selected,
-                ClFirstName: this.form.firstName,
-                ClLastName: this.form.lastName,
-                ClCellPhone: this.form.phone,
-                ClEmail: this.form.email,
-                Address1: this.form.address,
-                Address2: this.form.addressTwo,
-                City: this.form.city,
-                State: this.form.state,
-                ZipCode: this.form.zip,
-                ClIsActive: this.form.isActive,
-                ClStartMonday: this.formatTime(this.form.mon),
-                ClEndMonday: this.formatTime(this.form.endMon),
-                ClStartTuesday: this.formatTime(this.form.tue),
-                ClEndTuesday: this.formatTime(this.form.endTue),
-                ClStartWednesday: this.formatTime(this.form.wed),
-                ClEndWednesday: this.formatTime(this.form.endWed),
-                ClStartThursday: this.formatTime(this.form.thur),
-                ClEndThursday: this.formatTime(this.form.endThur),
-                ClStartFriday: this.formatTime(this.form.fri),
-                ClEndFriday: this.formatTime(this.form.endFri),
-                ClStartSaturday: this.formatTime(this.form.sat),
-                ClEndSaturday: this.formatTime(this.form.endSat),
-                ClStartSunday: this.formatTime(this.form.sun),
-                ClEndSunday: this.formatTime(this.form.endSun),
-                PreferredMeats: this.form.meats,
-                MeatsToAvoid: this.form.meatAvoid,
-                PreferredCheeses: this.form.cheese,
-                CheesesToAvoid: this.form.cheeseAvoid,
-                PreferredGrains: this.form.grains,
-                GrainsToAvoid: this.form.grainsAvoid,
-                SpiceLevel: this.form.spice,
-                OtherToAvoid: this.form.other,
-                Allergies: this.form.allergies,
-                DietRestrictions: this.form.dietRestrictions,
-                DietGoals: this.form.dietGoals,
-                MainDishSoupSaladStew: this.form.mainDish,
-                StoreContainers: this.form.storageContainers,
-                StoveOven: this.form.stove,
-                OrganicMeals: this.form.organic,
-                PreferredGroceryStore: this.form.groceryStore,
-                MealSize: this.form.mealStructure,
-                ExtraNotes: this.form.notes,
-                }, {headers: headers}
+          let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+          let letterPatt = new RegExp(/[^\d,\s]/g);
+          let letterPattResult = letterPatt.test(this.form.zip);
+          let pattResult = patt.test(this.form.zip);
+          if(letterPattResult === true){
+              this.zipRegex = false;
+          }else
+          if(pattResult === true){
+              this.zipRegex = true;
+          }
+      },
+      handleSubmit(form){
+        this.checkRegex();
+        this.loading = true;
+        if(this.zipRegex == true){
+          let token = localStorage.getItem('t');
+          let headers = {'Authorization': "Bearer " + token};
+          this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
+              EmployeeId: this.selected,
+              ClFirstName: this.form.firstName,
+              ClLastName: this.form.lastName,
+              ClCellPhone: this.form.phone,
+              ClEmail: this.form.email,
+              Address1: this.form.address,
+              Address2: this.form.addressTwo,
+              City: this.form.city,
+              State: this.form.state,
+              ZipCode: this.form.zip,
+              ClIsActive: this.form.isActive,
+              ClStartMonday: this.formatTime(this.form.mon),
+              ClEndMonday: this.formatTime(this.form.endMon),
+              ClStartTuesday: this.formatTime(this.form.tue),
+              ClEndTuesday: this.formatTime(this.form.endTue),
+              ClStartWednesday: this.formatTime(this.form.wed),
+              ClEndWednesday: this.formatTime(this.form.endWed),
+              ClStartThursday: this.formatTime(this.form.thur),
+              ClEndThursday: this.formatTime(this.form.endThur),
+              ClStartFriday: this.formatTime(this.form.fri),
+              ClEndFriday: this.formatTime(this.form.endFri),
+              ClStartSaturday: this.formatTime(this.form.sat),
+              ClEndSaturday: this.formatTime(this.form.endSat),
+              ClStartSunday: this.formatTime(this.form.sun),
+              ClEndSunday: this.formatTime(this.form.endSun),
+              PreferredMeats: this.form.meats,
+              MeatsToAvoid: this.form.meatAvoid,
+              PreferredCheeses: this.form.cheese,
+              CheesesToAvoid: this.form.cheeseAvoid,
+              PreferredGrains: this.form.grains,
+              GrainsToAvoid: this.form.grainsAvoid,
+              SpiceLevel: this.form.spice,
+              OtherToAvoid: this.form.other,
+              Allergies: this.form.allergies,
+              DietRestrictions: this.form.dietRestrictions,
+              DietGoals: this.form.dietGoals,
+              MainDishSoupSaladStew: this.form.mainDish,
+              StoreContainers: this.form.storageContainers,
+              StoveOven: this.form.stove,
+              OrganicMeals: this.form.organic,
+              PreferredGroceryStore: this.form.groceryStore,
+              MealSize: this.form.mealStructure,
+              ExtraNotes: this.form.notes,
+              }, {headers: headers}
             )
             .then((response)=>{
               this.loading = false,
@@ -489,10 +491,10 @@ export default {
               this.unsuccessfulAdd();
               console.log(error);
             })
-          }else{
-            this.loading = false;
-            this.unsuccessfulAdd();
-          }
+        }else{
+          this.loading = false;
+          this.unsuccessfulAdd();
+        }
       },
       formatTime(time){
         let timeStamp = time.split(':');
@@ -512,19 +514,19 @@ export default {
         alert('Error: Please check to make sure the fields were filled out correctly.')
       }
     },
-    mounted: function(){
-        let token = localStorage.getItem('t');
-        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
-        .then((response) => {
-          this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
-          this.chefFiltered.forEach((item) => {
-              this.options.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
-          })
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
+    // mounted: function(){
+    //     let token = localStorage.getItem('t');
+    //     axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
+    //     .then((response) => {
+    //       this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
+    //       this.chefFiltered.forEach((item) => {
+    //           this.options.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
+    //       })
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+    // }
 
 }
 </script>
