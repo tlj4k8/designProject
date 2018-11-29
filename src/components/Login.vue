@@ -22,7 +22,7 @@
             <div class="buttonDiv">
                 <div class="buttonInfo">
                     <b-button type="submit" class="loginButton">Login</b-button>
-                    <p>Forgot Password? Click<a class="passwordText" @click="modalShow = !modalShow"> here</a></p>
+                    <p>Forgot Password? <a class="passwordText" @click="modalShow = !modalShow"><b>Click here</b></a></p>
                 </div>
             </div>
             </b-form>

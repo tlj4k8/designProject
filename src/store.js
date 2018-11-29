@@ -14,8 +14,7 @@ export default new Vuex.Store({
     userInfo:{},
     jwt: localStorage.getItem('t'),
     endpoints: {
-      obtainJWT: 'https://chefemployees.com/api/Auth/Login',
-    //   refreshJWT: 'https://slalom-health-api-staging.herokuapp.com/auth/refresh_token'
+      obtainJWT: 'https://chefemployees.com/api/Auth/Login'
     }
   },
   mutations: {
@@ -68,34 +67,6 @@ export default new Vuex.Store({
             console.log(error);
           })
     },
-    // refreshToken(){
-    //   const payload = {
-    //     token: this.state.jwt
-    //   }
-    //   axios.post(this.state.endpoints.refreshJWT, payload)
-    //     .then((response)=>{
-    //         this.commit('updateToken', response.data.token)
-    //       })
-    //     .catch((error)=>{
-    //         console.log(error)
-    //       })
-    // },
-    // inspectToken({commit, dispatch}){
-    //   const token = this.state.jwt;
-    //   if(token){
-    //     const exp = decoded.exp
-    //     const orig_iat = decoded.orig_iat
-    //     if(exp - (Date.now()/1000) < 1800 && (Date.now()/1000) - orig_iat < 628200){
-    //       dispatch('refreshToken');
-    //     } else if (exp -(Date.now()/1000) < 1800){
-    //       // DO NOTHING, DO NOT REFRESH
-    //     } else {
-
-    //       // PROMPT USER TO RE-LOGIN, THIS ELSE CLAUSE COVERS THE CONDITION WHERE A TOKEN IS EXPIRED AS WELL
-    //     }
-    //   }
-
-    // },
     storeUserInfo({commit},token){
       let userInfo = jwtDecoded(token);
       commit('setUserInfo', userInfo);
