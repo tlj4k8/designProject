@@ -129,7 +129,6 @@ export default {
                 this.form.time = '',
                 this.form.mealType = '',
                 this.form.menuNotes = ''
-                console.log(response)
             })
             .catch((error)=>{
                 this.loading = false;

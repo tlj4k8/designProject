@@ -297,12 +297,12 @@ export default {
             .catch((error)=>{
                 this.loading = false;
                 console.log(error);
-                alert('Employee not updated. Check to make sure fields are filled correctly.');
+                alert('Error: Employee not updated. Check to make sure fields are filled correctly.');
             })
         }
         else{
             this.loading = false;
-            alert('Please check your input');
+            alert('Error: Please check your input');
         }
       },
       updateEmployeeList(){
@@ -381,7 +381,7 @@ export default {
           .catch((error)=>{
             this.loading = false;
             console.log(error);
-            alert('Password updated. Check to make sure fields are filled correctly.');
+            alert('Error: Password updated. Check to make sure fields are filled correctly.');
           })
         },
         checkRegex(){

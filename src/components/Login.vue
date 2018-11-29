@@ -90,15 +90,15 @@ export default {
             this.$router.push('/dash');
         },
         failedLogin() {
-            this.loading = false;
+            this.loading = false; 
             if (this.form.username === ''){
-                alert('Please enter a username');
+                alert('Error: Please enter a username');
             }
             else if (this.form.password === ''){
-                alert('Please enter a password');
+                alert('Error: Please enter a password');
             }
             else{
-                alert('Please check that username and/or password are correct.');
+                alert('Error: Please check that username and/or password are correct.');
             }
         }
     },

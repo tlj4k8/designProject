@@ -322,7 +322,7 @@ export default {
       }
       else{
         this.loading = false;
-        alert('Please check your form for missing or invalid input');
+        alert('Error: Please check your form for missing or invalid input');
       }
       },
       formatTime(time){

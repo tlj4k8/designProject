@@ -145,7 +145,7 @@ export default {
             })
             .catch((error)=>{
                 this.loading = false;
-                alert('Issue updating menu, please check your fields.');
+                alert('Error: Issue updating menu, please check your fields.');
                 console.log(error)
             })
         },
