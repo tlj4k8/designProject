@@ -126,7 +126,7 @@
                     class="receiptflex"
                     label="Upload Receipt:"
                     label-for="receipt">
-                    <b-form-file :disabled="disabled" @change="onFileSelected" class="imageUpload" v-model="form.imagePath" >
+                    <b-form-file accept=".jpg, .png, .jpeg" :disabled="disabled" @change="onFileSelected" class="imageUpload" v-model="form.imagePath" >
                     </b-form-file>
                 </b-form-group>
                 </div>
@@ -195,7 +195,6 @@ export default {
     },
     onUpload(){
         if(this.ready == true){
-            console.log(this.selectedFile);
             if(this.selectedFile !==  null){
                 let image = this.imagePath;
                 if(image === null){
@@ -422,7 +421,6 @@ export default {
                 response.data.forEach((data) => {
                     this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.ClientMenuNotes )
                 })
-                console.log(this.menuOptions);
                 this.ready = true;
                 this.loading = false;
             })
