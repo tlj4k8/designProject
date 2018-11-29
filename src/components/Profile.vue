@@ -158,12 +158,25 @@ export default {
         password: '',
         employeeInfo: {},
         show: true,
-        loading: true
+        loading: true,
+        zipRegex: false
         };
     },
     methods: {
         help(){
             window.open('http://localhost:8080/?#/help', "_blank");
+        },
+        checkRegex(){
+            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+            let letterPatt = new RegExp(/[^\d,\s]/g);
+            let letterPattResult = letterPatt.test(this.form.zip);
+            let pattResult = patt.test(this.form.zip);
+            if(letterPattResult === true){
+                this.zipRegex = false;
+            }else
+            if(pattResult === true){
+                this.zipRegex = true;
+            }
         },
         returnTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
@@ -177,46 +190,53 @@ export default {
             return formatedTime;
         },
         updateProfile(){
+          this.checkRegex();
           this.loading = true;
-          console.log(this.employeeInfo);
-          let token = localStorage.getItem('t');
-          let headers = {'Authorization' : 'Bearer ' + token}
-          this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {
-            EmployeeId: this.employeeInfo.employeeid,
-            EmFirstName: this.form.firstName,
-            EmLastName: this.form.lastName,
-            Username: this.username,
-            Password: this.password,
-            EmCellPhone: this.form.phone,
-            EmEmail: this.form.email,
-            EmZipCodes: this.form.zip,
-            IsMenu: this.employeeInfo.menu,
-            IsAdmin: this.employeeInfo.admin,
-            EmStartMonday: this.formatTime(this.form.mon),
-            EmEndMonday: this.formatTime(this.form.endMon),
-            EmStartTuesday: this.formatTime(this.form.tue),
-            EmEndTuesday: this.formatTime(this.form.endTue),
-            EmStartWednesday: this.formatTime(this.form.wed),
-            EmEndWednesday: this.formatTime(this.form.endWed),
-            EmStartThursday: this.formatTime(this.form.thur),
-            EmEndThursday: this.formatTime(this.form.endThur),
-            EmStartFriday: this.formatTime(this.form.fri),
-            EmEndFriday: this.formatTime(this.form.endFri),
-            EmStartSaturday: this.formatTime(this.form.sat),
-            EmEndSaturday: this.formatTime(this.form.endSat),
-            EmStartSunday: this.formatTime(this.form.sun),
-            EmEndSunday: this.formatTime(this.form.endSun),
-            }, {headers: headers}
-        )
-        .then((response)=>{
-          console.log(response)
-          this.disabled = true
-          this.loading = false;
-        })
-        .catch((error)=>{
-          this.loading = false;
-          console.log(error);
-        })
+          if(this.zipRegex == true){
+            this.loading = true;
+            console.log(this.employeeInfo);
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization' : 'Bearer ' + token}
+            this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {
+                EmployeeId: this.employeeInfo.employeeid,
+                EmFirstName: this.form.firstName,
+                EmLastName: this.form.lastName,
+                Username: this.username,
+                Password: this.password,
+                EmCellPhone: this.form.phone,
+                EmEmail: this.form.email,
+                EmZipCodes: this.form.zip,
+                IsMenu: this.employeeInfo.menu,
+                IsAdmin: this.employeeInfo.admin,
+                EmStartMonday: this.formatTime(this.form.mon),
+                EmEndMonday: this.formatTime(this.form.endMon),
+                EmStartTuesday: this.formatTime(this.form.tue),
+                EmEndTuesday: this.formatTime(this.form.endTue),
+                EmStartWednesday: this.formatTime(this.form.wed),
+                EmEndWednesday: this.formatTime(this.form.endWed),
+                EmStartThursday: this.formatTime(this.form.thur),
+                EmEndThursday: this.formatTime(this.form.endThur),
+                EmStartFriday: this.formatTime(this.form.fri),
+                EmEndFriday: this.formatTime(this.form.endFri),
+                EmStartSaturday: this.formatTime(this.form.sat),
+                EmEndSaturday: this.formatTime(this.form.endSat),
+                EmStartSunday: this.formatTime(this.form.sun),
+                EmEndSunday: this.formatTime(this.form.endSun),
+                }, {headers: headers}
+            )
+            .then((response)=>{
+            console.log(response)
+            this.disabled = true
+            this.loading = false;
+            })
+            .catch((error)=>{
+            this.loading = false;
+            console.log(error);
+            })
+        }else{
+            this.loading = false;
+            alert('Please check that your fields are correct.');
+        }
       } 
     },
     computed: mapState({

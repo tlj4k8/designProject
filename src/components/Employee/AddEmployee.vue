@@ -214,7 +214,8 @@ export default {
       employeeNames: [],
       valid: '',
       show: true,
-      loading: false
+      loading: false,
+      zipRegex: false
     };
   },
   methods: {
@@ -241,11 +242,24 @@ export default {
           this.disabledChef = false;
         }
       },
+      checkRegex(){
+        let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
+        let letterPatt = new RegExp(/[^\d,\s]/g);
+        let letterPattResult = letterPatt.test(this.form.zip);
+        let pattResult = patt.test(this.form.zip);
+        if(letterPattResult === true){
+            this.zipRegex = false;
+        }else
+        if(pattResult === true){
+            this.zipRegex = true;
+        }
+      },
       handleSubmit(form){
+        this.checkRegex();
         this.loading = true;
         let token = localStorage.getItem('t');
         let headers = {'Authorization': "Bearer " + token};
-        if(this.valid === 'lightgreen'){
+        if(this.valid === 'lightgreen' && this.zipRegex == true){
           this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
               Username: this.form.username,
               Password: this.form.password,
