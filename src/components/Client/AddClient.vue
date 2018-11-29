@@ -483,7 +483,6 @@ export default {
               this.form.endFri = '',
               this.form.endSat = '',
               this.form.endSun = ''
-              console.log(response)
             })
             .catch((error)=>{
               this.loading = false;
@@ -510,7 +509,7 @@ export default {
         alert(this.form.firstName + ' ' + this.form.lastName + ' successfully added to clients!');
       },
       unsuccessfulAdd(){
-        alert('Please check to make sure the fields were filled out correctly.')
+        alert('Error: Please check to make sure the fields were filled out correctly.')
       }
     },
     mounted: function(){

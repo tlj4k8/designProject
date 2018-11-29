@@ -235,7 +235,7 @@ export default {
             })
         }else{
             this.loading = false;
-            alert('Please check that your fields are correct.');
+            alert('Error: Please check that your fields are correct.');
         }
       } 
     },

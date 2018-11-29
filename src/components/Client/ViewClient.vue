@@ -527,11 +527,11 @@ export default {
                 .catch((error)=>{
                     console.log(error);
                     this.loading = false;
-                    alert('Client not updated. Check to make sure fields are filled correctly.');
+                    alert('Error: Client not updated. Check to make sure fields are filled correctly.');
                 })
             }else{
                 this.loading = false;
-                alert('Client not updated. Check to make sure fields are filled correctly.');
+                alert('Error: Client not updated. Check to make sure fields are filled correctly.');
             }
         },
         updateClientList(){

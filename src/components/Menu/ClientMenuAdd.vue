@@ -303,7 +303,8 @@ export default {
       },{headers: headers}
       )
       .then((response)=>{
-        console.log(response);
+        this.form.notes = '',
+        this.form.menus = null,
         this.selectedOptions = [];
         this.updateScheduledMenus();
         alert('Successfully added to the scheduled menu!');
@@ -311,7 +312,7 @@ export default {
       })
       .catch((error)=>{
         this.loading = false;
-        alert('Issue adding new menu, try again!');
+        alert('Error: Issue adding new menu, please try again!');
         console.log(error);
       })
     },
@@ -333,7 +334,7 @@ export default {
       })
       .catch((error)=>{
         this.loading = false;
-        alert('Issue deleting menu, try again!');
+        alert('Error: Issue deleting menu, please try again!');
         console.log(error);
       })
     },

@@ -118,7 +118,7 @@ export default {
                 .catch((error)=>{
                     this.loading = false;
                     console.log(error)
-                    alert('Please select a new date. This employee is already scheduled at this date');
+                    alert('Error: Please select a new date. This employee is already scheduled at this date');
                 })
             }
         },
@@ -148,7 +148,7 @@ export default {
                 this.checked = true;
             } else {
                 this.checked = false;
-                alert("Please enter a valid date. The date entered has passed.");
+                alert("Error: Please enter a valid date. The date entered has passed.");
             }
         },
         formatTime(time){

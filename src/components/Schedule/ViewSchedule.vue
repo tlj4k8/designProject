@@ -118,7 +118,7 @@
                                 v-model="form.mealCost">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="receipt"
+                <b-form-group v-if="this.imagePath === null" id="receipt"
                     class="receiptflex"
                     label="Upload Receipt:"
                     label-for="receipt">
@@ -128,10 +128,10 @@
                 </div>
             <div class="imageGroup">
                 <div class="imageButton">
-                    <b-button @click="openImage">View Uploaded Image</b-button>
+                    <b-button v-if="this.imagePath !== null" @click="openImage">View Uploaded Image</b-button>
                 </div>
                 <div class="imageButton">
-                    <b-button @click="onUpload">Upload Image</b-button>
+                    <b-button v-if="this.imagePath === null" @click="onUpload">Upload Image</b-button>
                 </div>
             </div>
         </div>
@@ -180,6 +180,7 @@ export default {
         checked: false,
         loading: true,
         ready: false,
+        selectedFile: null,
         imageUploaded: false
     }
   },
@@ -190,6 +191,7 @@ export default {
     },
     onUpload(){
         if(this.ready == true){
+            console.log(this.selectedFile);
             if(this.selectedFile !==  null){
                 let image = this.imagePath;
                 if(image === null){
@@ -205,30 +207,33 @@ export default {
                     })
                     .then((response)=>{
                         this.loading = false;
-                        alert('Receipt uploaded for ' + this.form.selectedSchedule);
+                        alert('Receipt uploaded!');
                         this.imagePath = response.data;
-                        console.log(response);
                     })
                     .catch((error)=>{
                         this.loading = false;
-                        alert('Receipt failed to upload. Please try again.');
+                        alert('Error: Receipt failed to upload. Please try again.');
                         console.log(error);
                     })
                 }else{
-                    alert('Image has already been uploaded for this schedule.');
+                    alert('Error: Image has already been uploaded for this schedule.');
                 }
             }else{
-                alert('File must be selected before upload.');
+                alert('Error: File must be selected before upload.');
             }
         }else{
-            alert('Schedule must be selected to upload an image.');
+            alert('Error: Schedule must be selected to upload an image.');
         }
     },
     openImage(){
         if(this.ready == true){
-            window.open(this.imagePath, "_blank");
+            if(this.imagePath !== null){
+                window.open(this.imagePath, "_blank");
+            }else{
+                alert('Error: Schedule does not have an image uploaded.');
+            }
         }else{
-            alert('Schedule must be selected before viewing image.')
+            alert('Error: Schedule must be selected before viewing image.')
         }
     },
     updateTime(){
@@ -241,14 +246,13 @@ export default {
         }, {headers: headers}
         )
         .then((response)=>{
-            console.log(response);
             this.loading = false;
             alert('Times are updated!');
             this.disabled = true;
         })
         .catch((error)=>{
             this.loading = false;
-            alert('Please make sure that times are correct.');
+            alert('Error: Please make sure that times are correct.');
             console.log(error);
         })
     },
@@ -271,7 +275,6 @@ export default {
     clockIn(){
         if(this.ready == true){
             let time = this.form.timeIn;
-            console.log(time);
             if(time === 'Invalid date' || null || ''){
                 let timestamp = moment().format("HH:mm");
                 this.form.timeIn = timestamp;
@@ -284,57 +287,55 @@ export default {
                 }, {headers: headers}
                 )
                 .then((response)=>{
-                    console.log(response);
                     this.loading = false;
                     alert('You are clocked in! Don\'t forget to clock out.');
                 })
                 .catch((error)=>{
                     this.loading = false;
-                    alert('There was a problem clocking in. Please try again.');
+                    alert('Error: There was a problem clocking in. Please try again.');
                     console.log(error);
                 })
             }else{
-                alert('You are already clocked in!');
+                alert('Error: You are already clocked in!');
             }
         }else{
-            alert('Schedule must be selected before clock in.')
+            alert('Error: Schedule must be selected before clock in.')
         }
     },
     clockOut(){
         if(this.ready == true){
             let time = this.form.timeIn;
-            if(time !== ''){
+            if(time !== 'Invalid date' || null || ''){
                 let clockout = this.form.timeOut;
                 if(clockout === 'Invalid date' || null || '' ){
-                let timestamp = moment().format("HH:mm");
-                this.form.timeOut = timestamp;
-                this.loading = true;
-                let token = localStorage.getItem('t');
-                let headers = {'Authorization': "Bearer " + token};
-                this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
-                    ScheduleId: this.form.selectedSchedule,
-                    Clockout: this.formatTime(this.form.timeOut)
-                }, {headers: headers}
-                )
-                .then((response)=>{
-                    console.log(response);
-                    this.loading = false;
-                    alert('You are clocked out!');
-                    this.disabled = true;
-                })
-                .catch((error)=>{
-                    this.loading = false;
-                    alert('There was a problem clocking out. Please try again.');
-                    console.log(error);
-                })
+                    let timestamp = moment().format("HH:mm");
+                    this.form.timeOut = timestamp;
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let headers = {'Authorization': "Bearer " + token};
+                    this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+                        ScheduleId: this.form.selectedSchedule,
+                        Clockout: this.formatTime(this.form.timeOut)
+                    }, {headers: headers}
+                    )
+                    .then((response)=>{
+                        this.loading = false;
+                        alert('You are clocked out!');
+                        this.disabled = true;
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        alert('Error: There was a problem clocking out. Please try again.');
+                        console.log(error);
+                    })
                 }else{
-                    alert('You are already clocked out!');
+                    alert('Error: You are already clocked out!');
                 }
             }else{
                 alert('Error: You must clock in first.');
             }
         }else{
-            alert('Schedule must be selected before clock out.')
+            alert('Error: Schedule must be selected before clock out.')
         }
     },
     validateDate(){
@@ -346,7 +347,7 @@ export default {
             this.checked = true;
         } else {
             this.checked = false;
-            alert("Please enter a valid date. The date entered has passed.");
+            alert("Error: Please enter a valid date. The date entered has passed.");
         }
     },
     returnTime(time){
@@ -373,14 +374,13 @@ export default {
             }, {headers: headers}
             )
             .then((response)=>{
-                console.log(response);
                 this.loading = false;
                 alert('Schedule updated!');
                 this.disabled = true;
             })
             .catch((error)=>{
                 this.loading = false;
-                alert('There was a problem updating schedule. Please try again.');
+                alert('Error: There was a problem updating schedule. Please try again.');
                 console.log(error);
             })
         }
@@ -400,7 +400,6 @@ export default {
         let token = localStorage.getItem('t');
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response)=>{
-            console.log(response);
             let scheduleValue = response.data;
             this.form.date = this.returnDate(scheduleValue.ScheduleDate),
             this.form.startTime = this.returnTime(scheduleValue.StartTime),
