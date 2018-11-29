@@ -54,12 +54,13 @@
         <h3> Scheduled Meal Items </h3>
         <hr/>
             <div v-if="this.menuOptions.length == 0">
-                <p>* No menus have been scheduled *</p>
+                <p class="menuError">* No menus have been scheduled *</p>
             </div>
             <div v-if="this.menuOptions.length !== 0">
                 <ul v-for="menuOption in menuOptions" :key="menuOption.MenuId">
                     <b-card>
-                        {{ menuOption }}
+                        <h5> {{menuOption.name}}</h5>
+                        <p class="card-text"><b>Notes:</b> {{ menuOption.notes}}</p>
                     </b-card>
                 </ul>
             </div>
@@ -177,7 +178,7 @@ export default {
         scheduleOptions: [],
         employeeId: null,
         clientId: null,
-        menuOptions: [],
+        menuOptions: [{name: '', notes: ''}],
         disabled: true,
         disabledTime: true,
         show: true,
@@ -419,7 +420,7 @@ export default {
             this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 response.data.forEach((data) => {
-                    this.menuOptions.push('Menu Item: ' + data.MenuName + ' ' + 'Notes: ' + data.ClientMenuNotes )
+                    this.menuOptions.push({name: data.MenuName, notes: data.ClientMenuNotes})
                 })
                 this.ready = true;
                 this.loading = false;
@@ -458,7 +459,7 @@ hr{
     background-color: #0d50bc;
     height: 1px;
 }
-p{
+.menuError{
     text-align: center;
 }
 ul{
