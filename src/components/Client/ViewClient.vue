@@ -350,11 +350,11 @@
                         v-model="form.notes"/>
         </b-form-group>
         </div>
-    </b-form>
-    <div v-if="isAdmin=='True'" class="disabledButtons">
+        <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Client</b-button>
         <b-button class="update" v-if="!disabled" @click="updateClient">Update Client</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    </b-form>
     <Spinner v-if="loading"/>
     </div>
 </template>
@@ -454,14 +454,12 @@ export default {
             return formatedTime;
         },
         checkRegex(){
-            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
-            let letterPatt = new RegExp(/[^\d,\s]/g);
-            let letterPattResult = letterPatt.test(this.form.zip);
-            let pattResult = patt.test(this.form.zip);
-            if(letterPattResult === true){
+            let patt = new RegExp(/^\d{5}(?:[-\s]\d{4})?$/g);
+            let pattCheck = patt.exec(this.form.zip);
+            patt.test(this.form.zip);
+            if(!patt.test(this.form.zip)){
                 this.zipRegex = false;
-            }else
-            if(pattResult === true){
+            }else{
                 this.zipRegex = true;
             }
         },
@@ -531,7 +529,7 @@ export default {
                 })
             }else{
                 this.loading = false;
-                alert('Error: Client not updated. Check to make sure fields are filled correctly.');
+                alert('Error: Please check that your zip code is correct.');
             }
         },
         updateClientList(){

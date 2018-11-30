@@ -163,14 +163,12 @@ export default {
             window.open('http://localhost:8080/?#/help', "_blank");
         },
         checkRegex(){
-            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
-            let letterPatt = new RegExp(/[^\d,\s]/g);
-            let letterPattResult = letterPatt.test(this.form.zip);
-            let pattResult = patt.test(this.form.zip);
-            if(letterPattResult === true){
+            let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)+$/g);
+            let pattCheck = patt.exec(this.form.zip);
+            patt.test(this.form.zip);
+            if(!patt.test(this.form.zip)){
                 this.zipRegex = false;
-            }else
-            if(pattResult === true){
+            }else{
                 this.zipRegex = true;
             }
         },
@@ -225,17 +223,18 @@ export default {
                 }, {headers: headers}
             )
             .then((response)=>{
-            console.log(response)
-            this.disabled = true
-            this.loading = false;
+                console.log(response)
+                this.disabled = true
+                this.loading = false;
             })
             .catch((error)=>{
-            this.loading = false;
-            console.log(error);
+                alert('Error: Please check that your fields are correct.');
+                this.loading = false;
+                console.log(error);
             })
         }else{
             this.loading = false;
-            alert('Error: Please check that your fields are correct.');
+            alert('Error: Please check that your zip code is correct.');
         }
       } 
     },
