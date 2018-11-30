@@ -107,21 +107,25 @@
                                 class="receiptflex"
                                 label="Meal Charged:"
                                 label-for="mealCharged">
-                    <b-form-input id="mealCharged"
-                                type="text"
-                                :disabled="disabled"
-                                v-model="form.mealCharged">
-                    </b-form-input>
+                    <b-input-group size="md" prepend="$" append=".00">
+                        <b-form-input id="mealCharged"
+                                    type="number"
+                                    :disabled="disabled"
+                                    v-model="form.mealCharged">
+                        </b-form-input>
+                     </b-input-group>
                 </b-form-group>
                 <b-form-group id="mealCost"
                                 class="receiptflex"
                                 label="Meal Cost:"
                                 label-for="mealCost">
-                    <b-form-input id="mealCost"
-                                type="text"
-                                :disabled="disabled"
-                                v-model="form.mealCost">
-                    </b-form-input>
+                    <b-input-group size="md" prepend="$" append=".00">
+                        <b-form-input id="mealCost"
+                                    type="number"
+                                    :disabled="disabled"
+                                    v-model="form.mealCost">
+                        </b-form-input>
+                    </b-input-group>
                 </b-form-group>
                 <b-form-group v-if="this.imagePath === null" id="receipt"
                     class="receiptflex"

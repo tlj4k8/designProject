@@ -59,7 +59,7 @@
       </div>
     </div>
     </b-form>
-    <b-button @click="showClient = !showClient">Show Client Info </b-button>
+    <b-button v-if="scheduleSelected == true" @click="showClient = !showClient">Show Client Info </b-button>
     <div class="clientInfo" v-if="showClient">
     <div class="needform">
     <h3>Client Needs Assessment</h3>
@@ -281,6 +281,7 @@ export default {
       selectedOptions: [],
       scheduleOptions: [],
       showClient: false,
+      scheduleSelected: false,
       clientId: null,
       show: true,
       loading: false,
@@ -364,6 +365,7 @@ export default {
         response.data.forEach((data) => {
           this.selectedOptions.push({ value: data.ClientMenuId, text: data.MenuName })
         })
+        this.scheduleSelected = true;
         this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.schedule + ')', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
           this.clientId = response.data.ClientId;

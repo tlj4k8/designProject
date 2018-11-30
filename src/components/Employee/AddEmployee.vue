@@ -14,6 +14,7 @@
             <b-form-input class="input" 
                         id="username"
                         type="text"
+                        :formatter="format"
                         v-on:input.native="checkName"
                         v-bind:style="{ 'border-color' : valid }"
                         v-model="form.username"
@@ -221,6 +222,9 @@ export default {
     };
   },
   methods: {
+      format (value, event) {
+        return value.toLowerCase()
+      },
       help(){
         window.open('http://localhost:8080/?#/help', "_blank");
       },

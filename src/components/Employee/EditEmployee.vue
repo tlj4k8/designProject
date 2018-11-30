@@ -1,7 +1,7 @@
 <template>
     <div class="editEmployee">
     <div class="end">
-        <font-awesome-icon i@click="help" con="question"/>
+        <font-awesome-icon @click="help" icon="question"/>
     </div>
       <div class="employeeSelect">
       <h3>Select Employee</h3>

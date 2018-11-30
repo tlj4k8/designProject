@@ -45,7 +45,7 @@
                     label="Phone:"
                     label-for="phone">
         <b-form-input id="phone"
-                      type="text"
+                      type="tel"
                       v-model="form.phone"
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>

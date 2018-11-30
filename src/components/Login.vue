@@ -10,7 +10,7 @@
             <b-row class="flex">
                 <b-col sm="2"><label for="username">USERNAME</label></b-col>
                 <b-col sm="10">
-                    <b-form-input class="input" id="username" type="text" v-model="form.username" required placeholder="Enter username"/>
+                    <b-form-input class="input" id="username" type="text" v-model="form.username" :formatter="format" required placeholder="Enter username"/>
                 </b-col>
             </b-row>
             <b-row class="flex">
@@ -65,6 +65,9 @@ export default {
         }
     },
     methods: {
+        format (value, event) {
+            return value.toLowerCase()
+        },
         handleLogin() {
             this.loading = true;
             let token = localStorage.getItem('t');

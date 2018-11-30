@@ -6,7 +6,7 @@
     <b-button-group vertical class="dashGroup">
       <b-button to="/menu"><b>View Menu</b></b-button>
       <b-button v-if="isAdmin=='True' || isMenu=='True'" to="/menuEdit"><b>Add Menu</b></b-button>
-      <b-button to="/clientMenu"><b>Create Customer Menu</b></b-button>
+      <b-button to="/clientMenu"><b>Create Client Menu</b></b-button>
     </b-button-group>
   </div>
 </template>
