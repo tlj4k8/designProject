@@ -107,56 +107,44 @@
       </b-form-group>
     </div>
     </div>
-    <div class="availability">
-    <h3>Availability</h3>
-    <hr/>
-    <div class="table">
-        <table>
-            <tr>
-              <th></th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-              <th>Sunday</th>
-            </tr>
-            <tr>
-                <td>Start</td>
-                <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
-            </tr>
-            <tr>
-                <td>End</td>
-                <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
-                <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
-            </tr>
-        </table>
-    </div>
-    </div>
-    <!-- <div class="chef">
-    <h3>Assign Chef</h3>
-      <hr/>
-      <div class="chef">
-          <b-form-group id="chef"
-                      class="select"
-                      :label-cols="4"
-                      breakpoint="md">
-          <b-form-select v-model="selected" :options="options" class="mb-1" />
-          </b-form-group>
-      </div>
-    </div> -->
+  <div class="availability">
+  <h3>Availability</h3>
+  <hr/>
+  <div class="table">
+      <table>
+          <tr>
+            <th></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+          <tr>
+              <td>Start</td>
+              <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
+          </tr>
+          <tr>
+              <td>End</td>
+              <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
+              <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
+          </tr>
+      </table>
+  </div>
+  </div>
   <div class="needform">
   <h3>Client Needs Assessment</h3>
   <hr/>
@@ -372,12 +360,24 @@ export default {
       ],
       show: true,
       loading: false,
-      zipRegex: false
+      zipRegex: false,
+      timeCheck: false
     }
   },
     methods: {
       help(){
           window.open('http://localhost:8080/?#/help', "_blank");
+      },
+      check(){
+        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
+        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
+        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        {
+          this.timeCheck = true;
+        }else{
+          alert('Error: Please check that availability end times are after start times');
+          this.timeCheck = false;
+        }
       },
       checkRegex(){
         let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
@@ -391,107 +391,108 @@ export default {
       },
       handleSubmit(form){
         this.checkRegex();
+        this.check();
         this.loading = true;
-        if(this.zipRegex == true){
+        if(this.zipRegex == true && this.timeCheck == true){
           let token = localStorage.getItem('t');
           let headers = {'Authorization': "Bearer " + token};
           this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
-              EmployeeId: this.selected,
-              ClFirstName: this.form.firstName,
-              ClLastName: this.form.lastName,
-              ClCellPhone: this.form.phone,
-              ClEmail: this.form.email,
-              Address1: this.form.address,
-              Address2: this.form.addressTwo,
-              City: this.form.city,
-              State: this.form.state,
-              ZipCode: this.form.zip,
-              ClIsActive: this.form.isActive,
-              ClStartMonday: this.formatTime(this.form.mon),
-              ClEndMonday: this.formatTime(this.form.endMon),
-              ClStartTuesday: this.formatTime(this.form.tue),
-              ClEndTuesday: this.formatTime(this.form.endTue),
-              ClStartWednesday: this.formatTime(this.form.wed),
-              ClEndWednesday: this.formatTime(this.form.endWed),
-              ClStartThursday: this.formatTime(this.form.thur),
-              ClEndThursday: this.formatTime(this.form.endThur),
-              ClStartFriday: this.formatTime(this.form.fri),
-              ClEndFriday: this.formatTime(this.form.endFri),
-              ClStartSaturday: this.formatTime(this.form.sat),
-              ClEndSaturday: this.formatTime(this.form.endSat),
-              ClStartSunday: this.formatTime(this.form.sun),
-              ClEndSunday: this.formatTime(this.form.endSun),
-              PreferredMeats: this.form.meats,
-              MeatsToAvoid: this.form.meatAvoid,
-              PreferredCheeses: this.form.cheese,
-              CheesesToAvoid: this.form.cheeseAvoid,
-              PreferredGrains: this.form.grains,
-              GrainsToAvoid: this.form.grainsAvoid,
-              SpiceLevel: this.form.spice,
-              OtherToAvoid: this.form.other,
-              Allergies: this.form.allergies,
-              DietRestrictions: this.form.dietRestrictions,
-              DietGoals: this.form.dietGoals,
-              MainDishSoupSaladStew: this.form.mainDish,
-              StoreContainers: this.form.storageContainers,
-              StoveOven: this.form.stove,
-              OrganicMeals: this.form.organic,
-              PreferredGroceryStore: this.form.groceryStore,
-              MealSize: this.form.mealStructure,
-              ExtraNotes: this.form.notes,
-              }, {headers: headers}
-            )
-            .then((response)=>{
-              this.loading = false,
-              this.successfulAdd(),
-              this.selected = null,
-              this.form.firstName = '',
-              this.form.lastName = '',
-              this.form.phone = '',
-              this.form.email = '',
-              this.form.address = '',
-              this.form.addressTwo = '',
-              this.form.city = '',
-              this.form.state = '',
-              this.form.zip = '',
-              this.form.meats = '',
-              this.form.meatAvoid = '',
-              this.form.cheese = '',
-              this.form.cheeseAvoid = '',
-              this.form.grains = '',
-              this.form.grainsAvoid = '',
-              this.form.spice = '',
-              this.form.other = '',
-              this.form.allergies = '',
-              this.form.dietRestrictions = '',
-              this.form.dietGoals = '',
-              this.form.mainDish = '',
-              this.form.storageContainers = '',
-              this.form.stove = '',
-              this.form.organic = '',
-              this.form.groceryStore = '',
-              this.form.mealStructure = '',
-              this.form.notes = '',
-              this.form.mon = '',
-              this.form.tue = '',
-              this.form.wed = '',
-              this.form.thur = '',
-              this.form.fri = '',
-              this.form.sat = '',
-              this.form.sun = '',
-              this.form.endMon = '',
-              this.form.endTue = '',
-              this.form.endWed = '',
-              this.form.endThur = '',
-              this.form.endFri = '',
-              this.form.endSat = '',
-              this.form.endSun = ''
-            })
-            .catch((error)=>{
-              this.loading = false;
-              this.unsuccessfulAdd();
-              console.log(error);
-            })
+            EmployeeId: this.selected,
+            ClFirstName: this.form.firstName,
+            ClLastName: this.form.lastName,
+            ClCellPhone: this.form.phone,
+            ClEmail: this.form.email,
+            Address1: this.form.address,
+            Address2: this.form.addressTwo,
+            City: this.form.city,
+            State: this.form.state,
+            ZipCode: this.form.zip,
+            ClIsActive: this.form.isActive,
+            ClStartMonday: this.formatTime(this.form.mon),
+            ClEndMonday: this.formatTime(this.form.endMon),
+            ClStartTuesday: this.formatTime(this.form.tue),
+            ClEndTuesday: this.formatTime(this.form.endTue),
+            ClStartWednesday: this.formatTime(this.form.wed),
+            ClEndWednesday: this.formatTime(this.form.endWed),
+            ClStartThursday: this.formatTime(this.form.thur),
+            ClEndThursday: this.formatTime(this.form.endThur),
+            ClStartFriday: this.formatTime(this.form.fri),
+            ClEndFriday: this.formatTime(this.form.endFri),
+            ClStartSaturday: this.formatTime(this.form.sat),
+            ClEndSaturday: this.formatTime(this.form.endSat),
+            ClStartSunday: this.formatTime(this.form.sun),
+            ClEndSunday: this.formatTime(this.form.endSun),
+            PreferredMeats: this.form.meats,
+            MeatsToAvoid: this.form.meatAvoid,
+            PreferredCheeses: this.form.cheese,
+            CheesesToAvoid: this.form.cheeseAvoid,
+            PreferredGrains: this.form.grains,
+            GrainsToAvoid: this.form.grainsAvoid,
+            SpiceLevel: this.form.spice,
+            OtherToAvoid: this.form.other,
+            Allergies: this.form.allergies,
+            DietRestrictions: this.form.dietRestrictions,
+            DietGoals: this.form.dietGoals,
+            MainDishSoupSaladStew: this.form.mainDish,
+            StoreContainers: this.form.storageContainers,
+            StoveOven: this.form.stove,
+            OrganicMeals: this.form.organic,
+            PreferredGroceryStore: this.form.groceryStore,
+            MealSize: this.form.mealStructure,
+            ExtraNotes: this.form.notes,
+            }, {headers: headers}
+          )
+          .then((response)=>{
+            this.loading = false,
+            this.successfulAdd(),
+            this.selected = null,
+            this.form.firstName = '',
+            this.form.lastName = '',
+            this.form.phone = '',
+            this.form.email = '',
+            this.form.address = '',
+            this.form.addressTwo = '',
+            this.form.city = '',
+            this.form.state = '',
+            this.form.zip = '',
+            this.form.meats = '',
+            this.form.meatAvoid = '',
+            this.form.cheese = '',
+            this.form.cheeseAvoid = '',
+            this.form.grains = '',
+            this.form.grainsAvoid = '',
+            this.form.spice = '',
+            this.form.other = '',
+            this.form.allergies = '',
+            this.form.dietRestrictions = '',
+            this.form.dietGoals = '',
+            this.form.mainDish = '',
+            this.form.storageContainers = '',
+            this.form.stove = '',
+            this.form.organic = '',
+            this.form.groceryStore = '',
+            this.form.mealStructure = '',
+            this.form.notes = '',
+            this.form.mon = '',
+            this.form.tue = '',
+            this.form.wed = '',
+            this.form.thur = '',
+            this.form.fri = '',
+            this.form.sat = '',
+            this.form.sun = '',
+            this.form.endMon = '',
+            this.form.endTue = '',
+            this.form.endWed = '',
+            this.form.endThur = '',
+            this.form.endFri = '',
+            this.form.endSat = '',
+            this.form.endSun = ''
+          })
+          .catch((error)=>{
+            this.loading = false;
+            this.unsuccessfulAdd();
+            console.log(error);
+          })
         }else{
           this.loading = false;
           alert('Error: Please check that your zip code is correct.');
@@ -514,21 +515,7 @@ export default {
       unsuccessfulAdd(){
         alert('Error: Please check to make sure the fields were filled out correctly.')
       }
-    },
-    // mounted: function(){
-    //     let token = localStorage.getItem('t');
-    //     axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
-    //     .then((response) => {
-    //       this.chefFiltered = response.data.value.filter(value => value.IsMenu === false && value.IsAdmin === false);
-    //       this.chefFiltered.forEach((item) => {
-    //           this.options.push({ value: item.EmployeeId, text: item.EmFirstName + ' ' + item.EmLastName });
-    //       })
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
-    // }
-
+    }
 }
 </script>
 <style scoped>

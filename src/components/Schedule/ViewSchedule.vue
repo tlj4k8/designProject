@@ -25,6 +25,7 @@
                     <b-form-input id="startTime"
                                 type="time"
                                 required
+                                @change="check"
                                 :disabled="disabled"
                                 v-model="form.startTime"/>
                 </b-form-group>
@@ -35,6 +36,7 @@
                     <b-form-input id="endTime"
                                 type="time"
                                 required
+                                @change="check"
                                 :disabled="disabled"
                                 v-model="form.endTime"/>
                 </b-form-group>
@@ -190,7 +192,8 @@ export default {
         loading: false,
         ready: false,
         selectedFile: null,
-        imageUploaded: false
+        imageUploaded: false,
+        timeCheck: false
     }
   },
 
@@ -405,41 +408,50 @@ export default {
                 return state.userInfo.admin;
             }
         }),
-      getSchedules(){
-        this.loading = true;
-        let token = localStorage.getItem('t');
-        this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
-        .then((response)=>{
-            let scheduleValue = response.data;
-            this.form.date = this.returnDate(scheduleValue.ScheduleDate),
-            this.form.startTime = this.returnTime(scheduleValue.StartTime),
-            this.form.endTime = this.returnTime(scheduleValue.EndTime),
-            this.form.timeIn = this.returnTime(scheduleValue.Clockin),
-            this.form.timeOut = this.returnTime(scheduleValue.Clockout),
-            this.form.mealCharged = scheduleValue.Charged,
-            this.form.mealCost = scheduleValue.Cost,
-            this.imagePath = scheduleValue.ImagePath,
-            this.employeeId = scheduleValue.EmployeeId,
-            this.clientId = scheduleValue.ClientId,
-            this.menuOptions = []
-            this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
+        check(){
+            let start = this.form.startTime;
+            let end = this.form.endTime;
+            if(end > start){
+                this.timeCheck = true;
+            }else{
+                this.timeCheck = false;
+            }
+        },
+        getSchedules(){
+            this.loading = true;
+            let token = localStorage.getItem('t');
+            this.$axiosServer.get('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
-                response.data.forEach((data) => {
-                    this.menuOptions.push({name: data.MenuName, notes: data.ClientMenuNotes})
+                let scheduleValue = response.data;
+                this.form.date = this.returnDate(scheduleValue.ScheduleDate),
+                this.form.startTime = this.returnTime(scheduleValue.StartTime),
+                this.form.endTime = this.returnTime(scheduleValue.EndTime),
+                this.form.timeIn = this.returnTime(scheduleValue.Clockin),
+                this.form.timeOut = this.returnTime(scheduleValue.Clockout),
+                this.form.mealCharged = scheduleValue.Charged,
+                this.form.mealCost = scheduleValue.Cost,
+                this.imagePath = scheduleValue.ImagePath,
+                this.employeeId = scheduleValue.EmployeeId,
+                this.clientId = scheduleValue.ClientId,
+                this.menuOptions = []
+                this.$axiosServer.get('https://chefemployees.com/api/ScheduleMenuInfo/' + this.form.selectedSchedule + '',{ headers: { 'Authorization': "Bearer " + token }})
+                .then((response)=>{
+                    response.data.forEach((data) => {
+                        this.menuOptions.push({name: data.MenuName, notes: data.ClientMenuNotes})
+                    })
+                    this.ready = true;
+                    this.loading = false;
                 })
-                this.ready = true;
-                this.loading = false;
+                .catch((error)=>{
+                    this.loading = false;
+                    console.log(error);
+                })
             })
             .catch((error)=>{
                 this.loading = false;
                 console.log(error);
             })
-        })
-        .catch((error)=>{
-            this.loading = false;
-            console.log(error);
-        })
-      }
+        }
   },
   mounted() {
       this.loading = true;

@@ -251,18 +251,20 @@ export default {
       show: true,
       loading: false,
       checked: false,
-      zipRegex: false
+      zipRegex: false,
+      timeCheck: false
     };
   },
   methods: {
     help(){
         window.open('http://localhost:8080/?#/help', "_blank");
     },
-      updateEmployee(form){
+    updateEmployee(form){
         this.checkRegex();
+        this.check();
         this.loading = true;
         if(this.checked == true){
-            if(this.zipRegex == true){
+            if(this.zipRegex == true && this.timeCheck == true){
                 this.loading = true;
                 let token = localStorage.getItem('t');
                 let headers = {'Authorization': "Bearer " + token};
@@ -313,8 +315,8 @@ export default {
             this.loading = false;
             alert('Error: Please check that only one employee status is selected.');
         }
-      },
-      updateEmployeeList(){
+    },
+    updateEmployeeList(){
         this.loading = true;
         let token = localStorage.getItem('t');
         this.$axiosServer.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
@@ -328,8 +330,8 @@ export default {
             this.loading = false;
             console.log(error);
         });
-      },
-      formatTime(time){
+    },
+    formatTime(time){
         var timeStamp = time.split(':');
         var timeHour = timeStamp[0];
         var timeMinutes = timeStamp[1];
@@ -339,12 +341,22 @@ export default {
             return formatedTime;
         }
         return formatedTime;
-      },
-      returnTime(time){
+        },
+        returnTime(time){
         let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
         return timeStamp;
-      },
-      
+    },
+    check(){
+        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
+        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
+        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        {
+            this.timeCheck = true;
+        }else{
+            alert('Error: Please check that availability end times are after start times');
+            this.timeCheck = false;
+        }
+    },
     updatePassword(){
         this.loading = true;
         let token = localStorage.getItem('t');
