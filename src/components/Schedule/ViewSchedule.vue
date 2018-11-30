@@ -1,7 +1,7 @@
 <template>
     <div class="addSchedule">
         <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
         </div>
         <div class="employeeSelect">
         <h3> Select Schedule </h3>
@@ -191,6 +191,9 @@ export default {
   },
 
   methods: {
+    help(){
+        window.open('http://localhost:8080/?#/help', "_blank");
+    },
     onFileSelected(event){
         this.selectedFile = event.target.files[0];
     },

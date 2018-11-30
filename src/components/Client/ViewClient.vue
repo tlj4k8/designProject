@@ -1,7 +1,7 @@
 <template>
   <div class="viewClient">
     <div class="end">
-        <font-awesome-icon icon="question" @click="help"/>
+        <font-awesome-icon @click="help" icon="question"/>
     </div>
     <h3>Select Client</h3>
     <hr/>
@@ -440,7 +440,7 @@ export default {
             this.form.chef = this.selectedChef;
         },
         help(){
-            alert('HELP ME!!!!');
+            window.open('http://localhost:8080/?#/help', "_blank");
         },
         formatTime(time){
             let timeStamp = time.split(':');

@@ -1,7 +1,7 @@
 <template>
     <div class="addEmpployee">
       <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
         <h3>Login Credentials</h3>
@@ -221,6 +221,9 @@ export default {
     };
   },
   methods: {
+      help(){
+        window.open('http://localhost:8080/?#/help', "_blank");
+      },
       checkName(){
         this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';
         if(this.form.username === '') { this.valid = ''}

@@ -1,7 +1,7 @@
 <template>
     <div class="editEmployee">
     <div class="end">
-        <font-awesome-icon icon="question"/>
+        <font-awesome-icon i@click="help" con="question"/>
     </div>
       <div class="employeeSelect">
       <h3>Select Employee</h3>
@@ -255,6 +255,9 @@ export default {
     };
   },
   methods: {
+    help(){
+        window.open('http://localhost:8080/?#/help', "_blank");
+    },
       updateEmployee(form){
         this.checkRegex();
         this.loading = true;

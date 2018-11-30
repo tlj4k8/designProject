@@ -1,7 +1,7 @@
 <template>
     <div class="viewMenu">
         <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
         </div>
         <h3>Select Menu</h3>
         <hr/>
@@ -122,6 +122,9 @@ export default {
         }
     },
     methods:{
+        help(){
+            window.open('http://localhost:8080/?#/help', "_blank");
+        },
         updateMenu(){
             this.loading = true;
             let token = localStorage.getItem('t');

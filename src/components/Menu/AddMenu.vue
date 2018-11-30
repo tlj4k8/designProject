@@ -1,7 +1,7 @@
 <template>
     <div class="addMenu">
     <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
     </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class="menu">
@@ -106,6 +106,9 @@ export default {
     }
   },
     methods: {
+        help(){
+            window.open('http://localhost:8080/?#/help', "_blank");
+        },
         handleSubmit(form){
             this.loading = true;
             let token = localStorage.getItem('t');

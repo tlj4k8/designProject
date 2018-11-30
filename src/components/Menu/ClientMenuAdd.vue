@@ -1,7 +1,7 @@
 <template>
     <div class="clientMenuAdd">
     <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
     </div>
     <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <h3> Select Schedule </h3>
@@ -288,6 +288,9 @@ export default {
     };
   },
   methods: {
+    help(){
+        window.open('http://localhost:8080/?#/help', "_blank");
+    },
     returnDate(date){
         let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');
         return dateStamp;

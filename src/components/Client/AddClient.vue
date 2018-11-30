@@ -1,7 +1,7 @@
 <template>
   <div class="addClient">
     <div class="end">
-        <font-awesome-icon icon="question"/>
+        <font-awesome-icon @click="help" icon="question"/>
     </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class= "person">
@@ -376,6 +376,9 @@ export default {
     }
   },
     methods: {
+      help(){
+          window.open('http://localhost:8080/?#/help', "_blank");
+      },
       checkRegex(){
         let patt = new RegExp(/^\d{5}(?:[-\s]\d{4})?$/g);
         let pattCheck = patt.exec(this.form.zip);

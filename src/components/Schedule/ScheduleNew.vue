@@ -1,7 +1,7 @@
 <template>
     <div class="scheduleNew">
     <div class="end">
-          <font-awesome-icon icon="question"/>
+          <font-awesome-icon @click="help" icon="question"/>
     </div>
         <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
             <div class="employeeSelect">
@@ -91,6 +91,9 @@ export default {
         }
     },
     methods: {
+        help(){
+            window.open('http://localhost:8080/?#/help', "_blank");
+        },
         handleSubmit(form) {
             this.validateDate();
             if(this.checked === true){
