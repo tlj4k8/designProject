@@ -379,7 +379,6 @@ export default {
       checkRegex(){
         let patt = new RegExp(/^\d{5}(?:[-\s]\d{4})?$/g);
         let pattCheck = patt.exec(this.form.zip);
-        console.log(pattCheck);
         patt.test(this.form.zip);
         if(!patt.test(this.form.zip)){
             this.zipRegex = false;
