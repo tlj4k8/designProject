@@ -18,6 +18,7 @@ import ScheduleNew from './views/ScheduleNew.vue';
 import ScheduleDash from './views/ScheduleDash.vue';
 import HelpManuel from './HelpManuel.vue';
 import Decoded from 'jwt-decode';
+import store from './store';
 
 Vue.use(Router);
 
@@ -156,20 +157,16 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/'];
+  const publicPages = ['/', '/help'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('t');
-  if(!loggedIn){
-    return next();
-  }
-
-  const userType = Decoded(loggedIn);
+  let user = store.state.userInfo;
 
   if (authRequired && !loggedIn) {
     return next('/');
   }
   else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == true){
-    if(userType.admin === 'True' || userType.menu === 'True' || (userType.menu === 'False' && userType.admin === 'False')){
+    if(user.admin === 'True' || user.menu === 'True' || (user.menu === 'False' && user.admin === 'False')){
       next();
     }
     else{
@@ -177,7 +174,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == false){
-    if(userType.admin === 'True' || userType.menu === 'True'){
+    if(user.admin === 'True' || user.menu === 'True'){
       next();
     }
     else{
@@ -185,7 +182,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == false){
-    if(userType.admin === 'True'){
+    if(user.admin === 'True'){
       next();
     }
     else{
@@ -193,14 +190,15 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == true){
-    if(userType.admin === 'True' || (userType.admin === 'False' && userType.menu === 'False')){
+    if(user.admin === 'True' || (user.admin === 'False' && user.menu === 'False')){
       next();
     }
     else{
       return next('/dash');
     }
+  }else{
+    next();
   }
-  next();
 })
 
 
