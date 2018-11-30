@@ -252,7 +252,7 @@ export default {
         }
       },
       checkRegex(){
-        let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)+$/g);
+        let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
         let pattCheck = patt.exec(this.form.zip);
         patt.test(this.form.zip);
         if(!patt.test(this.form.zip)){
