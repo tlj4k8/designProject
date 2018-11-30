@@ -314,6 +314,7 @@ export default {
             this.form.isAdmin = false,
             this.valid = '',
             this.loading = false
+            alert('Employee added successfully!');
           })
           .catch((error)=>{
             this.loading = false;

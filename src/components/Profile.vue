@@ -74,14 +74,14 @@
       <div class="table">
           <table>
               <tr>
-                    <th></th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
               </tr>
               <tr>
                   <td>Start</td>
@@ -130,8 +130,6 @@ export default {
         return {
         disabled: true,
         form: {
-            username: '',
-            password: '',
             email: '',
             firstName: '',
             lastName: '',
@@ -154,8 +152,6 @@ export default {
             zipSelected: ''
             },
         employee: '',
-        username: '',
-        password: '',
         employeeInfo: {},
         show: true,
         loading: true,

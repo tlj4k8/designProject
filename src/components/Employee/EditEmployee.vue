@@ -15,7 +15,7 @@
           <b-form-select v-model="selected" v-on:input="getEmployees" :options="options" class="mb-1" />
           </b-form-group>
       </div>
-    <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
+    <b-form ref="form" :model="form" @submit="updateEmployee(form)" v-if="show" class="form">
         <div class="personflexGroup">
             <b-form-group class="personflex" 
                         id="username"
@@ -91,6 +91,7 @@
                         type="email"
                         :disabled="disabled"
                         v-model="form.email"
+                        pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
                         required>
             </b-form-input>
         </b-form-group>
@@ -192,12 +193,12 @@
               </tr>
           </table>
       </div>
-    </div>
-    </b-form>
+    </div>  
     <div v-if="isAdmin=='True'" class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Employee</b-button>
-        <b-button class="update" v-if="!disabled" @click="updateEmployee">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
+        <b-button class="update" v-if="!disabled" type="submit">Update Employee</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    </b-form>
     <Spinner v-if="loading" />
     </div>
 </template>
@@ -254,55 +255,60 @@ export default {
     };
   },
   methods: {
-      updateEmployee(){
+      updateEmployee(form){
         this.checkRegex();
         this.loading = true;
-        if(this.checked == true && this.zipRegex == true){
-            this.loading = true;
-            let token = localStorage.getItem('t');
-            let headers = {'Authorization': "Bearer " + token};
-            this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
-                EmployeeId: this.selected,
-                EmFirstName: this.form.firstName,
-                EmLastName: this.form.lastName,
-                EmCellPhone: this.form.phone,
-                EmEmail: this.form.email,
-                EmZipCodes: this.form.zip,
-                EmStartMonday: this.formatTime(this.form.mon),
-                EmEndMonday: this.formatTime(this.form.endMon),
-                EmStartTuesday: this.formatTime(this.form.tue),
-                EmEndTuesday: this.formatTime(this.form.endTue),
-                EmStartWednesday: this.formatTime(this.form.wed),
-                EmEndWednesday: this.formatTime(this.form.endWed),
-                EmStartThursday: this.formatTime(this.form.thur),
-                EmEndThursday: this.formatTime(this.form.endThur),
-                EmStartFriday: this.formatTime(this.form.fri),
-                EmEndFriday: this.formatTime(this.form.endFri),
-                EmStartSaturday: this.formatTime(this.form.sat),
-                EmEndSaturday: this.formatTime(this.form.endSat),
-                EmStartSunday: this.formatTime(this.form.sun),
-                EmEndSunday: this.formatTime(this.form.endSun),
-                IsMenu: this.form.ismenu,
-                IsAdmin: this.form.isadmin,
-                EmIsActive: this.form.isactive
-                }, {headers: headers}
-            )
-            .then((response)=>{
+        if(this.checked == true){
+            if(this.zipRegex == true){
+                this.loading = true;
+                let token = localStorage.getItem('t');
+                let headers = {'Authorization': "Bearer " + token};
+                this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
+                    EmployeeId: this.selected,
+                    EmFirstName: this.form.firstName,
+                    EmLastName: this.form.lastName,
+                    EmCellPhone: this.form.phone,
+                    EmEmail: this.form.email,
+                    EmZipCodes: this.form.zip,
+                    EmStartMonday: this.formatTime(this.form.mon),
+                    EmEndMonday: this.formatTime(this.form.endMon),
+                    EmStartTuesday: this.formatTime(this.form.tue),
+                    EmEndTuesday: this.formatTime(this.form.endTue),
+                    EmStartWednesday: this.formatTime(this.form.wed),
+                    EmEndWednesday: this.formatTime(this.form.endWed),
+                    EmStartThursday: this.formatTime(this.form.thur),
+                    EmEndThursday: this.formatTime(this.form.endThur),
+                    EmStartFriday: this.formatTime(this.form.fri),
+                    EmEndFriday: this.formatTime(this.form.endFri),
+                    EmStartSaturday: this.formatTime(this.form.sat),
+                    EmEndSaturday: this.formatTime(this.form.endSat),
+                    EmStartSunday: this.formatTime(this.form.sun),
+                    EmEndSunday: this.formatTime(this.form.endSun),
+                    IsMenu: this.form.ismenu,
+                    IsAdmin: this.form.isadmin,
+                    EmIsActive: this.form.isactive
+                    }, {headers: headers}
+                )
+                .then((response)=>{
+                    this.loading = false;
+                    this.disabled = true
+                    alert('Employee updated successfully!');
+                    this.options = [];
+                    this.updateEmployeeList();
+                })
+                .catch((error)=>{
+                    this.loading = false;
+                    console.log(error);
+                    alert('Error: Employee not updated. Check to make sure fields are filled correctly.');
+                })
+            }else{
                 this.loading = false;
-                this.disabled = true
-                alert('Employee updated successfully!');
-                this.options = [];
-                this.updateEmployeeList();
-            })
-            .catch((error)=>{
-                this.loading = false;
-                console.log(error);
-                alert('Error: Employee not updated. Check to make sure fields are filled correctly.');
-            })
+                alert('Error: Please check that your zip code is correct.');
+            }
         }
         else{
             this.loading = false;
-            alert('Error: Please check your input');
+            alert('Error: Please check that only one employee status is selected.');
         }
       },
       updateEmployeeList(){
@@ -385,14 +391,12 @@ export default {
           })
         },
         checkRegex(){
-            let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
-            let letterPatt = new RegExp(/[^\d,\s]/g);
-            let letterPattResult = letterPatt.test(this.form.zip);
-            let pattResult = patt.test(this.form.zip);
-            if(letterPattResult === true){
+            let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)+$/g);
+            let pattCheck = patt.exec(this.form.zip);
+            if(!patt.test(this.form.zip))
+            {
                 this.zipRegex = false;
-            }else
-            if(pattResult === true){
+            }else{
                 this.zipRegex = true;
             }
         },
@@ -424,7 +428,6 @@ export default {
                 this.checked = true;
             }
         },
-
         getEmployees(){
             this.loading = true;
             this.passwordDisabled = true;
@@ -563,7 +566,7 @@ hr {
     padding: 7px 2px;
 }
 .update{
-    width: 15%;
+    width: 20%;
     color:white;
     background-color: #0d50bc;
     border-color: darkblue;
