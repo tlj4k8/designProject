@@ -377,16 +377,15 @@ export default {
   },
     methods: {
       checkRegex(){
-          let patt = new RegExp(/(?:[^\d]|^)(\d{5})(?:[^\d]|$)/g);
-          let letterPatt = new RegExp(/[^\d,\s]/g);
-          let letterPattResult = letterPatt.test(this.form.zip);
-          let pattResult = patt.test(this.form.zip);
-          if(letterPattResult === true){
-              this.zipRegex = false;
-          }else
-          if(pattResult === true){
-              this.zipRegex = true;
-          }
+        let patt = new RegExp(/^\d{5}(?:[-\s]\d{4})?$/g);
+        let pattCheck = patt.exec(this.form.zip);
+        console.log(pattCheck);
+        patt.test(this.form.zip);
+        if(!patt.test(this.form.zip)){
+            this.zipRegex = false;
+        }else{
+            this.zipRegex = true;
+        }
       },
       handleSubmit(form){
         this.checkRegex();
@@ -493,7 +492,7 @@ export default {
             })
         }else{
           this.loading = false;
-          this.unsuccessfulAdd();
+          alert('Error: Please check that your zip code is correct.');
         }
       },
       formatTime(time){
