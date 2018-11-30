@@ -218,7 +218,8 @@ export default {
       valid: '',
       show: true,
       loading: false,
-      zipRegex: false
+      zipRegex: false,
+      timeCheck: false
     };
   },
   methods: {
@@ -251,6 +252,17 @@ export default {
           this.disabledChef = false;
         }
       },
+      check(){
+        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
+        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
+        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        {
+        this.timeCheck = true;
+        }else{
+        alert('Error: Please check that availability end times are after start times');
+        this.timeCheck = false;
+        }
+      },
       checkRegex(){
         let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
         let pattCheck = patt.exec(this.form.zip);
@@ -263,9 +275,10 @@ export default {
       },
       handleSubmit(form){
         this.checkRegex();
+        this.check();
         this.loading = true;
         if(this.valid === 'lightgreen'){
-          if(this.zipRegex == true){
+          if(this.zipRegex == true && this.timeCheck == true){
             let token = localStorage.getItem('t');
             let headers = {'Authorization': "Bearer " + token};
             this.$axiosServer.post('https://chefemployees.com/odata/Employees', {

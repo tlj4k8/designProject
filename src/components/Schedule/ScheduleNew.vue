@@ -35,6 +35,7 @@
                         <b-form-input id="startTime"
                                     type="time"
                                     required
+                                    @change="check"
                                     v-model="form.startTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -44,6 +45,7 @@
                         <b-form-input id="endTime"
                                     type="time"
                                     required
+                                    @change="check"
                                     v-model="form.endTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -87,7 +89,8 @@ export default {
             employeeOptions: [],
             show: true,
             loading: false,
-            checked: false
+            checked: false,
+            timeCheck: false
         }
     },
     methods: {
@@ -170,19 +173,31 @@ export default {
             let dateStamp = this.form.date.split('/').reverse().join('-');
             let formatedDate = dateStamp + "T00:00:00";
             return formatedDate;
+        },
+        check(){
+            let start = this.form.startTime;
+            let end = this.form.endTime;
+            if(end > start){
+                this.timeCheck = true;
+            }else{
+                this.timeCheck = false;
+            }
         }
-        },
-    computed: mapState({
-        getToken (state){
-            return state.jwt;
-        },
-        isAdmin (state){
-            return state.userInfo.admin;
-        },
-        isMenu (state){
-            return state.userInfo.menu;
-        }
-    }),
+    },
+    computed: {
+        ...mapState({
+            getToken (state){
+                return state.jwt;
+            },
+            isAdmin (state){
+                return state.userInfo.admin;
+            },
+            isMenu (state){
+                return state.userInfo.menu;
+            }
+        }),
+        
+    },
     mounted(){
         this.loading = true;
         let token = localStorage.getItem('t');
