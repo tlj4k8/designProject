@@ -106,11 +106,11 @@
           </table>
       </div>
     </div>
-    </b-form>
     <div class="disabledButtons">
         <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Profile</b-button>
         <b-button class="update" v-if="!disabled" @click="updateProfile">Update Profile</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
     </div>
+    </b-form>
     <Spinner v-if="loading"/>
     </div>
 </template>
