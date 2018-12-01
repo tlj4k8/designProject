@@ -19,13 +19,13 @@ export default {
       return state.jwt;
     }
   }),
-  mounted: function(){
+  mounted(){
     let token = localStorage.getItem('t');
     if (!token){
       let token = {};
     }
     else{
-    this.$store.dispatch('storeUserInfo',token);
+      this.$store.dispatch('storeUserInfo',token);
     }
   }
 }

@@ -156,49 +156,59 @@ const router = new Router({
     }
   ]
 })
-router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/help'];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('t');
-  let user = store.state.userInfo;
 
-  if (authRequired && !loggedIn) {
-    return next('/');
-  }
-  else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == true){
-    if(user.admin === 'True' || user.menu === 'True' || (user.menu === 'False' && user.admin === 'False')){
+router.beforeEach((to, from, next) => {
+  setTimeout(()=> {
+    const publicPages = ['/', '/help'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('t');
+    let user = store.state.userInfo;
+    
+    if (authRequired) {
+      if(!loggedIn){
+        return next('/');
+      }
       next();
     }
-    else{
-      return next('/dash');
+    if(to.meta.requiresAuth){
+      if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == true){
+        if(user.admin === 'True' || user.menu === 'True' || (user.menu === 'False' && user.admin === 'False')){
+          next();
+        }
+        else{
+          return next('/dash');
+        }
+      }
+      if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == false){
+        if(user.admin === 'True' || user.menu === 'True'){
+          next();
+        }
+        else{
+          return next('/dash');
+        }
+      }
+      if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == false){
+        if(user.admin === 'True'){
+          next();
+        }
+        else{
+          return next('/dash');
+        }
+      }
+      if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == true){
+        if(user.admin === 'True' || (user.admin === 'False' && user.menu === 'False')){
+          next();
+        }
+        else{
+          return next('/dash');
+        }
     }
-  }
-  else if(to.meta.adminAuth == true && to.meta.menuAuth == true && to.meta.chefAuth == false){
-    if(user.admin === 'True' || user.menu === 'True'){
-      next();
-    }
-    else{
-      return next('/dash');
-    }
-  }
-  else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == false){
-    if(user.admin === 'True'){
-      next();
-    }
-    else{
-      return next('/dash');
-    }
-  }
-  else if(to.meta.adminAuth == true && to.meta.menuAuth == false && to.meta.chefAuth == true){
-    if(user.admin === 'True' || (user.admin === 'False' && user.menu === 'False')){
-      next();
-    }
-    else{
-      return next('/dash');
-    }
-  }else{
     next();
   }
+  next();
+  
+  }, 25 )
+ 
 })
 
 

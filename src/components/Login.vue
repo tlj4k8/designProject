@@ -6,7 +6,7 @@
         </div>
         <div class="form">
             <div class="flexGroup">
-            <b-form ref="form" @submit="handleLogin(form)" :model="form" v-if="show" class="form">
+            <b-form ref="form" :model="form" v-if="show" class="form">
             <b-row class="flex">
                 <b-col sm="2"><label for="username">USERNAME</label></b-col>
                 <b-col sm="10">
@@ -21,7 +21,7 @@
             </b-row>
             <div class="buttonDiv">
                 <div class="buttonInfo">
-                    <b-button type="submit" class="loginButton">Login</b-button>
+                    <b-button type="button" @click="handleLogin(form)" class="loginButton">Login</b-button>
                     <p>Forgot Password? <a class="passwordText" @click="modalShow = !modalShow"><b>Click here</b></a></p>
                 </div>
             </div>
