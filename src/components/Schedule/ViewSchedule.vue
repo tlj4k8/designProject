@@ -25,7 +25,7 @@
                     <b-form-input id="startTime"
                                 type="time"
                                 required
-                                @change="check"
+                                @input="check"
                                 :disabled="disabled"
                                 v-model="form.startTime"/>
                 </b-form-group>
@@ -36,7 +36,7 @@
                     <b-form-input id="endTime"
                                 type="time"
                                 required
-                                @change="check"
+                                @input="check"
                                 :disabled="disabled"
                                 v-model="form.endTime"/>
                 </b-form-group>
@@ -107,7 +107,7 @@
             <div class="receiptflexGroup">
                 <b-form-group id="mealCharged"
                                 class="receiptflex"
-                                label="Meal Charged:"
+                                label="Meal Charged to Client:"
                                 label-for="mealCharged">
                     <b-input-group size="md" prepend="$" append=".00">
                         <b-form-input id="mealCharged"
@@ -459,7 +459,7 @@ export default {
       axios.get('https://chefemployees.com/api/ScheduleEmpClient', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
             response.data.forEach((data) => {
-                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
+                this.scheduleOptions.push({ value: data.ScheduleId, text: 'Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' + 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
             })
             this.loading = false;
         })
