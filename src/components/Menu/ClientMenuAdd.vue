@@ -100,6 +100,7 @@
         <b-form-input id="preferredMeat"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.meats"/>
     </b-form-group>
     <b-form-group class="flex" id="meatAvoid"
@@ -108,6 +109,7 @@
         <b-form-input id="meatAvoid"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.meatAvoid"/>
     </b-form-group>
     </div>
@@ -118,6 +120,7 @@
         <b-form-input id="meatCookPreferrence"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.meatCookPref"/>
     </b-form-group>
     <b-form-group class="flex" id="preferredCheeses"
@@ -126,6 +129,7 @@
         <b-form-input id="preferredCheeses"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.cheese"/>
     </b-form-group>
     </div>
@@ -136,6 +140,7 @@
         <b-form-input id="cheeseAvoid"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.cheeseAvoid"/>
     </b-form-group>
     <b-form-group class="flex" id="preferredGrains"
@@ -144,6 +149,7 @@
         <b-form-input id="preferredGrains"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.grains"/>
     </b-form-group>
     </div>
@@ -155,6 +161,7 @@
                     type="text"
                     placeholder="ex. (1 - 10)"
                     :disabled="disabled"
+                    maxlength='100'
                     v-model="client.spice"/>
     </b-form-group>
     <b-form-group class="flex" id="other"
@@ -163,6 +170,7 @@
         <b-form-input id="other"
                     type="text"
                     :disabled="disabled"
+                    maxlength='300'
                     v-model="client.other"/>
     </b-form-group>
     </div>
@@ -173,6 +181,7 @@
         <b-form-input id="allergies"
                     type="text"
                     :disabled="disabled"
+                    maxlength='300'
                     v-model="client.allergies"/>
     </b-form-group>
     <b-form-group class="flex" id="dietRestrictions"
@@ -181,6 +190,7 @@
         <b-form-input id="dietRestrictions"
                     type="text"
                     :disabled="disabled"
+                    maxlength='300'
                     v-model="client.dietRestrictions"/>
     </b-form-group>
     </div>
@@ -191,6 +201,7 @@
         <b-form-input id="dietGoals"
                     type="text"
                     :disabled="disabled"
+                    maxlength='300'
                     v-model="client.dietGoals"/>
     </b-form-group>
     <b-form-group class="flex" id="mainDish"
@@ -199,6 +210,7 @@
         <b-form-input id="mainDish"
                     type="text"
                     :disabled="disabled"
+                    maxlength='100'
                     v-model="client.mainDish"/>
     </b-form-group>
     </div>
@@ -209,6 +221,7 @@
         <b-form-input id="groceryStore"
                     type="text"
                     :disabled="disabled"
+                    maxlength='200'
                     v-model="client.groceryStore"/>
     </b-form-group>
     <b-form-group  class="flex" id="mealStructure"
@@ -217,6 +230,7 @@
         <b-form-input id="mealStructure"
                     type="text"
                     :disabled="disabled"
+                    maxlength='100'
                     v-model="client.mealStructure"/>
     </b-form-group>
     </div>
