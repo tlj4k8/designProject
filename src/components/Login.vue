@@ -16,7 +16,7 @@
             <b-row class="flex">
                 <b-col sm="2"><label for="password">PASSWORD</label></b-col>
                 <b-col sm="10">
-                    <b-form-input class="input" id="password" type="password" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
+                    <b-form-input class="input" id="password" type="password" oncopy="return false" onpaste="return false" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
                 </b-col>
             </b-row>
             <div class="buttonDiv">

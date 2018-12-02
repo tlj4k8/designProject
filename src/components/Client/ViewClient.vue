@@ -466,14 +466,14 @@ export default {
             window.open('http://localhost:8080/?#/help', "_blank");
         },
         check(){
-            if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
-            && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
-            && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+            if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
+            && (this.form.endThur >= this.form.thur) && (this.form.endFri >= this.form.fri) 
+            && (this.form.endSat >= this.form.sat) && (this.form.endSun >= this.form.sun))
             {
-            this.timeCheck = true;
+                this.timeCheck = true;
             }else{
-            alert('Error: Please check that availability end times are after start times');
-            this.timeCheck = false;
+                alert('Error: Please check that availability end times are after start times');
+                this.timeCheck = false;
             }
         },
         formatTime(time){
@@ -499,9 +499,10 @@ export default {
         },
         updateClient(){
             this.checkRegex();
-            this.check();
             this.loading = true;
-            if(this.zipRegex == true && this.timeCheck == true){
+            if(this.zipRegex == true){
+                this.check();
+                if(this.timeCheck == true){
                 let token = localStorage.getItem('t');
                 let headers = {'Authorization': "Bearer " + token};
                 this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
@@ -562,6 +563,9 @@ export default {
                     this.loading = false;
                     alert('Error: Client not updated. Check to make sure fields are filled correctly.');
                 })
+                }else{
+                    this.loading = false;
+                }
             }else{
                 this.loading = false;
                 alert('Error: Please check that your zip code is correct.');

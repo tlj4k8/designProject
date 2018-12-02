@@ -267,52 +267,56 @@ export default {
         window.open('http://localhost:8080/?#/help', "_blank");
     },
     updateEmployee(form){
-        this.checkRegex();
-        this.check();
         this.loading = true;
+        this.checkRegex();
         if(this.checked == true){
-            if(this.zipRegex == true && this.timeCheck == true){
-                this.loading = true;
-                let token = localStorage.getItem('t');
-                let headers = {'Authorization': "Bearer " + token};
-                this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
-                    EmployeeId: this.selected,
-                    EmFirstName: this.form.firstName,
-                    EmLastName: this.form.lastName,
-                    EmCellPhone: this.form.phone,
-                    EmEmail: this.form.email,
-                    EmZipCodes: this.form.zip,
-                    EmStartMonday: this.formatTime(this.form.mon),
-                    EmEndMonday: this.formatTime(this.form.endMon),
-                    EmStartTuesday: this.formatTime(this.form.tue),
-                    EmEndTuesday: this.formatTime(this.form.endTue),
-                    EmStartWednesday: this.formatTime(this.form.wed),
-                    EmEndWednesday: this.formatTime(this.form.endWed),
-                    EmStartThursday: this.formatTime(this.form.thur),
-                    EmEndThursday: this.formatTime(this.form.endThur),
-                    EmStartFriday: this.formatTime(this.form.fri),
-                    EmEndFriday: this.formatTime(this.form.endFri),
-                    EmStartSaturday: this.formatTime(this.form.sat),
-                    EmEndSaturday: this.formatTime(this.form.endSat),
-                    EmStartSunday: this.formatTime(this.form.sun),
-                    EmEndSunday: this.formatTime(this.form.endSun),
-                    IsMenu: this.form.ismenu,
-                    IsAdmin: this.form.isadmin,
-                    EmIsActive: this.form.isactive
-                    }, {headers: headers}
-                )
-                .then((response)=>{
+            if(this.zipRegex == true){
+                this.check();
+                if(this.timeCheck == true){
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let headers = {'Authorization': "Bearer " + token};
+                    this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.selected + ')', {
+                        EmployeeId: this.selected,
+                        EmFirstName: this.form.firstName,
+                        EmLastName: this.form.lastName,
+                        EmCellPhone: this.form.phone,
+                        EmEmail: this.form.email,
+                        EmZipCodes: this.form.zip,
+                        EmStartMonday: this.formatTime(this.form.mon),
+                        EmEndMonday: this.formatTime(this.form.endMon),
+                        EmStartTuesday: this.formatTime(this.form.tue),
+                        EmEndTuesday: this.formatTime(this.form.endTue),
+                        EmStartWednesday: this.formatTime(this.form.wed),
+                        EmEndWednesday: this.formatTime(this.form.endWed),
+                        EmStartThursday: this.formatTime(this.form.thur),
+                        EmEndThursday: this.formatTime(this.form.endThur),
+                        EmStartFriday: this.formatTime(this.form.fri),
+                        EmEndFriday: this.formatTime(this.form.endFri),
+                        EmStartSaturday: this.formatTime(this.form.sat),
+                        EmEndSaturday: this.formatTime(this.form.endSat),
+                        EmStartSunday: this.formatTime(this.form.sun),
+                        EmEndSunday: this.formatTime(this.form.endSun),
+                        IsMenu: this.form.ismenu,
+                        IsAdmin: this.form.isadmin,
+                        EmIsActive: this.form.isactive
+                        }, {headers: headers}
+                    )
+                    .then((response)=>{
+                        this.loading = false;
+                        this.disabled = true
+                        alert('Employee updated successfully!');
+                        this.options = [];
+                        this.updateEmployeeList();
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        console.log(error);
+                        alert('Error: Employee not updated. Check to make sure fields are filled correctly.');
+                    })
+                }else{
                     this.loading = false;
-                    this.disabled = true
-                    alert('Employee updated successfully!');
-                    this.options = [];
-                    this.updateEmployeeList();
-                })
-                .catch((error)=>{
-                    this.loading = false;
-                    console.log(error);
-                    alert('Error: Employee not updated. Check to make sure fields are filled correctly.');
-                })
+                }
             }else{
                 this.loading = false;
                 alert('Error: Please check that your zip code is correct.');
@@ -354,9 +358,9 @@ export default {
         return timeStamp;
     },
     check(){
-        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
-        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
-        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
+        && (this.form.endThur >= this.form.thur) && (this.form.endFri >= this.form.fri) 
+        && (this.form.endSat >= this.form.sat) && (this.form.endSun >= this.form.sun))
         {
             this.timeCheck = true;
         }else{

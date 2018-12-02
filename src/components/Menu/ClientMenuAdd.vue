@@ -433,7 +433,7 @@ export default {
       axios.get('https://chefemployees.com/api/ScheduleEmpClientDate', { headers: { 'Authorization': "Bearer " + token }})
       .then((response) => {
           response.data.forEach((data) => {
-              this.scheduleOptions.push({ value: data.ScheduleId, text: 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' + '   Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
+              this.scheduleOptions.push({ value: data.ScheduleId, text: 'Client:   ' + data.ClFirstName + ' ' + data.ClLastName + ', ' + 'Employee:   ' + data.EmFirstName + ' ' + data.EmLastName + ', ' +' Date: ' + this.returnDate(data.ScheduleDate) })
           })
           this.loading = false;
       })
