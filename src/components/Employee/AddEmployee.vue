@@ -15,8 +15,8 @@
                         id="username"
                         type="text"
                         :formatter="format"
-                        v-on:input.native="checkName"
-                        v-bind:style="{ 'border-color' : valid }"
+                        @input.native="usernameState"
+                        :style="{ 'border-color' : usernameValid }"
                         v-model="form.username"
                         maxlength='200'
                         required>
@@ -45,6 +45,8 @@
             <b-form-input id="firstName"
                         type="text"
                         v-model="form.firstName"
+                        @input.native="firstState"
+                        :style="{ 'border-color': firstValid}"
                         maxlength='50'
                         required>
             </b-form-input>
@@ -56,6 +58,8 @@
             <b-form-input id="lastName"
                         type="text"
                         v-model="form.lastName"
+                        @input.native="lastState"
+                        :style="{ 'border-color': lastValid}"
                         maxlength='50'
                         required>
             </b-form-input>
@@ -68,6 +72,8 @@
                         label-for="email">
             <b-form-input id="email"
                         type="email"
+                        @input.native="emailState"
+                        :style="{ 'border-color' : emailValid }"
                         v-model="form.email"
                         maxlength='50'
                         required>
@@ -80,7 +86,8 @@
             <b-form-input id="phone"
                         type="tel"
                         v-model="form.phone"
-                        pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                        @input.native="phoneState"
+                        :style="{ 'border-color': phoneValid}"
                         maxlength='15'
                         required>
             </b-form-input>
@@ -92,7 +99,10 @@
                         label-for="zip">
             <b-form-input id="zip"
                         type="text"
+                        @input.native="zipState"
+                        :style="{ 'border-color': zipValid}"
                         v-model="form.zip"
+                        placeholder="(i.e. List your zip codes, separated by a comma)"
                         maxlength='400'
                         required>
             </b-form-input>
@@ -222,10 +232,14 @@ export default {
         isAdmin: false
       },
       employeeNames: [],
-      valid: '',
+      usernameValid: '',
+      emailValid: '',
+      zipValid: '',
+      firstValid: '',
+      lastValid: '',
+      phoneValid: '',
       show: true,
       loading: false,
-      zipRegex: false,
       timeCheck: false
     };
   },
@@ -236,9 +250,37 @@ export default {
       help(){
         window.open('http://localhost:8080/#/help', "_blank");
       },
-      checkName(){
-        this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';
-        if(this.form.username === '') { this.valid = ''}
+      usernameState(){
+        this.employeeNames.includes(this.form.username) ? this.usernameValid = 'red' : this.usernameValid = 'lightgreen';
+        if(this.form.username === '') { this.usernameValid = ''}
+      },
+      emailState(){
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        re.test(this.form.email);
+        if(this.form.email === ''){ this.emailValid = ''}
+        if(!re.test(this.form.email)){this.emailValid = 'red';}else{this.emailValid = 'lightgreen';}
+      },
+      zipState(){
+        let patt = /^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/;
+        let pattCheck = patt.exec(this.form.zip);
+        patt.test(this.form.zip);
+        if(this.form.zip === ''){ this.zipValid = ''}
+        if(!patt.test(this.form.zip)){this.zipValid = 'red';}else{this.zipValid = 'lightgreen';}
+      },
+      firstState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.firstName);
+        if(!name.test(this.form.firstName)){this.firstValid = 'red';}else{this.firstValid = 'lightgreen';}
+      },
+      lastState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.lastName);
+        if(!name.test(this.form.lastName)){this.lastValid = 'red';}else{this.lastValid = 'lightgreen';}
+      },
+      phoneState(){
+        let num = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+        num.test(this.form.phone);
+        if(!num.test(this.form.phone)){this.phoneValid = 'red';}else{this.phoneValid = 'lightgreen';}
       },
       checkType(){
         if(this.form.isMenu === true ){
@@ -270,97 +312,86 @@ export default {
         this.timeCheck = false;
         }
       },
-      checkRegex(){
-        let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
-        let pattCheck = patt.exec(this.form.zip);
-        patt.test(this.form.zip);
-        if(!patt.test(this.form.zip)){
-            this.zipRegex = false;
-        }else{
-            this.zipRegex = true;
-        }
-      },
       handleSubmit(form){
         this.loading = true;
-        if(this.valid === 'lightgreen'){
-          this.checkRegex();
-          if(this.zipRegex == true){
-            this.check();
-            if(this.timeCheck == true){
-            let token = localStorage.getItem('t');
-            let headers = {'Authorization': "Bearer " + token};
-            this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
-                Username: this.form.username,
-                Password: this.form.password,
-                EmFirstName: this.form.firstName,
-                EmLastName: this.form.lastName,
-                EmCellPhone: this.form.phone,
-                EmEmail: this.form.email,
-                EmZipCodes: this.form.zip,
-                EmStartMonday: this.formatTime(this.form.mon),
-                EmEndMonday: this.formatTime(this.form.endMon),
-                EmStartTuesday: this.formatTime(this.form.tue),
-                EmEndTuesday: this.formatTime(this.form.endTue),
-                EmStartWednesday: this.formatTime(this.form.wed),
-                EmEndWednesday: this.formatTime(this.form.endWed),
-                EmStartThursday: this.formatTime(this.form.thur),
-                EmEndThursday: this.formatTime(this.form.endThur),
-                EmStartFriday: this.formatTime(this.form.fri),
-                EmEndFriday: this.formatTime(this.form.endFri),
-                EmStartSaturday: this.formatTime(this.form.sat),
-                EmEndSaturday: this.formatTime(this.form.endSat),
-                EmStartSunday: this.formatTime(this.form.sun),
-                EmEndSunday: this.formatTime(this.form.endSun),
-                IsMenu: this.form.isMenu,
-                IsAdmin: this.form.isAdmin,
-                EmIsActive: this.form.IsActive
-              },{headers: headers}
-            )
-            .then((response)=>{
-              console.log(response)
-              this.form.username = '',
-              this.form.password = '',
-              this.form.email = '',
-              this.form.firstName = '',
-              this.form.lastName = '',
-              this.form.phone = '', 
-              this.form.zip = '',
-              this.form.mon = '',
-              this.form.tue = '',
-              this.form.wed = '',
-              this.form.thur = '',
-              this.form.fri = '',
-              this.form.sat = '',
-              this.form.sun = '',
-              this.form.endMon = '',
-              this.form.endTue = '',
-              this.form.endWed = '',
-              this.form.endThur = '',
-              this.form.endFri = '',
-              this.form.endSat = '',
-              this.form.endSun = '',
-              this.form.isMenu = false,
-              this.form.isAdmin = false,
-              this.valid = '',
-              this.loading = false
-              alert('Employee added successfully!');
-            })
-            .catch((error)=>{
-              this.loading = false;
-              alert('Error: Issue adding employee. Please try again.');
-              console.log(error);
-            })
-          }else{
+        if(this.usernameValid === 'lightgreen' && this.firstValid === 'lightgreen' && this.lastValid === 'lightgreen' && this.emailValid === 'lightgreen' && this.phoneValid === 'lightgreen' && this.zipValid === 'lightgreen'){
+          this.check();
+          if(this.timeCheck == true){
+          let token = localStorage.getItem('t');
+          let headers = {'Authorization': "Bearer " + token};
+          this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
+              Username: this.form.username,
+              Password: this.form.password,
+              EmFirstName: this.form.firstName,
+              EmLastName: this.form.lastName,
+              EmCellPhone: this.form.phone,
+              EmEmail: this.form.email,
+              EmZipCodes: this.form.zip,
+              EmStartMonday: this.formatTime(this.form.mon),
+              EmEndMonday: this.formatTime(this.form.endMon),
+              EmStartTuesday: this.formatTime(this.form.tue),
+              EmEndTuesday: this.formatTime(this.form.endTue),
+              EmStartWednesday: this.formatTime(this.form.wed),
+              EmEndWednesday: this.formatTime(this.form.endWed),
+              EmStartThursday: this.formatTime(this.form.thur),
+              EmEndThursday: this.formatTime(this.form.endThur),
+              EmStartFriday: this.formatTime(this.form.fri),
+              EmEndFriday: this.formatTime(this.form.endFri),
+              EmStartSaturday: this.formatTime(this.form.sat),
+              EmEndSaturday: this.formatTime(this.form.endSat),
+              EmStartSunday: this.formatTime(this.form.sun),
+              EmEndSunday: this.formatTime(this.form.endSun),
+              IsMenu: this.form.isMenu,
+              IsAdmin: this.form.isAdmin,
+              EmIsActive: this.form.IsActive
+            },{headers: headers}
+          )
+          .then((response)=>{
+            console.log(response)
+            this.form.username = '',
+            this.form.password = '',
+            this.form.email = '',
+            this.form.firstName = '',
+            this.form.lastName = '',
+            this.form.phone = '', 
+            this.form.zip = '',
+            this.form.mon = '',
+            this.form.tue = '',
+            this.form.wed = '',
+            this.form.thur = '',
+            this.form.fri = '',
+            this.form.sat = '',
+            this.form.sun = '',
+            this.form.endMon = '',
+            this.form.endTue = '',
+            this.form.endWed = '',
+            this.form.endThur = '',
+            this.form.endFri = '',
+            this.form.endSat = '',
+            this.form.endSun = '',
+            this.form.isMenu = false,
+            this.form.isAdmin = false,
+            this.usernameValid = '',
+            this.emailValid = '',
+            this.zipValid = '',
+            this.firstValid = '',
+            this.lastValid = '',
+            this.phoneValid = '',
+            this.loading = false
+            alert('Employee added successfully!');
+          })
+          .catch((error)=>{
             this.loading = false;
-          }
+            alert('Error: Issue adding employee. Please try again.');
+            console.log(error);
+          })
         }else{
           this.loading = false;
-          alert('Error: Please check that your zip code is correct.');
         }
       }
       else{
         this.loading = false;
-        alert('Error: Username already taken, please try a new one.');
+        alert('Error: Please check your form for incomplete/incorrect input.');
       }
       },
       formatTime(time){

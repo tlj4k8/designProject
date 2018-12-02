@@ -116,6 +116,7 @@
                                     type="number"
                                     :disabled="disabled"
                                     maxlength='6'
+                                    @input.native="chargedState"
                                     v-model="form.mealCharged">
                         </b-form-input>
                      </b-input-group>
@@ -129,6 +130,7 @@
                                     type="number"
                                     :disabled="disabled"
                                     maxlength='6'
+                                    @input.native="costState"
                                     v-model="form.mealCost">
                         </b-form-input>
                     </b-input-group>
@@ -207,6 +209,16 @@ export default {
     },
     onFileSelected(event){
         this.selectedFile = event.target.files[0];
+    },
+    costState(){
+        let cost = /^[0-9]*$/;
+        cost.test(this.form.mealCost);
+        if(!cost.test(this.form.mealCost)){return false;}else{return true;}
+    },
+    chargedState(){
+        let charged = /^[0-9]*$/;
+        charged.test(this.form.mealCharged);
+        if(!charged.test(this.form.mealCharged)){return false;}else{return true;}
     },
     onUpload(){
         if(this.ready == true){
@@ -384,33 +396,38 @@ export default {
     updateSchedule(){
         this.validateDate();
         if(this.checked == true){
-            this.checkTimeSchedule();
-            if(this.timeCheck == true){
-                this.loading = true;
-                let token = localStorage.getItem('t');
-                let headers = {'Authorization': 'Bearer ' + token}
-                this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
-                    ScheduleId: this.form.selectedSchedule,
-                    ScheduleDate: this.formatDate(this.form.date),
-                    StartTime: this.formatTime(this.form.startTime),
-                    EndTime: this.formatTime(this.form.endTime),
-                    Charged: this.form.mealCharged,
-                    Cost: this.form.mealCost,
-                }, {headers: headers}
-                )
-                .then((response)=>{
+            if(this.costState() == true && this.chargedState() ==  true){
+                this.checkTimeSchedule();
+                if(this.timeCheck == true){
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let headers = {'Authorization': 'Bearer ' + token}
+                    this.$axiosServer.patch('https://chefemployees.com/odata/Schedules(' + this.form.selectedSchedule + ')', {
+                        ScheduleId: this.form.selectedSchedule,
+                        ScheduleDate: this.formatDate(this.form.date),
+                        StartTime: this.formatTime(this.form.startTime),
+                        EndTime: this.formatTime(this.form.endTime),
+                        Charged: this.form.mealCharged,
+                        Cost: this.form.mealCost,
+                    }, {headers: headers}
+                    )
+                    .then((response)=>{
+                        this.loading = false;
+                        alert('Schedule updated!');
+                        this.disabled = true;
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        alert('Error: There was a problem updating schedule. Please try again.');
+                        console.log(error);
+                    })
+                }else{  
                     this.loading = false;
-                    alert('Schedule updated!');
-                    this.disabled = true;
-                })
-                .catch((error)=>{
-                    this.loading = false;
-                    alert('Error: There was a problem updating schedule. Please try again.');
-                    console.log(error);
-                })
+                    alert('Error: Please make sure that schedule times are correct.');
+                }
             }else{
                 this.loading = false;
-                alert('Error: Please make sure that schedule times are correct.');
+                alert('Error: Please make sure that "Customer Receipt Form" is correct.');
             }
         }
     },

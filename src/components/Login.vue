@@ -169,6 +169,7 @@ h1{
 }
 a.passwordText{
     color: blue;
+    cursor: pointer;
 }
 @media(max-width: 1200px){
     .flex{
