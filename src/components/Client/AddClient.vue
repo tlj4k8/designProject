@@ -412,109 +412,113 @@ export default {
         }
       },
       handleSubmit(form){
-        this.checkRegex();
-        this.check();
         this.loading = true;
-        if(this.zipRegex == true && this.timeCheck == true){
-          let token = localStorage.getItem('t');
-          let headers = {'Authorization': "Bearer " + token};
-          this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
-            EmployeeId: this.selected,
-            ClFirstName: this.form.firstName,
-            ClLastName: this.form.lastName,
-            ClCellPhone: this.form.phone,
-            ClEmail: this.form.email,
-            Address1: this.form.address,
-            Address2: this.form.addressTwo,
-            City: this.form.city,
-            State: this.form.state,
-            ZipCode: this.form.zip,
-            ClIsActive: this.form.isActive,
-            ClStartMonday: this.formatTime(this.form.mon),
-            ClEndMonday: this.formatTime(this.form.endMon),
-            ClStartTuesday: this.formatTime(this.form.tue),
-            ClEndTuesday: this.formatTime(this.form.endTue),
-            ClStartWednesday: this.formatTime(this.form.wed),
-            ClEndWednesday: this.formatTime(this.form.endWed),
-            ClStartThursday: this.formatTime(this.form.thur),
-            ClEndThursday: this.formatTime(this.form.endThur),
-            ClStartFriday: this.formatTime(this.form.fri),
-            ClEndFriday: this.formatTime(this.form.endFri),
-            ClStartSaturday: this.formatTime(this.form.sat),
-            ClEndSaturday: this.formatTime(this.form.endSat),
-            ClStartSunday: this.formatTime(this.form.sun),
-            ClEndSunday: this.formatTime(this.form.endSun),
-            PreferredMeats: this.form.meats,
-            MeatsToAvoid: this.form.meatAvoid,
-            PreferredCheeses: this.form.cheese,
-            CheesesToAvoid: this.form.cheeseAvoid,
-            PreferredGrains: this.form.grains,
-            GrainsToAvoid: this.form.grainsAvoid,
-            SpiceLevel: this.form.spice,
-            OtherToAvoid: this.form.other,
-            Allergies: this.form.allergies,
-            DietRestrictions: this.form.dietRestrictions,
-            DietGoals: this.form.dietGoals,
-            MainDishSoupSaladStew: this.form.mainDish,
-            StoreContainers: this.form.storageContainers,
-            StoveOven: this.form.stove,
-            OrganicMeals: this.form.organic,
-            PreferredGroceryStore: this.form.groceryStore,
-            MealSize: this.form.mealStructure,
-            ExtraNotes: this.form.notes,
-            }, {headers: headers}
-          )
-          .then((response)=>{
-            this.loading = false,
-            alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
-            this.selected = null,
-            this.form.firstName = '',
-            this.form.lastName = '',
-            this.form.phone = '',
-            this.form.email = '',
-            this.form.address = '',
-            this.form.addressTwo = '',
-            this.form.city = '',
-            this.form.state = '',
-            this.form.zip = '',
-            this.form.meats = '',
-            this.form.meatAvoid = '',
-            this.form.cheese = '',
-            this.form.cheeseAvoid = '',
-            this.form.grains = '',
-            this.form.grainsAvoid = '',
-            this.form.spice = '',
-            this.form.other = '',
-            this.form.allergies = '',
-            this.form.dietRestrictions = '',
-            this.form.dietGoals = '',
-            this.form.mainDish = '',
-            this.form.storageContainers = '',
-            this.form.stove = '',
-            this.form.organic = '',
-            this.form.groceryStore = '',
-            this.form.mealStructure = '',
-            this.form.notes = '',
-            this.form.mon = '',
-            this.form.tue = '',
-            this.form.wed = '',
-            this.form.thur = '',
-            this.form.fri = '',
-            this.form.sat = '',
-            this.form.sun = '',
-            this.form.endMon = '',
-            this.form.endTue = '',
-            this.form.endWed = '',
-            this.form.endThur = '',
-            this.form.endFri = '',
-            this.form.endSat = '',
-            this.form.endSun = ''
-          })
-          .catch((error)=>{
+        this.checkRegex();
+        if(this.zipRegex == true){ 
+          this.check();
+          if(this.timeCheck == true){
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
+              EmployeeId: this.selected,
+              ClFirstName: this.form.firstName,
+              ClLastName: this.form.lastName,
+              ClCellPhone: this.form.phone,
+              ClEmail: this.form.email,
+              Address1: this.form.address,
+              Address2: this.form.addressTwo,
+              City: this.form.city,
+              State: this.form.state,
+              ZipCode: this.form.zip,
+              ClIsActive: this.form.isActive,
+              ClStartMonday: this.formatTime(this.form.mon),
+              ClEndMonday: this.formatTime(this.form.endMon),
+              ClStartTuesday: this.formatTime(this.form.tue),
+              ClEndTuesday: this.formatTime(this.form.endTue),
+              ClStartWednesday: this.formatTime(this.form.wed),
+              ClEndWednesday: this.formatTime(this.form.endWed),
+              ClStartThursday: this.formatTime(this.form.thur),
+              ClEndThursday: this.formatTime(this.form.endThur),
+              ClStartFriday: this.formatTime(this.form.fri),
+              ClEndFriday: this.formatTime(this.form.endFri),
+              ClStartSaturday: this.formatTime(this.form.sat),
+              ClEndSaturday: this.formatTime(this.form.endSat),
+              ClStartSunday: this.formatTime(this.form.sun),
+              ClEndSunday: this.formatTime(this.form.endSun),
+              PreferredMeats: this.form.meats,
+              MeatsToAvoid: this.form.meatAvoid,
+              PreferredCheeses: this.form.cheese,
+              CheesesToAvoid: this.form.cheeseAvoid,
+              PreferredGrains: this.form.grains,
+              GrainsToAvoid: this.form.grainsAvoid,
+              SpiceLevel: this.form.spice,
+              OtherToAvoid: this.form.other,
+              Allergies: this.form.allergies,
+              DietRestrictions: this.form.dietRestrictions,
+              DietGoals: this.form.dietGoals,
+              MainDishSoupSaladStew: this.form.mainDish,
+              StoreContainers: this.form.storageContainers,
+              StoveOven: this.form.stove,
+              OrganicMeals: this.form.organic,
+              PreferredGroceryStore: this.form.groceryStore,
+              MealSize: this.form.mealStructure,
+              ExtraNotes: this.form.notes,
+              }, {headers: headers}
+            )
+            .then((response)=>{
+              this.loading = false,
+              alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
+              this.selected = null,
+              this.form.firstName = '',
+              this.form.lastName = '',
+              this.form.phone = '',
+              this.form.email = '',
+              this.form.address = '',
+              this.form.addressTwo = '',
+              this.form.city = '',
+              this.form.state = '',
+              this.form.zip = '',
+              this.form.meats = '',
+              this.form.meatAvoid = '',
+              this.form.cheese = '',
+              this.form.cheeseAvoid = '',
+              this.form.grains = '',
+              this.form.grainsAvoid = '',
+              this.form.spice = '',
+              this.form.other = '',
+              this.form.allergies = '',
+              this.form.dietRestrictions = '',
+              this.form.dietGoals = '',
+              this.form.mainDish = '',
+              this.form.storageContainers = '',
+              this.form.stove = '',
+              this.form.organic = '',
+              this.form.groceryStore = '',
+              this.form.mealStructure = '',
+              this.form.notes = '',
+              this.form.mon = '',
+              this.form.tue = '',
+              this.form.wed = '',
+              this.form.thur = '',
+              this.form.fri = '',
+              this.form.sat = '',
+              this.form.sun = '',
+              this.form.endMon = '',
+              this.form.endTue = '',
+              this.form.endWed = '',
+              this.form.endThur = '',
+              this.form.endFri = '',
+              this.form.endSat = '',
+              this.form.endSun = ''
+            })
+            .catch((error)=>{
+              this.loading = false;
+              alert('Error: Please check to make sure the fields were filled out correctly.')
+              console.log(error);
+            })
+          }else{
             this.loading = false;
-            alert('Error: Please check to make sure the fields were filled out correctly.')
-            console.log(error);
-          })
+          }
         }else{
           this.loading = false;
           alert('Error: Please check that your zip code is correct.');
