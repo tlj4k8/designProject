@@ -29,7 +29,7 @@
             <b-form-input id="password"
                         type="password"
                         v-model="form.password"
-                        maxlength='200'
+                        maxlength='50'
                         required>
             </b-form-input>
         </b-form-group>

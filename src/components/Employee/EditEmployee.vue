@@ -47,7 +47,7 @@
                     <b-form-input id="resetPass"
                                 type="password"
                                 :disabled="passwordDisabled"
-                                maxlength='200'
+                                maxlength='50'
                                 v-model="form.resetPass">
                     </b-form-input>
                 </b-form-group>
