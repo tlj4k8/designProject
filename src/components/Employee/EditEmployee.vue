@@ -567,7 +567,7 @@ export default {
 
 <style scoped>
 .time{
-    overflow: hidden;
+    width: 100px;
 }
 hr {
     background-color: #0d50bc;
