@@ -38,6 +38,7 @@
                     :rows="3"
                     :max-rows="6"
                     type="text"
+                    maxlength='400'
                     v-model="form.notes"/>
         </b-form-group>
       </div>
@@ -304,7 +305,7 @@ export default {
   },
   methods: {
     help(){
-        window.open('http://localhost:8080/?#/help', "_blank");
+        window.open('http://localhost:8080/#/help', "_blank");
     },
     returnDate(date){
         let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');

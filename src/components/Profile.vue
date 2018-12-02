@@ -16,6 +16,7 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.firstName"
+                        maxlength='50'
                         required>
             </b-form-input>
         </b-form-group>
@@ -27,6 +28,7 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.lastName"
+                        maxlength='50'
                         required>
             </b-form-input>
             </b-form-group>
@@ -40,6 +42,7 @@
                         type="email"
                         :disabled="disabled"
                         v-model="form.email"
+                        maxlength='50'
                         required>
             </b-form-input>
         </b-form-group>
@@ -51,6 +54,7 @@
                         type="text"
                         v-model="form.phone"
                         :disabled="disabled"
+                        maxlength='15'
                         pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                         required>
             </b-form-input>
@@ -64,6 +68,7 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.zip"
+                        maxlength='400'
                         required>
             </b-form-input>
         </b-form-group>
@@ -85,23 +90,23 @@
               </tr>
               <tr>
                   <td>Start</td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
               </tr>
               <tr>
                   <td>End</td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
-                  <td><b-form-input type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
+                  <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
               </tr>
           </table>
       </div>
@@ -161,7 +166,7 @@ export default {
     },
     methods: {
         help(){
-            window.open('http://localhost:8080/?#/help', "_blank");
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         check(){
             if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
@@ -206,7 +211,6 @@ export default {
             this.check();
             if(this.timeCheck == true){
                 this.loading = true;
-                console.log(this.employeeInfo);
                 let token = localStorage.getItem('t');
                 let headers = {'Authorization' : 'Bearer ' + token}
                 this.$axiosServer.patch('https://chefemployees.com/odata/Employees(' + this.employeeInfo.employeeid + ')', {

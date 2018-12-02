@@ -234,7 +234,7 @@ export default {
         return value.toLowerCase()
       },
       help(){
-        window.open('http://localhost:8080/?#/help', "_blank");
+        window.open('http://localhost:8080/#/help', "_blank");
       },
       checkName(){
         this.employeeNames.includes(this.form.username) ? this.valid = 'red' : this.valid = 'lightgreen';

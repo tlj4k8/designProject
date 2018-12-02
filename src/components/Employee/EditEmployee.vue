@@ -264,7 +264,7 @@ export default {
   },
   methods: {
     help(){
-        window.open('http://localhost:8080/?#/help', "_blank");
+        window.open('http://localhost:8080/#/help', "_blank");
     },
     updateEmployee(form){
         this.loading = true;
