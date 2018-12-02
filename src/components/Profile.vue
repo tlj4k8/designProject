@@ -14,6 +14,7 @@
                         label-for="firstName">
             <b-form-input id="firstName"
                         type="text"
+                        :state="firstState"
                         :disabled="disabled"
                         v-model="form.firstName"
                         maxlength='50'
@@ -27,6 +28,7 @@
             <b-form-input id="lastName"
                         type="text"
                         :disabled="disabled"
+                        :state="lastState"
                         v-model="form.lastName"
                         maxlength='50'
                         required>
@@ -41,6 +43,7 @@
             <b-form-input id="email"
                         type="email"
                         :disabled="disabled"
+                        :state="emailState"
                         v-model="form.email"
                         maxlength='50'
                         required>
@@ -51,11 +54,11 @@
                         label="Phone:"
                         label-for="phone">
             <b-form-input id="phone"
-                        type="text"
+                        type="tel"
                         v-model="form.phone"
                         :disabled="disabled"
+                        :state="phoneState"
                         maxlength='15'
-                        pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                         required>
             </b-form-input>
             </b-form-group>
@@ -68,6 +71,7 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.zip"
+                        :state="checkRegex"
                         maxlength='400'
                         required>
             </b-form-input>
@@ -173,22 +177,13 @@ export default {
             && (this.form.endThur >= this.form.thur) && (this.form.endFri >= this.form.fri) 
             && (this.form.endSat >= this.form.sat) && (this.form.endSun >= this.form.sun))
             {
-            this.timeCheck = true;
+                this.timeCheck = true;
             }else{
             alert('Error: Please check that availability end times are after start times');
-            this.timeCheck = false;
+                this.timeCheck = false;
             }
         },
-        checkRegex(){
-            let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
-            let pattCheck = patt.exec(this.form.zip);
-            patt.test(this.form.zip);
-            if(!patt.test(this.form.zip)){
-                this.zipRegex = false;
-            }else{
-                this.zipRegex = true;
-            }
-        },
+        
         returnTime(time){
             let timeStamp = moment(time, 'HH:mm:ss.SSS').format('HH:mm');
             return timeStamp;
@@ -205,9 +200,8 @@ export default {
             return formatedTime;
         },
         updateProfile(){
-          this.checkRegex();
           this.loading = true;
-          if(this.zipRegex == true){
+          if(this.lastState == true && this.firstState == true && this.phoneState == true && this.emailState == true && this.checkRegex == true){
             this.check();
             if(this.timeCheck == true){
                 this.loading = true;
@@ -256,15 +250,63 @@ export default {
             }
         }else{
             this.loading = false;
-            alert('Error: Please check that your zip code is correct.');
+            alert('Error: Please check your form for incomplete/incorrect input.');
         }
       } 
     },
-    computed: mapState({
-        getToken(state){
-            return state.jwt;
+    computed: {
+        ...mapState({
+            getToken(state){
+                return state.jwt;
+            }
+        }),
+        emailState(){
+            let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(this.form.email);
+            if(re.test(this.form.email)){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        checkRegex(){
+            let patt = /^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/;
+            let pattCheck = patt.exec(this.form.zip);
+            patt.test(this.form.zip);
+            if(patt.test(this.form.zip)){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        firstState(){
+            let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+            return name.test(this.form.firstName);
+            if(name.test(this.form.firstName)){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        lastState(){
+            let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+            return name.test(this.form.lastName);
+            if(name.test(this.form.lastName)){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        phoneState(){
+            let num = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+            return num.test(this.form.phone);
+            if(num.test(this.form.phone)){
+                return true;
+            }else{
+                return false;
+            }
         }
-    }),
+    },
     mounted(){
         this.loading = true;
         let token = localStorage.getItem('t');

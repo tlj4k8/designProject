@@ -15,6 +15,7 @@
         <b-form-input id="firstName"
                       type="text"
                       v-model="form.firstName"
+                      :state="firstState"
                       maxlength='50'
                       required>
         </b-form-input>
@@ -26,6 +27,7 @@
         <b-form-input id="lastName"
                       type="text"
                       v-model="form.lastName"
+                      :state="lastState"
                       maxlength='50'
                       required>
         </b-form-input>
@@ -39,6 +41,7 @@
         <b-form-input id="email"
                       type="email"
                       v-model="form.email"
+                      :state="emailState"
                       maxlength='50'
                       required>
         </b-form-input>
@@ -51,7 +54,7 @@
                       type="tel"
                       v-model="form.phone"
                       maxlength='15'
-                      pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                      :state="phoneState"
                       required>
         </b-form-input>
         </b-form-group>
@@ -110,6 +113,7 @@
                       type="text"
                       v-model="form.zip"
                       maxlength='5'
+                      :state="checkRegex"
                       required>
         </b-form-input>
       </b-form-group>
@@ -235,7 +239,7 @@
                     label-for="spice">
         <b-form-input id="spice"
                       type="text"
-                      placeholder="ex. (1 - 10)"
+                      placeholder="(e.g. 1 - 10)"
                       maxlength='100'
                       v-model="form.spice"/>
       </b-form-group>
@@ -277,7 +281,7 @@
         <b-form-input id="mainDish"
                       type="text"
                       maxlength='100'
-                      placeholder="Ex. Soup, Salad, Stew, etc."
+                      placeholder="(e.g. Soup, Salad, Stew, etc.)"
                       v-model="form.mainDish"/>
       </b-form-group>
       <b-form-group id="groceryStore"
@@ -294,7 +298,7 @@
         <b-form-input id="mealStructure"
                       type="text"
                       maxlength='100'
-                      placeholder="Ex. # of meals per/day"
+                      placeholder="(i.e. # of meals per/day)"
                       v-model="form.mealStructure"/>
       </b-form-group>
       <b-form-group id="notes"
@@ -383,7 +387,6 @@ export default {
       ],
       show: true,
       loading: false,
-      zipRegex: false,
       timeCheck: false
     }
   },
@@ -402,20 +405,9 @@ export default {
           this.timeCheck = false;
         }
       },
-      checkRegex(){
-        let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
-        let pattCheck = patt.exec(this.form.zip);
-        patt.test(this.form.zip);
-        if(!patt.test(this.form.zip)){
-            this.zipRegex = false;
-        }else{
-            this.zipRegex = true;
-        }
-      },
       handleSubmit(form){
         this.loading = true;
-        this.checkRegex();
-        if(this.zipRegex == true){ 
+        if(this.lastState == true && this.firstState == true && this.phoneState == true && this.emailState == true && this.checkRegex == true){
           this.check();
           if(this.timeCheck == true){
             let token = localStorage.getItem('t');
@@ -522,7 +514,7 @@ export default {
           }
         }else{
           this.loading = false;
-          alert('Error: Please check that your zip code is correct.');
+          alert('Error: Please check your form for incomplete/incorrect input.');
         }
       },
       formatTime(time){
@@ -536,6 +528,54 @@ export default {
         }
         return formatedTime;
       },
+    },
+    computed: {
+      emailState(){
+          let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(this.form.email);
+          if(re.test(this.form.email)){
+              return true;
+          }else{
+              return false;
+          }
+      },
+      checkRegex(){
+          let patt = /^\d{5}$/;
+          let pattCheck = patt.exec(this.form.zip);
+          patt.test(this.form.zip);
+          if(patt.test(this.form.zip)){
+              return true;
+          }else{
+              return false;
+          }
+      },
+      firstState(){
+          let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+          return name.test(this.form.firstName);
+          if(name.test(this.form.firstName)){
+              return true;
+          }else{
+              return false;
+          }
+      },
+      lastState(){
+          let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+          return name.test(this.form.lastName);
+          if(name.test(this.form.lastName)){
+              return true;
+          }else{
+              return false;
+          }
+      },
+      phoneState(){
+          let num = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+          return num.test(this.form.phone);
+          if(num.test(this.form.phone)){
+              return true;
+          }else{
+              return false;
+          }
+      }
     }
 }
 </script>
