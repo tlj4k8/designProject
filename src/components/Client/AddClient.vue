@@ -16,6 +16,8 @@
                       type="text"
                       v-model="form.firstName"
                       maxlength='50'
+                      @input.native="firstState"
+                      :style="{ 'border-color': firstValid}"
                       required>
         </b-form-input>
       </b-form-group>
@@ -26,6 +28,8 @@
         <b-form-input id="lastName"
                       type="text"
                       v-model="form.lastName"
+                      @input.native="lastState"
+                      :style="{ 'border-color': lastValid}"
                       maxlength='50'
                       required>
         </b-form-input>
@@ -39,6 +43,8 @@
         <b-form-input id="email"
                       type="email"
                       v-model="form.email"
+                      @input.native="emailState"
+                      :style="{ 'border-color' : emailValid }"
                       maxlength='50'
                       required>
         </b-form-input>
@@ -51,7 +57,8 @@
                       type="tel"
                       v-model="form.phone"
                       maxlength='15'
-                      pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                      @input.native="phoneState"
+                      :style="{ 'border-color': phoneValid}"
                       required>
         </b-form-input>
         </b-form-group>
@@ -109,6 +116,8 @@
         <b-form-input id="zip"
                       type="text"
                       v-model="form.zip"
+                      @input.native="zipState"
+                      :style="{ 'border-color': zipValid}"
                       maxlength='5'
                       required>
         </b-form-input>
@@ -235,7 +244,7 @@
                     label-for="spice">
         <b-form-input id="spice"
                       type="text"
-                      placeholder="ex. (1 - 10)"
+                      placeholder="(e.g. 1 - 10)"
                       maxlength='100'
                       v-model="form.spice"/>
       </b-form-group>
@@ -277,7 +286,7 @@
         <b-form-input id="mainDish"
                       type="text"
                       maxlength='100'
-                      placeholder="Ex. Soup, Salad, Stew, etc."
+                      placeholder="(e.g. Soup, Salad, Stew, etc.)"
                       v-model="form.mainDish"/>
       </b-form-group>
       <b-form-group id="groceryStore"
@@ -294,7 +303,7 @@
         <b-form-input id="mealStructure"
                       type="text"
                       maxlength='100'
-                      placeholder="Ex. # of meals per/day"
+                      placeholder="(i.e. # of meals per/day)"
                       v-model="form.mealStructure"/>
       </b-form-group>
       <b-form-group id="notes"
@@ -383,7 +392,11 @@ export default {
       ],
       show: true,
       loading: false,
-      zipRegex: false,
+      emailValid: '',
+      zipValid: '',
+      firstValid: '',
+      lastValid: '',
+      phoneValid: '',
       timeCheck: false
     }
   },
@@ -402,20 +415,37 @@ export default {
           this.timeCheck = false;
         }
       },
-      checkRegex(){
-        let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
+      emailState(){
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        re.test(this.form.email);
+        if(this.form.email === ''){ this.emailValid = ''}
+        if(!re.test(this.form.email)){this.emailValid = 'red';}else{this.emailValid = 'lightgreen';}
+      },
+      zipState(){
+        let patt = /^\d{5}$/;
         let pattCheck = patt.exec(this.form.zip);
         patt.test(this.form.zip);
-        if(!patt.test(this.form.zip)){
-            this.zipRegex = false;
-        }else{
-            this.zipRegex = true;
-        }
+        if(this.form.zip === ''){ this.zipValid = ''}
+        if(!patt.test(this.form.zip)){this.zipValid = 'red';}else{this.zipValid = 'lightgreen';}
+      },
+      firstState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.firstName);
+        if(!name.test(this.form.firstName)){this.firstValid = 'red';}else{this.firstValid = 'lightgreen';}
+      },
+      lastState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.lastName);
+        if(!name.test(this.form.lastName)){this.lastValid = 'red';}else{this.lastValid = 'lightgreen';}
+      },
+      phoneState(){
+        let num = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+        num.test(this.form.phone);
+        if(!num.test(this.form.phone)){this.phoneValid = 'red';}else{this.phoneValid = 'lightgreen';}
       },
       handleSubmit(form){
         this.loading = true;
-        this.checkRegex();
-        if(this.zipRegex == true){ 
+        if(this.firstValid === 'lightgreen' && this.lastValid === 'lightgreen' && this.emailValid === 'lightgreen' && this.phoneValid === 'lightgreen' && this.zipValid === 'lightgreen'){
           this.check();
           if(this.timeCheck == true){
             let token = localStorage.getItem('t');
@@ -468,7 +498,7 @@ export default {
             )
             .then((response)=>{
               this.loading = false,
-              alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
+              alert(this.form.firstName + ' ' + this.form.lastName + ' successfully added to clients!');
               this.selected = null,
               this.form.firstName = '',
               this.form.lastName = '',
@@ -510,7 +540,12 @@ export default {
               this.form.endThur = '',
               this.form.endFri = '',
               this.form.endSat = '',
-              this.form.endSun = ''
+              this.form.endSun = '',
+              this.emailValid = '',
+              this.zipValid = '',
+              this.firstValid = '',
+              this.lastValid = '',
+              this.phoneValid = ''
             })
             .catch((error)=>{
               this.loading = false;
@@ -522,7 +557,7 @@ export default {
           }
         }else{
           this.loading = false;
-          alert('Error: Please check that your zip code is correct.');
+          alert('Error: Please check your form for incomplete/incorrect input.');
         }
       },
       formatTime(time){

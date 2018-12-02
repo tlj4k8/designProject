@@ -346,9 +346,9 @@ export default {
                         this.usernameValid = '',
                         this.emailValid = '',
                         this.zipValid = '',
-                        this.fisrtValid = '',
-                        this.lastVAlid = '',
-                        this .phoneValid = '',
+                        this.firstValid = '',
+                        this.lastValid = '',
+                        this.phoneValid = '',
                         this.loading = false;
                         this.disabled = true;
                         alert('Employee updated successfully!');

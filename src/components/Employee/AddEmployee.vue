@@ -374,9 +374,9 @@ export default {
             this.usernameValid = '',
             this.emailValid = '',
             this.zipValid = '',
-            this.fisrtValid = '',
-            this.lastVAlid = '',
-            this .phoneValid = '',
+            this.firstValid = '',
+            this.lastValid = '',
+            this.phoneValid = '',
             this.loading = false
             alert('Employee added successfully!');
           })
