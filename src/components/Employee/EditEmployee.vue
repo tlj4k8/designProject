@@ -343,7 +343,6 @@ export default {
                         }, {headers: headers}
                     )
                     .then((response)=>{
-                        this.usernameValid = '',
                         this.emailValid = '',
                         this.zipValid = '',
                         this.firstValid = '',
