@@ -69,6 +69,8 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.firstName"
+                        @input.native="firstState"
+                        :style="{ 'border-color': firstValid}"
                         maxlength='50'
                         required>
             </b-form-input>
@@ -81,6 +83,8 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.lastName"
+                        @input.native="lastState"
+                        :style="{ 'border-color': lastValid}"
                         maxlength='50'
                         required>
             </b-form-input>
@@ -95,7 +99,8 @@
                         type="email"
                         :disabled="disabled"
                         v-model="form.email"
-                        pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                        @input.native="emailState"
+                        :style="{ 'border-color' : emailValid }"
                         maxlength='50'
                         required>
             </b-form-input>
@@ -108,7 +113,8 @@
                         type="text"
                         v-model="form.phone"
                         :disabled="disabled"
-                        pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                        @input.native="phoneState"
+                        :style="{ 'border-color': phoneValid}"
                         maxlength='15'
                         required>
             </b-form-input>
@@ -122,7 +128,10 @@
                         type="text"
                         :disabled="disabled"
                         v-model="form.zip"
+                        @input.native="zipState"
+                        :style="{ 'border-color': zipValid}"
                         maxlength='400'
+                        placeholder="(i.e. List your zip codes, separated by a comma)"
                         required>
             </b-form-input>
         </b-form-group>
@@ -255,10 +264,14 @@ export default {
       },
       selected: '',
       options: [],
+      emailValid: '',
+      zipValid: '',
+      firstValid: '',
+      lastValid: '',
+      phoneValid: '',
       show: true,
       loading: false,
       checked: false,
-      zipRegex: false,
       timeCheck: false
     };
   },
@@ -266,11 +279,38 @@ export default {
     help(){
         window.open('http://localhost:8080/#/help', "_blank");
     },
+    emailState(){
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        re.test(this.form.email);
+        if(this.form.email === ''){ this.emailValid = ''}
+        if(!re.test(this.form.email)){this.emailValid = 'red';}else{this.emailValid = 'lightgreen';}
+    },
+    zipState(){
+        let patt = /^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/;
+        let pattCheck = patt.exec(this.form.zip);
+        patt.test(this.form.zip);
+        if(this.form.zip === ''){ this.zipValid = ''}
+        if(!patt.test(this.form.zip)){this.zipValid = 'red';}else{this.zipValid = 'lightgreen';}
+    },
+    firstState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.firstName);
+        if(!name.test(this.form.firstName)){this.firstValid = 'red';}else{this.firstValid = 'lightgreen';}
+    },
+    lastState(){
+        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        name.test(this.form.lastName);
+        if(!name.test(this.form.lastName)){this.lastValid = 'red';}else{this.lastValid = 'lightgreen';}
+    },
+    phoneState(){
+        let num = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+        num.test(this.form.phone);
+        if(!num.test(this.form.phone)){this.phoneValid = 'red';}else{this.phoneValid = 'lightgreen';}
+    },
     updateEmployee(form){
         this.loading = true;
-        this.checkRegex();
         if(this.checked == true){
-            if(this.zipRegex == true){
+            if((this.firstValid === 'lightgreen' || this.firstValid === '') && (this.lastValid === 'lightgreen' || this.lastValid === '') && (this.emailValid === 'lightgreen' || this.emailValid === '') && (this.phoneValid === 'lightgreen' || this.phoneValid === '') && (this.zipValid === 'lightgreen' || this.zipValid === '')){
                 this.check();
                 if(this.timeCheck == true){
                     this.loading = true;
@@ -303,8 +343,14 @@ export default {
                         }, {headers: headers}
                     )
                     .then((response)=>{
+                        this.usernameValid = '',
+                        this.emailValid = '',
+                        this.zipValid = '',
+                        this.fisrtValid = '',
+                        this.lastVAlid = '',
+                        this .phoneValid = '',
                         this.loading = false;
-                        this.disabled = true
+                        this.disabled = true;
                         alert('Employee updated successfully!');
                         this.options = [];
                         this.updateEmployeeList();
@@ -319,7 +365,7 @@ export default {
                 }
             }else{
                 this.loading = false;
-                alert('Error: Please check that your zip code is correct.');
+                alert('Error: Please check your form for incomplete/incorrect input.');
             }
         }
         else{
@@ -416,19 +462,8 @@ export default {
             alert('Error: Password updated. Check to make sure fields are filled correctly.');
           })
         },
-        checkRegex(){
-            let patt = new RegExp(/^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/g);
-            let pattCheck = patt.exec(this.form.zip);
-            patt.test(this.form.zip);
-            if(!patt.test(this.form.zip)){
-                this.zipRegex = false;
-            }else{
-                this.zipRegex = true;
-            }
-        },
-  },
-
-  computed: {
+    },
+    computed: {
       ...mapState({
             getToken(state){
                 return state.jwt;
