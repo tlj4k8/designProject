@@ -171,6 +171,12 @@ a.passwordText{
     color: blue;
     cursor: pointer;
 }
+@media(max-width: 440px){
+    img{
+        width: 200px;
+        height: 120px;
+    }
+}
 @media(max-width: 1200px){
     .flex{
         width: 50vw;
