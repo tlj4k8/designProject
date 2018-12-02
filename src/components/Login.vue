@@ -34,7 +34,7 @@
                     <font-awesome-icon @click="help" icon="question"/>
                 </div>
                 <p class="text">Please contact administrator to reset password:</p>
-                <p class="text"><a href="mailto:info@saltedchef.com?Subject=Hello%20again" target="_top">info@saltedchef.com</a></p>
+                <p class="text"><a href="mailto:info@saltedchef.com" target="_top">info@saltedchef.com</a></p>
             </b-modal>
         </div>
         </div>
