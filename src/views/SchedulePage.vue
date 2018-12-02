@@ -1,5 +1,8 @@
 <template>
   <div class="schedulePage">
+    <!-- <div class="chef">
+      <img src="../assets/saltedChefEmployee.jpg" style="width: 200px; height: 120px " alt="saltedChefPic"/>
+    </div> -->
     <h1>Schedule</h1>
     <b-card bg-variant="light" class="card">
         <ViewSchedule/>

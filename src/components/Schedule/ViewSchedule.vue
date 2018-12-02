@@ -109,7 +109,7 @@
             <div class="receiptflexGroup">
                 <b-form-group id="mealCharged"
                                 class="receiptflex"
-                                label="Meal Charged to Client:"
+                                label="Cost Charged to Client:"
                                 label-for="mealCharged">
                     <b-input-group size="md" prepend="$" append=".00">
                         <b-form-input id="mealCharged"
