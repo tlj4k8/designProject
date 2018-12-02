@@ -1,8 +1,15 @@
 <template> 
   <div v-if="isLoggedIn">
     <div class="menu">
-        <b-button class="logoutButton" @click="logout"><b>Logout</b></b-button><col/>
-        <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
+      <div class="chef">
+        <img src="../assets/saltedChefEmployee.jpg" class="chefLogo" alt="saltedChefPic"/><col/>
+      </div>
+      <div class="chef">
+        <div class="chefItem">
+          <b-button class="logoutButton" @click="logout"><b>Logout</b></b-button>
+          <col class="menuLogo"><font-awesome-icon icon="bars" @click="show = !show" class="fontAwesome"/>
+        </div>
+      </div>
     </div>
     <transition name="fade">
         <div class="overlay" v-if="show" >
@@ -13,6 +20,7 @@
             <router-link class="nav-links" to="/profile">Profile</router-link>
             <router-link v-if="isAdmin=='True'" class="nav-links" to="/employeeDash">Employee</router-link>
             <router-link v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" class="nav-links" to="/scheduleDash">Schedule</router-link>
+            <a class="nav-links" @click="logout">Logout</a>
 		      </div>
 	      </div>
     </transition>
@@ -53,6 +61,15 @@ export default {
 }
 </script>
 <style scoped>
+.chefLogo{
+  width: 130px;
+  margin-left: 10px;
+}
+.chefItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .logoutButton{
   border-color: rgba(110, 110, 110, 0.781);
   background-color: rgb(235, 235, 235);
@@ -66,7 +83,7 @@ export default {
   height: 2em;
   width: 1.6em;
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: 13px;
 }
 .menu {
   display: flex;
@@ -79,7 +96,7 @@ export default {
   padding-bottom: 1em;
   padding-right: .5em;
   padding-top: .5em;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 .link-inner {
     display: flex;
@@ -117,6 +134,7 @@ ul {
 /*overlay*/
 .overlay {
   position: fixed;
+  padding-top: 30px;
   top: 0;
   height: 100vh;
   width: 100vw;
@@ -154,20 +172,23 @@ ul {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-
 .logs {
   display: none;
 }
 
-@media (max-width: 600px){
+@media (max-width: 605px){
   .logs {
     display: block;
   }
-    .logBtn {
-      display: none;
-    }
-    .menu {
-      justify-content: flex-end;
-    }
+  .logBtn {
+    display: none;
+  }
+  .chefLogo{
+    width: 130px;
+    margin-left: 10px;
+  }
+  .logoutButton{
+    visibility: hidden;
+  }
 }
 </style>
