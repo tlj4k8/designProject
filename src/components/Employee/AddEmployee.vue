@@ -253,13 +253,13 @@ export default {
         }
       },
       check(){
-        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
-        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
-        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
+        && (this.form.endThur >= this.form.thur) && (this.form.endFri >= this.form.fri) 
+        && (this.form.endSat >= this.form.sat) && (this.form.endSun >= this.form.sun))
         {
-        this.timeCheck = true;
+          this.timeCheck = true;
         }else{
-        alert('Error: Please check that availability end times are after start times');
+          alert('Error: Please check that availability end times are after start times');
         this.timeCheck = false;
         }
       },
@@ -274,11 +274,12 @@ export default {
         }
       },
       handleSubmit(form){
-        this.checkRegex();
-        this.check();
         this.loading = true;
         if(this.valid === 'lightgreen'){
-          if(this.zipRegex == true && this.timeCheck == true){
+          this.checkRegex();
+          if(this.zipRegex == true){
+            this.check();
+            if(this.timeCheck == true){
             let token = localStorage.getItem('t');
             let headers = {'Authorization': "Bearer " + token};
             this.$axiosServer.post('https://chefemployees.com/odata/Employees', {
@@ -344,8 +345,11 @@ export default {
             })
           }else{
             this.loading = false;
-            alert('Error: Please check that your zip code is correct.');
           }
+        }else{
+          this.loading = false;
+          alert('Error: Please check that your zip code is correct.');
+        }
       }
       else{
         this.loading = false;

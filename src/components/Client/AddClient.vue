@@ -369,9 +369,9 @@ export default {
           window.open('http://localhost:8080/?#/help', "_blank");
       },
       check(){
-        if((this.form.endMon > this.form.mon) && (this.form.endTue > this.form.tue) && (this.form.endWed > this.form.wed)
-        && (this.form.endThur > this.form.thur) && (this.form.endFri > this.form.fri) 
-        && (this.form.endSat > this.form.sat) && (this.form.endSun > this.form.sun))
+        if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
+        && (this.form.endThur >= this.form.thur) && (this.form.endFri >= this.form.fri) 
+        && (this.form.endSat >= this.form.sat) && (this.form.endSun >= this.form.sun))
         {
           this.timeCheck = true;
         }else{
@@ -444,7 +444,7 @@ export default {
           )
           .then((response)=>{
             this.loading = false,
-            this.successfulAdd(),
+            alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
             this.selected = null,
             this.form.firstName = '',
             this.form.lastName = '',
@@ -490,7 +490,7 @@ export default {
           })
           .catch((error)=>{
             this.loading = false;
-            this.unsuccessfulAdd();
+            alert('Error: Please check to make sure the fields were filled out correctly.')
             console.log(error);
           })
         }else{
@@ -509,12 +509,6 @@ export default {
         }
         return formatedTime;
       },
-      successfulAdd(){
-        alert(this.form.firstName + ' ' + this.form.lastName + ' successfully added to clients!');
-      },
-      unsuccessfulAdd(){
-        alert('Error: Please check to make sure the fields were filled out correctly.')
-      }
     }
 }
 </script>
