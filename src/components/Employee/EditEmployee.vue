@@ -566,6 +566,9 @@ export default {
 </script>
 
 <style scoped>
+b-form-input{
+    overflow: hidden;
+}
 hr {
     background-color: #0d50bc;
     height: 1px;
