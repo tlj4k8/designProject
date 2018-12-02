@@ -26,6 +26,7 @@
                                 type="time"
                                 required
                                 :disabled="disabled"
+                                maxlength='7'
                                 v-model="form.startTime"/>
                 </b-form-group>
                 <b-form-group class="flex"
@@ -36,6 +37,7 @@
                                 type="time"
                                 required
                                 :disabled="disabled"
+                                maxlength='7'
                                 v-model="form.endTime"/>
                 </b-form-group>
                 <b-form-group class="flex"
@@ -79,6 +81,7 @@
                                 class="clockText"
                                 required
                                 :disabled="disabledTime"
+                                maxlength='7'
                                 v-model="form.timeIn"/>
                 </b-form-group>
                 <b-form-group class="timeflex"
@@ -91,6 +94,7 @@
                                 required
                                 class="clockText"
                                 :disabled="disabledTime"
+                                maxlength='7'
                                 v-model="form.timeOut"/>
                 </b-form-group>
             </div>
@@ -111,6 +115,7 @@
                         <b-form-input id="mealCharged"
                                     type="number"
                                     :disabled="disabled"
+                                    maxlength='6'
                                     v-model="form.mealCharged">
                         </b-form-input>
                      </b-input-group>
@@ -123,6 +128,7 @@
                         <b-form-input id="mealCost"
                                     type="number"
                                     :disabled="disabled"
+                                    maxlength='6'
                                     v-model="form.mealCost">
                         </b-form-input>
                     </b-input-group>
@@ -197,7 +203,7 @@ export default {
 
   methods: {
     help(){
-        window.open('http://localhost:8080/?#/help', "_blank");
+        window.open('http://localhost:8080/#/help', "_blank");
     },
     onFileSelected(event){
         this.selectedFile = event.target.files[0];

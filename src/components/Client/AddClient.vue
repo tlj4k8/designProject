@@ -15,6 +15,7 @@
         <b-form-input id="firstName"
                       type="text"
                       v-model="form.firstName"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -25,6 +26,7 @@
         <b-form-input id="lastName"
                       type="text"
                       v-model="form.lastName"
+                      maxlength='50'
                       required>
         </b-form-input>
         </b-form-group>
@@ -37,6 +39,7 @@
         <b-form-input id="email"
                       type="email"
                       v-model="form.email"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -47,6 +50,7 @@
         <b-form-input id="phone"
                       type="tel"
                       v-model="form.phone"
+                      maxlength='15'
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>
         </b-form-input>
@@ -60,6 +64,7 @@
         <b-form-input id="address"
                       type="text"
                       v-model="form.address"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -70,6 +75,7 @@
         <b-form-input id="addressTwo"
                       type="text"
                       v-model="form.addressTwo"
+                      maxlength='50'
                       placeholder="Optional">
         </b-form-input>
       </b-form-group>
@@ -81,6 +87,7 @@
                     label-for="city">
         <b-form-input id="city"
                       type="text"
+                      maxlength='50'
                       v-model="form.city"
                       required>
         </b-form-input>
@@ -102,6 +109,7 @@
         <b-form-input id="zip"
                       type="text"
                       v-model="form.zip"
+                      maxlength='5'
                       required>
         </b-form-input>
       </b-form-group>
@@ -124,23 +132,23 @@
           </tr>
           <tr>
               <td>Start</td>
-              <td><b-form-input type="time" v-model="form.mon"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.tue"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.wed"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.thur"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.fri"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.sat"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.sun"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.mon"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.tue"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.wed"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.thur"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.fri"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.sat"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.sun"></b-form-input></td>
           </tr>
           <tr>
               <td>End</td>
-              <td><b-form-input type="time" v-model="form.endMon"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endTue"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endWed"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endThur"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endFri"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endSat"></b-form-input></td>
-              <td><b-form-input type="time" v-model="form.endSun"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endMon"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endTue"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endWed"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endThur"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endFri"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endSat"></b-form-input></td>
+              <td><b-form-input maxlength='7' type="time" v-model="form.endSun"></b-form-input></td>
           </tr>
       </table>
   </div>
@@ -179,6 +187,7 @@
                     label-for="preferredMeat">
         <b-form-input id="preferredMeat"
                       type="text"
+                      maxlength='200'
                       v-model="form.meats"/>
       </b-form-group>
       <b-form-group id="meatAvoid"
@@ -186,6 +195,7 @@
                     label-for="meatAvoid">
         <b-form-input id="meatAvoid"
                       type="text"
+                      maxlength='200'
                       v-model="form.meatAvoid"/>
       </b-form-group>
       <b-form-group id="preferredCheeses"
@@ -193,6 +203,7 @@
                     label-for="preferredCheeses">
         <b-form-input id="preferredCheeses"
                       type="text"
+                      maxlength='200'
                       v-model="form.cheese"/>
       </b-form-group>
       <b-form-group id="cheeseAvoid"
@@ -200,6 +211,7 @@
                     label-for="cheeseAvoid">
         <b-form-input id="cheeseAvoid"
                       type="text"
+                      maxlength='200'
                       v-model="form.cheeseAvoid"/>
       </b-form-group>
       <b-form-group id="preferredGrains"
@@ -207,6 +219,7 @@
                     label-for="preferredGrains">
         <b-form-input id="preferredGrains"
                       type="text"
+                      maxlength='200'
                       v-model="form.grains"/>
       </b-form-group>
       <b-form-group id="grainsAvoid"
@@ -214,6 +227,7 @@
                     label-for="grainsAvoid">
         <b-form-input id="grainsAvoid"
                       type="text"
+                      maxlength='200'
                       v-model="form.grainsAvoid"/>
       </b-form-group>
       <b-form-group id="spice"
@@ -222,6 +236,7 @@
         <b-form-input id="spice"
                       type="text"
                       placeholder="ex. (1 - 10)"
+                      maxlength='100'
                       v-model="form.spice"/>
       </b-form-group>
       <b-form-group id="other"
@@ -229,6 +244,7 @@
                     label-for="other">
         <b-form-input id="other"
                       type="text"
+                      maxlength='300'
                       v-model="form.other"/>
       </b-form-group>
       <b-form-group id="allergies"
@@ -236,6 +252,7 @@
                     label-for="allergies">
         <b-form-input id="allergies"
                       type="text"
+                      maxlength='300'
                       v-model="form.allergies"/>
       </b-form-group>
       <b-form-group id="dietRestrictions"
@@ -243,6 +260,7 @@
                     label-for="dietRestrictions">
         <b-form-input id="dietRestrictions"
                       type="text"
+                      maxlength='300'
                       v-model="form.dietRestrictions"/>
       </b-form-group>
       <b-form-group id="dietGoals"
@@ -250,6 +268,7 @@
                     label-for="dietGoals">
         <b-form-input id="dietGoals"
                       type="text"
+                      maxlength='300'
                       v-model="form.dietGoals"/>
       </b-form-group>
       <b-form-group id="mainDish"
@@ -257,6 +276,7 @@
                     label-for="mainDish">
         <b-form-input id="mainDish"
                       type="text"
+                      maxlength='100'
                       placeholder="Ex. Soup, Salad, Stew, etc."
                       v-model="form.mainDish"/>
       </b-form-group>
@@ -265,6 +285,7 @@
                     label-for="groceryStore">
         <b-form-input id="groceryStore"
                       type="text"
+                      maxlength='200'
                       v-model="form.groceryStore"/>
       </b-form-group>
       <b-form-group id="mealStructure"
@@ -272,6 +293,7 @@
                     label-for="mealStructure">
         <b-form-input id="mealStructure"
                       type="text"
+                      maxlength='100'
                       placeholder="Ex. # of meals per/day"
                       v-model="form.mealStructure"/>
       </b-form-group>
@@ -282,6 +304,7 @@
                       :rows="3"
                       :max-rows="6"
                       type="text"
+                      maxlength='400'
                       v-model="form.notes"/>
       </b-form-group>
     </div>
@@ -366,7 +389,7 @@ export default {
   },
     methods: {
       help(){
-          window.open('http://localhost:8080/?#/help', "_blank");
+          window.open('http://localhost:8080/#/help', "_blank");
       },
       check(){
         if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
@@ -390,109 +413,113 @@ export default {
         }
       },
       handleSubmit(form){
-        this.checkRegex();
-        this.check();
         this.loading = true;
-        if(this.zipRegex == true && this.timeCheck == true){
-          let token = localStorage.getItem('t');
-          let headers = {'Authorization': "Bearer " + token};
-          this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
-            EmployeeId: this.selected,
-            ClFirstName: this.form.firstName,
-            ClLastName: this.form.lastName,
-            ClCellPhone: this.form.phone,
-            ClEmail: this.form.email,
-            Address1: this.form.address,
-            Address2: this.form.addressTwo,
-            City: this.form.city,
-            State: this.form.state,
-            ZipCode: this.form.zip,
-            ClIsActive: this.form.isActive,
-            ClStartMonday: this.formatTime(this.form.mon),
-            ClEndMonday: this.formatTime(this.form.endMon),
-            ClStartTuesday: this.formatTime(this.form.tue),
-            ClEndTuesday: this.formatTime(this.form.endTue),
-            ClStartWednesday: this.formatTime(this.form.wed),
-            ClEndWednesday: this.formatTime(this.form.endWed),
-            ClStartThursday: this.formatTime(this.form.thur),
-            ClEndThursday: this.formatTime(this.form.endThur),
-            ClStartFriday: this.formatTime(this.form.fri),
-            ClEndFriday: this.formatTime(this.form.endFri),
-            ClStartSaturday: this.formatTime(this.form.sat),
-            ClEndSaturday: this.formatTime(this.form.endSat),
-            ClStartSunday: this.formatTime(this.form.sun),
-            ClEndSunday: this.formatTime(this.form.endSun),
-            PreferredMeats: this.form.meats,
-            MeatsToAvoid: this.form.meatAvoid,
-            PreferredCheeses: this.form.cheese,
-            CheesesToAvoid: this.form.cheeseAvoid,
-            PreferredGrains: this.form.grains,
-            GrainsToAvoid: this.form.grainsAvoid,
-            SpiceLevel: this.form.spice,
-            OtherToAvoid: this.form.other,
-            Allergies: this.form.allergies,
-            DietRestrictions: this.form.dietRestrictions,
-            DietGoals: this.form.dietGoals,
-            MainDishSoupSaladStew: this.form.mainDish,
-            StoreContainers: this.form.storageContainers,
-            StoveOven: this.form.stove,
-            OrganicMeals: this.form.organic,
-            PreferredGroceryStore: this.form.groceryStore,
-            MealSize: this.form.mealStructure,
-            ExtraNotes: this.form.notes,
-            }, {headers: headers}
-          )
-          .then((response)=>{
-            this.loading = false,
-            alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
-            this.selected = null,
-            this.form.firstName = '',
-            this.form.lastName = '',
-            this.form.phone = '',
-            this.form.email = '',
-            this.form.address = '',
-            this.form.addressTwo = '',
-            this.form.city = '',
-            this.form.state = '',
-            this.form.zip = '',
-            this.form.meats = '',
-            this.form.meatAvoid = '',
-            this.form.cheese = '',
-            this.form.cheeseAvoid = '',
-            this.form.grains = '',
-            this.form.grainsAvoid = '',
-            this.form.spice = '',
-            this.form.other = '',
-            this.form.allergies = '',
-            this.form.dietRestrictions = '',
-            this.form.dietGoals = '',
-            this.form.mainDish = '',
-            this.form.storageContainers = '',
-            this.form.stove = '',
-            this.form.organic = '',
-            this.form.groceryStore = '',
-            this.form.mealStructure = '',
-            this.form.notes = '',
-            this.form.mon = '',
-            this.form.tue = '',
-            this.form.wed = '',
-            this.form.thur = '',
-            this.form.fri = '',
-            this.form.sat = '',
-            this.form.sun = '',
-            this.form.endMon = '',
-            this.form.endTue = '',
-            this.form.endWed = '',
-            this.form.endThur = '',
-            this.form.endFri = '',
-            this.form.endSat = '',
-            this.form.endSun = ''
-          })
-          .catch((error)=>{
+        this.checkRegex();
+        if(this.zipRegex == true){ 
+          this.check();
+          if(this.timeCheck == true){
+            let token = localStorage.getItem('t');
+            let headers = {'Authorization': "Bearer " + token};
+            this.$axiosServer.post('https://chefemployees.com/odata/Clients', {
+              EmployeeId: this.selected,
+              ClFirstName: this.form.firstName,
+              ClLastName: this.form.lastName,
+              ClCellPhone: this.form.phone,
+              ClEmail: this.form.email,
+              Address1: this.form.address,
+              Address2: this.form.addressTwo,
+              City: this.form.city,
+              State: this.form.state,
+              ZipCode: this.form.zip,
+              ClIsActive: this.form.isActive,
+              ClStartMonday: this.formatTime(this.form.mon),
+              ClEndMonday: this.formatTime(this.form.endMon),
+              ClStartTuesday: this.formatTime(this.form.tue),
+              ClEndTuesday: this.formatTime(this.form.endTue),
+              ClStartWednesday: this.formatTime(this.form.wed),
+              ClEndWednesday: this.formatTime(this.form.endWed),
+              ClStartThursday: this.formatTime(this.form.thur),
+              ClEndThursday: this.formatTime(this.form.endThur),
+              ClStartFriday: this.formatTime(this.form.fri),
+              ClEndFriday: this.formatTime(this.form.endFri),
+              ClStartSaturday: this.formatTime(this.form.sat),
+              ClEndSaturday: this.formatTime(this.form.endSat),
+              ClStartSunday: this.formatTime(this.form.sun),
+              ClEndSunday: this.formatTime(this.form.endSun),
+              PreferredMeats: this.form.meats,
+              MeatsToAvoid: this.form.meatAvoid,
+              PreferredCheeses: this.form.cheese,
+              CheesesToAvoid: this.form.cheeseAvoid,
+              PreferredGrains: this.form.grains,
+              GrainsToAvoid: this.form.grainsAvoid,
+              SpiceLevel: this.form.spice,
+              OtherToAvoid: this.form.other,
+              Allergies: this.form.allergies,
+              DietRestrictions: this.form.dietRestrictions,
+              DietGoals: this.form.dietGoals,
+              MainDishSoupSaladStew: this.form.mainDish,
+              StoreContainers: this.form.storageContainers,
+              StoveOven: this.form.stove,
+              OrganicMeals: this.form.organic,
+              PreferredGroceryStore: this.form.groceryStore,
+              MealSize: this.form.mealStructure,
+              ExtraNotes: this.form.notes,
+              }, {headers: headers}
+            )
+            .then((response)=>{
+              this.loading = false,
+              alert(this.form.firstName + ' ' + this.form.lastName + 'successfully added to clients!');
+              this.selected = null,
+              this.form.firstName = '',
+              this.form.lastName = '',
+              this.form.phone = '',
+              this.form.email = '',
+              this.form.address = '',
+              this.form.addressTwo = '',
+              this.form.city = '',
+              this.form.state = '',
+              this.form.zip = '',
+              this.form.meats = '',
+              this.form.meatAvoid = '',
+              this.form.cheese = '',
+              this.form.cheeseAvoid = '',
+              this.form.grains = '',
+              this.form.grainsAvoid = '',
+              this.form.spice = '',
+              this.form.other = '',
+              this.form.allergies = '',
+              this.form.dietRestrictions = '',
+              this.form.dietGoals = '',
+              this.form.mainDish = '',
+              this.form.storageContainers = '',
+              this.form.stove = '',
+              this.form.organic = '',
+              this.form.groceryStore = '',
+              this.form.mealStructure = '',
+              this.form.notes = '',
+              this.form.mon = '',
+              this.form.tue = '',
+              this.form.wed = '',
+              this.form.thur = '',
+              this.form.fri = '',
+              this.form.sat = '',
+              this.form.sun = '',
+              this.form.endMon = '',
+              this.form.endTue = '',
+              this.form.endWed = '',
+              this.form.endThur = '',
+              this.form.endFri = '',
+              this.form.endSat = '',
+              this.form.endSun = ''
+            })
+            .catch((error)=>{
+              this.loading = false;
+              alert('Error: Please check to make sure the fields were filled out correctly.')
+              console.log(error);
+            })
+          }else{
             this.loading = false;
-            alert('Error: Please check to make sure the fields were filled out correctly.')
-            console.log(error);
-          })
+          }
         }else{
           this.loading = false;
           alert('Error: Please check that your zip code is correct.');

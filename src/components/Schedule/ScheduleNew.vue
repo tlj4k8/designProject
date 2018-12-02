@@ -35,6 +35,7 @@
                         <b-form-input id="startTime"
                                     type="time"
                                     required
+                                    maxlength='7'
                                     v-model="form.startTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -44,6 +45,7 @@
                         <b-form-input id="endTime"
                                     type="time"
                                     required
+                                    maxlength='7'
                                     v-model="form.endTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -93,7 +95,7 @@ export default {
     },
     methods: {
         help(){
-            window.open('http://localhost:8080/?#/help', "_blank");
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         handleSubmit() {
             this.validateDate();

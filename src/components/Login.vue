@@ -10,13 +10,13 @@
             <b-row class="flex">
                 <b-col sm="2"><label for="username">USERNAME</label></b-col>
                 <b-col sm="10">
-                    <b-form-input class="input" id="username" type="text" v-model="form.username" :formatter="format" required placeholder="Enter username"/>
+                    <b-form-input maxlength='200' class="input" id="username" type="text" v-model="form.username" :formatter="format" required placeholder="Enter username"/>
                 </b-col>
             </b-row>
             <b-row class="flex">
                 <b-col sm="2"><label for="password">PASSWORD</label></b-col>
                 <b-col sm="10">
-                    <b-form-input class="input" id="password" type="password" oncopy="return false" onpaste="return false" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
+                    <b-form-input maxlength='200' class="input" id="password" type="password" oncopy="return false" onpaste="return false" auto-complete="off" v-model="form.password" required placeholder="Enter password"/>
                 </b-col>
             </b-row>
             <div class="buttonDiv">
@@ -30,6 +30,9 @@
         </div>
         <div>
             <b-modal v-model="modalShow" id="myModal">
+                <div class="end">
+                    <font-awesome-icon @click="help" icon="question"/>
+                </div>
                 <p class="text">Please contact administrator to reset password:</p>
                 <p class="text">(Email goes here)</p>
             </b-modal>
@@ -67,6 +70,9 @@ export default {
     methods: {
         format (value, event) {
             return value.toLowerCase()
+        },
+        help(){
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         handleLogin() {
             this.loading = true;
@@ -149,6 +155,11 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: center;   
+}
+.end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .loginButton{
     width: 100%;

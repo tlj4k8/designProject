@@ -11,6 +11,7 @@
             <b-form-input id="menuName"
                         type="text"
                         required
+                        maxlength='200'
                         v-model="form.menuName">
             </b-form-input>
         </b-form-group>
@@ -20,6 +21,7 @@
             <b-form-input id="ingrediants"
                         type="text"
                         required
+                        maxlength='400'
                         v-model="form.ingredients">
             </b-form-input>
         </b-form-group>
@@ -31,6 +33,7 @@
                         :rows="3"
                         :max-rows="6"
                         required
+                        maxlength='400'
                         v-model="form.instructions">
             </b-form-textarea>
         </b-form-group>
@@ -40,6 +43,7 @@
             <b-form-input id="servings"
                         type="number"
                         required
+                        maxlength='10'
                         v-model="form.servings">
             </b-form-input>
         </b-form-group>
@@ -49,6 +53,7 @@
             <b-form-input id="time"
                         type="text"
                         required
+                        maxlength='200'
                         v-model="form.time">
             </b-form-input>
         </b-form-group>
@@ -58,6 +63,7 @@
             <b-form-input id="mealType"
                         type="text"
                         required
+                        maxlength='200'
                         v-model="form.mealType">
             </b-form-input>
         </b-form-group>
@@ -69,6 +75,7 @@
                         :max-rows="6"
                         type="text"
                         required
+                        maxlength='400'
                         v-model="form.menuNotes">
             </b-form-textarea>
         </b-form-group>
@@ -107,7 +114,7 @@ export default {
   },
     methods: {
         help(){
-            window.open('http://localhost:8080/?#/help', "_blank");
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         handleSubmit(form){
             this.loading = true;

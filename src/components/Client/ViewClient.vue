@@ -23,6 +23,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.firstName"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -34,6 +35,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.lastName"
+                      maxlength='50'
                       required>
         </b-form-input>
         </b-form-group>
@@ -47,6 +49,7 @@
                       type="email"
                       :disabled="disabled"
                       v-model="form.email"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -58,6 +61,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.phone"
+                      maxlength='15'
                       pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                       required>
         </b-form-input>
@@ -72,6 +76,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.address"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -83,6 +88,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.addressTwo"
+                      maxlength='50'
                       placeholder="Optional">
         </b-form-input>
       </b-form-group>
@@ -96,6 +102,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.city"
+                      maxlength='50'
                       required>
         </b-form-input>
       </b-form-group>
@@ -118,6 +125,7 @@
                       type="text"
                       :disabled="disabled"
                       v-model="form.zip"
+                      maxlength='5'
                       required>
         </b-form-input>
       </b-form-group>
@@ -140,23 +148,23 @@
             </tr>
             <tr>
                 <td>Start</td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.mon"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.tue"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.wed"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.thur"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.fri"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.sat"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.sun"></b-form-input></td>
             </tr>
             <tr>
                 <td>End</td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
-                <td><b-form-input type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endMon"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endTue"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endWed"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endThur"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endFri"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endSat"></b-form-input></td>
+                <td><b-form-input maxlength='7' type="time" :disabled="disabled" v-model="form.endSun"></b-form-input></td>
             </tr>
         </table>
     </div>
@@ -219,6 +227,7 @@
             <b-form-input id="preferredMeat"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.meats"/>
         </b-form-group>
         <b-form-group class="flex" id="meatAvoid"
@@ -227,6 +236,7 @@
             <b-form-input id="meatAvoid"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.meatAvoid"/>
         </b-form-group>
         </div> 
@@ -237,6 +247,7 @@
             <b-form-input id="meatCookPreferrence"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.meatCookPref"/>
         </b-form-group>
         <b-form-group class="flex" id="preferredCheeses"
@@ -245,6 +256,7 @@
             <b-form-input id="preferredCheeses"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.cheese"/>
         </b-form-group>
         </div> 
@@ -255,6 +267,7 @@
             <b-form-input id="cheeseAvoid"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.cheeseAvoid"/>
         </b-form-group>
         <b-form-group class="flex" id="preferredGrains"
@@ -263,6 +276,7 @@
             <b-form-input id="preferredGrains"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.grains"/>
         </b-form-group>
         </div> 
@@ -274,6 +288,7 @@
                         type="text"
                         placeholder="ex. (1 - 10)"
                         :disabled="disabled"
+                        maxlength='100'
                         v-model="form.spice"/>
         </b-form-group>
         <b-form-group class="flex" id="other"
@@ -282,6 +297,7 @@
             <b-form-input id="other"
                         type="text"
                         :disabled="disabled"
+                        maxlength='300'
                         v-model="form.other"/>
         </b-form-group>
         </div>
@@ -292,6 +308,7 @@
             <b-form-input id="allergies"
                         type="text"
                         :disabled="disabled"
+                        maxlength='300'
                         v-model="form.allergies"/>
         </b-form-group>
         <b-form-group class="flex" id="dietRestrictions"
@@ -300,6 +317,7 @@
             <b-form-input id="dietRestrictions"
                         type="text"
                         :disabled="disabled"
+                        maxlength='300'
                         v-model="form.dietRestrictions"/>
         </b-form-group>
         </div>
@@ -310,6 +328,7 @@
             <b-form-input id="dietGoals"
                         type="text"
                         :disabled="disabled"
+                        maxlength='300'
                         v-model="form.dietGoals"/>
         </b-form-group>
         <b-form-group class="flex" id="mainDish"
@@ -318,6 +337,7 @@
             <b-form-input id="mainDish"
                         type="text"
                         :disabled="disabled"
+                        maxlength='100'
                         v-model="form.mainDish"/>
         </b-form-group>
         </div>
@@ -328,6 +348,7 @@
             <b-form-input id="groceryStore"
                         type="text"
                         :disabled="disabled"
+                        maxlength='200'
                         v-model="form.groceryStore"/>
         </b-form-group>
         <b-form-group class="flex" id="mealStructure"
@@ -336,6 +357,7 @@
             <b-form-input id="mealStructure"
                         type="text"
                         :disabled="disabled"
+                        maxlength='100'
                         v-model="form.mealStructure"/>
         </b-form-group>
         </div>
@@ -347,6 +369,7 @@
                         :max-rows="6"
                         type="text"
                         :disabled="disabled"
+                        maxlength='400'
                         v-model="form.notes"/>
         </b-form-group>
         </div>
@@ -441,7 +464,7 @@ export default {
             this.form.chef = this.selectedChef;
         },
         help(){
-            window.open('http://localhost:8080/?#/help', "_blank");
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         check(){
             if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)

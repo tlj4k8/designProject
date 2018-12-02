@@ -23,6 +23,7 @@
                 <b-form-input id="menuName"
                             type="text"
                             :disabled="disabled"
+                            maxlength='200'
                             v-model="form.menuName">
                 </b-form-input>
             </b-form-group>
@@ -32,6 +33,7 @@
                 <b-form-input id="ingredients"
                             type="text"
                             :disabled="disabled"
+                            maxlength='400'
                             v-model="form.ingredients">
                 </b-form-input>
             </b-form-group>
@@ -43,6 +45,7 @@
                             :rows="3"
                             :max-rows="6"
                             :disabled="disabled"
+                            maxlength='400'
                             v-model="form.instructions">
                 </b-form-textarea>
             </b-form-group>
@@ -52,6 +55,7 @@
                 <b-form-input id="servings"
                             type="text"
                             :disabled="disabled"
+                            maxlength='10'
                             v-model="form.servings">
                 </b-form-input>
             </b-form-group>
@@ -61,6 +65,7 @@
                 <b-form-input id="time"
                             type="text"
                             :disabled="disabled"
+                            maxlength='200'
                             v-model="form.time">
                 </b-form-input>
             </b-form-group>
@@ -70,6 +75,7 @@
                 <b-form-input id="mealType"
                             type="text"
                             :disabled="disabled"
+                            maxlength='200'
                             v-model="form.mealType">
                 </b-form-input>
             </b-form-group>
@@ -81,15 +87,16 @@
                             :max-rows="6"
                             type="text"
                             :disabled="disabled"
+                            maxlength='400'
                             v-model="form.menuNotes">
                 </b-form-textarea>
             </b-form-group>
             </div>
-        </b-form>
-        <div v-if="isAdmin=='True' || isMenu=='True'" class="disabledButtons">
+            <div v-if="isAdmin=='True' || isMenu=='True'" class="disabledButtons">
             <b-button class="disabled" v-if="disabled" v-on:click="disabled = !disabled">Edit Menu</b-button>
             <b-button class="update" v-if="!disabled" @click="updateMenu">Update Menu</b-button><b-button class="cancel" v-if="!disabled" v-on:click="disabled = !disabled">Cancel</b-button>
         </div>
+        </b-form>
         <Spinner v-if="loading" />
   </div>
 </template>
@@ -123,7 +130,7 @@ export default {
     },
     methods:{
         help(){
-            window.open('http://localhost:8080/?#/help', "_blank");
+            window.open('http://localhost:8080/#/help', "_blank");
         },
         updateMenu(){
             this.loading = true;
