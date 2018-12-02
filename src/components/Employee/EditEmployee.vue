@@ -189,23 +189,23 @@
               </tr>
               <tr>
                   <td>Start</td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.mon" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.tue" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.wed" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.thur" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.fri" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.sat" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.sun" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.mon" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.tue" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.wed" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.thur" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.fri" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.sat" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.sun" :disabled="disabled"></b-form-input></td>
               </tr>
               <tr>
                   <td>End</td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endMon" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endTue" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endWed" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endThur" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endFri" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endSat" :disabled="disabled"></b-form-input></td>
-                  <td><b-form-input maxlength='7' type="time" v-model="form.endSun" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endMon" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endTue" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endWed" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endThur" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endFri" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endSat" :disabled="disabled"></b-form-input></td>
+                  <td><b-form-input class="time" maxlength='7' type="time" v-model="form.endSun" :disabled="disabled"></b-form-input></td>
               </tr>
           </table>
       </div>
@@ -566,7 +566,7 @@ export default {
 </script>
 
 <style scoped>
-b-form-input{
+.time{
     overflow: hidden;
 }
 hr {
