@@ -3,7 +3,7 @@
     <div class="end">
           <font-awesome-icon @click="help" icon="question"/>
     </div>
-        <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
+        <b-form ref="form" :model="form" v-if="show" class="form">
             <div class="employeeSelect">
                 <h3> Select Employee </h3>
                 <hr/>
@@ -35,7 +35,6 @@
                         <b-form-input id="startTime"
                                     type="time"
                                     required
-                                    @change="check"
                                     v-model="form.startTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -45,7 +44,6 @@
                         <b-form-input id="endTime"
                                     type="time"
                                     required
-                                    @change="check"
                                     v-model="form.endTime"/>
                     </b-form-group>
                     <b-form-group class="flex"
@@ -60,7 +58,7 @@
                 </div>
             </div>
             <div class="submit">
-                <b-button type="submit">Submit</b-button>
+                <b-button type="button" @click="handleSubmit">Submit</b-button>
             </div>
         </b-form>
         <Spinner v-if="loading" />
@@ -97,35 +95,41 @@ export default {
         help(){
             window.open('http://localhost:8080/?#/help', "_blank");
         },
-        handleSubmit(form) {
+        handleSubmit() {
             this.validateDate();
-            if(this.checked === true){
-                this.loading = true;
-                let token = localStorage.getItem('t');
-                let headers = {'Authorization': "Bearer " + token};
-                this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
-                    EmployeeId: this.form.selectedEmployee,
-                    ClientId: this.form.selectedClient,
-                    StartTime: this.formatTime(this.form.startTime),
-                    EndTime: this.formatTime(this.form.endTime),
-                    ScheduleDate: this.formatDate(this.form.date)
-                },{headers: headers}
-                )
-                .then((response)=>{
+            this.check();
+            if(this.checked == true){
+                if(this.timeCheck == true){
+                    this.loading = true;
+                    let token = localStorage.getItem('t');
+                    let headers = {'Authorization': "Bearer " + token};
+                    this.$axiosServer.post('https://chefemployees.com/odata/Schedules', {
+                        EmployeeId: this.form.selectedEmployee,
+                        ClientId: this.form.selectedClient,
+                        StartTime: this.formatTime(this.form.startTime),
+                        EndTime: this.formatTime(this.form.endTime),
+                        ScheduleDate: this.formatDate(this.form.date)
+                    },{headers: headers}
+                    )
+                    .then((response)=>{
+                        this.loading = false;
+                        console.log(response);
+                        this.form.selectedEmployee = null,
+                        this.form.selectedClient =  null,
+                        this.form.startTime = '',
+                        this.form.endTime = '',
+                        this.form.date = ''
+                        alert('Schedule added successfully!');
+                    })
+                    .catch((error)=>{
+                        this.loading = false;
+                        console.log(error)
+                        alert('Error: Please select a new date. This employee is already scheduled at this date');
+                    })
+                }else{
                     this.loading = false;
-                    console.log(response);
-                    this.form.selectedEmployee = null,
-                    this.form.selectedClient =  null,
-                    this.form.startTime = '',
-                    this.form.endTime = '',
-                    this.form.date = ''
-                    alert('Schedule added successfully!');
-                })
-                .catch((error)=>{
-                    this.loading = false;
-                    console.log(error)
-                    alert('Error: Please select a new date. This employee is already scheduled at this date');
-                })
+                    alert('Error: Please make sure that times are correct.');
+                }
             }
         },
         filterClients(){
