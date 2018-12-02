@@ -1,7 +1,7 @@
 <template>
   <div class="employeeDash">
-    <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
+    <div to="/dash" class="logo">
+      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic"/>
     </div>
     <b-button-group vertical class="dashGroup">
       <b-button to="/employee"><b>View Employee</b></b-button>
@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: "EmployeeDash"
+  name: "EmployeeDash",
+  methods: {
+    redirect(){
+      this.$router.push('/dash');
+    }
+  }
 };
 </script>
 

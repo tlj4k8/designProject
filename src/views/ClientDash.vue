@@ -1,7 +1,7 @@
 <template>
   <div class="clientDash">
     <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
+      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic"/>
     </div>
     <b-button-group vertical class="dashGroup">
       <b-button to="/clientPage"><b>View Client</b></b-button>
@@ -23,6 +23,11 @@ export default {
   data(){
     return{
       show: false
+    }
+  },
+  methods: {
+    redirect(){
+      this.$router.push('/dash');
     }
   },
   computed: mapState({
