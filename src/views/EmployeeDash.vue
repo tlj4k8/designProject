@@ -43,5 +43,9 @@ export default {
     width: 100vw;
     margin: 0px 0px;
   }
+  img{
+    width: 200px;
+    height: 120px;
+  }
 }
 </style>
