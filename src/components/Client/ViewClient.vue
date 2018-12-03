@@ -481,9 +481,7 @@ export default {
         updateChef(){
             let newChef = this.employees.value.filter((value)=> value.EmployeeId == this.selectedChef);
             this.chefId = newChef[0].EmployeeId;
-            console.log(this.chefId);
             this.form.chef = newChef[0].EmFirstName + ' ' + newChef[0].EmLastName;
-            console.log(this.form.chef);
         },
         help(){
             window.open('http://localhost:8080/#/help', "_blank");
