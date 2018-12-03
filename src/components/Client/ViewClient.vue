@@ -730,10 +730,7 @@ export default {
         });
         axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
         .then((response) => {
-            console.log(response);
             this.employees = response.data;
-            console.log(response.data)
-            // this.form.chef = response.data.EmFirstName + ' ' + response.data.EmLastName;
             this.loading = false;
         })
         .catch((error) => {
