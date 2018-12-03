@@ -565,7 +565,7 @@ export default {
         let timeHour = timeStamp[0];
         let timeMinutes = timeStamp[1];
         let formatedTime= "PT" + timeHour + "H" + timeMinutes + "M" + "00S";
-        if(time === '' || 'Invalid date' || undefined){
+        if(time === '' || time === 'Invalid date' || time === undefined){
           let formatedTime = "PT00H00M00S";
           return formatedTime;
         }
