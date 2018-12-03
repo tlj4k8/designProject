@@ -720,7 +720,7 @@ export default {
 </script>
 <style scoped>
 .time{
-  width: 120px;
+  width: 125px;
 }
 hr{
     background-color: #0d50bc;
