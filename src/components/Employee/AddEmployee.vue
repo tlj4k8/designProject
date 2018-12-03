@@ -429,7 +429,7 @@ export default {
 
 <style scoped>
 .time{
-  width: 100px;
+  width: 120px;
 }
 hr {
   background-color: #0d50bc;
