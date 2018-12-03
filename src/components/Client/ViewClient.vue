@@ -467,8 +467,11 @@ export default {
         zipValid: '',
         firstValid: '',
         lastValid: '',
-        phoneValid: ''
-    }
+        phoneValid: '',
+        chefId: null,
+        employees: [],
+        filter: []
+        }
     },
     methods:{
         returnTime(time){
@@ -476,7 +479,9 @@ export default {
             return timeStamp;
         },
         updateChef(){
-            this.form.chef = this.selectedChef;
+            let newChef = this.employees.value.filter((value)=> value.EmployeeId == this.selectedChef);
+            this.chefId = newChef[0].EmployeeId;
+            this.form.chef = newChef[0].EmFirstName + ' ' + newChef[0].EmLastName;
         },
         help(){
             window.open('http://localhost:8080/#/help', "_blank");
@@ -540,7 +545,7 @@ export default {
                 let headers = {'Authorization': "Bearer " + token};
                 this.$axiosServer.patch('https://chefemployees.com/odata/Clients(' + this.selected + ')',{
                     ClientId: this.selected,
-                    EmployeeId: this.form.chef,
+                    EmployeeId: this.chefId,
                     ClFirstName: this.form.firstName,
                     ClLastName: this.form.lastName,
                     ClCellPhone: this.form.phone,
@@ -635,12 +640,14 @@ export default {
             }
         }),
         getClient(){
+            this.form.chef = '';
+            this.chefId = null;
             this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
                 let clientValue = response.data;
-                this.form.chef = clientValue.EmployeeId,
+                this.chefId = clientValue.EmployeeId,
                 this.form.firstName = clientValue.ClFirstName,
                 this.form.lastName = clientValue.ClLastName,
                 this.form.phone = clientValue.ClCellPhone,
@@ -682,6 +689,12 @@ export default {
                 this.form.groceryStore = clientValue.PreferredGroceryStore,
                 this.form.mealStructure = clientValue.MealSize,
                 this.form.notes = clientValue.ExtraNotes
+                if(this.chefId != null || this.chefId != undefined){
+                    this.filter = this.employees.value.filter((value)=> value.EmployeeId == clientValue.EmployeeId);
+                    this.form.chef = this.filter[0].EmFirstName + ' ' + this.filter[0].EmLastName;
+                    this.chefId = this.filter[0].EmployeeId;
+                    console.log(this.chefId);
+                }
                 this.$axiosServer.get('https://chefemployees.com/api/EmpClientZip/' + this.selected + '', { headers: { 'Authorization': "Bearer " + token }})
                 .then((response)=>{
                     this.loading = false;
@@ -715,12 +728,21 @@ export default {
             this.loading = false;
             console.log(error);
         });
+        axios.get('https://chefemployees.com/odata/Employees', { headers: { 'Authorization': "Bearer " + token }})
+        .then((response) => {
+            this.employees = response.data;
+            this.loading = false;
+        })
+        .catch((error) => {
+            this.loading = false;
+            console.log(error);
+        });
     }
 }
 </script>
 <style scoped>
 .time{
-  width: 120px;
+  width: 125px;
 }
 hr{
     background-color: #0d50bc;
