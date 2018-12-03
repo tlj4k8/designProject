@@ -293,12 +293,12 @@ export default {
         if(!patt.test(this.form.zip)){this.zipValid = 'red';}else{this.zipValid = 'lightgreen';}
     },
     firstState(){
-        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        let name = /^[a-zA-Z-]{2,}(?: [a-zA-Z]+){0,2}$/
         name.test(this.form.firstName);
         if(!name.test(this.form.firstName)){this.firstValid = 'red';}else{this.firstValid = 'lightgreen';}
     },
     lastState(){
-        let name = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/
+        let name = /^[a-zA-Z-]{2,}(?: [a-zA-Z]+){0,2}$/
         name.test(this.form.lastName);
         if(!name.test(this.form.lastName)){this.lastValid = 'red';}else{this.lastValid = 'lightgreen';}
     },
