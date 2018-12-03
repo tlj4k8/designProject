@@ -624,7 +624,6 @@ export default {
                 console.log(error);
             });
         }
-        
     },
     computed: {
         ...mapState({
@@ -636,6 +635,7 @@ export default {
             }
         }),
         getClient(){
+            this.loading = true;
             let token = localStorage.getItem('t');
             this.$axiosServer.get('https://chefemployees.com/odata/Clients(' + this.selected + ')', { headers: { 'Authorization': "Bearer " + token }})
             .then((response)=>{
@@ -696,6 +696,7 @@ export default {
                 })
             })
             .catch((error)=>{
+                this.loading = false;
                 console.log(error);
             })
         }
