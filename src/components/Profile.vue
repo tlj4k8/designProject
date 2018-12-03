@@ -214,7 +214,7 @@ export default {
             if(!re.test(this.form.email)){this.emailValid = 'red';}else{this.emailValid = 'lightgreen';}
         },
         zipState(){
-            let patt = /^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)?()+$/;
+            let patt = /^\d{5}(?:-\d{4})?(?:,\s*\d{5}(?:-\d{4})?)+?()+$/;
             let pattCheck = patt.exec(this.form.zip);
             patt.test(this.form.zip);
             if(this.form.zip === ''){ this.zipValid = ''}
