@@ -402,7 +402,7 @@ export default {
   },
     methods: {
       help(){
-          window.open('http://localhost:8080/#/help', "_blank");
+          window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
       },
       check(){
         if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)

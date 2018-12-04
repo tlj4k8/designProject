@@ -305,7 +305,7 @@ export default {
   },
   methods: {
     help(){
-        window.open('http://localhost:8080/#/help', "_blank");
+        window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
     },
     returnDate(date){
         let dateStamp = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSS').format('YYYY-MM-DD');
