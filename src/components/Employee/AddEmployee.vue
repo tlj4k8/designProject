@@ -248,7 +248,7 @@ export default {
         return value.toLowerCase()
       },
       help(){
-        window.open('http://localhost:8080/#/help', "_blank");
+        window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
       },
       usernameState(){
         this.employeeNames.includes(this.form.username) ? this.usernameValid = 'red' : this.usernameValid = 'lightgreen';
