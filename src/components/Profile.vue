@@ -1,7 +1,7 @@
 <template>
     <div class="profilePage">
     <div class="end">
-        <font-awesome-icon @click="help" icon="question"/>
+        <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
     <b-form ref="form" :model="form" v-if="show" class="form">
       <div class="person">
@@ -338,6 +338,9 @@ export default {
 </script>
 
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .time{
     width: 130px;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="addEmpployee">
       <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
       </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
         <h3>Login Credentials</h3>
@@ -428,6 +428,9 @@ export default {
 </script>
 
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .time{
   width: 130px;
 }

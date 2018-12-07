@@ -1,7 +1,7 @@
 <template>
     <div class="scheduleNew">
     <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
         <b-form ref="form" :model="form" v-if="show" class="form">
             <div class="employeeSelect">
@@ -234,6 +234,9 @@ export default {
 }
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 hr{
     background-color: #0d50bc;
     height: 1px;

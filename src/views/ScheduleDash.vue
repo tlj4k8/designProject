@@ -1,7 +1,7 @@
 <template>
   <div class="scheduleDash">
     <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic"/>
+      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" class="imgClick" alt="saltedChefPic"/>
     </div>
     <b-button-group vertical class="dashGroup">
       <b-button v-if="isAdmin=='True' || (isAdmin=='False' && isMenu=='False')" to="/viewSchedule"><b>View Schedule</b></b-button>
@@ -39,6 +39,9 @@ export default {
 </script>
 
 <style scoped>
+.imgClick{
+  cursor: pointer;
+}
 .scheduleDash{
   margin-top: 8em;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="viewMenu">
         <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
         </div>
         <h3>Select Menu</h3>
         <hr/>
@@ -226,6 +226,9 @@ export default {
 }
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .menu{
   padding: 0 0;
 }

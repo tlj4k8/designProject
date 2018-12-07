@@ -2,7 +2,7 @@
   <div v-if="isLoggedIn">
     <div class="menu">
       <div class="chef">
-        <img src="../assets/saltedChefEmployee.jpg" class="chefLogo" alt="saltedChefPic"/><col/>
+        <img src="../assets/saltedChefEmployee.jpg" @click="redirect" class="chefLogo" alt="saltedChefPic"/><col/>
       </div>
       <div class="chef">
         <div class="chefItem">
@@ -42,6 +42,9 @@ export default {
       .then(()=>{
         this.$router.push('/');
       })
+    },
+    redirect(){
+      this.$router.push('/dash');
     }
   },
   computed: mapState({
@@ -64,6 +67,7 @@ export default {
 .chefLogo{
   width: 130px;
   margin-left: 10px;
+  cursor: pointer;
 }
 .chefItem{
   display: flex;
@@ -84,6 +88,7 @@ export default {
   width: 1.6em;
   margin-right: 10px;
   margin-top: 13px;
+  cursor: pointer;
 }
 .menu {
   display: flex;

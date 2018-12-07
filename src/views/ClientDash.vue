@@ -1,7 +1,7 @@
 <template>
   <div class="clientDash">
     <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic"/>
+      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic" class="imgClick"/>
     </div>
     <b-button-group vertical class="dashGroup">
       <b-button to="/clientPage"><b>View Client</b></b-button>
@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style scoped>
+.imgClick{
+  cursor: pointer;
+}
 .clientDash{
   margin-top: 8em;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="addMenu">
     <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class="menu">
@@ -149,6 +149,9 @@ export default {
 }
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .menu{
   padding: 0 0;
 }

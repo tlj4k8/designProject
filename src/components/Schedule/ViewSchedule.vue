@@ -1,7 +1,7 @@
 <template>
     <div class="addSchedule">
         <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
         </div>
         <div class="employeeSelect">
         <h3> Select Schedule </h3>
@@ -514,6 +514,9 @@ export default {
 </script>
 
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 hr{
     background-color: #0d50bc;
     height: 1px;

@@ -1,7 +1,7 @@
 <template>
   <div class="viewClient">
     <div class="end">
-        <font-awesome-icon @click="help" icon="question"/>
+        <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
     <h3>Select Client</h3>
     <hr/>
@@ -741,6 +741,9 @@ export default {
 }
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .time{
   width: 130px;
 }
