@@ -218,7 +218,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   setTimeout(()=> {
-    const publicPages = ['/', '/profileHelp'];
+    const publicPages = ['/', '/loginHelp'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('t');
     let user = store.state.userInfo;
