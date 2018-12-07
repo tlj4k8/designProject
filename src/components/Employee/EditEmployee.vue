@@ -1,7 +1,7 @@
 <template>
     <div class="editEmployee">
     <div class="end">
-        <font-awesome-icon @click="help" icon="question"/>
+        <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
       <div class="employeeSelect">
       <h3>Select Employee</h3>
@@ -489,6 +489,7 @@ export default {
             }
         },
         getEmployees(){
+            this.form.ischef = false;
             this.loading = true;
             this.passwordDisabled = true;
             let token = localStorage.getItem('t');
@@ -496,49 +497,31 @@ export default {
             .then((response)=>{
                 this.loading = false;
                 let employeeValue = response.data;
-                if(employeeValue == null || undefined){
-                    this.form.mon = '',
-                    this.form.tue = '',
-                    this.form.wed = '',
-                    this.form.thur = '',
-                    this.form.fri = '',
-                    this.form.sat = '',
-                    this.form.sun = '',
-                    this.form.endMon = '',
-                    this.form.endTue = '',
-                    this.form.endWed = '',
-                    this.form.endThur = '',
-                    this.form.endFri = '',
-                    this.form.endSat = '',
-                    this.form.endSun = ''
-                }
-                else{
-                    this.form.firstName = employeeValue.EmFirstName,
-                    this.form.lastName = employeeValue.EmLastName,
-                    this.form.username = employeeValue.Username,
-                    this.form.password = employeeValue.Password,
-                    this.form.phone = employeeValue.EmCellPhone,
-                    this.form.email = employeeValue.EmEmail,
-                    this.form.zip = employeeValue.EmZipCodes,
-                    this.form.mon = this.returnTime(employeeValue.EmStartMonday),
-                    this.form.endMon = this.returnTime(employeeValue.EmEndMonday),
-                    this.form.tue = this.returnTime(employeeValue.EmStartTuesday),
-                    this.form.endTue = this.returnTime(employeeValue.EmEndTuesday),
-                    this.form.wed = this.returnTime(employeeValue.EmStartWednesday),
-                    this.form.endWed = this.returnTime(employeeValue.EmEndWednesday),
-                    this.form.thur = this.returnTime(employeeValue.EmStartThursday),
-                    this.form.endThur = this.returnTime(employeeValue.EmEndThursday),
-                    this.form.fri = this.returnTime(employeeValue.EmStartFriday),
-                    this.form.endFri = this.returnTime(employeeValue.EmEndFriday),
-                    this.form.sat = this.returnTime(employeeValue.EmStartSaturday),
-                    this.form.endSat = this.returnTime(employeeValue.EmEndSaturday),
-                    this.form.sun = this.returnTime(employeeValue.EmStartSunday),
-                    this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
-                    this.form.isadmin = employeeValue.IsAdmin,
-                    this.form.ismenu = employeeValue.IsMenu
-                    if(this.form.isadmin === false && this.form.ismenu === false){
-                        this.form.ischef = true;
-                    }
+                this.form.firstName = employeeValue.EmFirstName,
+                this.form.lastName = employeeValue.EmLastName,
+                this.form.username = employeeValue.Username,
+                this.form.password = employeeValue.Password,
+                this.form.phone = employeeValue.EmCellPhone,
+                this.form.email = employeeValue.EmEmail,
+                this.form.zip = employeeValue.EmZipCodes,
+                this.form.mon = this.returnTime(employeeValue.EmStartMonday),
+                this.form.endMon = this.returnTime(employeeValue.EmEndMonday),
+                this.form.tue = this.returnTime(employeeValue.EmStartTuesday),
+                this.form.endTue = this.returnTime(employeeValue.EmEndTuesday),
+                this.form.wed = this.returnTime(employeeValue.EmStartWednesday),
+                this.form.endWed = this.returnTime(employeeValue.EmEndWednesday),
+                this.form.thur = this.returnTime(employeeValue.EmStartThursday),
+                this.form.endThur = this.returnTime(employeeValue.EmEndThursday),
+                this.form.fri = this.returnTime(employeeValue.EmStartFriday),
+                this.form.endFri = this.returnTime(employeeValue.EmEndFriday),
+                this.form.sat = this.returnTime(employeeValue.EmStartSaturday),
+                this.form.endSat = this.returnTime(employeeValue.EmEndSaturday),
+                this.form.sun = this.returnTime(employeeValue.EmStartSunday),
+                this.form.endSun = this.returnTime(employeeValue.EmEndSunday),
+                this.form.isadmin = employeeValue.IsAdmin,
+                this.form.ismenu = employeeValue.IsMenu
+                if(employeeValue.IsAdmin === false && employeeValue.IsMenu === false){
+                    this.form.ischef = true;
                 }
             })
             .catch((error)=>{
@@ -566,6 +549,9 @@ export default {
 </script>
 
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .time{
     width: 130px;
 }

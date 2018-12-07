@@ -1,7 +1,7 @@
 <template>
   <div class="menuDash">
     <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" alt="saltedChefPic"/>
+      <img src="../assets/saltedChefEmployee.jpg" @click="redirect" class="imgClick" alt="saltedChefPic"/>
     </div>
     <b-button-group vertical class="dashGroup">
       <b-button to="/menu"><b>View Master Menu</b></b-button>
@@ -40,6 +40,9 @@ export default {
 </script>
 
 <style scoped>
+.imgClick{
+  cursor: pointer;
+}
 .menuDash{
   margin-top: 8em;
 }

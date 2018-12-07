@@ -31,7 +31,7 @@
         <div>
             <b-modal v-model="modalShow" id="myModal">
                 <div class="end">
-                    <font-awesome-icon @click="help" icon="question"/>
+                    <font-awesome-icon @click="help" class="qmark" icon="question"/>
                 </div>
                 <p class="text">Please contact administrator to reset password:</p>
                 <p class="text"><a href="mailto:info@saltedchef.com" target="_top">info@saltedchef.com</a></p>
@@ -124,6 +124,9 @@ export default {
 </script>
 
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .text{
     text-align: center;
 }

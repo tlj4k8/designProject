@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <div class="logo">
-      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic"/>
+      <img src="../assets/saltedChefEmployee.jpg" alt="saltedChefPic" class="imgClick"/>
     </div>
     <b-button-group vertical class="dashGroup">
         <b-button to="/profile"><b>Profile</b></b-button>
@@ -37,6 +37,9 @@ export default {
 </script>
 
 <style scoped>
+.imgClick{
+  cursor: pointer;
+}
 .dashboard{
   margin-top: 8em;
 }

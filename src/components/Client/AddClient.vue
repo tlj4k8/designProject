@@ -1,7 +1,7 @@
 <template>
   <div class="addClient">
     <div class="end">
-        <font-awesome-icon @click="help" icon="question"/>
+        <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
     <b-form ref="form" @submit="handleSubmit(form)" :model="form" v-if="show" class="form">
     <div class= "person">
@@ -499,6 +499,7 @@ export default {
             .then((response)=>{
               this.loading = false,
               alert(this.form.firstName + ' ' + this.form.lastName + ' successfully added to clients!');
+              this.$router.push('/newclient');
               this.selected = null,
               this.form.firstName = '',
               this.form.lastName = '',
@@ -575,6 +576,9 @@ export default {
 }
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .time{
   width: 130px;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="clientMenuAdd">
     <div class="end">
-          <font-awesome-icon @click="help" icon="question"/>
+          <font-awesome-icon @click="help" class="qmark" icon="question"/>
     </div>
     <b-form ref="form" @submit.prevent="handleSubmit" :model="form" v-if="show" class="form">
     <h3> Select Schedule </h3>
@@ -446,6 +446,9 @@ export default {
 };
 </script>
 <style scoped>
+.qmark{
+    cursor: pointer;
+}
 .clientMenuAdd {
   padding: 0 0;
 }
