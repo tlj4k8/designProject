@@ -484,7 +484,7 @@ export default {
             this.form.chef = newChef[0].EmFirstName + ' ' + newChef[0].EmLastName;
         },
         help(){
-            window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+            window.open('https://salted-chef.herokuapp.com/#/viewClientHelp', "_blank");
         },
         emailState(){
             let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -742,7 +742,7 @@ export default {
 </script>
 <style scoped>
 .time{
-  width: 125px;
+  width: 130px;
 }
 hr{
     background-color: #0d50bc;

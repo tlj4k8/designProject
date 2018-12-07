@@ -16,8 +16,17 @@ import EmployeeNew from './views/EmployeeNew.vue';
 import SchedulePage from './views/SchedulePage.vue';
 import ScheduleNew from './views/ScheduleNew.vue';
 import ScheduleDash from './views/ScheduleDash.vue';
-import HelpManuel from './HelpManuel.vue';
-import Decoded from 'jwt-decode';
+import profileHelp from './help/profileHelp.vue';
+import loginHelp from './help/loginHelp.vue';
+import addClientHelp from './help/addClientHelp.vue';
+import viewClientHelp from './help/viewClientHelp.vue';
+import addEmployeeHelp from './help/addEmployeeHelp.vue';
+import addMenuHelp from './help/addMenuHelp.vue';
+import viewMenuHelp from './help/viewMenuHelp.vue';
+import customerMenuHelp from './help/customerMenuHelp.vue';
+import viewEmployeeHelp from './help/viewEmployeeHelp.vue';
+import addScheduleHelp from './help/addScheduleHelp.vue';
+import viewScheduleHelp from './help/viewScheduleHelp.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -30,9 +39,59 @@ const router = new Router({
       component: Home
     },
     {
-      path: '/help',
-      name: 'help',
-      component: HelpManuel
+      path: '/profileHelp',
+      name: 'ProfileHelp',
+      component: profileHelp
+    },
+    {
+      path: '/loginHelp',
+      name: 'loginHelp',
+      component: loginHelp
+    },
+    {
+      path: '/addClientHelp',
+      name: 'addClientHelp',
+      component: addClientHelp
+    },
+    {
+      path: '/viewClientHelp',
+      name: 'viewClientHelp',
+      component: viewClientHelp
+    },
+    {
+      path: '/addEmployeeHelp',
+      name: 'addEmployeeHelp',
+      component: addEmployeeHelp
+    },
+    {
+      path: '/addMenuHelp',
+      name: 'addMenuHelp',
+      component: addMenuHelp
+    },
+    {
+      path: '/viewMenuHelp',
+      name: 'viewMenuHelp',
+      component: viewMenuHelp
+    },
+    {
+      path: '/customerMenuHelp',
+      name: 'customerMenuHelp',
+      component: customerMenuHelp
+    },
+    {
+      path: '/viewEmployeeHelp',
+      name: 'viewEmployeeHelp',
+      component: viewEmployeeHelp
+    },
+    {
+      path: '/addScheduleHelp',
+      name: 'addScheduleHelp',
+      component: addScheduleHelp
+    },
+    {
+      path: '/viewScheduleHelp',
+      name: 'viewScheduleHelp',
+      component: viewScheduleHelp
     },
     {
       path: '/scheduleNew',
@@ -159,7 +218,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   setTimeout(()=> {
-    const publicPages = ['/', '/help'];
+    const publicPages = ['/', '/profileHelp'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('t');
     let user = store.state.userInfo;
