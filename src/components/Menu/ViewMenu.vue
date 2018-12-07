@@ -130,7 +130,7 @@ export default {
     },
     methods:{
         help(){
-            window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+            window.open('https://salted-chef.herokuapp.com/#/viewMenuHelp', "_blank");
         },
         updateMenu(){
             this.loading = true;

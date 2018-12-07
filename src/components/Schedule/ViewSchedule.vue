@@ -205,7 +205,7 @@ export default {
 
   methods: {
     help(){
-        window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+        window.open('https://salted-chef.herokuapp.com/#/viewScheduleHelp', "_blank");
     },
     onFileSelected(event){
         this.selectedFile = event.target.files[0];

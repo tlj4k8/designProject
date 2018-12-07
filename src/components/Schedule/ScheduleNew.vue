@@ -95,7 +95,7 @@ export default {
     },
     methods: {
         help(){
-            window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+            window.open('https://salted-chef.herokuapp.com/#/addScheduleHelp', "_blank");
         },
         handleSubmit() {
             this.validateDate();

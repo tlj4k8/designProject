@@ -72,7 +72,7 @@ export default {
             return value.toLowerCase()
         },
         help(){
-            window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+            window.open('https://salted-chef.herokuapp.com/#/loginHelp', "_blank");
         },
         handleLogin() {
             this.loading = true;

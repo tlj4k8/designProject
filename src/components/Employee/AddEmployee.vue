@@ -248,7 +248,7 @@ export default {
         return value.toLowerCase()
       },
       help(){
-        window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+        window.open('https://salted-chef.herokuapp.com/#/addEmployeeHelp', "_blank");
       },
       usernameState(){
         this.employeeNames.includes(this.form.username) ? this.usernameValid = 'red' : this.usernameValid = 'lightgreen';
@@ -429,7 +429,7 @@ export default {
 
 <style scoped>
 .time{
-  width: 125px;
+  width: 130px;
 }
 hr {
   background-color: #0d50bc;

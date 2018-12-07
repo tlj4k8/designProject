@@ -402,7 +402,7 @@ export default {
   },
     methods: {
       help(){
-          window.open('https://salted-chef.herokuapp.com/#/help', "_blank");
+          window.open('https://salted-chef.herokuapp.com/#/addClientHelp', "_blank");
       },
       check(){
         if((this.form.endMon >= this.form.mon) && (this.form.endTue >= this.form.tue) && (this.form.endWed >= this.form.wed)
@@ -576,7 +576,7 @@ export default {
 </script>
 <style scoped>
 .time{
-  width: 125px;
+  width: 130px;
 }
 hr{
     background-color: #0d50bc;
