@@ -32,6 +32,8 @@
                             label-for="ingredients">
                 <b-form-input id="ingredients"
                             type="text"
+                            :rows="3"
+                            :max-rows="6"
                             :disabled="disabled"
                             maxlength='400'
                             v-model="form.ingredients">

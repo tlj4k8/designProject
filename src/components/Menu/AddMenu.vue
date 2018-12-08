@@ -20,6 +20,8 @@
                         label-for="ingredients">
             <b-form-input id="ingrediants"
                         type="text"
+                        :rows="3"
+                        :max-rows="6"
                         required
                         maxlength='400'
                         v-model="form.ingredients">
