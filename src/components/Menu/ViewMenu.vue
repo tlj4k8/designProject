@@ -30,14 +30,14 @@
             <b-form-group id="ingredients"
                             label="Ingredients:"
                             label-for="ingredients">
-                <b-form-input id="ingredients"
+                <b-form-textarea id="ingredients"
                             type="text"
                             :rows="3"
                             :max-rows="6"
                             :disabled="disabled"
                             maxlength='400'
                             v-model="form.ingredients">
-                </b-form-input>
+                </b-form-textarea>
             </b-form-group>
             <b-form-group id="instructions"
                             label="Instructions:"
