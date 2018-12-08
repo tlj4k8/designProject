@@ -1,6 +1,6 @@
 <template>
   <div class="menuEdit">
-    <h1>View Master Menu Item</h1>
+    <h1>Add Master Menu</h1>
     <b-card bg-variant="light" class="card">
     <AddMenu/>
     </b-card>
