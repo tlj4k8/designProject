@@ -35,7 +35,7 @@
                             :rows="3"
                             :max-rows="6"
                             :disabled="disabled"
-                            maxlength='400'
+                            maxlength='2000'
                             v-model="form.ingredients">
                 </b-form-textarea>
             </b-form-group>
@@ -47,7 +47,7 @@
                             :rows="3"
                             :max-rows="6"
                             :disabled="disabled"
-                            maxlength='400'
+                            maxlength='2000'
                             v-model="form.instructions">
                 </b-form-textarea>
             </b-form-group>
